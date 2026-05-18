@@ -4,13 +4,50 @@ import { useState, useRef } from "react";
 import { Button, Card } from "@heroui/react";
 import * as XLSX from "xlsx";
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 export interface BarangItem {
   kodeBarang: string;
   namaBarang: string;
+  jumlah: number;
+  satuan: string;
+}
+
+export interface BarangMerged {
+  nomor: number;
+  kodeBarang: string;
+  namaBarang: string;
+  jumlah: number;
+  satuan: string;
 }
 
 type ExcelSource = File | ArrayBuffer | ArrayBufferView;
 
+// ─── Kolom (0-indexed) ────────────────────────────────────────────────────────
+// A=0  B=1  C=2  D=3  E=4  F=5  G=6  H=7  I=8
+// T=19 (jumlah)  U=20 (satuan)
+
+const COL = {
+  A: 0, B: 1, C: 2, D: 3, E: 4, F: 5,
+  H: 7, I: 8,
+  T: 19, U: 20,
+} as const;
+
+const START_ROW_INDEX = 13; // baris ke-14 (0-indexed)
+
+// ─── extractBarang ────────────────────────────────────────────────────────────
+
+/**
+ * Membaca file Excel BMD dan mengekstrak data barang mulai baris ke-14.
+ * Hanya baris yang kolom H (nomor urut) berisi nilai yang diambil.
+ *
+ * Kolom yang diambil:
+ *  A,B,C,D,E,F → segmen kode barang
+ *  H           → nomor urut item
+ *  I           → nama barang
+ *  T           → jumlah
+ *  U           → satuan
+ */
 export async function extractBarang(source: ExcelSource): Promise<BarangItem[]> {
   const workbook = await readWorkbook(source);
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -21,47 +58,84 @@ export async function extractBarang(source: ExcelSource): Promise<BarangItem[]> 
     defval: null,
   });
 
-  const START_ROW_INDEX = 13;
   const result: BarangItem[] = [];
 
   for (let rowIdx = START_ROW_INDEX; rowIdx < rows.length; rowIdx++) {
     const row = rows[rowIdx];
 
     // Skip baris header grup (kolom H kosong)
-    const h = toStr(row[7]);
+    const h = toStr(row[COL.H]);
     if (!h) continue;
 
-    const namaBarang = toStr(row[8]);
+    const namaBarang = toStr(row[COL.I]);
     if (!namaBarang) continue;
 
-    const segments = [row[0], row[1], row[2], row[3], row[4], row[5]]
+    const segments = [row[COL.A], row[COL.B], row[COL.C], row[COL.D], row[COL.E], row[COL.F]]
       .map(toStr)
       .filter(Boolean) as string[];
 
     segments.push(h);
 
-    result.push({ kodeBarang: segments.join("."), namaBarang });
+    result.push({
+      kodeBarang: segments.join("."),
+      namaBarang,
+      jumlah: toNum(row[COL.T]),
+      satuan: toStr(row[COL.U]),
+    });
   }
 
   return result;
 }
 
+// ─── mergeBarang ──────────────────────────────────────────────────────────────
+
+/**
+ * Menggabungkan item dengan kode barang yang sama.
+ * Jumlah dijumlahkan, satuan diambil dari item pertama yang ditemukan.
+ * Hasil diurutkan berdasarkan kodeBarang dan diberi nomor urut.
+ */
+export function mergeBarang(items: BarangItem[]): BarangMerged[] {
+  const map = new Map<string, BarangMerged>();
+
+  for (const item of items) {
+    const existing = map.get(item.kodeBarang);
+    if (existing) {
+      existing.jumlah += item.jumlah;
+    } else {
+      map.set(item.kodeBarang, {
+        nomor: 0, // diisi setelah sort
+        kodeBarang: item.kodeBarang,
+        namaBarang: item.namaBarang,
+        jumlah: item.jumlah,
+        satuan: item.satuan,
+      });
+    }
+  }
+
+  return [...map.values()]
+    .sort((a, b) => a.kodeBarang.localeCompare(b.kodeBarang))
+    .map((item, idx) => ({ ...item, nomor: idx + 1 }));
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
 function toStr(value: unknown): string {
   return value != null ? String(value).trim() : "";
+}
+
+function toNum(value: unknown): number {
+  const n = Number(value);
+  return isNaN(n) ? 0 : n;
 }
 
 async function readWorkbook(source: ExcelSource): Promise<XLSX.WorkBook> {
   if (source instanceof File) {
     return XLSX.read(await source.arrayBuffer(), { type: "array" });
   }
-
   if (source instanceof ArrayBuffer || ArrayBuffer.isView(source)) {
     return XLSX.read(source, { type: "array" });
   }
-
-  throw new Error(
-    "Unsupported source type. Expected: File | ArrayBuffer | ArrayBufferView"
-  );
+  throw new Error("Unsupported source type. Expected: File | ArrayBuffer | ArrayBufferView");
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -69,7 +143,7 @@ async function readWorkbook(source: ExcelSource): Promise<XLSX.WorkBook> {
 export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
-  const [items, setItems] = useState<BarangItem[]>([]);
+  const [merged, setMerged] = useState<BarangMerged[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -79,12 +153,12 @@ export default function Home() {
 
     setFileName(file.name);
     setError(null);
-    setItems([]);
+    setMerged([]);
     setLoading(true);
 
     try {
-      const result = await extractBarang(file);
-      setItems(result);
+      const extracted = await extractBarang(file);
+      setMerged(mergeBarang(extracted));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Gagal membaca file.");
     } finally {
@@ -92,9 +166,11 @@ export default function Home() {
     }
   }
 
+  const hasData = merged.length > 0;
+
   return (
     <div className="flex flex-col items-center gap-4 p-6">
-      <Card className="w-[600px]">
+      <Card className="w-[800px]">
         <Card.Header>
           <Card.Title>Import Data BMD</Card.Title>
           <Card.Description>
@@ -103,7 +179,6 @@ export default function Home() {
         </Card.Header>
 
         <Card.Content className="flex flex-col gap-4">
-          {/* Hidden file input */}
           <input
             ref={inputRef}
             type="file"
@@ -112,54 +187,52 @@ export default function Home() {
             onChange={handleFileChange}
           />
 
-          {/* Trigger button */}
           <div className="flex items-center gap-3">
             <Button onPress={() => inputRef.current?.click()} isDisabled={loading}>
               {loading ? "Memproses..." : "Pilih File Excel"}
             </Button>
             {fileName && (
-              <span className="text-sm text-default-500 truncate max-w-[300px]">
+              <span className="text-sm text-default-500 truncate max-w-[400px]">
                 {fileName}
               </span>
             )}
           </div>
 
-          {/* Error */}
-          {error && (
-            <p className="text-sm text-danger">{error}</p>
-          )}
+          {error && <p className="text-sm text-danger">{error}</p>}
 
-          {/* Result summary */}
-          {items.length > 0 && (
+          {hasData && (
             <p className="text-sm text-success">
-              {items.length} barang berhasil diekstrak.
+              {merged.length} kode barang unik berhasil diekstrak.
             </p>
           )}
         </Card.Content>
       </Card>
 
-      {/* Result table */}
-      {items.length > 0 && (
-        <Card className="w-[600px]">
+      {hasData && (
+        <Card className="w-[800px]">
           <Card.Header>
-            <Card.Title>Hasil Ekstraksi</Card.Title>
+            <Card.Title>Data Barang</Card.Title>
           </Card.Header>
           <Card.Content>
-            <div className="max-h-[400px] overflow-y-auto">
+            <div className="max-h-[500px] overflow-y-auto">
               <table className="w-full text-sm">
                 <thead className="sticky top-0 bg-default-100">
                   <tr>
+                    <th className="text-left py-2 px-3 font-medium">No</th>
                     <th className="text-left py-2 px-3 font-medium">Kode Barang</th>
                     <th className="text-left py-2 px-3 font-medium">Nama Barang</th>
+                    <th className="text-right py-2 px-3 font-medium">Jumlah</th>
+                    <th className="text-left py-2 px-3 font-medium">Satuan</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {items.map((item, idx) => (
-                    <tr key={idx} className="border-t border-default-100">
-                      <td className="py-2 px-3 font-mono text-xs text-default-600">
-                        {item.kodeBarang}
-                      </td>
+                  {merged.map((item) => (
+                    <tr key={item.kodeBarang} className="border-t border-default-100">
+                      <td className="py-2 px-3 text-default-400 text-xs">{item.nomor}</td>
+                      <td className="py-2 px-3 font-mono text-xs text-default-600">{item.kodeBarang}</td>
                       <td className="py-2 px-3">{item.namaBarang}</td>
+                      <td className="py-2 px-3 text-right font-medium">{item.jumlah}</td>
+                      <td className="py-2 px-3 text-default-500">{item.satuan}</td>
                     </tr>
                   ))}
                 </tbody>

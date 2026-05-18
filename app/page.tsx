@@ -47,12 +47,12 @@ const COL_BASE = { A: 0, B: 1, C: 2, D: 3, E: 4, F: 5, H: 7, I: 8 } as const;
  * | JALAN, IRIGASI & JARINGAN    | U (20) | V (21) |
  * | ASET TETAP LAINNYA           | R (17) | S (18) |
  */
-const ASET_COL_MAP: Record<AsetType, { jumlah: number; satuan: number }> = {
-  tanah: { jumlah: 16, satuan: 17 },
-  peralatan_mesin: { jumlah: 19, satuan: 20 },
-  bangunan: { jumlah: 19, satuan: 20 },
-  jalan_irigasi_jaringan: { jumlah: 20, satuan: 21 },
-  aset_tetap_lainnya: { jumlah: 17, satuan: 18 },
+const ASET_COL_MAP: Record<AsetType, { jumlah: number; satuan: number; namaBarang: number }> = {
+  tanah: { namaBarang: 8, jumlah: 16, satuan: 17 },  // kolom I
+  peralatan_mesin: { namaBarang: 8, jumlah: 19, satuan: 20 },  // kolom I
+  bangunan: { namaBarang: 9, jumlah: 19, satuan: 20 },  // kolom J
+  jalan_irigasi_jaringan: { namaBarang: 9, jumlah: 20, satuan: 21 },  // kolom J
+  aset_tetap_lainnya: { namaBarang: 8, jumlah: 17, satuan: 18 },  // kolom I
 };
 
 const START_ROW_INDEX = 13; // baris ke-14 (0-indexed)
@@ -65,7 +65,11 @@ export async function extractBarang(
   source: ExcelSource,
   asetType: AsetType
 ): Promise<BarangItem[]> {
-  const { jumlah: colJumlah, satuan: colSatuan } = ASET_COL_MAP[asetType];
+  const { namaBarang: colNamaBarang, jumlah: colJumlah, satuan: colSatuan } = ASET_COL_MAP[asetType];
+
+  console.info(
+    `[extractBarang] asetType="${asetType}" → kolom jumlah=idx(${colJumlah}), satuan=idx(${colSatuan})`
+  );
 
   const workbook = await readWorkbook(source);
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -76,16 +80,40 @@ export async function extractBarang(
     defval: null,
   });
 
+  console.info(`[extractBarang] total baris: ${rows.length}, parsing mulai baris ${START_ROW_INDEX + 1}`);
+
+  // Log judul file (baris 1-6) untuk konfirmasi tipe aset yang diupload
+  const judul = rows.slice(0, 6)
+    .map((r) => toStr((r as unknown[])[0]))
+    .filter(Boolean);
+  console.info("[extractBarang] judul file:", judul);
+
+  // Log nilai header pada kolom jumlah & satuan (baris ke-11, index 10)
+  const headerRow = (rows[10] ?? []) as unknown[];
+  console.table({
+    [`col idx ${colNamaBarang} (namaBarang)`]: toStr(headerRow[colNamaBarang]) || "(kosong)",
+    [`col idx ${colJumlah} (jumlah)`]: toStr(headerRow[colJumlah]) || "(kosong)",
+    [`col idx ${colSatuan} (satuan)`]: toStr(headerRow[colSatuan]) || "(kosong)",
+  });
+
   const result: BarangItem[] = [];
+  let skippedNoH = 0;
+  let skippedNoNama = 0;
 
   for (let rowIdx = START_ROW_INDEX; rowIdx < rows.length; rowIdx++) {
     const row = rows[rowIdx];
 
     const h = toStr(row[COL_BASE.H]);
-    if (!h) continue;
+    if (!h) { skippedNoH++; continue; }
 
-    const namaBarang = toStr(row[COL_BASE.I]);
-    if (!namaBarang) continue;
+    const namaBarang = toStr(row[colNamaBarang]); // ← perubahan utama
+    if (!namaBarang) {
+      skippedNoNama++;
+      console.warn(
+        `[extractBarang] baris ${rowIdx + 1}: H="${h}" ada tapi kolom idx(${colNamaBarang}) (namaBarang) kosong — dilewati`
+      );
+      continue;
+    }
 
     const segments = [
       row[COL_BASE.A], row[COL_BASE.B], row[COL_BASE.C],
@@ -96,12 +124,42 @@ export async function extractBarang(
 
     segments.push(h);
 
+    const jumlah = toNum(row[colJumlah]);
+    const satuan = toStr(row[colSatuan]);
+
+    if (jumlah === 0) {
+      console.warn(
+        `[extractBarang] baris ${rowIdx + 1}: jumlah=0 pada "${namaBarang}" ` +
+        `(col idx ${colJumlah}, nilai mentah="${toStr(row[colJumlah])}")`
+      );
+    }
+    if (!satuan) {
+      console.warn(
+        `[extractBarang] baris ${rowIdx + 1}: satuan kosong pada "${namaBarang}" ` +
+        `(col idx ${colSatuan}, nilai mentah="${toStr(row[colSatuan])}")`
+      );
+    }
+
     result.push({
       kodeBarang: segments.join("."),
       namaBarang,
-      jumlah: toNum(row[colJumlah]),
-      satuan: toStr(row[colSatuan]),
+      jumlah,
+      satuan,
     });
+  }
+
+  if (result.length === 0) {
+    console.error(
+      `[extractBarang] TIDAK ADA DATA untuk asetType="${asetType}". ` +
+      `Kemungkinan: kolom H (idx ${COL_BASE.H}) tidak berisi nomor urut di file ini, ` +
+      `atau START_ROW_INDEX (${START_ROW_INDEX}) tidak sesuai struktur file.`
+    );
+  } else {
+    console.info(
+      `[extractBarang] ✓ selesai: ${result.length} item, ` +
+      `skip H-kosong=${skippedNoH}, skip nama-kosong=${skippedNoNama}`
+    );
+    console.debug("[extractBarang] sample 3 item pertama:", result.slice(0, 3));
   }
 
   return result;
@@ -110,11 +168,16 @@ export async function extractBarang(
 // ─── mergeBarang ──────────────────────────────────────────────────────────────
 
 export function mergeBarang(items: BarangItem[]): BarangMerged[] {
+  console.info(`[mergeBarang] input: ${items.length} item mentah`);
+
   const map = new Map<string, BarangMerged>();
 
   for (const item of items) {
     const existing = map.get(item.kodeBarang);
     if (existing) {
+      console.debug(
+        `[mergeBarang] duplikat kodeBarang="${item.kodeBarang}" — jumlah ${existing.jumlah} + ${item.jumlah}`
+      );
       existing.jumlah += item.jumlah;
     } else {
       map.set(item.kodeBarang, {
@@ -127,9 +190,16 @@ export function mergeBarang(items: BarangItem[]): BarangMerged[] {
     }
   }
 
-  return [...map.values()]
+  const result = [...map.values()]
     .sort((a, b) => a.kodeBarang.localeCompare(b.kodeBarang))
     .map((item, idx) => ({ ...item, nomor: idx + 1 }));
+
+  console.info(
+    `[mergeBarang] ✓ ${items.length} item → ${result.length} kode unik ` +
+    `(${items.length - result.length} duplikat digabung)`
+  );
+
+  return result;
 }
 
 // ─── localStorage helpers ─────────────────────────────────────────────────────
@@ -205,12 +275,20 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
 
   // Hydrate dari localStorage saat mount
   useEffect(() => {
-    setMerged(loadFromStorage(asetType));
+    const saved = loadFromStorage(asetType);
+    if (saved.length > 0) {
+      console.info(`[AsetTabContent] hydrate dari localStorage: asetType="${asetType}", ${saved.length} item`);
+    } else {
+      console.debug(`[AsetTabContent] localStorage kosong untuk asetType="${asetType}"`);
+    }
+    setMerged(saved);
   }, [asetType]);
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    console.info(`[handleFileChange] file dipilih: "${file.name}" (${(file.size / 1024).toFixed(1)} KB), asetType="${asetType}"`);
 
     setFileName(file.name);
     setError(null);
@@ -221,8 +299,11 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
       const result = mergeBarang(extracted);
       setMerged(result);
       saveToStorage(asetType, result);
+      console.info(`[handleFileChange] ✓ disimpan ke localStorage: key="${"bmd_merged_" + asetType}"`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Gagal membaca file.");
+      const msg = err instanceof Error ? err.message : "Gagal membaca file.";
+      console.error(`[handleFileChange] error:`, err);
+      setError(msg);
     } finally {
       setLoading(false);
       if (inputRef.current) inputRef.current.value = "";
@@ -230,6 +311,7 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
   }
 
   function handleReset() {
+    console.warn(`[handleReset] data dihapus untuk asetType="${asetType}"`);
     setMerged([]);
     setFileName(null);
     setError(null);
@@ -265,7 +347,7 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
 
         {hasData && (
           <Button
-            variant="danger"
+            variant="danger-soft"
             size="sm"
             onPress={handleReset}
           >

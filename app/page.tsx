@@ -27,6 +27,10 @@ export async function extractBarang(source: ExcelSource): Promise<BarangItem[]> 
   for (let rowIdx = START_ROW_INDEX; rowIdx < rows.length; rowIdx++) {
     const row = rows[rowIdx];
 
+    // Skip baris header grup (kolom H kosong)
+    const h = toStr(row[7]);
+    if (!h) continue;
+
     const namaBarang = toStr(row[8]);
     if (!namaBarang) continue;
 
@@ -34,8 +38,7 @@ export async function extractBarang(source: ExcelSource): Promise<BarangItem[]> 
       .map(toStr)
       .filter(Boolean) as string[];
 
-    const h = toStr(row[7]);
-    if (h) segments.push(h);
+    segments.push(h);
 
     result.push({ kodeBarang: segments.join("."), namaBarang });
   }

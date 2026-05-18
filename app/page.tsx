@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button, Card, Tabs } from "@heroui/react";
 import * as XLSX from "xlsx";
 
@@ -57,13 +57,10 @@ const ASET_COL_MAP: Record<AsetType, { jumlah: number; satuan: number }> = {
 
 const START_ROW_INDEX = 13; // baris ke-14 (0-indexed)
 
+const STORAGE_KEY = (asetType: AsetType) => `bmd_merged_${asetType}`;
+
 // ─── extractBarang ────────────────────────────────────────────────────────────
 
-/**
- * Membaca file Excel BMD dan mengekstrak data barang mulai baris ke-14.
- * Hanya baris yang kolom H (nomor urut) berisi nilai yang diambil.
- * Kolom jumlah & satuan disesuaikan per tipe aset via ASET_COL_MAP.
- */
 export async function extractBarang(
   source: ExcelSource,
   asetType: AsetType
@@ -84,7 +81,6 @@ export async function extractBarang(
   for (let rowIdx = START_ROW_INDEX; rowIdx < rows.length; rowIdx++) {
     const row = rows[rowIdx];
 
-    // Skip baris header grup (kolom H kosong)
     const h = toStr(row[COL_BASE.H]);
     if (!h) continue;
 
@@ -113,11 +109,6 @@ export async function extractBarang(
 
 // ─── mergeBarang ──────────────────────────────────────────────────────────────
 
-/**
- * Menggabungkan item dengan kode barang yang sama.
- * Jumlah dijumlahkan, satuan & namaBarang diambil dari item pertama.
- * Hasil diurutkan berdasarkan kodeBarang dan diberi nomor urut.
- */
 export function mergeBarang(items: BarangItem[]): BarangMerged[] {
   const map = new Map<string, BarangMerged>();
 
@@ -141,6 +132,33 @@ export function mergeBarang(items: BarangItem[]): BarangMerged[] {
     .map((item, idx) => ({ ...item, nomor: idx + 1 }));
 }
 
+// ─── localStorage helpers ─────────────────────────────────────────────────────
+
+function loadFromStorage(asetType: AsetType): BarangMerged[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY(asetType));
+    return raw ? (JSON.parse(raw) as BarangMerged[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveToStorage(asetType: AsetType, data: BarangMerged[]): void {
+  try {
+    localStorage.setItem(STORAGE_KEY(asetType), JSON.stringify(data));
+  } catch {
+    // storage penuh atau private mode — abaikan
+  }
+}
+
+function clearStorage(asetType: AsetType): void {
+  try {
+    localStorage.removeItem(STORAGE_KEY(asetType));
+  } catch {
+    // abaikan
+  }
+}
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function toStr(value: unknown): string {
@@ -159,7 +177,7 @@ async function readWorkbook(source: ExcelSource): Promise<XLSX.WorkBook> {
   if (source instanceof ArrayBuffer || ArrayBuffer.isView(source)) {
     return XLSX.read(source, { type: "array" });
   }
-  throw new Error("Unsupported source type. Expected: File | ArrayBuffer | ArrayBufferView");
+  throw new Error("Unsupported source type.");
 }
 
 // ─── Tab config ───────────────────────────────────────────────────────────────
@@ -172,7 +190,7 @@ const TABS: { key: AsetType; label: string }[] = [
   { key: "aset_tetap_lainnya", label: "Aset Tetap Lainnya" },
 ];
 
-// ─── TabPanel ─────────────────────────────────────────────────────────────────
+// ─── AsetTabContent ───────────────────────────────────────────────────────────
 
 interface AsetTabContentProps {
   asetType: AsetType;
@@ -185,47 +203,74 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Hydrate dari localStorage saat mount
+  useEffect(() => {
+    setMerged(loadFromStorage(asetType));
+  }, [asetType]);
+
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setFileName(file.name);
     setError(null);
-    setMerged([]);
     setLoading(true);
 
     try {
       const extracted = await extractBarang(file, asetType);
-      setMerged(mergeBarang(extracted));
+      const result = mergeBarang(extracted);
+      setMerged(result);
+      saveToStorage(asetType, result);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Gagal membaca file.");
     } finally {
       setLoading(false);
-      // reset input agar file yang sama bisa dipilih ulang
       if (inputRef.current) inputRef.current.value = "";
     }
+  }
+
+  function handleReset() {
+    setMerged([]);
+    setFileName(null);
+    setError(null);
+    clearStorage(asetType);
   }
 
   const hasData = merged.length > 0;
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Upload area */}
-      <div className="flex items-center gap-3">
-        <input
-          ref={inputRef}
-          type="file"
-          accept=".xlsx,.xls"
-          className="hidden"
-          onChange={handleFileChange}
-        />
-        <Button onPress={() => inputRef.current?.click()} isDisabled={loading}>
-          {loading ? "Memproses..." : "Pilih File Excel"}
-        </Button>
-        {fileName && (
-          <span className="text-sm text-default-500 truncate max-w-[400px]">
-            {fileName}
-          </span>
+      {/* Toolbar */}
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <input
+            ref={inputRef}
+            type="file"
+            accept=".xlsx,.xls"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+          <Button
+            onPress={() => inputRef.current?.click()}
+            isDisabled={loading}
+          >
+            {loading ? "Memproses..." : "Pilih File Excel"}
+          </Button>
+          {fileName && (
+            <span className="text-sm text-default-500 truncate max-w-[300px]">
+              {fileName}
+            </span>
+          )}
+        </div>
+
+        {hasData && (
+          <Button
+            variant="danger"
+            size="sm"
+            onPress={handleReset}
+          >
+            Reset Data
+          </Button>
         )}
       </div>
 
@@ -233,7 +278,7 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
 
       {hasData && (
         <p className="text-sm text-success">
-          {merged.length} kode barang unik berhasil diekstrak.
+          {merged.length} kode barang unik.
         </p>
       )}
 
@@ -252,7 +297,10 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
             </thead>
             <tbody>
               {merged.map((item) => (
-                <tr key={item.kodeBarang} className="border-t border-default-100 hover:bg-default-50">
+                <tr
+                  key={item.kodeBarang}
+                  className="border-t border-default-100 hover:bg-default-50"
+                >
                   <td className="py-2 px-3 text-default-400 text-xs">{item.nomor}</td>
                   <td className="py-2 px-3 font-mono text-xs text-default-600">{item.kodeBarang}</td>
                   <td className="py-2 px-3">{item.namaBarang}</td>
@@ -278,6 +326,8 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<AsetType>("tanah");
+
   return (
     <div className="flex flex-col items-center p-6">
       <Card className="w-[900px]">
@@ -288,21 +338,34 @@ export default function Home() {
           </Card.Description>
         </Card.Header>
 
-        <Card.Content>
-          <Tabs>
-            <Tabs.List aria-label="Kategori Aset Tetap">
-              {TABS.map(({ key, label }) => (
-                <Tabs.Tab key={key} id={key}>{label}</Tabs.Tab>
-              ))}
-            </Tabs.List>
-            {TABS.map(({ key }) => (
-              <Tabs.Panel key={key} id={key}>
-                <div className="pt-4">
-                  <AsetTabContent asetType={key} />
-                </div>
-              </Tabs.Panel>
-            ))}
-          </Tabs>
+        <Card.Content className="flex flex-col gap-0">
+          {/* Custom tab list */}
+          <div className="flex border-b border-default-200 mb-4 gap-1">
+            {TABS.map(({ key, label }) => {
+              const isActive = activeTab === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setActiveTab(key)}
+                  className={[
+                    "px-4 py-2 text-sm font-medium rounded-t-lg transition-all whitespace-nowrap",
+                    isActive
+                      ? "bg-primary text-primary-foreground border-b-2 border-primary shadow-sm"
+                      : "text-default-500 hover:text-default-800 hover:bg-default-100",
+                  ].join(" ")}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Tab panels — semua di-mount agar state tidak hilang saat ganti tab */}
+          {TABS.map(({ key }) => (
+            <div key={key} className={activeTab === key ? "block" : "hidden"}>
+              <AsetTabContent asetType={key} />
+            </div>
+          ))}
         </Card.Content>
       </Card>
     </div>

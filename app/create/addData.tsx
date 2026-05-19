@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
     Button,
@@ -14,11 +14,9 @@ import {
     TextField,
     useOverlayState,
 } from "@heroui/react";
-import { BarangSelectField } from "@/component/barangSelectField";
+import { BarangSelectField } from "@/component/barangSelectField"; // Sesuaikan path jika perlu
 import { ASET_LABEL } from "@/types/bmd";
 import type { AsetType, BarangAll } from "@/types/bmd";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 export type { AsetType } from "@/types/bmd";
 export type BarangSelected = BarangAll;
@@ -39,12 +37,12 @@ export interface FormPemeliharaanData {
 
 export interface FormPemeliharaanModalProps {
     open: boolean;
+    initialData?: FormPemeliharaanData | null; // Tambahan properti initialData untuk Edit
     initialBarang?: BarangSelected | null;
     onClose: () => void;
     onSubmit: (data: FormPemeliharaanData) => void;
 }
 
-// Tipe untuk internal Form state
 interface FormValues {
     barang: BarangSelected | null;
     kuasaPenggunaBarang: string;
@@ -54,8 +52,6 @@ interface FormValues {
     namaPemeliharaan: string;
     jumlah: number | null;
 }
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
     return (
@@ -69,28 +65,16 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     );
 }
 
-// ─── BarangCard ──────────────────────────────────────────────────────────────
-
-function BarangCard({
-    barang,
-    jumlahDipakai,
-}: {
-    barang: BarangSelected;
-    jumlahDipakai: number;
-}) {
-    const valid = jumlahDipakai > 0 && jumlahDipakai < barang.jumlah;
+function BarangCard({ barang, jumlahDipakai }: { barang: BarangSelected; jumlahDipakai: number }) {
+    const valid = jumlahDipakai > 0 && jumlahDipakai <= barang.jumlah;
     const pct = valid ? (jumlahDipakai / barang.jumlah) * 100 : 0;
 
     return (
         <Surface className="rounded-xl px-4 py-3 flex flex-col gap-2">
             <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-foreground truncate">
-                        {barang.namaBarang}
-                    </p>
-                    <p className="text-xs font-mono text-foreground/50 mt-0.5">
-                        {barang.kodeBarang}
-                    </p>
+                    <p className="text-sm font-semibold text-foreground truncate">{barang.namaBarang}</p>
+                    <p className="text-xs font-mono text-foreground/50 mt-0.5">{barang.kodeBarang}</p>
                 </div>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium whitespace-nowrap shrink-0">
                     {ASET_LABEL[barang.asetType]}
@@ -110,11 +94,7 @@ function BarangCard({
                         <div
                             className={[
                                 "h-full rounded-full transition-all duration-300",
-                                pct > 90
-                                    ? "bg-danger"
-                                    : pct > 60
-                                        ? "bg-warning"
-                                        : "bg-success",
+                                pct > 90 ? "bg-danger" : pct > 60 ? "bg-warning" : "bg-success",
                             ].join(" ")}
                             style={{ width: `${pct}%` }}
                         />
@@ -128,50 +108,57 @@ function BarangCard({
     );
 }
 
-// ─── ModalInner ──────────────────────────────────────────────────────────────
-
 function ModalInner({
+    initialData,
     initialBarang,
     onClose,
     onSubmit,
 }: {
+    initialData?: FormPemeliharaanData | null;
     initialBarang?: BarangSelected | null;
     onClose: () => void;
     onSubmit: (data: FormPemeliharaanData) => void;
 }) {
-    // 1. Inisialisasi React Hook Form
-    const {
-        control,
-        handleSubmit,
-        watch,
-        setValue,
-        clearErrors,
-    } = useForm<FormValues>({
+    // 1. Rekonstruksi object Barang jika dalam mode Edit (initialData)
+    const defaultBarang = initialData
+        ? ({
+            kodeBarang: initialData.kodeBarang,
+            namaBarang: initialData.namaBarang,
+            jumlah: initialData.jumlahTersedia, // Pastikan "jumlah" pada BarangAll terisi jumlah tersedia
+            satuan: initialData.satuan,
+            asetType: initialData.asetType,
+        } as BarangSelected)
+        : (initialBarang ?? null);
+
+    const { control, handleSubmit, watch, setValue, clearErrors } = useForm<FormValues>({
         defaultValues: {
-            barang: initialBarang ?? null,
-            kuasaPenggunaBarang: "",
-            program: "",
-            kegiatan: "",
-            output: "",
-            namaPemeliharaan: "",
-            jumlah: null,
+            barang: defaultBarang,
+            kuasaPenggunaBarang: initialData?.kuasaPenggunaBarang ?? "",
+            program: initialData?.program ?? "",
+            kegiatan: initialData?.kegiatan ?? "",
+            output: initialData?.output ?? "",
+            namaPemeliharaan: initialData?.namaPemeliharaan ?? "",
+            jumlah: initialData?.jumlah ?? null,
         },
         mode: "onChange",
     });
 
-    // 2. Pantau (watch) nilai field tertentu untuk logic kondisional
     const selectedBarang = watch("barang");
     const currentJumlah = watch("jumlah");
+    const isMounted = useRef(false);
 
-    // 3. Reset jumlah jika barang berganti
+    // 2. Reset field 'jumlah' HANYA jika terjadi pergantian barang oleh user.
+    // (Mencegah jumlah ter-reset otomatis saat modal Edit baru terbuka)
     useEffect(() => {
-        setValue("jumlah", null);
-        clearErrors("jumlah");
+        if (isMounted.current) {
+            setValue("jumlah", null);
+            clearErrors("jumlah");
+        } else {
+            isMounted.current = true;
+        }
     }, [selectedBarang?.kodeBarang, setValue, clearErrors]);
 
-    // 4. Handler Submit (Hanya tereksekusi jika lolos validasi)
     const onValidSubmit = (data: FormValues) => {
-        // Pada titik ini, rules di Controller memastikan barang & jumlah tidak null
         onSubmit({
             kuasaPenggunaBarang: data.kuasaPenggunaBarang,
             program: data.program,
@@ -179,11 +166,11 @@ function ModalInner({
             output: data.output,
             kodeBarang: data.barang!.kodeBarang,
             namaBarang: data.barang!.namaBarang,
-            jumlahTersedia: data.barang!.jumlah,
+            jumlahTersedia: data.barang!.jumlah, // Jumlah tersedia (Max)
             satuan: data.barang!.satuan,
             asetType: data.barang!.asetType,
             namaPemeliharaan: data.namaPemeliharaan,
-            jumlah: data.jumlah!,
+            jumlah: data.jumlah!, // Jumlah pengajuan
         });
     };
 
@@ -191,21 +178,15 @@ function ModalInner({
         <Modal.Dialog>
             <Modal.Header>
                 <Modal.Heading className="text-base font-semibold">
-                    Form Pemeliharaan Barang
+                    {initialData ? "Edit Pemeliharaan" : "Form Pemeliharaan Barang"}
                 </Modal.Heading>
                 <Description className="text-xs text-foreground/50 mt-0.5">
-                    Isi data pemeliharaan untuk barang yang dipilih
+                    {initialData ? "Ubah data pemeliharaan terpilih" : "Isi data pemeliharaan untuk barang yang dipilih"}
                 </Description>
             </Modal.Header>
 
             <Modal.Body className="max-h-[70vh] overflow-y-auto">
-                {/* Gunakan form native yg di-handle oleh handleSubmit RHF */}
-                <form
-                    id="form-pemeliharaan"
-                    onSubmit={handleSubmit(onValidSubmit)}
-                    className="flex flex-col gap-4 py-2"
-                >
-                    {/* ── Pilih Barang ── */}
+                <form id="form-pemeliharaan" onSubmit={handleSubmit(onValidSubmit)} className="flex flex-col gap-4 py-2">
                     <div className="flex flex-col gap-1.5">
                         <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
                             Barang <span className="text-danger">*</span>
@@ -224,37 +205,23 @@ function ModalInner({
                         />
                     </div>
 
-                    {/* Preview barang terpilih */}
-                    {selectedBarang && (
-                        <BarangCard
-                            barang={selectedBarang}
-                            jumlahDipakai={currentJumlah ?? 0}
-                        />
-                    )}
+                    {selectedBarang && <BarangCard barang={selectedBarang} jumlahDipakai={currentJumlah ?? 0} />}
 
                     <SectionLabel>Data Anggaran</SectionLabel>
 
-                    {/* ── TextFields ── */}
-                    {(
-                        [
-                            { name: "kuasaPenggunaBarang", label: "Kuasa Pengguna Barang", placeholder: "Nama SKPD / unit kerja..." },
-                            { name: "program", label: "Program", placeholder: "Nama program..." },
-                            { name: "kegiatan", label: "Kegiatan", placeholder: "Nama kegiatan..." },
-                            { name: "output", label: "Output", placeholder: "Output kegiatan..." },
-                        ] as const
-                    ).map((fieldInfo) => (
+                    {([
+                        { name: "kuasaPenggunaBarang", label: "Kuasa Pengguna Barang", placeholder: "Nama SKPD / unit kerja..." },
+                        { name: "program", label: "Program", placeholder: "Nama program..." },
+                        { name: "kegiatan", label: "Kegiatan", placeholder: "Nama kegiatan..." },
+                        { name: "output", label: "Output", placeholder: "Output kegiatan..." },
+                    ] as const).map((fieldInfo) => (
                         <Controller
                             key={fieldInfo.name}
                             control={control}
                             name={fieldInfo.name}
                             rules={{ required: `${fieldInfo.label} wajib diisi.` }}
                             render={({ field, fieldState: { error } }) => (
-                                <TextField
-                                    {...field}
-                                    isRequired
-                                    isInvalid={!!error}
-                                    className="flex flex-col gap-1.5"
-                                >
+                                <TextField {...field} isRequired isInvalid={!!error} className="flex flex-col gap-1.5">
                                     <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
                                         {fieldInfo.label} <span className="text-danger ml-0.5">*</span>
                                     </Label>
@@ -267,18 +234,12 @@ function ModalInner({
 
                     <SectionLabel>Detail Pemeliharaan</SectionLabel>
 
-                    {/* ── Nama Pemeliharaan ── */}
                     <Controller
                         control={control}
                         name="namaPemeliharaan"
                         rules={{ required: "Nama Pemeliharaan wajib diisi." }}
                         render={({ field, fieldState: { error } }) => (
-                            <TextField
-                                {...field}
-                                isRequired
-                                isInvalid={!!error}
-                                className="flex flex-col gap-1.5"
-                            >
+                            <TextField {...field} isRequired isInvalid={!!error} className="flex flex-col gap-1.5">
                                 <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
                                     Nama Pemeliharaan <span className="text-danger ml-0.5">*</span>
                                 </Label>
@@ -288,7 +249,6 @@ function ModalInner({
                         )}
                     />
 
-                    {/* ── Jumlah (Validasi Kustom) ── */}
                     <Controller
                         control={control}
                         name="jumlah"
@@ -297,12 +257,11 @@ function ModalInner({
                             min: { value: 1, message: "Masukkan angka minimal 1." },
                             validate: (value) => {
                                 if (!selectedBarang) return "Pilih barang terlebih dahulu.";
-                                // Validasi kurang dari jumlah tersedia
-                                if (value !== null && value >= selectedBarang.jumlah) {
-                                    return `Harus kurang dari jumlah tersedia (${selectedBarang.jumlah} ${selectedBarang.satuan}).`;
+                                if (value !== null && value > selectedBarang.jumlah) {
+                                    return `Harus tidak lebih dari ketersediaan (${selectedBarang.jumlah} ${selectedBarang.satuan}).`;
                                 }
                                 return true;
-                            }
+                            },
                         }}
                         render={({ field, fieldState: { error } }) => (
                             <NumberField
@@ -330,13 +289,11 @@ function ModalInner({
                                 </div>
                                 {selectedBarang && !error && (
                                     <Description className="text-xs text-foreground/40 mt-1">
-                                        Harus kurang dari {selectedBarang.jumlah} {selectedBarang.satuan}
+                                        Maksimal {selectedBarang.jumlah} {selectedBarang.satuan}
                                     </Description>
                                 )}
                                 {error && (
-                                    <p className="text-[11px] text-danger font-medium mt-0.5">
-                                        {error.message}
-                                    </p>
+                                    <p className="text-[11px] text-danger font-medium mt-0.5">{error.message}</p>
                                 )}
                             </NumberField>
                         )}
@@ -345,21 +302,10 @@ function ModalInner({
             </Modal.Body>
 
             <Modal.Footer>
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onPress={onClose}
-                >
+                <Button variant="ghost" size="sm" onPress={onClose}>
                     Batal
                 </Button>
-                {/* Karena form menggunakan tag <form> native dengan id="form-pemeliharaan",
-                    button ber-type "submit" ini otomatis akan memicu handleSubmit RHF 
-                */}
-                <Button
-                    size="sm"
-                    type="submit"
-                    form="form-pemeliharaan"
-                >
+                <Button size="sm" type="submit" form="form-pemeliharaan">
                     Simpan
                 </Button>
             </Modal.Footer>
@@ -367,10 +313,9 @@ function ModalInner({
     );
 }
 
-// ─── FormPemeliharaanModal ───────────────────────────────────────────────────
-
 export default function FormPemeliharaanModal({
     open,
+    initialData,
     initialBarang,
     onClose,
     onSubmit,
@@ -384,9 +329,10 @@ export default function FormPemeliharaanModal({
         <Modal state={state}>
             <Modal.Backdrop>
                 <Modal.Container>
-                    {/* Remount component menjamin reset state hook form bekerja sempurna */}
                     <ModalInner
-                        key={open ? (initialBarang?.kodeBarang ?? "new") : "closed"}
+                        // Ubah key agar me-remount ulang modal setiap kali ganti antara edit row A, B, atau mode Create
+                        key={open ? (initialData ? initialData.kodeBarang + initialData.namaPemeliharaan : "new") : "closed"}
+                        initialData={initialData}
                         initialBarang={initialBarang}
                         onClose={onClose}
                         onSubmit={onSubmit}

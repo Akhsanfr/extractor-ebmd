@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@heroui/react";
-import FormPemeliharaanModal, { FormPemeliharaanData } from "./addData";
+import FormPemeliharaanModal, { FormPemeliharaanData } from "@/app/rkbmd/pemeliharaan/addData";
 import { exportPemeliharaanToExcel } from "@/lib/exportExcel";
-import { useRouter } from "next/navigation";
 
 const PEMELIHARAAN_STORAGE_KEY = "bmd_list_pemeliharaan";
 
@@ -112,19 +111,6 @@ export default function CreatePage() {
         setIsModalOpen(false);
     };
 
-    const handleExport = async () => {
-        setIsExporting(true);
-        try {
-            await exportPemeliharaanToExcel(listPemeliharaan);
-        } catch (e) {
-            console.error("Gagal export", e);
-            alert("Gagal melakukan export Excel");
-        } finally {
-            setIsExporting(false);
-        }
-    };
-    const router = useRouter();
-
     if (!isLoaded) return null;
 
     return (
@@ -140,16 +126,6 @@ export default function CreatePage() {
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Button onClick={() => router.push('/')}>
-                        Menu Import BMD
-                    </Button>
-                    <Button
-                        onPress={handleExport}
-                        isPending={isExporting}
-                        isDisabled={listPemeliharaan.length === 0}
-                    >
-                        {isExporting ? "Memproses..." : "Export Excel"}
-                    </Button>
                     <Button
                         onPress={handleOpenModalCreate}
                         className="font-medium shadow-sm bg-primary text-primary-foreground"

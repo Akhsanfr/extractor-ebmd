@@ -2,8 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Button, Card, Tabs } from "@heroui/react";
+import Link from "next/link";
 import * as XLSX from "xlsx";
-import { useRouter } from "next/navigation";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -417,7 +417,6 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<AsetType>("tanah");
-  const router = useRouter();
   return (
     <div className="flex flex-col items-center p-6">
       <Card className="w-[900px]">
@@ -427,9 +426,12 @@ export default function Home() {
             Upload file Excel laporan BMD per kategori aset tetap.
           </Card.Description>
           <div className="flex items-center gap-3">
-            <Button onClick={() => router.push("/create")}>
-              Menu Data Pemeliharaan
-            </Button>
+            <Link
+              href="/rkbmd"
+              className="text-sm font-medium text-primary hover:underline transition-colors"
+            >
+              Dashboard RKBMD →
+            </Link>
           </div>
         </Card.Header>
 

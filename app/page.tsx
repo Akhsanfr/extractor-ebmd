@@ -125,7 +125,14 @@ export async function extractBarang(
 
     segments.push(h);
 
-    const jumlah = toNum(row[colJumlah]);
+    let jumlah = 0;
+    if (asetType === "tanah") {
+      // Untuk tanah, setiap baris yang valid dihitung sebagai 1 unit
+      jumlah = 1;
+    } else {
+      // Untuk tipe lain, tetap ambil dari kolom excel yang ditentukan
+      jumlah = toNum(row[colJumlah]);
+    }
     const satuan = toStr(row[colSatuan]);
 
     if (jumlah === 0) {

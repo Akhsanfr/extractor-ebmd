@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import {
     Button,
     Description,
-    FieldError,
-    Form,
     Input,
     Label,
     Modal,
@@ -21,23 +20,19 @@ import type { AsetType, BarangAll } from "@/types/bmd";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-// BarangSelected is just BarangAll aliased for clarity in this form context
 export type { AsetType } from "@/types/bmd";
 export type BarangSelected = BarangAll;
 
 export interface FormPemeliharaanData {
-    // Anggaran
     kuasaPenggunaBarang: string;
     program: string;
     kegiatan: string;
     output: string;
-    // Dari row terpilih
     kodeBarang: string;
     namaBarang: string;
     jumlahTersedia: number;
     satuan: string;
     asetType: AsetType;
-    // Pemeliharaan
     namaPemeliharaan: string;
     jumlah: number;
 }
@@ -49,13 +44,24 @@ export interface FormPemeliharaanModalProps {
     onSubmit: (data: FormPemeliharaanData) => void;
 }
 
+// Tipe untuk internal Form state
+interface FormValues {
+    barang: BarangSelected | null;
+    kuasaPenggunaBarang: string;
+    program: string;
+    kegiatan: string;
+    output: string;
+    namaPemeliharaan: string;
+    jumlah: number | null;
+}
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex items-center gap-3 my-1">
+        <div className="flex items-center gap-3 my-2">
             <Separator className="flex-1" />
-            <span className="text-xs font-medium text-foreground/40 uppercase tracking-widest whitespace-nowrap">
+            <span className="text-[10px] font-bold text-foreground/40 uppercase tracking-widest whitespace-nowrap">
                 {children}
             </span>
             <Separator className="flex-1" />
@@ -63,7 +69,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     );
 }
 
-// ─── BarangCard — preview barang terpilih + progress ─────────────────────────
+// ─── BarangCard ──────────────────────────────────────────────────────────────
 
 function BarangCard({
     barang,
@@ -72,12 +78,11 @@ function BarangCard({
     barang: BarangSelected;
     jumlahDipakai: number;
 }) {
-    const valid = jumlahDipakai > 0 && jumlahDipakai <= barang.jumlah;
+    const valid = jumlahDipakai > 0 && jumlahDipakai < barang.jumlah;
     const pct = valid ? (jumlahDipakai / barang.jumlah) * 100 : 0;
 
     return (
         <Surface className="rounded-xl px-4 py-3 flex flex-col gap-2">
-            {/* Nama & kode */}
             <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-foreground truncate">
@@ -92,17 +97,15 @@ function BarangCard({
                 </span>
             </div>
 
-            {/* Jumlah tersedia */}
-            <div className="flex items-center justify-between text-xs">
+            <div className="flex items-center justify-between text-xs mt-1">
                 <span className="text-foreground/50">Jumlah tersedia</span>
-                <span className="font-semibold">
+                <span className="font-semibold text-foreground">
                     {barang.jumlah} {barang.satuan}
                 </span>
             </div>
 
-            {/* Progress bar — tampil kalau jumlah valid */}
             {valid && (
-                <>
+                <div className="space-y-1">
                     <div className="h-1.5 w-full rounded-full bg-default-200 overflow-hidden">
                         <div
                             className={[
@@ -116,17 +119,16 @@ function BarangCard({
                             style={{ width: `${pct}%` }}
                         />
                     </div>
-                    <p className="text-xs text-foreground/40 text-right">
-                        {jumlahDipakai} dari {barang.jumlah} {barang.satuan}{" "}
-                        ({pct.toFixed(0)}%)
+                    <p className="text-[11px] text-foreground/40 text-right">
+                        {jumlahDipakai} dari {barang.jumlah} {barang.satuan} ({pct.toFixed(0)}%)
                     </p>
-                </>
+                </div>
             )}
         </Surface>
     );
 }
 
-// ─── ModalInner — semua state & hooks, tidak ada conditional return ────────────
+// ─── ModalInner ──────────────────────────────────────────────────────────────
 
 function ModalInner({
     initialBarang,
@@ -137,69 +139,53 @@ function ModalInner({
     onClose: () => void;
     onSubmit: (data: FormPemeliharaanData) => void;
 }) {
-    // ── State ──
-    const [barang, setBarang] = useState<BarangSelected | null>(
-        initialBarang ?? null
-    );
-    const [kuasaPenggunaBarang, setKuasaPenggunaBarang] = useState("");
-    const [program, setProgram] = useState("");
-    const [kegiatan, setKegiatan] = useState("");
-    const [output, setOutput] = useState("");
-    const [namaPemeliharaan, setNamaPemeliharaan] = useState("");
-    const [jumlah, setJumlah] = useState<number | null>(null);
+    // 1. Inisialisasi React Hook Form
+    const {
+        control,
+        handleSubmit,
+        watch,
+        setValue,
+        clearErrors,
+    } = useForm<FormValues>({
+        defaultValues: {
+            barang: initialBarang ?? null,
+            kuasaPenggunaBarang: "",
+            program: "",
+            kegiatan: "",
+            output: "",
+            namaPemeliharaan: "",
+            jumlah: null,
+        },
+        mode: "onChange",
+    });
 
-    // Validasi errors manual (untuk field barang & jumlah yang custom)
-    const [barangError, setBarangError] = useState<string | null>(null);
-    const [jumlahError, setJumlahError] = useState<string | null>(null);
+    // 2. Pantau (watch) nilai field tertentu untuk logic kondisional
+    const selectedBarang = watch("barang");
+    const currentJumlah = watch("jumlah");
 
-    // Reset jumlah & error saat barang berganti
+    // 3. Reset jumlah jika barang berganti
     useEffect(() => {
-        setJumlah(null);
-        setJumlahError(null);
-        setBarangError(null);
-    }, [barang?.kodeBarang]);
+        setValue("jumlah", null);
+        clearErrors("jumlah");
+    }, [selectedBarang?.kodeBarang, setValue, clearErrors]);
 
-    // ── Submit ──
-    function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-
-        let valid = true;
-
-        if (!barang) {
-            setBarangError("Pilih barang terlebih dahulu.");
-            valid = false;
-        } else {
-            setBarangError(null);
-        }
-
-        if (jumlah === null || jumlah <= 0) {
-            setJumlahError("Masukkan angka lebih dari 0.");
-            valid = false;
-        } else if (barang && jumlah >= barang.jumlah) {
-            setJumlahError(
-                `Harus kurang dari jumlah tersedia (${barang.jumlah} ${barang.satuan}).`
-            );
-            valid = false;
-        } else {
-            setJumlahError(null);
-        }
-
-        if (!valid || !barang || jumlah === null) return;
-
+    // 4. Handler Submit (Hanya tereksekusi jika lolos validasi)
+    const onValidSubmit = (data: FormValues) => {
+        // Pada titik ini, rules di Controller memastikan barang & jumlah tidak null
         onSubmit({
-            kuasaPenggunaBarang,
-            program,
-            kegiatan,
-            output,
-            kodeBarang: barang.kodeBarang,
-            namaBarang: barang.namaBarang,
-            jumlahTersedia: barang.jumlah,
-            satuan: barang.satuan,
-            asetType: barang.asetType,
-            namaPemeliharaan,
-            jumlah,
+            kuasaPenggunaBarang: data.kuasaPenggunaBarang,
+            program: data.program,
+            kegiatan: data.kegiatan,
+            output: data.output,
+            kodeBarang: data.barang!.kodeBarang,
+            namaBarang: data.barang!.namaBarang,
+            jumlahTersedia: data.barang!.jumlah,
+            satuan: data.barang!.satuan,
+            asetType: data.barang!.asetType,
+            namaPemeliharaan: data.namaPemeliharaan,
+            jumlah: data.jumlah!,
         });
-    }
+    };
 
     return (
         <Modal.Dialog>
@@ -212,158 +198,150 @@ function ModalInner({
                 </Description>
             </Modal.Header>
 
-            <Modal.Body>
-                <Form
+            <Modal.Body className="max-h-[70vh] overflow-y-auto">
+                {/* Gunakan form native yg di-handle oleh handleSubmit RHF */}
+                <form
                     id="form-pemeliharaan"
-                    onSubmit={handleFormSubmit}
-                    validationBehavior="aria"
-                    className="flex flex-col gap-4"
+                    onSubmit={handleSubmit(onValidSubmit)}
+                    className="flex flex-col gap-4 py-2"
                 >
                     {/* ── Pilih Barang ── */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1.5">
                         <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                            Barang{" "}
-                            <span className="text-danger">*</span>
+                            Barang <span className="text-danger">*</span>
                         </Label>
-                        <BarangSelectField
-                            value={barang}
-                            onChange={setBarang}
-                            error={barangError ?? undefined}
+                        <Controller
+                            control={control}
+                            name="barang"
+                            rules={{ required: "Pilih barang terlebih dahulu." }}
+                            render={({ field, fieldState: { error } }) => (
+                                <BarangSelectField
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    error={error?.message}
+                                />
+                            )}
                         />
                     </div>
 
-                    {/* ── Preview barang terpilih ── */}
-                    {barang && (
+                    {/* Preview barang terpilih */}
+                    {selectedBarang && (
                         <BarangCard
-                            barang={barang}
-                            jumlahDipakai={jumlah ?? 0}
+                            barang={selectedBarang}
+                            jumlahDipakai={currentJumlah ?? 0}
                         />
                     )}
 
                     <SectionLabel>Data Anggaran</SectionLabel>
 
-                    {/* ── Kuasa Pengguna Barang ── */}
-                    <TextField
-                        name="kuasaPenggunaBarang"
-                        isRequired
-                        value={kuasaPenggunaBarang}
-                        onChange={setKuasaPenggunaBarang}
-                        className="flex flex-col gap-1"
-                    >
-                        <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                            Kuasa Pengguna Barang
-                            <span className="text-danger ml-0.5">*</span>
-                        </Label>
-                        <Input placeholder="Nama SKPD / unit kerja..." />
-                        <FieldError className="text-xs text-danger" />
-                    </TextField>
-
-                    {/* ── Program ── */}
-                    <TextField
-                        name="program"
-                        isRequired
-                        value={program}
-                        onChange={setProgram}
-                        className="flex flex-col gap-1"
-                    >
-                        <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                            Program
-                            <span className="text-danger ml-0.5">*</span>
-                        </Label>
-                        <Input placeholder="Nama program..." />
-                        <FieldError className="text-xs text-danger" />
-                    </TextField>
-
-                    {/* ── Kegiatan ── */}
-                    <TextField
-                        name="kegiatan"
-                        isRequired
-                        value={kegiatan}
-                        onChange={setKegiatan}
-                        className="flex flex-col gap-1"
-                    >
-                        <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                            Kegiatan
-                            <span className="text-danger ml-0.5">*</span>
-                        </Label>
-                        <Input placeholder="Nama kegiatan..." />
-                        <FieldError className="text-xs text-danger" />
-                    </TextField>
-
-                    {/* ── Output ── */}
-                    <TextField
-                        name="output"
-                        isRequired
-                        value={output}
-                        onChange={setOutput}
-                        className="flex flex-col gap-1"
-                    >
-                        <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                            Output
-                            <span className="text-danger ml-0.5">*</span>
-                        </Label>
-                        <Input placeholder="Output kegiatan..." />
-                        <FieldError className="text-xs text-danger" />
-                    </TextField>
+                    {/* ── TextFields ── */}
+                    {(
+                        [
+                            { name: "kuasaPenggunaBarang", label: "Kuasa Pengguna Barang", placeholder: "Nama SKPD / unit kerja..." },
+                            { name: "program", label: "Program", placeholder: "Nama program..." },
+                            { name: "kegiatan", label: "Kegiatan", placeholder: "Nama kegiatan..." },
+                            { name: "output", label: "Output", placeholder: "Output kegiatan..." },
+                        ] as const
+                    ).map((fieldInfo) => (
+                        <Controller
+                            key={fieldInfo.name}
+                            control={control}
+                            name={fieldInfo.name}
+                            rules={{ required: `${fieldInfo.label} wajib diisi.` }}
+                            render={({ field, fieldState: { error } }) => (
+                                <TextField
+                                    {...field}
+                                    isRequired
+                                    isInvalid={!!error}
+                                    className="flex flex-col gap-1.5"
+                                >
+                                    <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
+                                        {fieldInfo.label} <span className="text-danger ml-0.5">*</span>
+                                    </Label>
+                                    <Input placeholder={fieldInfo.placeholder} />
+                                    {error && <p className="text-[11px] text-danger font-medium mt-0.5">{error.message}</p>}
+                                </TextField>
+                            )}
+                        />
+                    ))}
 
                     <SectionLabel>Detail Pemeliharaan</SectionLabel>
 
                     {/* ── Nama Pemeliharaan ── */}
-                    <TextField
+                    <Controller
+                        control={control}
                         name="namaPemeliharaan"
-                        isRequired
-                        value={namaPemeliharaan}
-                        onChange={setNamaPemeliharaan}
-                        className="flex flex-col gap-1"
-                    >
-                        <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                            Nama Pemeliharaan
-                            <span className="text-danger ml-0.5">*</span>
-                        </Label>
-                        <Input placeholder="Contoh: Pengecatan ulang, Servis berkala..." />
-                        <FieldError className="text-xs text-danger" />
-                    </TextField>
-
-                    {/* ── Jumlah — harus < jumlah tersedia ── */}
-                    <div className="flex flex-col gap-1">
-                        <NumberField
-                            name="jumlah"
-                            isRequired
-                            isDisabled={!barang}
-                            minValue={1}
-                            value={jumlah ?? undefined}
-                            onChange={(v) => setJumlah(isNaN(v) ? null : v)}
-                            className="flex flex-col gap-1"
-                        >
-                            <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                                Jumlah
-                                <span className="text-danger ml-0.5">*</span>
-                            </Label>
-                            <div className="flex items-center gap-2">
-                                <NumberField.Group className="flex-1">
-                                    <NumberField.DecrementButton />
-                                    <NumberField.Input />
-                                    <NumberField.IncrementButton />
-                                </NumberField.Group>
-                                <span className="text-sm text-foreground/50 font-medium shrink-0 min-w-[36px]">
-                                    {barang?.satuan ?? "—"}
-                                </span>
-                            </div>
-                            {barang && !jumlahError && (
-                                <Description className="text-xs text-foreground/40">
-                                    Harus kurang dari {barang.jumlah}{" "}
-                                    {barang.satuan}
-                                </Description>
-                            )}
-                            <FieldError className="text-xs text-danger" />
-                        </NumberField>
-
-                        {/* Error manual untuk validasi "< jumlah tersedia" */}
-                        {jumlahError && (
-                            <p className="text-xs text-danger">{jumlahError}</p>
+                        rules={{ required: "Nama Pemeliharaan wajib diisi." }}
+                        render={({ field, fieldState: { error } }) => (
+                            <TextField
+                                {...field}
+                                isRequired
+                                isInvalid={!!error}
+                                className="flex flex-col gap-1.5"
+                            >
+                                <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
+                                    Nama Pemeliharaan <span className="text-danger ml-0.5">*</span>
+                                </Label>
+                                <Input placeholder="Contoh: Pengecatan ulang, Servis berkala..." />
+                                {error && <p className="text-[11px] text-danger font-medium mt-0.5">{error.message}</p>}
+                            </TextField>
                         )}
-                    </div>
-                </Form>
+                    />
+
+                    {/* ── Jumlah (Validasi Kustom) ── */}
+                    <Controller
+                        control={control}
+                        name="jumlah"
+                        rules={{
+                            required: "Jumlah wajib diisi.",
+                            min: { value: 1, message: "Masukkan angka minimal 1." },
+                            validate: (value) => {
+                                if (!selectedBarang) return "Pilih barang terlebih dahulu.";
+                                // Validasi kurang dari jumlah tersedia
+                                if (value !== null && value >= selectedBarang.jumlah) {
+                                    return `Harus kurang dari jumlah tersedia (${selectedBarang.jumlah} ${selectedBarang.satuan}).`;
+                                }
+                                return true;
+                            }
+                        }}
+                        render={({ field, fieldState: { error } }) => (
+                            <NumberField
+                                name={field.name}
+                                isRequired
+                                isDisabled={!selectedBarang}
+                                minValue={1}
+                                isInvalid={!!error}
+                                value={field.value ?? undefined}
+                                onChange={(v) => field.onChange(isNaN(v) ? null : v)}
+                                className="flex flex-col gap-1.5"
+                            >
+                                <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
+                                    Jumlah <span className="text-danger ml-0.5">*</span>
+                                </Label>
+                                <div className="flex items-center gap-2">
+                                    <NumberField.Group className="flex-1">
+                                        <NumberField.DecrementButton />
+                                        <NumberField.Input />
+                                        <NumberField.IncrementButton />
+                                    </NumberField.Group>
+                                    <span className="text-sm text-foreground/50 font-medium shrink-0 min-w-[36px]">
+                                        {selectedBarang?.satuan ?? "—"}
+                                    </span>
+                                </div>
+                                {selectedBarang && !error && (
+                                    <Description className="text-xs text-foreground/40 mt-1">
+                                        Harus kurang dari {selectedBarang.jumlah} {selectedBarang.satuan}
+                                    </Description>
+                                )}
+                                {error && (
+                                    <p className="text-[11px] text-danger font-medium mt-0.5">
+                                        {error.message}
+                                    </p>
+                                )}
+                            </NumberField>
+                        )}
+                    />
+                </form>
             </Modal.Body>
 
             <Modal.Footer>
@@ -374,6 +352,9 @@ function ModalInner({
                 >
                     Batal
                 </Button>
+                {/* Karena form menggunakan tag <form> native dengan id="form-pemeliharaan",
+                    button ber-type "submit" ini otomatis akan memicu handleSubmit RHF 
+                */}
                 <Button
                     size="sm"
                     type="submit"
@@ -386,7 +367,7 @@ function ModalInner({
     );
 }
 
-// ─── FormPemeliharaanModal — shell, hanya urus open state ─────────────────────
+// ─── FormPemeliharaanModal ───────────────────────────────────────────────────
 
 export default function FormPemeliharaanModal({
     open,
@@ -394,7 +375,6 @@ export default function FormPemeliharaanModal({
     onClose,
     onSubmit,
 }: FormPemeliharaanModalProps) {
-    // HeroUI v3: Modal dikontrol via useOverlayState, bukan isOpen prop langsung
     const state = useOverlayState({
         isOpen: open,
         onOpenChange: (isOpen) => { if (!isOpen) onClose(); },
@@ -404,6 +384,7 @@ export default function FormPemeliharaanModal({
         <Modal state={state}>
             <Modal.Backdrop>
                 <Modal.Container>
+                    {/* Remount component menjamin reset state hook form bekerja sempurna */}
                     <ModalInner
                         key={open ? (initialBarang?.kodeBarang ?? "new") : "closed"}
                         initialBarang={initialBarang}

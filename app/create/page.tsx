@@ -55,7 +55,19 @@ export default function CreatePage() {
         // Tutup modal setelah data berhasil disimpan
         setIsModalOpen(false);
     };
+    const [isExporting, setIsExporting] = useState(false);
 
+    const handleExport = async () => {
+        setIsExporting(true); // Putar loading
+        try {
+            await exportPemeliharaanToExcel(listPemeliharaan);
+        } catch (e) {
+            console.error("Gagal export", e);
+            alert("Gagal melakukan export Excel");
+        } finally {
+            setIsExporting(false); // Stop loading
+        }
+    };
     // (Opsional) Jika loading awal belum selesai, Anda bisa menampilkan null 
     // atau skeleton agar tabel tidak "berkedip" dari kosong ke isi
     if (!isLoaded) {
@@ -78,14 +90,11 @@ export default function CreatePage() {
                 {/* ── Action Buttons ── */}
                 <div className="flex items-center gap-3">
                     <Button
-                        onPress={() => exportPemeliharaanToExcel(listPemeliharaan)}
+                        onPress={handleExport}
+                        isPending={isExporting} // Fitur loading otomatis dari HeroUI
                         isDisabled={listPemeliharaan.length === 0}
-                        className="font-medium shadow-sm"
                     >
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                        Export Excel
+                        {isExporting ? "Memproses..." : "Export Excel"}
                     </Button>
 
                     <Button
@@ -102,10 +111,15 @@ export default function CreatePage() {
                 <table className="w-full text-sm text-left border-collapse">
                     <thead className="bg-muted/50 text-foreground/70 uppercase text-xs font-semibold tracking-wider border-b">
                         <tr>
-                            <th className="px-4 py-3">Kuasa Pengguna</th>
-                            <th className="px-4 py-3">Program / Kegiatan</th>
+                            <th className="px-4 py-3">Kuasa Pengguna Barang</th>
+                            <th className="px-4 py-3">Program</th>
+                            <th className="px-4 py-3">Kegiatan</th>
                             <th className="px-4 py-3">Output</th>
-                            <th className="px-4 py-3">Detail Barang</th>
+                            <th className="px-4 py-3">Kode Barang</th>
+                            <th className="px-4 py-3">Nama Barang</th>
+                            <th className="px-4 py-3">Jumlah Tersedia</th>
+                            <th className="px-4 py-3">Satuan</th>
+                            <th className="px-4 py-3">Aset Type</th>
                             <th className="px-4 py-3">Nama Pemeliharaan</th>
                             <th className="px-4 py-3 text-right">Jumlah</th>
                         </tr>
@@ -123,23 +137,34 @@ export default function CreatePage() {
                                     <td className="px-4 py-3.5 font-medium vertical-top">
                                         {item.kuasaPenggunaBarang}
                                     </td>
+
                                     <td className="px-4 py-3.5 vertical-top">
                                         <div className="font-medium text-foreground">{item.program}</div>
                                         <div className="text-xs text-foreground/50 mt-0.5">{item.kegiatan}</div>
                                     </td>
+
                                     <td className="px-4 py-3.5 text-foreground/80 vertical-top">
                                         {item.output}
                                     </td>
+
                                     <td className="px-4 py-3.5 vertical-top">
-                                        <div className="font-semibold text-foreground">{item.namaBarang}</div>
+                                        <div className="flex items-center gap-2">
+                                            <div className="font-semibold text-foreground">{item.namaBarang}</div>
+                                            {/* Menambahkan asetType sebagai badge/label */}
+                                            <span className="px-1.5 py-0.5 text-[10px] rounded bg-primary/10 text-primary font-bold uppercase tracking-wider">
+                                                {item.asetType}
+                                            </span>
+                                        </div>
                                         <div className="text-xs font-mono text-foreground/40 mt-0.5">{item.kodeBarang}</div>
                                         <span className="inline-block text-[10px] px-1.5 py-0.5 mt-1 rounded bg-default-100 text-foreground/60 font-medium">
                                             Tersedia: {item.jumlahTersedia} {item.satuan}
                                         </span>
                                     </td>
+
                                     <td className="px-4 py-3.5 text-foreground/90 font-medium vertical-top">
                                         {item.namaPemeliharaan}
                                     </td>
+
                                     <td className="px-4 py-3.5 text-right font-semibold text-primary vertical-top">
                                         {item.jumlah} {item.satuan}
                                     </td>

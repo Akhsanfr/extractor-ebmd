@@ -1,6 +1,6 @@
 import * as XLSX from "xlsx-js-style";
 import { saveAs } from "file-saver";
-import { FormPemeliharaanData } from "@/app/create/addData";
+import { FormPemeliharaanData } from "@/app/rkbmd/pemeliharaan/addData";
 
 export async function exportPemeliharaanToExcel(data: FormPemeliharaanData[]) {
     // 1. KELOMPOKKAN DATA 

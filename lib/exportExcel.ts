@@ -1,218 +1,321 @@
 import * as XLSX from "xlsx-js-style";
 import { saveAs } from "file-saver";
 import { FormPemeliharaanData } from "@/app/rkbmd/pemeliharaan/addData";
+import { FormPengadaanData } from "@/app/rkbmd/pengadaan/addData";
 
-export async function exportPemeliharaanToExcel(data: FormPemeliharaanData[]) {
-    // 1. KELOMPOKKAN DATA 
-    const grouped: Record<string, any> = {};
-    data.forEach((item) => {
-        const { kuasaPenggunaBarang, program, kegiatan, output } = item;
-        if (!grouped[kuasaPenggunaBarang]) grouped[kuasaPenggunaBarang] = {};
-        if (!grouped[kuasaPenggunaBarang][program]) grouped[kuasaPenggunaBarang][program] = {};
-        if (!grouped[kuasaPenggunaBarang][program][kegiatan]) grouped[kuasaPenggunaBarang][program][kegiatan] = {};
-        if (!grouped[kuasaPenggunaBarang][program][kegiatan][output]) grouped[kuasaPenggunaBarang][program][kegiatan][output] = [];
-        grouped[kuasaPenggunaBarang][program][kegiatan][output].push(item);
-    });
-
-    const rows: any[][] = [];
-
-    // --- BAGIAN JUDUL (Baris 1 - 8) ---
-    rows.push(["RENCANA KEBUTUHAN BARANG MILIK DAERAH"]);
-    rows.push(["(RENCANA PEMELIHARAAN)"]);
-    rows.push(["PENGGUNA BARANG", ":", "................(2)"]);
-    rows.push(["TAHUN ANGGARAN", ":", "2027"]);
-    rows.push([]);
-    rows.push(["KAB/KOTA", ":", "PASURUAN"]);
-    rows.push(["PROVINSI", ":", "JAWA TIMUR"]);
-    rows.push([]);
-
-    // --- BAGIAN HEADER TABEL (Baris 9 - 12) ---
-    // Baris 9
-    rows.push([
-        "No.", "Kuasa Pengguna Barang/Program/Kegiatan/Output", "Barang Yang Dipelihara", "", "", "", "", "", "", "",
-        "Usulan Kebutuhan Pemeliharaan", "", "", "Keterangan"
-    ]);
-    // Baris 10
-    rows.push([
-        "", "", "Kode Barang", "Nama Barang", "Jumlah", "Satuan", "Status Barang", "Kondisi Barang", "", "",
-        "Nama Pemeliharaan", "Jumlah", "Satuan", ""
-    ]);
-    // Baris 11
-    rows.push([
-        "", "", "", "", "", "", "", "B", "RR", "RB", "", "", "", ""
-    ]);
-    // Baris 12 (Nomor Kolom)
-    rows.push(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"]);
-
-    const dataStartIndex = rows.length;
-
-    // --- BAGIAN DATA ---
+/**
+ * Fungsi Gabungan untuk Mengekspor Rencana Pengadaan dan Rencana Pemeliharaan
+ * ke dalam satu file Excel dengan dua sheet terpisah.
+ */
+export async function exportRkbmdToExcel(
+    pengadaanData: FormPengadaanData[],
+    pemeliharaanData: FormPemeliharaanData[]
+) {
+    const wb = XLSX.utils.book_new();
+    const borderThin = {
+        top: { style: "thin" }, bottom: { style: "thin" },
+        left: { style: "thin" }, right: { style: "thin" }
+    };
     const getAlpha = (i: number) => String.fromCharCode(65 + i);
     const getLowerAlpha = (i: number) => String.fromCharCode(97 + i);
 
-    let kuasaIndex = 1;
-    for (const [kuasa, programs] of Object.entries(grouped)) {
-        rows.push(["", `${kuasaIndex}. ${kuasa}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
-        let progIndex = 0;
+    // ============================================================================
+    // 1. PROSES DATA & SHEET: PENGADAAN
+    // ============================================================================
+    const groupedPengadaan: Record<string, any> = {};
+    pengadaanData.forEach((item) => {
+        const { kuasaPenggunaBarang, program, kegiatan, output } = item;
+        if (!groupedPengadaan[kuasaPenggunaBarang]) groupedPengadaan[kuasaPenggunaBarang] = {};
+        if (!groupedPengadaan[kuasaPenggunaBarang][program]) groupedPengadaan[kuasaPenggunaBarang][program] = {};
+        if (!groupedPengadaan[kuasaPenggunaBarang][program][kegiatan]) groupedPengadaan[kuasaPenggunaBarang][program][kegiatan] = {};
+        if (!groupedPengadaan[kuasaPenggunaBarang][program][kegiatan][output]) groupedPengadaan[kuasaPenggunaBarang][program][kegiatan][output] = [];
+        groupedPengadaan[kuasaPenggunaBarang][program][kegiatan][output].push(item);
+    });
+
+    const rowsPengadaan: any[][] = [];
+    rowsPengadaan.push(["RENCANA KEBUTUHAN BARANG MILIK DAERAH"]);
+    rowsPengadaan.push(["(RENCANA PENGADAAN)"]);
+    rowsPengadaan.push(["PENGGUNA BARANG", ":", "................(2)"]);
+    rowsPengadaan.push(["TAHUN ANGGARAN", ":", "2027"]);
+    rowsPengadaan.push([]);
+    rowsPengadaan.push(["KAB/KOTA", ":", "PASURUAN"]);
+    rowsPengadaan.push(["PROVINSI", ":", "JAWA TIMUR"]);
+    rowsPengadaan.push([]);
+    rowsPengadaan.push([
+        "No", "Program / Kegiatan / Output", "Usulan Barang Milik Daerah", "", "", "",
+        "Kebutuhan Maksimum", "", "Data Daftar Barang Yang Dapat Dioptimalkan", "", "", "",
+        "Kebutuhan Riil Barang Milik Daerah", "", "Ket"
+    ]);
+    rowsPengadaan.push([
+        "", "", "Kode Barang", "Nama Barang", "Jumlah", "Satuan",
+        "Jumlah", "Satuan", "Kode Barang", "Nama Barang", "Jumlah", "Satuan",
+        "Jumlah", "Satuan", ""
+    ]);
+    rowsPengadaan.push(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]);
+
+    const startIdxPengadaan = rowsPengadaan.length;
+    let kuasaIdxP = 1;
+    for (const [kuasa, programs] of Object.entries(groupedPengadaan)) {
+        rowsPengadaan.push(["", `${kuasaIdxP}. ${kuasa}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+        let progIdx = 0;
         for (const [program, kegiatans] of Object.entries(programs as Record<string, any>)) {
-            rows.push(["", `     ${getAlpha(progIndex)}. ${program}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
-            let kegIndex = 1;
+            rowsPengadaan.push(["", `     ${getAlpha(progIdx)}. ${program}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+            let kegIdx = 1;
             for (const [kegiatan, outputs] of Object.entries(kegiatans as Record<string, any>)) {
-                rows.push(["", `          ${kegIndex}). ${kegiatan}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
-                let outIndex = 0;
+                rowsPengadaan.push(["", `          ${kegIdx}). ${kegiatan}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+                let outIdx = 0;
                 for (const [output, items] of Object.entries(outputs as Record<string, any>)) {
-                    rows.push(["", `               ${getLowerAlpha(outIndex)}. ${output}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+                    rowsPengadaan.push(["", `               ${getLowerAlpha(outIdx)}. ${output}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+                    for (const item of items as FormPengadaanData[]) {
+                        rowsPengadaan.push([
+                            "", "",
+                            item.usulan.kodeBarang, item.usulan.namaBarang, item.usulan.jumlah, item.usulan.satuan,
+                            "-", "-",
+                            item.bmdBisaDioptimalkan?.kodeBarang || "-", item.bmdBisaDioptimalkan?.namaBarang || "-", item.bmdBisaDioptimalkan?.jumlah || "-", item.bmdBisaDioptimalkan?.satuan || "-",
+                            item.kebutuhanRiil?.jumlah || "-", item.kebutuhanRiil?.satuan || "-", ""
+                        ]);
+                    }
+                    outIdx++;
+                }
+                kegIdx++;
+            }
+            progIdx++;
+        }
+        kuasaIdxP++;
+    }
+    const endIdxPengadaan = rowsPengadaan.length;
+
+    rowsPengadaan.push([]);
+    rowsPengadaan.push([]);
+    rowsPengadaan.push(["", "", "", "", "", "", "", "", "", "", "", "", ".................., .................................... (21)", "", ""]);
+    rowsPengadaan.push(["", "", "", "", "", "", "", "", "", "", "", "", "PENGGUNA BARANG………(22)", "", ""]);
+    rowsPengadaan.push([]);
+    rowsPengadaan.push([]);
+    rowsPengadaan.push([]);
+    rowsPengadaan.push(["", "", "", "", "", "", "", "", "", "", "", "", "..........................................................(23)", "", ""]);
+    rowsPengadaan.push(["", "", "", "", "", "", "", "", "", "", "", "", "NIP ………………………….………… (23)", "", ""]);
+    rowsPengadaan.push([]);
+    rowsPengadaan.push(["Petunjuk Pengisian"]);
+    rowsPengadaan.push(["(1)", "Diisi nomor halaman."]);
+    rowsPengadaan.push(["(2)", "Diisi nama pengguna barang."]);
+    rowsPengadaan.push(["(3)", "Diisi tahun anggaran RKBMD yang diusulkan."]);
+    rowsPengadaan.push(["(4)", "Diisi nama Pemerintah Provinsi."]);
+    rowsPengadaan.push(["(5)", "Diisi nama Pemerintah Kabupaten/Kota."]);
+    rowsPengadaan.push(["(6)", "Diisi no urut."]);
+    rowsPengadaan.push(["(7)", "Diisi Kuasa Pengguna Barang/Program/Kegiatan/Output berdasarkan rencana kerja SKPD."]);
+    rowsPengadaan.push(["(8)", "Diisi kode barang yang diusulkan berdasarkan ketentuan penggolongan barang."]);
+    rowsPengadaan.push(["(9)", "Diisi nama barang yang diusulkan."]);
+    rowsPengadaan.push(["(10)", "Diisi kuantitas barang yang diusulkan."]);
+    rowsPengadaan.push(["(11)", "Diisi satuan barang yang diusulkan (m, m², unit, buah, set, dsb)."]);
+    rowsPengadaan.push(["(12)", "Diisi kuantitas standar kebutuhan maksimum."]);
+    rowsPengadaan.push(["(13)", "Diisi satuan standar kebutuhan maksimum."]);
+    rowsPengadaan.push(["(14)", "Diisi kode barang yang masih dimungkinkan untuk dioptimalkan."]);
+    rowsPengadaan.push(["(15)", "Diisi nama barang yang masih dimungkinkan untuk dioptimalkan."]);
+    rowsPengadaan.push(["(16)", "Diisi jumlah barang yang masih dimungkinkan untuk dioptimalkan."]);
+    rowsPengadaan.push(["(17)", "Diisi satuan barang yang masih dimungkinkan untuk dioptimalkan."]);
+    rowsPengadaan.push(["(18)", "Diisi kuantitas kebutuhan riil."]);
+    rowsPengadaan.push(["(19)", "Diisi satuan kebutuhan riil."]);
+    rowsPengadaan.push(["(20)", "Diisi keterangan penting lainnya."]);
+    rowsPengadaan.push(["(21)", "Diisi tempat dan tanggal disahkan."]);
+    rowsPengadaan.push(["(22)", "Diisi jabatan Pengguna Barang yang menandatangani."]);
+    rowsPengadaan.push(["(23)", "Diisi nama dan NIP pejabat yang mengesahkan."]);
+
+    const wsPengadaan = XLSX.utils.aoa_to_sheet(rowsPengadaan);
+    wsPengadaan["!cols"] = [
+        { wch: 5 }, { wch: 45 }, { wch: 18 }, { wch: 30 }, { wch: 8 }, { wch: 10 }, { wch: 8 }, { wch: 10 },
+        { wch: 18 }, { wch: 30 }, { wch: 8 }, { wch: 10 }, { wch: 8 }, { wch: 10 }, { wch: 18 }
+    ];
+    wsPengadaan["!merges"] = [
+        { s: { r: 0, c: 0 }, e: { r: 0, c: 14 } },
+        { s: { r: 1, c: 0 }, e: { r: 1, c: 14 } },
+        { s: { r: 8, c: 0 }, e: { r: 9, c: 0 } },
+        { s: { r: 8, c: 1 }, e: { r: 9, c: 1 } },
+        { s: { r: 8, c: 2 }, e: { r: 8, c: 5 } },
+        { s: { r: 8, c: 6 }, e: { r: 8, c: 7 } },
+        { s: { r: 8, c: 8 }, e: { r: 8, c: 11 } },
+        { s: { r: 8, c: 12 }, e: { r: 8, c: 13 } },
+        { s: { r: 8, c: 14 }, e: { r: 9, c: 14 } }
+    ];
+
+    for (let R = 0; R < rowsPengadaan.length; ++R) {
+        for (let C = 0; C < 15; ++C) {
+            const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
+            if (!wsPengadaan[cellRef]) wsPengadaan[cellRef] = { t: "s", v: "" };
+            if (R === 0 || R === 1) {
+                wsPengadaan[cellRef].s = { font: { bold: true, sz: 12 }, alignment: { horizontal: "center", vertical: "center" } };
+            } else if (R >= 2 && R <= 6) {
+                wsPengadaan[cellRef].s = { font: { bold: true, sz: 11 } };
+            } else if (R >= 8 && R < endIdxPengadaan) {
+                const isHeader = R <= 10;
+                wsPengadaan[cellRef].s = {
+                    border: borderThin,
+                    font: { bold: isHeader, sz: 10 },
+                    alignment: {
+                        vertical: "center",
+                        horizontal: isHeader ? "center" : (C === 0 || (C >= 4 && C <= 7) || (C >= 10 && C <= 13)) ? "center" : "left",
+                        wrapText: true
+                    }
+                };
+            } else if (R >= endIdxPengadaan) {
+                wsPengadaan[cellRef].s = { font: { sz: 10, bold: R === endIdxPengadaan + 7 }, alignment: { vertical: "center" } };
+            }
+        }
+    }
+    XLSX.utils.book_append_sheet(wb, wsPengadaan, "PENGADAAN");
+
+
+    // ============================================================================
+    // 2. PROSES DATA & SHEET: PEMELIHARAAN
+    // ============================================================================
+    const groupedPemeliharaan: Record<string, any> = {};
+    pemeliharaanData.forEach((item) => {
+        const { kuasaPenggunaBarang, program, kegiatan, output } = item;
+        if (!groupedPemeliharaan[kuasaPenggunaBarang]) groupedPemeliharaan[kuasaPenggunaBarang] = {};
+        if (!groupedPemeliharaan[kuasaPenggunaBarang][program]) groupedPemeliharaan[kuasaPenggunaBarang][program] = {};
+        if (!groupedPemeliharaan[kuasaPenggunaBarang][program][kegiatan]) groupedPemeliharaan[kuasaPenggunaBarang][program][kegiatan] = {};
+        if (!groupedPemeliharaan[kuasaPenggunaBarang][program][kegiatan][output]) groupedPemeliharaan[kuasaPenggunaBarang][program][kegiatan][output] = [];
+        groupedPemeliharaan[kuasaPenggunaBarang][program][kegiatan][output].push(item);
+    });
+
+    const rowsPemeliharaan: any[][] = [];
+    rowsPemeliharaan.push(["RENCANA KEBUTUHAN BARANG MILIK DAERAH"]);
+    rowsPemeliharaan.push(["(RENCANA PEMELIHARAAN)"]);
+    rowsPemeliharaan.push(["PENGGUNA BARANG", ":", "................(2)"]);
+    rowsPemeliharaan.push(["TAHUN ANGGARAN", ":", "2027"]);
+    rowsPemeliharaan.push([]);
+    rowsPemeliharaan.push(["KAB/KOTA", ":", "PASURUAN"]);
+    rowsPemeliharaan.push(["PROVINSI", ":", "JAWA TIMUR"]);
+    rowsPemeliharaan.push([]);
+    rowsPemeliharaan.push([
+        "No.", "Kuasa Pengguna Barang/Program/Kegiatan/Output", "Barang Yang Dipelihara", "", "", "", "", "", "", "",
+        "Usulan Kebutuhan Pemeliharaan", "", "", "Keterangan"
+    ]);
+    rowsPemeliharaan.push([
+        "", "", "Kode Barang", "Nama Barang", "Jumlah", "Satuan", "Status Barang", "Kondisi Barang", "", "",
+        "Nama Pemeliharaan", "Jumlah", "Satuan", ""
+    ]);
+    rowsPemeliharaan.push(["", "", "", "", "", "", "", "B", "RR", "RB", "", "", "", ""]);
+    rowsPemeliharaan.push(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"]);
+
+    const startIdxPemeliharaan = rowsPemeliharaan.length;
+    let kuasaIdxM = 1;
+    for (const [kuasa, programs] of Object.entries(groupedPemeliharaan)) {
+        rowsPemeliharaan.push(["", `${kuasaIdxM}. ${kuasa}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+        let progIdx = 0;
+        for (const [program, kegiatans] of Object.entries(programs as Record<string, any>)) {
+            rowsPemeliharaan.push(["", `     ${getAlpha(progIdx)}. ${program}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+            let kegIdx = 1;
+            for (const [kegiatan, outputs] of Object.entries(kegiatans as Record<string, any>)) {
+                rowsPemeliharaan.push(["", `          ${kegIdx}). ${kegiatan}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+                let outIdx = 0;
+                for (const [output, items] of Object.entries(outputs as Record<string, any>)) {
+                    rowsPemeliharaan.push(["", `               ${getLowerAlpha(outIdx)}. ${output}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
                     for (const item of items as FormPemeliharaanData[]) {
-                        rows.push([
+                        rowsPemeliharaan.push([
                             "", "",
                             item.kodeBarang, item.namaBarang, item.jumlahTersedia, item.satuan,
                             "Milik Sendiri", "v", "", "",
                             item.namaPemeliharaan, item.jumlah, item.satuan, ""
                         ]);
                     }
-                    outIndex++;
+                    outIdx++;
                 }
-                kegIndex++;
+                kegIdx++;
             }
-            progIndex++;
+            progIdx++;
         }
-        kuasaIndex++;
+        kuasaIdxM++;
     }
+    const endIdxPemeliharaan = rowsPemeliharaan.length;
 
-    const dataEndIndex = rows.length;
+    rowsPemeliharaan.push([]);
+    rowsPemeliharaan.push([]);
+    rowsPemeliharaan.push(["", "", "", "", "", "", "", "", "", "", ".................., .................................... (21)"]);
+    rowsPemeliharaan.push(["", "", "", "", "", "", "", "", "", "", "PENGGUNA BARANG………(22)"]);
+    rowsPemeliharaan.push([]);
+    rowsPemeliharaan.push([]);
+    rowsPemeliharaan.push([]);
+    rowsPemeliharaan.push(["", "", "", "", "", "", "", "", "", "", "..........................................................(23)"]);
+    rowsPemeliharaan.push(["", "", "", "", "", "", "", "", "", "", "NIP ………………………….………… (23)"]);
+    rowsPemeliharaan.push([]);
+    rowsPemeliharaan.push(["Petunjuk Pengisian"]);
+    rowsPemeliharaan.push(["(1)", "Diisi nomor halaman."]);
+    rowsPemeliharaan.push(["(2)", "Diisi nama pengguna barang."]);
+    rowsPemeliharaan.push(["(3)", "Diisi tahun anggaran RKBMD yang diusulkan."]);
+    rowsPemeliharaan.push(["(4)", "Disi nama Pemerintah Provinsi."]);
+    rowsPengadaan.push(["(5)", "Disi nama Pemerintah Kabupaten/Kota."]);
+    rowsPemeliharaan.push(["(6)", "Diisi no urut."]);
+    rowsPemeliharaan.push(["(7)", "Diisi Kuasa Pengguna Barang/Program/Kegiatan/Output berdasarkan rencana kerja SKPD."]);
+    rowsPemeliharaan.push(["(8)", "Diisi kode barang berdasarkan ketentuan penggolongan dan kodefikasi Barang Milik Daerah yang berlaku."]);
+    rowsPemeliharaan.push(["(9)", "Diisi nama barang sesuai kolom (8)."]);
+    rowsPemeliharaan.push(["(10)", "Diisi kuantitas barang yang diusulkan."]);
+    rowsPemeliharaan.push(["(11)", "Diisi satuan barang yang dipelihara (m, m², unit, buah, set, dsb)."]);
+    rowsPemeliharaan.push(["(12)", "Diisi status barang milik daerah yang pemeliharaannya dibiayai APBD."]);
+    rowsPemeliharaan.push(["(13)", "Diisi 'v' jika kondisi barang Baik (B)."]);
+    rowsPemeliharaan.push(["(14)", "Diisi 'v' jika kondisi barang Rusak Ringan (RR)."]);
+    rowsPemeliharaan.push(["(15)", "Diisi 'v' jika kondisi barang Rusak Berat (RB)."]);
+    rowsPemeliharaan.push(["(16)", "Diisi uraian nama pemeliharaan."]);
+    rowsPemeliharaan.push(["(17)", "Diisi kuantitas barang yang diusulkan dipelihara."]);
+    rowsPemeliharaan.push(["(18)", "Diisi satuan barang yang diusulkan dipelihara."]);
+    rowsPemeliharaan.push(["(19)", "Diisi keterangan penting lainnya."]);
+    rowsPemeliharaan.push(["(20)", "Diisi tempat dan tanggal disahkan."]);
+    rowsPemeliharaan.push(["(21)", "Diisi jabatan Pengguna Barang yang menandatangani."]);
 
-    // --- BAGIAN TANDA TANGAN (Sesuai Template) ---
-    rows.push([]);
-    rows.push([]);
-    rows.push(["", "", "", "", "", "", "", "", "", "", ".................., .................................... (21)"]);
-    rows.push(["", "", "", "", "", "", "", "", "", "", "PENGGUNA BARANG………(22)"]);
-    rows.push([]);
-    rows.push([]);
-    rows.push([]);
-    rows.push(["", "", "", "", "", "", "", "", "", "", "..........................................................(23)"]);
-    rows.push(["", "", "", "", "", "", "", "", "", "", "NIP ………………………….………… (23)"]);
-    rows.push([]);
-
-    // --- BAGIAN PETUNJUK PENGISIAN ---
-    rows.push(["Petunjuk Pengisian"]);
-    rows.push(["(1)", "Diisi nomor halaman."]);
-    rows.push(["(2)", "Diisi nama pengguna barang."]);
-    rows.push(["(3)", "Diisi tahun anggaran RKBMD yang diusulkan."]);
-    rows.push(["(4)", "Disi nama Pemerintah Provinsi."]);
-    rows.push(["(5)", "Disi nama Pemerintah Kabupaten/Kota."]);
-    rows.push(["(6)", "Diisi no urut."]);
-    rows.push(["(7)", "Diisi Kuasa Pengguna Barang/Program/Kegiatan/Output berdasarkan rencana kerja SKPD."]);
-    rows.push(["(8)", "Diisi kode barang berdasarkan ketentuan penggolongan dan kodefikasi Barang Milik Daerah yang berlaku."]);
-    rows.push(["(9)", "Diisi nama barang sesuai kolom (8)."]);
-    rows.push(["(10)", "Diisi kuantitas barang yang diusulkan."]);
-    rows.push(["(11)", "Diisi satuan barang yang dipelihara (m, m², unit, buah, set, dsb)."]);
-    rows.push(["(12)", "Diisi status barang milik daerah yang pemeliharaannya dibiayai APBD."]);
-    rows.push(["(13)", "Diisi 'v' jika kondisi barang Baik (B)."]);
-    rows.push(["(14)", "Diisi 'v' jika kondisi barang Rusak Ringan (RR)."]);
-    rows.push(["(15)", "Diisi 'v' jika kondisi barang Rusak Berat (RB)."]);
-    rows.push(["(16)", "Diisi uraian nama pemeliharaan."]);
-    rows.push(["(17)", "Diisi kuantitas barang yang diusulkan dipelihara."]);
-    rows.push(["(18)", "Diisi satuan barang yang diusulkan dipelihara."]);
-    rows.push(["(19)", "Diisi keterangan penting lainnya."]);
-    rows.push(["(20)", "Diisi tempat dan tanggal disahkan."]);
-    rows.push(["(21)", "Diisi jabatan Pengguna Barang yang menandatangani."]);
-
-    // 3. BUAT WORKSHEET & WORKBOOK
-    const ws = XLSX.utils.aoa_to_sheet(rows);
-
-    // Konfigurasi Lebar Kolom (Width)
-    ws["!cols"] = [
-        { wch: 5 },   // A: No
-        { wch: 45 },  // B: Kuasa Pengguna... (Dibuat lebar agar hierarki muat)
-        { wch: 18 },  // C: Kode Barang
-        { wch: 30 },  // D: Nama Barang
-        { wch: 8 },   // E: Jumlah
-        { wch: 10 },  // F: Satuan
-        { wch: 15 },  // G: Status
-        { wch: 5 },   // H: Kondisi B
-        { wch: 5 },   // I: Kondisi RR
-        { wch: 5 },   // J: Kondisi RB
-        { wch: 25 },  // K: Nama Pemeliharaan
-        { wch: 8 },   // L: Jumlah
-        { wch: 10 },  // M: Satuan
-        { wch: 18 }   // N: Keterangan
+    const wsPemeliharaan = XLSX.utils.aoa_to_sheet(rowsPemeliharaan);
+    wsPemeliharaan["!cols"] = [
+        { wch: 5 }, { wch: 45 }, { wch: 18 }, { wch: 30 }, { wch: 8 }, { wch: 10 }, { wch: 15 },
+        { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 25 }, { wch: 8 }, { wch: 10 }, { wch: 18 }
+    ];
+    wsPemeliharaan["!merges"] = [
+        { s: { r: 0, c: 0 }, e: { r: 0, c: 13 } },
+        { s: { r: 1, c: 0 }, e: { r: 1, c: 13 } },
+        { s: { r: 8, c: 0 }, e: { r: 10, c: 0 } },
+        { s: { r: 8, c: 1 }, e: { r: 10, c: 1 } },
+        { s: { r: 8, c: 2 }, e: { r: 8, c: 9 } },
+        { s: { r: 9, c: 2 }, e: { r: 10, c: 2 } },
+        { s: { r: 9, c: 3 }, e: { r: 10, c: 3 } },
+        { s: { r: 9, c: 4 }, e: { r: 10, c: 4 } },
+        { s: { r: 9, c: 5 }, e: { r: 10, c: 5 } },
+        { s: { r: 9, c: 6 }, e: { r: 10, c: 6 } },
+        { s: { r: 9, c: 7 }, e: { r: 9, c: 9 } },
+        { s: { r: 8, c: 10 }, e: { r: 8, c: 12 } },
+        { s: { r: 9, c: 10 }, e: { r: 10, c: 10 } },
+        { s: { r: 9, c: 11 }, e: { r: 10, c: 11 } },
+        { s: { r: 9, c: 12 }, e: { r: 10, c: 12 } },
+        { s: { r: 8, c: 13 }, e: { r: 10, c: 13 } }
     ];
 
-    // Merge Cells untuk Judul & Header Tabel
-    ws["!merges"] = [
-        // Merge Judul Atas
-        { s: { r: 0, c: 0 }, e: { r: 0, c: 13 } }, // RENCANA KEBUTUHAN
-        { s: { r: 1, c: 0 }, e: { r: 1, c: 13 } }, // (RENCANA PEMELIHARAAN)
-
-        // Merge Header Tabel (Sesuai dengan baris/row index)
-        { s: { r: 8, c: 0 }, e: { r: 10, c: 0 } },  // No. (A9:A11)
-        { s: { r: 8, c: 1 }, e: { r: 10, c: 1 } },  // Kuasa Pengguna Barang (B9:B11)
-        { s: { r: 8, c: 2 }, e: { r: 8, c: 9 } },   // Barang Yang Dipelihara (C9:J9)
-        { s: { r: 9, c: 2 }, e: { r: 10, c: 2 } },  // Kode Barang (C10:C11)
-        { s: { r: 9, c: 3 }, e: { r: 10, c: 3 } },  // Nama Barang (D10:D11)
-        { s: { r: 9, c: 4 }, e: { r: 10, c: 4 } },  // Jumlah (E10:E11)
-        { s: { r: 9, c: 5 }, e: { r: 10, c: 5 } },  // Satuan (F10:F11)
-        { s: { r: 9, c: 6 }, e: { r: 10, c: 6 } },  // Status Barang (G10:G11)
-        { s: { r: 9, c: 7 }, e: { r: 9, c: 9 } },   // Kondisi Barang (H10:J10)
-        { s: { r: 8, c: 10 }, e: { r: 8, c: 12 } }, // Usulan Kebutuhan Pemeliharaan (K9:M9)
-        { s: { r: 9, c: 10 }, e: { r: 10, c: 10 } },// Nama Pemeliharaan (K10:K11)
-        { s: { r: 9, c: 11 }, e: { r: 10, c: 11 } },// Jumlah (L10:L11)
-        { s: { r: 9, c: 12 }, e: { r: 10, c: 12 } },// Satuan (M10:M11)
-        { s: { r: 8, c: 13 }, e: { r: 10, c: 13 } } // Keterangan (N9:N11)
-    ];
-
-    // 4. STYLING SELURUH CELL
-    const borderThin = {
-        top: { style: "thin" }, bottom: { style: "thin" },
-        left: { style: "thin" }, right: { style: "thin" }
-    };
-
-    // Loop semua baris untuk applying style spesifik
-    for (let R = 0; R < rows.length; ++R) {
+    for (let R = 0; R < rowsPemeliharaan.length; ++R) {
         for (let C = 0; C < 14; ++C) {
             const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
-            if (!ws[cellRef]) ws[cellRef] = { t: "s", v: "" };
-
-            // Style untuk Judul Atas
+            if (!wsPemeliharaan[cellRef]) wsPemeliharaan[cellRef] = { t: "s", v: "" };
             if (R === 0 || R === 1) {
-                ws[cellRef].s = {
-                    font: { bold: true, sz: 12 },
-                    alignment: { horizontal: "center", vertical: "center" }
-                };
-            }
-            // Style untuk Bagian KAB/KOTA dsb
-            else if (R >= 2 && R <= 6) {
-                ws[cellRef].s = { font: { bold: true, sz: 11 } };
-            }
-            // Style untuk Tabel Header & Data
-            else if (R >= 8 && R < dataEndIndex) {
-                const isHeader = R <= 11; // Baris 9, 10, 11, 12 (Angka urut)
-                ws[cellRef].s = {
+                wsPemeliharaan[cellRef].s = { font: { bold: true, sz: 12 }, alignment: { horizontal: "center", vertical: "center" } };
+            } else if (R >= 2 && R <= 6) {
+                wsPemeliharaan[cellRef].s = { font: { bold: true, sz: 11 } };
+            } else if (R >= 8 && R < endIdxPemeliharaan) {
+                const isHeader = R <= 11;
+                wsPemeliharaan[cellRef].s = {
                     border: borderThin,
                     font: { bold: isHeader, sz: 10 },
                     alignment: {
                         vertical: "center",
-                        // Header dan Nomor Urut di-tengah, sisanya tergantung kolom
-                        horizontal: isHeader ? "center" : (C === 0 || C >= 4 && C <= 9 || C === 11 || C === 12) ? "center" : "left",
-                        wrapText: true // Supaya teks panjang bisa turun otomatis
+                        horizontal: isHeader ? "center" : (C === 0 || (C >= 4 && C <= 9) || C === 11 || C === 12) ? "center" : "left",
+                        wrapText: true
                     }
                 };
-            }
-            // Style untuk Tanda Tangan & Petunjuk Pengisian
-            else if (R >= dataEndIndex) {
-                ws[cellRef].s = {
-                    font: { sz: 10, bold: R === dataEndIndex + 7 }, // Bold tulisan "Petunjuk Pengisian"
-                    alignment: { vertical: "center" }
-                };
+            } else if (R >= endIdxPemeliharaan) {
+                wsPemeliharaan[cellRef].s = { font: { sz: 10, bold: R === endIdxPemeliharaan + 7 }, alignment: { vertical: "center" } };
             }
         }
     }
+    XLSX.utils.book_append_sheet(wb, wsPemeliharaan, "PEMELIHARAAN");
 
-    // 5. GENERATE & DOWNLOAD EXCEL
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "PEMELIHARAAN");
 
+    // ============================================================================
+    // 3. GENERATE & DOWNLOAD WORKBOOK GABUNGAN
+    // ============================================================================
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     const blob = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-    saveAs(blob, "Rencana_Pemeliharaan_RKBMD.xlsx");
+    saveAs(blob, "RKBMD_Gabungan_Pengadaan_dan_Pemeliharaan.xlsx");
 }

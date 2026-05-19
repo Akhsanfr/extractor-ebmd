@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Modal, useOverlayState } from "@heroui/react";
 import * as XLSX from "xlsx";
-import type { BarangSelected } from "@/types/bmd"; // Sesuaikan dengan path type Anda
+import { BarangSelected } from "./addData";
 
 interface ExcelBarangSelectProps {
     value: BarangSelected | null;
@@ -109,8 +109,7 @@ export function AvailableKodeBarang({ value, onChange, error }: ExcelBarangSelec
                                         <thead className="bg-muted sticky top-0 z-10 shadow-sm">
                                             <tr>
                                                 <th className="p-2 border-b">ID (A)</th>
-                                                <th className="p-2 border-b">KD6 (G)</th>
-                                                <th className="p-2 border-b">KD7 (H)</th>
+                                                <th className="p-2 border-b">KODE BARANG (Q)</th>
                                                 <th className="p-2 border-b">NAMA (I)</th>
                                                 <th className="p-2 border-b text-center">Aksi</th>
                                             </tr>
@@ -123,8 +122,7 @@ export function AvailableKodeBarang({ value, onChange, error }: ExcelBarangSelec
                                                 return (
                                                     <tr key={index} className="hover:bg-muted/50">
                                                         <td className="p-2 border-b text-foreground/70">{row.A}</td>
-                                                        <td className="p-2 border-b text-foreground/70">{row.G}</td>
-                                                        <td className="p-2 border-b font-semibold">{row.H}</td>
+                                                        <td className="p-2 border-b text-foreground/70">{row.Q}</td>
                                                         <td className="p-2 border-b">{row.I}</td>
                                                         <td className="p-2 border-b text-center">
                                                             {isKolomHAvailable ? (
@@ -133,10 +131,12 @@ export function AvailableKodeBarang({ value, onChange, error }: ExcelBarangSelec
                                                                     onPress={() => {
                                                                         // Format data yang dilempar kembali ke form
                                                                         onChange({
-                                                                            kodeBarang: String(row.H), // Atau gunakan gabungan kode jika ada di kolom Q
+                                                                            kodeBarang: String(row.Q), // Atau gunakan gabungan kode jika ada di kolom Q
                                                                             namaBarang: String(row.I),
                                                                             satuan: "Unit", // Sesuaikan jika di excel ada kolom satuan
-                                                                            asetType: "PERALATAN_MESIN", // Default atau sesuaikan mapping
+                                                                            asetType: "peralatan_mesin", // Default atau sesuaikan mapping
+                                                                            jumlah: 0,
+                                                                            nomor: 0
                                                                         });
                                                                         setIsOpen(false);
                                                                     }}

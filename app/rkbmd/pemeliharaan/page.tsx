@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@heroui/react";
 import FormPemeliharaanModal, { FormPemeliharaanData } from "@/app/rkbmd/pemeliharaan/addData";
-import { exportPemeliharaanToExcel } from "@/lib/exportExcel";
 
 const PEMELIHARAAN_STORAGE_KEY = "bmd_list_pemeliharaan";
 

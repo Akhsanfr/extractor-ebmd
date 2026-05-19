@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
     Button,
@@ -17,6 +17,7 @@ import {
 import { ASET_LABEL } from "@/types/bmd";
 import type { AsetType, BarangAll } from "@/types/bmd";
 import { AvailableKodeBarang } from "./availableKodeBarang";
+import { loadAllFromStorage } from "@/lib/bmd-storage";
 
 export type { AsetType } from "@/types/bmd";
 export type BarangSelected = BarangAll;
@@ -111,9 +112,25 @@ function ModalInner({
     onClose: () => void;
     onSubmit: (data: FormPengadaanData) => void;
 }) {
+    const getOptimasiData = (kodeBarang: string): BarangRef | null => {
+        const allBarang = loadAllFromStorage();
+        const match = allBarang.find((b) => b.kodeBarang === kodeBarang);
+
+
+        if (match && match.jumlah > 0) {
+            return {
+                kodeBarang: match.kodeBarang,
+                namaBarang: match.namaBarang,
+                jumlah: match.jumlah,
+                satuan: match.satuan,
+            };
+        }
+        return null;
+    };
     // Reconstruct BarangSelected from initialData.usulan if editing
     const defaultBarang: BarangSelected | null = initialData
         ? {
+            nomor: 0,
             kodeBarang: initialData.usulan.kodeBarang,
             namaBarang: initialData.usulan.namaBarang,
             jumlah: 0, // jumlah tersedia tidak tersimpan di usulan — set 0
@@ -136,6 +153,7 @@ function ModalInner({
     });
 
     const selectedBarang = watch("barang");
+    const jumlahUsulan = watch("jumlah");
     const isMounted = useRef(false);
 
     // Reset jumlah saat barang berganti (tapi tidak saat mount awal)
@@ -149,6 +167,13 @@ function ModalInner({
     }, [selectedBarang?.kodeBarang, setValue, clearErrors]);
 
     const onValidSubmit = (data: FormValues) => {
+        const bmdTersedia = getOptimasiData(data.barang!.kodeBarang);
+
+        // Logika: Kebutuhan Riil = Usulan - Tersedia (jika tersedia > 0)
+        // Jika usulan <= tersedia, maka kebutuhan riil 0 (terpenuhi dari stok)
+        const jumlahTersedia = bmdTersedia ? bmdTersedia.jumlah : 0;
+        const sisaKebutuhan = Math.max(0, (data.jumlah ?? 0) - jumlahTersedia);
+
         onSubmit({
             kuasaPenggunaBarang: data.kuasaPenggunaBarang,
             program: data.program,
@@ -161,12 +186,17 @@ function ModalInner({
                 satuan: data.barang!.satuan,
                 asetType: data.barang!.asetType,
             },
-            // Pertahankan bmdBisaDioptimalkan & kebutuhanRiil jika sedang edit
-            bmdBisaDioptimalkan: initialData?.bmdBisaDioptimalkan ?? null,
-            kebutuhanRiil: initialData?.kebutuhanRiil ?? null,
+            bmdBisaDioptimalkan: bmdTersedia,
+            kebutuhanRiil: {
+                jumlah: sisaKebutuhan,
+                satuan: data.barang!.satuan,
+            },
         });
     };
-
+    const bmdPreview = useMemo(() => {
+        if (!selectedBarang) return null;
+        return getOptimasiData(selectedBarang.kodeBarang);
+    }, [selectedBarang]);
     return (
         <Modal.Dialog>
             <Modal.Header>
@@ -271,36 +301,44 @@ function ModalInner({
                             min: { value: 1, message: "Masukkan angka minimal 1." },
                         }}
                         render={({ field, fieldState: { error } }) => (
-                            <NumberField
-                                name={field.name}
-                                isRequired
-                                isDisabled={!selectedBarang}
-                                minValue={1}
-                                isInvalid={!!error}
-                                value={field.value ?? undefined}
-                                onChange={(v) => field.onChange(isNaN(v) ? null : v)}
-                                className="flex flex-col gap-1.5"
-                            >
-                                <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                                    Jumlah Usulan{" "}
-                                    <span className="text-danger ml-0.5">*</span>
-                                </Label>
-                                <div className="flex items-center gap-2">
-                                    <NumberField.Group className="flex-1">
-                                        <NumberField.DecrementButton />
-                                        <NumberField.Input />
-                                        <NumberField.IncrementButton />
-                                    </NumberField.Group>
-                                    <span className="text-sm text-foreground/50 font-medium shrink-0 min-w-[40px]">
-                                        {selectedBarang?.satuan ?? "—"}
-                                    </span>
-                                </div>
-                                {error && (
-                                    <p className="text-[11px] text-danger font-medium mt-0.5">
-                                        {error.message}
+                            <>
+                                <NumberField
+                                    name={field.name}
+                                    isRequired
+                                    isDisabled={!selectedBarang}
+                                    minValue={1}
+                                    isInvalid={!!error}
+                                    value={field.value ?? undefined}
+                                    onChange={(v) => field.onChange(isNaN(v) ? null : v)}
+                                    className="flex flex-col gap-1.5"
+                                >
+                                    <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
+                                        Jumlah Usulan{" "}
+                                        <span className="text-danger ml-0.5">*</span>
+                                    </Label>
+                                    <div className="flex items-center gap-2">
+                                        <NumberField.Group className="flex-1">
+                                            <NumberField.DecrementButton />
+                                            <NumberField.Input />
+                                            <NumberField.IncrementButton />
+                                        </NumberField.Group>
+                                        <span className="text-sm text-foreground/50 font-medium shrink-0 min-w-[40px]">
+                                            {selectedBarang?.satuan ?? "—"}
+                                        </span>
+                                    </div>
+                                    {error && (
+                                        <p className="text-[11px] text-danger font-medium mt-0.5">
+                                            {error.message}
+                                        </p>
+                                    )}
+                                </NumberField>
+                                {bmdPreview && (
+                                    <p className="text-xs text-warning-600 mt-2">
+                                        Stok tersedia: {bmdPreview.jumlah} {bmdPreview.satuan}.
+                                        Kebutuhan riil: {Math.max(0, (jumlahUsulan ?? 0) - bmdPreview.jumlah)}
                                     </p>
                                 )}
-                            </NumberField>
+                            </>
                         )}
                     />
                 </form>

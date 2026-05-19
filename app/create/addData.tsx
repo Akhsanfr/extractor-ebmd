@@ -37,12 +37,18 @@ export interface FormPemeliharaanData {
 
 export interface FormPemeliharaanModalProps {
     open: boolean;
-    initialData?: FormPemeliharaanData | null; // Tambahan properti initialData untuk Edit
+    initialData?: FormPemeliharaanData | null;
+    // Tambahkan properti duplicateData
+    duplicateData?: {
+        kuasaPenggunaBarang: string;
+        program: string;
+        kegiatan: string;
+        output: string;
+    } | null;
     initialBarang?: BarangSelected | null;
     onClose: () => void;
     onSubmit: (data: FormPemeliharaanData) => void;
 }
-
 interface FormValues {
     barang: BarangSelected | null;
     kuasaPenggunaBarang: string;
@@ -110,35 +116,38 @@ function BarangCard({ barang, jumlahDipakai }: { barang: BarangSelected; jumlahD
 
 function ModalInner({
     initialData,
+    duplicateData, // Terima prop baru
     initialBarang,
     onClose,
     onSubmit,
 }: {
     initialData?: FormPemeliharaanData | null;
+    duplicateData?: FormPemeliharaanModalProps["duplicateData"];
     initialBarang?: BarangSelected | null;
     onClose: () => void;
     onSubmit: (data: FormPemeliharaanData) => void;
 }) {
-    // 1. Rekonstruksi object Barang jika dalam mode Edit (initialData)
     const defaultBarang = initialData
         ? ({
             kodeBarang: initialData.kodeBarang,
             namaBarang: initialData.namaBarang,
-            jumlah: initialData.jumlahTersedia, // Pastikan "jumlah" pada BarangAll terisi jumlah tersedia
+            jumlah: initialData.jumlahTersedia,
             satuan: initialData.satuan,
             asetType: initialData.asetType,
         } as BarangSelected)
         : (initialBarang ?? null);
 
+    // Prioritas pengisian data form: 
+    // 1. Data Edit (initialData) -> 2. Data Duplicate (duplicateData) -> 3. Kosong ("")
     const { control, handleSubmit, watch, setValue, clearErrors } = useForm<FormValues>({
         defaultValues: {
             barang: defaultBarang,
-            kuasaPenggunaBarang: initialData?.kuasaPenggunaBarang ?? "",
-            program: initialData?.program ?? "",
-            kegiatan: initialData?.kegiatan ?? "",
-            output: initialData?.output ?? "",
-            namaPemeliharaan: initialData?.namaPemeliharaan ?? "",
-            jumlah: initialData?.jumlah ?? null,
+            kuasaPenggunaBarang: initialData?.kuasaPenggunaBarang ?? duplicateData?.kuasaPenggunaBarang ?? "",
+            program: initialData?.program ?? duplicateData?.program ?? "",
+            kegiatan: initialData?.kegiatan ?? duplicateData?.kegiatan ?? "",
+            output: initialData?.output ?? duplicateData?.output ?? "",
+            namaPemeliharaan: initialData?.namaPemeliharaan ?? "", // Kosongkan saat duplicate
+            jumlah: initialData?.jumlah ?? null, // Kosongkan saat duplicate
         },
         mode: "onChange",
     });
@@ -316,6 +325,7 @@ function ModalInner({
 export default function FormPemeliharaanModal({
     open,
     initialData,
+    duplicateData, // 1. TANGKAP PROP DUPLICATE DI SINI
     initialBarang,
     onClose,
     onSubmit,
@@ -325,14 +335,23 @@ export default function FormPemeliharaanModal({
         onOpenChange: (isOpen) => { if (!isOpen) onClose(); },
     });
 
+    // 2. BUAT KEY GENERATOR
+    // Memaksa React untuk me-remount form (mengulang defaultValues) setiap kali tombol Duplicate/Edit/Add ditekan
+    const getModalKey = () => {
+        if (!open) return "closed";
+        if (initialData) return `edit-${initialData.kodeBarang}-${initialData.namaPemeliharaan}`;
+        if (duplicateData) return `dup-${duplicateData.program}-${Date.now()}`;
+        return `new-${Date.now()}`;
+    };
+
     return (
         <Modal state={state}>
             <Modal.Backdrop>
                 <Modal.Container>
                     <ModalInner
-                        // Ubah key agar me-remount ulang modal setiap kali ganti antara edit row A, B, atau mode Create
-                        key={open ? (initialData ? initialData.kodeBarang + initialData.namaPemeliharaan : "new") : "closed"}
+                        key={getModalKey()} // 3. GUNAKAN KEY BARU
                         initialData={initialData}
+                        duplicateData={duplicateData} // 4. PASSING DATA KE DALAM FORM
                         initialBarang={initialBarang}
                         onClose={onClose}
                         onSubmit={onSubmit}

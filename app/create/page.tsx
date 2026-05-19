@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@heroui/react";
 import FormPemeliharaanModal, { FormPemeliharaanData } from "./addData";
-import { exportPemeliharaanToExcel } from "@/lib/exportExcel"; // Pastikan ejaannya exportExcel (atau ikuti file Anda)
+import { exportPemeliharaanToExcel } from "@/lib/exportExcel";
 
 const PEMELIHARAAN_STORAGE_KEY = "bmd_list_pemeliharaan";
 
@@ -13,12 +13,18 @@ export default function CreatePage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [listPemeliharaan, setListPemeliharaan] = useState<FormPemeliharaanData[]>([]);
 
-    // State baru untuk menampung Index yang sedang di-edit. Null jika sedang create baru.
     const [editIndex, setEditIndex] = useState<number | null>(null);
+    // State baru untuk menampung data duplikat parsial
+    const [duplicateData, setDuplicateData] = useState<{
+        kuasaPenggunaBarang: string;
+        program: string;
+        kegiatan: string;
+        output: string;
+    } | null>(null);
+
     const [isExporting, setIsExporting] = useState(false);
 
     // ── Helper: Sorting Otomatis ─────────────────────────────────────────────
-    // Sort logic 100% sama dengan pengurutan excel (Kuasa -> Program -> Kegiatan -> Output)
     const sortPemeliharaan = (data: FormPemeliharaanData[]) => {
         return [...data].sort((a, b) => {
             const kuasa = a.kuasaPenggunaBarang.localeCompare(b.kuasaPenggunaBarang);
@@ -31,13 +37,12 @@ export default function CreatePage() {
         });
     };
 
-    // ── Effect 1: Load Data Pertama Kali ──────────────────────────────────────
+    // ── Effects ──────────────────────────────────────────────────────────────
     useEffect(() => {
         try {
             const savedData = localStorage.getItem(PEMELIHARAAN_STORAGE_KEY);
             if (savedData) {
                 const parsed = JSON.parse(savedData);
-                // Biasakan men-sortir data jika mengambil dari DB/Storage yang mungkin belum rapi
                 setListPemeliharaan(sortPemeliharaan(parsed));
             }
         } catch (error) {
@@ -47,7 +52,6 @@ export default function CreatePage() {
         }
     }, []);
 
-    // ── Effect 2: Simpan Data ke Storage Saat Berubah ────────────────────────
     useEffect(() => {
         if (!isLoaded) return;
         try {
@@ -59,12 +63,27 @@ export default function CreatePage() {
 
     // ── Handlers Modal & Aksi ─────────────────────────────────────────────────
     const handleOpenModalCreate = () => {
-        setEditIndex(null); // Reset mode ke Create
+        setEditIndex(null);
+        setDuplicateData(null); // Bersihkan data duplikat
         setIsModalOpen(true);
     };
 
     const handleOpenModalEdit = (index: number) => {
-        setEditIndex(index); // Set mode ke Edit untuk indeks terpilih
+        setEditIndex(index);
+        setDuplicateData(null); // Bersihkan data duplikat
+        setIsModalOpen(true);
+    };
+
+    // Handler Baru: Buka Modal dengan data awal tersalin
+    const handleOpenModalDuplicate = (index: number) => {
+        const item = listPemeliharaan[index];
+        setEditIndex(null); // Dianggap sebagai input Create baru
+        setDuplicateData({
+            kuasaPenggunaBarang: item.kuasaPenggunaBarang,
+            program: item.program,
+            kegiatan: item.kegiatan,
+            output: item.output,
+        });
         setIsModalOpen(true);
     };
 
@@ -82,14 +101,11 @@ export default function CreatePage() {
         setListPemeliharaan((prev) => {
             let nextState;
             if (editIndex !== null) {
-                // Update / Edit (timpa array di posisi indeks lama)
                 nextState = [...prev];
                 nextState[editIndex] = newData;
             } else {
-                // Create baru
                 nextState = [...prev, newData];
             }
-            // Auto-sort setiap kali save berhasil
             return sortPemeliharaan(nextState);
         });
         setIsModalOpen(false);
@@ -121,7 +137,6 @@ export default function CreatePage() {
                         Kelola dan catat seluruh riwayat pemeliharaan aset barang.
                     </p>
                 </div>
-
                 <div className="flex items-center gap-3">
                     <Button
                         onPress={handleExport}
@@ -130,7 +145,6 @@ export default function CreatePage() {
                     >
                         {isExporting ? "Memproses..." : "Export Excel"}
                     </Button>
-
                     <Button
                         onPress={handleOpenModalCreate}
                         className="font-medium shadow-sm bg-primary text-primary-foreground"
@@ -140,7 +154,7 @@ export default function CreatePage() {
                 </div>
             </div>
 
-            {/* ── Render Hasil / Tabel Data ── */}
+            {/* ── Render Tabel Data ── */}
             <div className="overflow-x-auto border rounded-xl shadow-sm bg-background">
                 <table className="w-full text-sm text-left border-collapse">
                     <thead className="bg-muted/50 text-foreground/70 uppercase text-xs font-semibold tracking-wider border-b">
@@ -194,20 +208,37 @@ export default function CreatePage() {
                                         {item.jumlah} {item.satuan}
                                     </td>
 
-                                    <td className="px-4 py-3.5 vertical-top w-28">
+                                    <td className="px-4 py-3.5 vertical-top w-36">
                                         <div className="flex items-center justify-center gap-1.5">
+                                            {/* Tombol DUPLICATE */}
+                                            <Button
+                                                isIconOnly
+                                                size="sm"
+                                                onPress={() => handleOpenModalDuplicate(index)}
+                                                className="text-foreground/70 hover:text-foreground"
+                                                aria-label="Duplikat"
+                                            >
+                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                                </svg>
+                                            </Button>
+
+                                            {/* Tombol EDIT */}
                                             <Button
                                                 isIconOnly
                                                 size="sm"
                                                 onPress={() => handleOpenModalEdit(index)}
-                                                className="text-foreground/70 hover:text-primary"
+                                                className="text-primary-500 hover:text-primary-700 bg-primary/10 hover:bg-primary/20"
                                                 aria-label="Edit"
                                             >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                     <path d="M12 20h9"></path>
                                                     <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                                                 </svg>
                                             </Button>
+
+                                            {/* Tombol HAPUS */}
                                             <Button
                                                 isIconOnly
                                                 size="sm"
@@ -216,7 +247,7 @@ export default function CreatePage() {
                                                 className="text-danger-500 hover:text-danger-700 bg-danger/10 hover:bg-danger/20"
                                                 aria-label="Hapus"
                                             >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                     <polyline points="3 6 5 6 21 6"></polyline>
                                                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                                                     <line x1="10" y1="11" x2="10" y2="17"></line>
@@ -237,8 +268,8 @@ export default function CreatePage() {
                 open={isModalOpen}
                 onClose={handleCloseModal}
                 onSubmit={handleSubmitPemeliharaan}
-                // Kirimkan object data spesifik jika editIndex tidak null (Edit Mode)
                 initialData={editIndex !== null ? listPemeliharaan[editIndex] : null}
+                duplicateData={duplicateData} // Kirim prop duplicateData
             />
         </div>
     );

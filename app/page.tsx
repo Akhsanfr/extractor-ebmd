@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button, Card, Tabs } from "@heroui/react";
 import * as XLSX from "xlsx";
+import { useRouter } from "next/navigation";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -409,7 +410,7 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<AsetType>("tanah");
-
+  const router = useRouter();
   return (
     <div className="flex flex-col items-center p-6">
       <Card className="w-[900px]">
@@ -418,6 +419,11 @@ export default function Home() {
           <Card.Description>
             Upload file Excel laporan BMD per kategori aset tetap.
           </Card.Description>
+          <div className="flex items-center gap-3">
+            <Button onClick={() => router.push("/create")}>
+              Menu Data Pemeliharaan
+            </Button>
+          </div>
         </Card.Header>
 
         <Card.Content className="flex flex-col gap-0">

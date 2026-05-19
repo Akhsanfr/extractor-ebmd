@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@heroui/react";
 import FormPemeliharaanModal, { FormPemeliharaanData } from "./addData";
 import { exportPemeliharaanToExcel } from "@/lib/exportExcel";
+import { useRouter } from "next/navigation";
 
 const PEMELIHARAAN_STORAGE_KEY = "bmd_list_pemeliharaan";
 
@@ -122,6 +123,7 @@ export default function CreatePage() {
             setIsExporting(false);
         }
     };
+    const router = useRouter();
 
     if (!isLoaded) return null;
 
@@ -138,6 +140,9 @@ export default function CreatePage() {
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
+                    <Button onClick={() => router.push('/')}>
+                        Menu Import BMD
+                    </Button>
                     <Button
                         onPress={handleExport}
                         isPending={isExporting}

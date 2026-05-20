@@ -195,7 +195,6 @@ export default function CreatePage() {
                                                 isIconOnly
                                                 size="sm"
                                                 onPress={() => handleOpenModalDuplicate(index)}
-                                                className="text-foreground/70 hover:text-foreground"
                                                 aria-label="Duplikat"
                                             >
                                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -209,7 +208,6 @@ export default function CreatePage() {
                                                 isIconOnly
                                                 size="sm"
                                                 onPress={() => handleOpenModalEdit(index)}
-                                                className="text-primary-500 hover:text-primary-700 bg-primary/10 hover:bg-primary/20"
                                                 aria-label="Edit"
                                             >
                                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -224,7 +222,6 @@ export default function CreatePage() {
                                                 size="sm"
                                                 variant="danger"
                                                 onPress={() => handleDelete(index)}
-                                                className="text-danger-500 hover:text-danger-700 bg-danger/10 hover:bg-danger/20"
                                                 aria-label="Hapus"
                                             >
                                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

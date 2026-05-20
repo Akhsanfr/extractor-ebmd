@@ -1,20 +1,16 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Button, Card, Tabs } from "@heroui/react";
+import { Button, Card, Chip, Input, Table, TableBody, TableCell, TableColumn, TableContent, TableHeader, TableRow, TableScrollContainer, Tabs } from "@heroui/react";
 import Link from "next/link";
 import * as XLSX from "xlsx";
 import {
   X,
   LayoutDashboard,
-  FileSpreadsheet,
-  ClipboardList,
-  PackageSearch,
   ArrowRight,
   Info,
   LucideIcon,
   Watch,
-  Icon,
   ArrowRightLeft,
   ClipboardCheck,
   MapPin,
@@ -249,7 +245,7 @@ function BannerInfo() {
   if (dismissed) return null;
 
   return (
-    <div className="rounded-xl border border-primary-200 bg-primary-50 p-4 mb-5 relative">
+    <div className="rounded-xl border border-primary-200 bg-primary p-4 mb-5 relative">
       <button
         onClick={dismiss}
         className="absolute top-3 right-3 text-default-400 hover:text-default-700 transition-colors"
@@ -273,7 +269,7 @@ function BannerInfo() {
               { step: "2", title: "Upload File Excel", body: "Unggah file laporan BMD (.xlsx/.xls)" },
               { step: "3", title: "Gunakan Hasil Rekap", body: "Data otomatis direkap — kode barang yang sama digabung jumlahnya." },
             ].map(({ step, title, body }) => (
-              <div key={step} className="bg-white rounded-lg p-3 border border-primary-100">
+              <div key={step} className="bg-background-secondary rounded-lg p-3 border border-primary-100">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-5 h-5 rounded-full bg-primary text-xs flex items-center justify-center font-bold shrink-0">{step}</span>
                   <span className="font-semibold text-xs text-default-800">{title}</span>
@@ -303,24 +299,24 @@ function SubToolNav() {
             <Link
               key={href}
               href={href}
-              className="group flex flex-col gap-1.5 rounded-xl border border-default-200 bg-white hover:border-primary hover:shadow-sm p-3 transition-all"
+              className="group flex flex-col gap-1.5 rounded-xl border border-default-200 bg-accent hover:border-primary hover:shadow-sm p-3 transition-all"
             >
               <div className="flex items-center justify-between">
-                <span className="text-primary">{icon}</span>
+                <span className="text-foreground">{icon}</span>
                 <ArrowRight size={13} className="text-default-300 group-hover:text-primary transition-colors" />
               </div>
-              <p className="text-xs font-semibold text-default-800 leading-tight">{label}</p>
+              <p className="text-xs font-semibold text-foreground leading-tight">{label}</p>
               <p className="text-xs text-default-400 leading-tight">{desc}</p>
             </Link>
           ) : (
             <div
               key={href}
-              className="flex flex-col gap-1.5 rounded-xl border border-dashed border-default-200 bg-default-50 p-3 opacity-60 cursor-not-allowed"
+              className="flex flex-col gap-1.5 rounded-xl border border-dashed border-default-200 bg-muted p-3 opacity-60 cursor-not-allowed"
               title="Segera hadir"
             >
               <div className="flex items-center justify-between">
                 <span className="text-default-400">{icon}</span>
-                <span className="text-[10px] text-default-400 font-medium bg-default-100 px-1.5 py-0.5 rounded">Soon</span>
+                <span className="text-[10px] text-default-400 font-medium px-1.5 py-0.5 rounded">Soon</span>
               </div>
               <p className="text-xs font-semibold text-default-600 leading-tight">{label}</p>
               <p className="text-xs text-default-400 leading-tight">{desc}</p>
@@ -369,8 +365,8 @@ function UploadZone({ inputRef, loading, fileName, onChange, asetType }: UploadZ
       className={[
         "border-2 border-dashed rounded-xl p-8 flex flex-col items-center gap-3 cursor-pointer transition-all select-none",
         dragOver
-          ? "border-primary bg-primary-50 scale-[1.01]"
-          : "border-default-200 hover:border-primary-300 hover:bg-default-50",
+          ? "border-primary scale-[1.01]"
+          : "border-default-200 hover:border-primary-300",
         loading ? "pointer-events-none opacity-60" : "",
       ].join(" ")}
     >
@@ -425,7 +421,7 @@ function StatsBar({ merged }: { merged: BarangMerged[] }) {
         { label: "Total Jumlah", value: totalJumlah.toLocaleString("id-ID"), color: "text-success" },
         { label: "Jenis Satuan", value: satuanSet.size, color: "text-warning" },
       ].map(({ label, value, color }) => (
-        <div key={label} className="rounded-lg border border-default-200 bg-default-50 px-4 py-3 text-center">
+        <div key={label} className="rounded-lg border border-default-200 bg-surface px-4 py-3 text-center">
           <p className={`text-xl font-bold ${color}`}>{value}</p>
           <p className="text-xs text-default-500 mt-0.5">{label}</p>
         </div>
@@ -503,12 +499,12 @@ function AsetTabContent({ asetType }: { asetType: AsetType }) {
 
           {/* Toolbar */}
           <div className="flex items-center gap-3">
-            <input
+            <Input
               type="text"
               placeholder="Cari nama barang atau kode..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 px-3 py-2 text-sm rounded-lg border border-default-200 bg-default-50 focus:outline-none focus:border-primary focus:bg-white transition-colors"
+              className="flex-1 px-3 py-2 text-sm rounded-lg border border-default-200  focus:outline-none focus:border-primary transition-colors"
             />
             <Button size="sm" onPress={() => inputRef.current?.click()} isDisabled={loading}>
               <input ref={inputRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={handleFileChange} />
@@ -528,7 +524,7 @@ function AsetTabContent({ asetType }: { asetType: AsetType }) {
       )}
 
       {error && (
-        <div className="rounded-lg bg-danger-50 border border-danger-200 px-4 py-3 flex gap-2 items-start">
+        <div className="rounded-lg border border-danger-200 px-4 py-3 flex gap-2 items-start">
           <span className="text-danger mt-0.5">⚠️</span>
           <div>
             <p className="text-sm font-medium text-danger">Gagal membaca file</p>
@@ -541,41 +537,55 @@ function AsetTabContent({ asetType }: { asetType: AsetType }) {
       )}
 
       {/* Tabel */}
-      {hasData && (
-        <div className="max-h-[460px] overflow-y-auto rounded-lg border border-default-200">
-          <table className="w-full text-sm">
-            <thead className="sticky top-0 bg-default-100 z-10">
-              <tr>
-                <th className="text-left py-2 px-3 font-medium text-default-600 text-xs w-10">No</th>
-                <th className="text-left py-2 px-3 font-medium text-default-600 text-xs">Kode Barang</th>
-                <th className="text-left py-2 px-3 font-medium text-default-600 text-xs">Nama Barang</th>
-                <th className="text-right py-2 px-3 font-medium text-default-600 text-xs w-20">Jumlah</th>
-                <th className="text-left py-2 px-3 font-medium text-default-600 text-xs w-20">Satuan</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="py-8 text-center text-sm text-default-400">
-                    Tidak ada data yang cocok dengan pencarian.
-                  </td>
-                </tr>
-              ) : (
-                filtered.map((item) => (
-                  <tr key={item.kodeBarang} className="border-t border-default-100 hover:bg-default-50">
-                    <td className="py-2 px-3 text-default-400 text-xs">{item.nomor}</td>
-                    <td className="py-2 px-3 font-mono text-xs text-default-600">{item.kodeBarang}</td>
-                    <td className="py-2 px-3 text-default-800">{item.namaBarang}</td>
-                    <td className="py-2 px-3 text-right font-semibold">{item.jumlah.toLocaleString("id-ID")}</td>
-                    <td className="py-2 px-3 text-default-500 text-xs">{item.satuan || "—"}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
+      {hasData &&
+        <Table
+          aria-label="Daftar Barang"
+        >
+          <TableScrollContainer>
+            <TableContent>
+
+              <TableHeader>
+                <TableColumn className="w-10">No</TableColumn>
+                <TableColumn>Kode Barang</TableColumn>
+                <TableColumn>Nama Barang</TableColumn>
+                <TableColumn className="w-20 text-right">Jumlah</TableColumn>
+                <TableColumn className="w-20">Satuan</TableColumn>
+              </TableHeader>
+
+              <TableBody>
+                {filtered.map((item) => (
+                  <TableRow
+                    key={item.kodeBarang}
+                    className="hover:bg-default-50"
+                  >
+                    <TableCell className="text-default-400 text-xs">
+                      {item.nomor}
+                    </TableCell>
+
+                    <TableCell className="font-mono text-xs text-default-600">
+                      {item.kodeBarang}
+                    </TableCell>
+
+                    <TableCell className="text-default-800">
+                      {item.namaBarang}
+                    </TableCell>
+
+                    <TableCell className="text-right font-semibold">
+                      {item.jumlah.toLocaleString("id-ID")}
+                    </TableCell>
+
+                    <TableCell className="text-default-500 text-xs">
+                      {item.satuan || "—"}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </TableContent>
+          </TableScrollContainer>
+        </Table>
+
+      }
+    </div >
   );
 }
 
@@ -603,7 +613,7 @@ export default function Home() {
   const totalImported = Object.values(tabData).reduce((s, v) => s + v, 0);
 
   return (
-    <div className="flex flex-col items-center p-6 min-h-screen bg-default-50">
+    <div className="flex flex-col items-center p-6 min-h-screen">
       <div className="w-full max-w-4xl">
 
         {/* Header */}
@@ -618,9 +628,11 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-3">
             {totalImported > 0 && (
-              <span className="text-xs bg-success-100 text-success-700 border border-success-200 px-2 py-1 rounded-full font-medium">
+              <Chip
+                color="success"
+              >
                 {totalImported} kode terimport
-              </span>
+              </Chip>
             )}
           </div>
         </div>
@@ -632,7 +644,7 @@ export default function Home() {
         <SubToolNav />
 
         {/* Main card */}
-        <Card className="w-full shadow-sm">
+        <Card className="w-full shadow-sm bg-surface">
           <Card.Content className="p-0">
             <Tabs className="w-full">
               <Tabs.ListContainer className="border-b border-default-200 px-4 pt-4">

@@ -20,7 +20,6 @@ import type { AsetType, BarangAll } from "@/types/bmd";
 
 export type { AsetType } from "@/types/bmd";
 export type BarangSelected = BarangAll;
-
 export interface FormPemeliharaanData {
     kuasaPenggunaBarang: string;
     program: string;

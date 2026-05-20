@@ -27,7 +27,7 @@ export async function actionExtractDaftarBarang() {
         'ctl00$Isi$TxtJabKanan': '',
         'ctl00$Isi$Button2': 'Export Ke Excel'
     }
-    const add = {
+    const config = {
         params: {
             'kib': '2',
             'Periode': '2026',
@@ -55,7 +55,7 @@ export async function actionExtractDaftarBarang() {
             'cookie': '_ga=GA1.3.1310505215.1777637860; _gid=GA1.3.951371392.1779099639; _ga_3LFLRFSZV4=GS2.3.s1779277472$o13$g0$t1779277472$j60$l0$h0; ebmdpasuruan_session=a%3A5%3A%7Bs%3A10%3A%22session_id%22%3Bs%3A32%3A%227030cbe1f9946101f6fe2a6927860c74%22%3Bs%3A10%3A%22ip_address%22%3Bs%3A13%3A%22114.5.240.152%22%3Bs%3A10%3A%22user_agent%22%3Bs%3A111%3A%22Mozilla%2F5.0+%28Windows+NT+10.0%3B+Win64%3B+x64%29+AppleWebKit%2F537.36+%28KHTML%2C+like+Gecko%29+Chrome%2F148.0.0.0+Safari%2F537.36%22%3Bs%3A13%3A%22last_activity%22%3Bi%3A1779288136%3Bs%3A9%3A%22user_data%22%3Bs%3A0%3A%22%22%3B%7D63dae4464dc8a97ce0b39951e409e7c4735617f8'
         },
         httpsAgent: httpsAgent,
-        responseType: 'arraybuffer', // Sangat penting!
+        responseType: 'arraybuffer' as const, // Sangat penting!
         timeout: 60000, // 60 detik sudah cukup. Jika lebih, berarti server E-BMD-nya yang down.
         maxContentLength: 50 * 1024 * 1024, // Batasi maksimal 50MB agar tidak memory leak
     }
@@ -63,12 +63,12 @@ export async function actionExtractDaftarBarang() {
         // TAHAP 1: TRIGGER PEMBUATAN FILE DI SERVER
         const postResponse = await axios.post(
             'https://ebmd.pasuruankab.go.id/ebmd_rpt/AST_daftarbarang/dbpb_param.aspx',
-            new URLSearchParams(params), add
+            new URLSearchParams(params), config
         );
 
         // Validasi jika server membalas HTML (biasanya Error 500 atau Sesi Habis)
         const contentType = postResponse.headers['content-type'];
-        if (contentType && (contentType.includes('text/html') || contentType.includes('text/plain'))) {
+        if (typeof contentType === 'string' && (contentType.includes('text/html') || contentType.includes('text/plain'))) {
             const htmlString = Buffer.from(postResponse.data).toString('utf-8');
 
             // Jika isinya sangat pendek (misal pesan error), simpan untuk debug

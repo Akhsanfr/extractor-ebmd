@@ -42,7 +42,7 @@ const COL_BASE = { A: 0, B: 1, C: 2, D: 3, E: 4, F: 5, H: 7, I: 8 } as const;
  *
  * | Tipe Aset                    | Jumlah | Satuan |
  * |------------------------------|--------|--------|
- * | TANAH                        | Q (16) | R (17) |
+ * | TANAH                        | Row    | R (17) |
  * | PERALATAN & MESIN            | T (19) | U (20) |
  * | GEDUNG & BANGUNAN            | T (19) | U (20) |
  * | JALAN, IRIGASI & JARINGAN    | U (20) | V (21) |
@@ -275,6 +275,7 @@ interface AsetTabContentProps {
 }
 
 function AsetTabContent({ asetType }: AsetTabContentProps) {
+  console.log("render tab content")
   const inputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [merged, setMerged] = useState<BarangMerged[]>([]);
@@ -331,8 +332,15 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
   return (
     <div className="flex flex-col gap-4">
       {/* Toolbar */}
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-end gap-3">
+        {hasData ? (
+          <Button
+            variant="danger-soft"
+            onPress={handleReset}
+          >
+            Reset Data
+          </Button>
+        ) : <div className="flex items-center gap-3">
           <input
             ref={inputRef}
             type="file"
@@ -351,17 +359,7 @@ function AsetTabContent({ asetType }: AsetTabContentProps) {
               {fileName}
             </span>
           )}
-        </div>
-
-        {hasData && (
-          <Button
-            variant="danger-soft"
-            size="sm"
-            onPress={handleReset}
-          >
-            Reset Data
-          </Button>
-        )}
+        </div>}
       </div>
 
       {error && <p className="text-sm text-danger">{error}</p>}
@@ -436,33 +434,23 @@ export default function Home() {
         </Card.Header>
 
         <Card.Content className="flex flex-col gap-0">
-          {/* Custom tab list */}
-          <div className="flex border-b border-default-200 mb-4 gap-1">
-            {TABS.map(({ key, label }) => {
-              const isActive = activeTab === key;
-              return (
-                <button
-                  key={key}
-                  onClick={() => setActiveTab(key)}
-                  className={[
-                    "px-4 py-2 text-sm font-medium rounded-t-lg transition-all whitespace-nowrap",
-                    isActive
-                      ? "bg-primary text-primary-foreground border-b-2 border-primary shadow-sm"
-                      : "text-default-500 hover:text-default-800 hover:bg-default-100",
-                  ].join(" ")}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Tab panels — semua di-mount agar state tidak hilang saat ganti tab */}
-          {TABS.map(({ key }) => (
-            <div key={key} className={activeTab === key ? "block" : "hidden"}>
-              <AsetTabContent asetType={key} />
-            </div>
-          ))}
+          <Tabs className="w-full">
+            <Tabs.ListContainer>
+              <Tabs.List aria-label="Options">
+                {TABS.map(({ key, label }) => (
+                  <Tabs.Tab key={key} id={key}>
+                    {label}
+                    <Tabs.Indicator />
+                  </Tabs.Tab>
+                ))}
+              </Tabs.List>
+            </Tabs.ListContainer>
+            {TABS.map(({ key }) => (
+              <Tabs.Panel key={key} id={key} className="pt-4">
+                <AsetTabContent asetType={key} />
+              </Tabs.Panel>
+            ))}
+          </Tabs>
         </Card.Content>
       </Card>
     </div>

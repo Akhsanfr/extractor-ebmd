@@ -133,7 +133,7 @@ function ModalInner({
             nomor: 0,
             kodeBarang: initialData.usulan.kodeBarang,
             namaBarang: initialData.usulan.namaBarang,
-            jumlah: 0, // jumlah tersedia tidak tersimpan di usulan — set 0
+            jumlah: 0,
             satuan: initialData.usulan.satuan,
             asetType: initialData.usulan.asetType,
         }
@@ -172,7 +172,8 @@ function ModalInner({
         // Logika: Kebutuhan Riil = Usulan - Tersedia (jika tersedia > 0)
         // Jika usulan <= tersedia, maka kebutuhan riil 0 (terpenuhi dari stok)
         const jumlahTersedia = bmdTersedia ? bmdTersedia.jumlah : 0;
-        const sisaKebutuhan = Math.max(0, (data.jumlah ?? 0) - jumlahTersedia);
+        const jumlahRiil = data.jumlah ?? 0;
+        const jumlahDiusulkan = jumlahTersedia + jumlahRiil;
 
         onSubmit({
             kuasaPenggunaBarang: data.kuasaPenggunaBarang,
@@ -182,13 +183,13 @@ function ModalInner({
             usulan: {
                 kodeBarang: data.barang!.kodeBarang,
                 namaBarang: data.barang!.namaBarang,
-                jumlah: data.jumlah!,
+                jumlah: jumlahDiusulkan,
                 satuan: data.barang!.satuan,
                 asetType: data.barang!.asetType,
             },
             bmdBisaDioptimalkan: bmdTersedia,
             kebutuhanRiil: {
-                jumlah: sisaKebutuhan,
+                jumlah: jumlahRiil,
                 satuan: data.barang!.satuan,
             },
         });
@@ -206,7 +207,7 @@ function ModalInner({
                 <Description className="text-xs text-foreground/50 mt-0.5">
                     {initialData
                         ? "Ubah data usulan pengadaan"
-                        : "Isi usulan pengadaan baru berdasarkan kamus barang"}
+                        : "Isi usulan pengadaan baru berdasarkan kode barang"}
                 </Description>
             </Modal.Header>
 
@@ -219,7 +220,7 @@ function ModalInner({
                     {/* ── Pilih Barang dari Kamus ── */}
                     <div className="flex flex-col gap-1.5">
                         <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                            Kamus Barang <span className="text-danger">*</span>
+                            Kode Barang <span className="text-danger">*</span>
                         </Label>
                         <Controller
                             control={control}
@@ -244,22 +245,22 @@ function ModalInner({
                             {
                                 name: "kuasaPenggunaBarang" as const,
                                 label: "Kuasa Pengguna Barang",
-                                placeholder: "Nama SKPD / unit kerja...",
+                                placeholder: "Dinas/Badan/Kecamatan/UPT/Puskesmas ...",
                             },
                             {
                                 name: "program" as const,
                                 label: "Program",
-                                placeholder: "Nama program...",
+                                placeholder: "Program ...",
                             },
                             {
                                 name: "kegiatan" as const,
                                 label: "Kegiatan",
-                                placeholder: "Nama kegiatan...",
+                                placeholder: "Kegiatan ...",
                             },
                             {
                                 name: "output" as const,
                                 label: "Output",
-                                placeholder: "Output kegiatan...",
+                                placeholder: "Terlaksananya ...",
                             },
                         ]
                     ).map((fieldInfo) => (

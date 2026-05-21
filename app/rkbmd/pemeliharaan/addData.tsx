@@ -217,12 +217,30 @@ function ModalInner({
 
                     <SectionLabel>Data Anggaran</SectionLabel>
 
-                    {([
-                        { name: "kuasaPenggunaBarang", label: "Kuasa Pengguna Barang", placeholder: "Nama SKPD / unit kerja..." },
-                        { name: "program", label: "Program", placeholder: "Nama program..." },
-                        { name: "kegiatan", label: "Kegiatan", placeholder: "Nama kegiatan..." },
-                        { name: "output", label: "Output", placeholder: "Output kegiatan..." },
-                    ] as const).map((fieldInfo) => (
+                    {(
+                        [
+                            {
+                                name: "kuasaPenggunaBarang" as const,
+                                label: "Kuasa Pengguna Barang",
+                                placeholder: "Dinas/Badan/Kecamatan/UPT/Puskesmas ...",
+                            },
+                            {
+                                name: "program" as const,
+                                label: "Program",
+                                placeholder: "Program ...",
+                            },
+                            {
+                                name: "kegiatan" as const,
+                                label: "Kegiatan",
+                                placeholder: "Kegiatan ...",
+                            },
+                            {
+                                name: "output" as const,
+                                label: "Output",
+                                placeholder: "Terlaksananya ...",
+                            },
+                        ]
+                    ).map((fieldInfo) => (
                         <Controller
                             key={fieldInfo.name}
                             control={control}

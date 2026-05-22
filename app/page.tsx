@@ -81,7 +81,7 @@ export type AsetType =
   | "peralatan_mesin"
   | "bangunan"
   | "jalan_irigasi_jaringan"
-  | "aset_tetap_lainnya";
+  | "aset_tetap_lain";
 
 type ExcelSource = File | ArrayBuffer | ArrayBufferView;
 
@@ -94,7 +94,7 @@ const ASET_COL_MAP: Record<AsetType, { jumlah: number; satuan: number; namaBaran
   peralatan_mesin: { namaBarang: 8, jumlah: 19, satuan: 20 },
   bangunan: { namaBarang: 9, jumlah: 19, satuan: 20 },
   jalan_irigasi_jaringan: { namaBarang: 9, jumlah: 20, satuan: 21 },
-  aset_tetap_lainnya: { namaBarang: 8, jumlah: 17, satuan: 18 },
+  aset_tetap_lain: { namaBarang: 8, jumlah: 17, satuan: 18 },
 };
 
 const START_ROW_INDEX = 13;
@@ -109,6 +109,7 @@ import {
   Route,
   Package,
 } from "lucide-react";
+import ProfilePerangkatDaerah from "./perangkatDaerah";
 
 const TABS: {
   key: AsetType;
@@ -141,8 +142,8 @@ const TABS: {
       desc: "Jalan, saluran, jaringan listrik/air",
     },
     {
-      key: "aset_tetap_lainnya",
-      label: "Aset Tetap Lainnya",
+      key: "aset_tetap_lain",
+      label: "Aset Tetap Lain",
       icon: Package,
       desc: "Aset yang tidak termasuk kategori lain",
     },
@@ -598,7 +599,7 @@ export default function Home() {
     peralatan_mesin: 0,
     bangunan: 0,
     jalan_irigasi_jaringan: 0,
-    aset_tetap_lainnya: 0,
+    aset_tetap_lain: 0,
   });
 
   useEffect(() => {
@@ -639,6 +640,7 @@ export default function Home() {
 
         {/* Banner onboarding */}
         <BannerInfo />
+        <ProfilePerangkatDaerah />
 
         {/* Sub-tool navigation */}
         <SubToolNav />

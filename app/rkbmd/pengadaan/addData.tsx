@@ -15,63 +15,19 @@ import {
     useOverlayState,
 } from "@heroui/react";
 import { ASET_LABEL } from "@/types/bmd";
-import type { AsetType, BarangAll } from "@/types/bmd";
+import type { Barang } from "@/types/bmd";
 import { AvailableKodeBarang } from "./availableKodeBarang";
-import { loadAllFromStorage } from "@/lib/bmd-storage";
+import { FormPengadaan, ListPengadaan } from "@/types/rkbmd";
 
 export type { AsetType } from "@/types/bmd";
-export type BarangSelected = BarangAll;
 
-// ─── Types ─────────────────────────────────────────────────────────────────────
-
-export interface BarangRef {
-    kodeBarang: string;
-    namaBarang: string;
-    jumlah: number;
-    satuan: string;
-}
-
-export interface FormPengadaanData {
-    // Identitas anggaran
-    kuasaPenggunaBarang: string;
-    program: string;
-    kegiatan: string;
-    output: string;
-    // Barang yang diusulkan (diisi dari form modal / kamus barang)
-    usulan: BarangRef & { asetType: AsetType };
-    // BMD yang masih bisa dioptimalkan (diisi di tabel setelah submit)
-    bmdBisaDioptimalkan: BarangRef | null;
-    // Kebutuhan riil setelah dikurangi optimalisasi
-    kebutuhanRiil: {
-        jumlah: number;
-        satuan: string;
-    } | null;
-}
-
-export interface FormPengadaanModalProps {
+export interface FormPengadaaModal {
+    isPenggunaBarang: boolean;
     open: boolean;
-    initialData?: FormPengadaanData | null;
-    duplicateData?: {
-        kuasaPenggunaBarang: string;
-        program: string;
-        kegiatan: string;
-        output: string;
-    } | null;
+    initialData: FormPengadaan;
     onClose: () => void;
-    onSubmit: (data: FormPengadaanData) => void;
+    onSubmit: (data: ListPengadaan) => void;
 }
-
-// ── Internal form shape ───────────────────────────────────────────────────────
-interface FormValues {
-    barang: BarangSelected | null;
-    kuasaPenggunaBarang: string;
-    program: string;
-    kegiatan: string;
-    output: string;
-    jumlah: number | null;
-}
-
-// ─── Helpers ───────────────────────────────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
     return (
@@ -85,7 +41,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     );
 }
 
-function BarangCard({ barang }: { barang: BarangSelected }) {
+function BarangCard({ barang }: { barang: Barang }) {
     return (
         <Surface className="rounded-xl px-4 py-3 flex items-center justify-between gap-3">
             <div className="flex-1 min-w-0">
@@ -103,101 +59,42 @@ function BarangCard({ barang }: { barang: BarangSelected }) {
 
 function ModalInner({
     initialData,
-    duplicateData,
+    isPenggunaBarang,
     onClose,
     onSubmit,
-}: {
-    initialData?: FormPengadaanData | null;
-    duplicateData?: FormPengadaanModalProps["duplicateData"];
-    onClose: () => void;
-    onSubmit: (data: FormPengadaanData) => void;
-}) {
-    const getOptimasiData = (kodeBarang: string): BarangRef | null => {
-        const allBarang = loadAllFromStorage();
-        const match = allBarang.find((b) => b.kodeBarang === kodeBarang);
+}: FormPengadaaModal) {
+    console.log(initialData)
 
+    const { control, handleSubmit, watch, setValue, getValues } = useForm<FormPengadaan>({
+        defaultValues: initialData
+    })
 
-        if (match && match.jumlah > 0) {
-            return {
-                kodeBarang: match.kodeBarang,
-                namaBarang: match.namaBarang,
-                jumlah: match.jumlah,
-                satuan: match.satuan,
-            };
+    const onValidSubmit = (data: FormPengadaan | null) => {
+        if (!data) {
+            return;
         }
-        return null;
-    };
-    // Reconstruct BarangSelected from initialData.usulan if editing
-    const defaultBarang: BarangSelected | null = initialData
-        ? {
-            nomor: 0,
-            kodeBarang: initialData.usulan.kodeBarang,
-            namaBarang: initialData.usulan.namaBarang,
-            jumlah: 0,
-            satuan: initialData.usulan.satuan,
-            asetType: initialData.usulan.asetType,
+        if (!data.bmdBisaDioptimalkan) {
+            return;
         }
-        : null;
-
-    const { control, handleSubmit, watch, setValue, clearErrors } = useForm<FormValues>({
-        defaultValues: {
-            barang: defaultBarang,
-            kuasaPenggunaBarang:
-                initialData?.kuasaPenggunaBarang ?? duplicateData?.kuasaPenggunaBarang ?? "",
-            program: initialData?.program ?? duplicateData?.program ?? "",
-            kegiatan: initialData?.kegiatan ?? duplicateData?.kegiatan ?? "",
-            output: initialData?.output ?? duplicateData?.output ?? "",
-            jumlah: initialData?.usulan.jumlah ?? null,
-        },
-        mode: "onChange",
-    });
-
-    const selectedBarang = watch("barang");
-    const jumlahUsulan = watch("jumlah");
-    const isMounted = useRef(false);
-
-    // Reset jumlah saat barang berganti (tapi tidak saat mount awal)
-    useEffect(() => {
-        if (isMounted.current) {
-            setValue("jumlah", null);
-            clearErrors("jumlah");
-        } else {
-            isMounted.current = true;
-        }
-    }, [selectedBarang?.kodeBarang, setValue, clearErrors]);
-
-    const onValidSubmit = (data: FormValues) => {
-        const bmdTersedia = getOptimasiData(data.barang!.kodeBarang);
-
-        // Logika: Kebutuhan Riil = Usulan - Tersedia (jika tersedia > 0)
-        // Jika usulan <= tersedia, maka kebutuhan riil 0 (terpenuhi dari stok)
-        const jumlahTersedia = bmdTersedia ? bmdTersedia.jumlah : 0;
-        const jumlahRiil = data.jumlah ?? 0;
-        const jumlahDiusulkan = jumlahTersedia + jumlahRiil;
+        const jumlahBmdBisaDioptimalkan = data.bmdBisaDioptimalkan?.jumlah ?? 0;
+        const jumlahKebutuhanRiil = data.kebutuhanRiil?.jumlah ?? 0;
 
         onSubmit({
+            penggunaBarang: data.penggunaBarang,
             kuasaPenggunaBarang: data.kuasaPenggunaBarang,
             program: data.program,
             kegiatan: data.kegiatan,
             output: data.output,
-            usulan: {
-                kodeBarang: data.barang!.kodeBarang,
-                namaBarang: data.barang!.namaBarang,
-                jumlah: jumlahDiusulkan,
-                satuan: data.barang!.satuan,
-                asetType: data.barang!.asetType,
-            },
-            bmdBisaDioptimalkan: bmdTersedia,
+            usulan: { ...data.bmdBisaDioptimalkan, jumlah: jumlahKebutuhanRiil + jumlahBmdBisaDioptimalkan },
+            bmdBisaDioptimalkan: data.bmdBisaDioptimalkan,
             kebutuhanRiil: {
-                jumlah: jumlahRiil,
-                satuan: data.barang!.satuan,
+                jumlah: jumlahKebutuhanRiil,
+                satuan: data.bmdBisaDioptimalkan?.satuan ?? "",
             },
         });
     };
-    const bmdPreview = useMemo(() => {
-        if (!selectedBarang) return null;
-        return getOptimasiData(selectedBarang.kodeBarang);
-    }, [selectedBarang]);
+
+    const bmdBisaDioptimalkan = watch("bmdBisaDioptimalkan")
     return (
         <Modal.Dialog>
             <Modal.Header>
@@ -211,7 +108,7 @@ function ModalInner({
                 </Description>
             </Modal.Header>
 
-            <Modal.Body className="max-h-[70vh] overflow-y-auto">
+            <Modal.Body className="p-2">
                 <form
                     id="form-pengadaan"
                     onSubmit={handleSubmit(onValidSubmit)}
@@ -222,45 +119,50 @@ function ModalInner({
                         <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
                             Kode Barang <span className="text-danger">*</span>
                         </Label>
-                        <Controller
-                            control={control}
-                            name="barang"
-                            rules={{ required: "Pilih referensi barang terlebih dahulu." }}
-                            render={({ field, fieldState: { error } }) => (
-                                <AvailableKodeBarang
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                    error={error?.message}
-                                />
-                            )}
+                        <AvailableKodeBarang
+                            value={getValues("bmdBisaDioptimalkan")}
+                            onChange={(value) => {
+                                setValue("bmdBisaDioptimalkan", value)
+                            }}
                         />
                     </div>
 
-                    {selectedBarang && <BarangCard barang={selectedBarang} />}
-
+                    {
+                        bmdBisaDioptimalkan &&
+                        <BarangCard barang={bmdBisaDioptimalkan} />
+                    }
                     <SectionLabel>Data Anggaran</SectionLabel>
-
                     {(
                         [
                             {
+                                name: "penggunaBarang" as const,
+                                isReadOnly: true,
+                                label: "Pengguna Barang",
+                                placeholder: "Dinas/Badan/Kecamatan",
+                            },
+                            {
                                 name: "kuasaPenggunaBarang" as const,
+                                isReadOnly: !isPenggunaBarang,
                                 label: "Kuasa Pengguna Barang",
-                                placeholder: "Dinas/Badan/Kecamatan/UPT/Puskesmas ...",
+                                placeholder: "UPT/Puskesmas/Sekolah/Bagian ...",
                             },
                             {
                                 name: "program" as const,
                                 label: "Program",
                                 placeholder: "Program ...",
+                                isReadOnly: false,
                             },
                             {
                                 name: "kegiatan" as const,
                                 label: "Kegiatan",
                                 placeholder: "Kegiatan ...",
+                                isReadOnly: false,
                             },
                             {
                                 name: "output" as const,
                                 label: "Output",
                                 placeholder: "Terlaksananya ...",
+                                isReadOnly: false,
                             },
                         ]
                     ).map((fieldInfo) => (
@@ -271,6 +173,7 @@ function ModalInner({
                             rules={{ required: `${fieldInfo.label} wajib diisi.` }}
                             render={({ field, fieldState: { error } }) => (
                                 <TextField
+                                    isReadOnly={fieldInfo.isReadOnly}
                                     {...field}
                                     isRequired
                                     isInvalid={!!error}
@@ -278,7 +181,7 @@ function ModalInner({
                                 >
                                     <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
                                         {fieldInfo.label}{" "}
-                                        <span className="text-danger ml-0.5">*</span>
+                                        {/* <span className="text-danger ml-0.5">*</span> */}
                                     </Label>
                                     <Input placeholder={fieldInfo.placeholder} />
                                     {error && (
@@ -296,7 +199,7 @@ function ModalInner({
                     {/* ── Jumlah Usulan ── */}
                     <Controller
                         control={control}
-                        name="jumlah"
+                        name="kebutuhanRiil.jumlah"
                         rules={{
                             required: "Jumlah wajib diisi.",
                             min: { value: 1, message: "Masukkan angka minimal 1." },
@@ -306,7 +209,7 @@ function ModalInner({
                                 <NumberField
                                     name={field.name}
                                     isRequired
-                                    isDisabled={!selectedBarang}
+                                    isDisabled={!bmdBisaDioptimalkan}
                                     minValue={1}
                                     isInvalid={!!error}
                                     value={field.value ?? undefined}
@@ -324,7 +227,7 @@ function ModalInner({
                                             <NumberField.IncrementButton />
                                         </NumberField.Group>
                                         <span className="text-sm text-foreground/50 font-medium shrink-0 min-w-[40px]">
-                                            {selectedBarang?.satuan ?? "—"}
+                                            {bmdBisaDioptimalkan?.satuan ?? "—"}
                                         </span>
                                     </div>
                                     {error && (
@@ -333,12 +236,12 @@ function ModalInner({
                                         </p>
                                     )}
                                 </NumberField>
-                                {bmdPreview && (
+                                {/* {bmdPreview && (
                                     <p className="text-xs text-warning-600 mt-2">
                                         Stok tersedia: {bmdPreview.jumlah} {bmdPreview.satuan}.
                                         Kebutuhan riil: {Math.max(0, (jumlahUsulan ?? 0) - bmdPreview.jumlah)}
                                     </p>
-                                )}
+                                )} */}
                             </>
                         )}
                     />
@@ -346,10 +249,10 @@ function ModalInner({
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant="ghost" size="sm" onPress={onClose}>
+                <Button variant="ghost" onPress={onClose}>
                     Batal
                 </Button>
-                <Button size="sm" type="submit" form="form-pengadaan">
+                <Button type="submit" form="form-pengadaan">
                     Simpan Usulan
                 </Button>
             </Modal.Footer>
@@ -362,10 +265,10 @@ function ModalInner({
 export default function FormPengadaanModal({
     open,
     initialData,
-    duplicateData,
+    isPenggunaBarang,
     onClose,
     onSubmit,
-}: FormPengadaanModalProps) {
+}: FormPengadaaModal) {
     const state = useOverlayState({
         isOpen: open,
         onOpenChange: (isOpen) => {
@@ -376,8 +279,8 @@ export default function FormPengadaanModal({
     const getModalKey = () => {
         if (!open) return "closed";
         if (initialData)
-            return `edit-${initialData.usulan.kodeBarang}-${initialData.program}`;
-        if (duplicateData) return `dup-${duplicateData.program}-${Date.now()}`;
+            return `edit-${initialData.program}`;
+        // if (duplicateData) return `dup-${duplicateData.program}-${Date.now()}`;
         return `new-${Date.now()}`;
     };
 
@@ -386,9 +289,10 @@ export default function FormPengadaanModal({
             <Modal.Backdrop>
                 <Modal.Container>
                     <ModalInner
+                        isPenggunaBarang={isPenggunaBarang}
+                        open={open}
                         key={getModalKey()}
                         initialData={initialData}
-                        duplicateData={duplicateData}
                         onClose={onClose}
                         onSubmit={onSubmit}
                     />

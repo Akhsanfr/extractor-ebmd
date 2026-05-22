@@ -1,14 +1,14 @@
 import * as XLSX from "xlsx-js-style";
 import { saveAs } from "file-saver";
 import { FormPemeliharaanData } from "@/app/rkbmd/pemeliharaan/addData";
-import { FormPengadaanData } from "@/app/rkbmd/pengadaan/addData";
+import { ListPengadaan } from "@/types/rkbmd";
 
 /**
  * Fungsi Gabungan untuk Mengekspor Rencana Pengadaan dan Rencana Pemeliharaan
  * ke dalam satu file Excel dengan dua sheet terpisah.
  */
 export async function exportRkbmdToExcel(
-    pengadaanData: FormPengadaanData[],
+    pengadaanData: ListPengadaan[],
     pemeliharaanData: FormPemeliharaanData[]
 ) {
     const wb = XLSX.utils.book_new();
@@ -16,26 +16,41 @@ export async function exportRkbmdToExcel(
         top: { style: "thin" }, bottom: { style: "thin" },
         left: { style: "thin" }, right: { style: "thin" }
     };
-    const getAlpha = (i: number) => String.fromCharCode(65 + i);
-    const getLowerAlpha = (i: number) => String.fromCharCode(97 + i);
+
+    // Helper untuk penomoran
+    const getAlpha = (i: number) => String.fromCharCode(65 + i); // A, B, C
+    const getLowerAlpha = (i: number) => String.fromCharCode(97 + i); // a, b, c
+    const getRoman = (i: number) => {
+        const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+        return roman[i] || (i + 1).toString();
+    };
 
     // ============================================================================
     // 1. PROSES DATA & SHEET: PENGADAAN
     // ============================================================================
     const groupedPengadaan: Record<string, any> = {};
+
     pengadaanData.forEach((item) => {
-        const { kuasaPenggunaBarang, program, kegiatan, output } = item;
-        if (!groupedPengadaan[kuasaPenggunaBarang]) groupedPengadaan[kuasaPenggunaBarang] = {};
-        if (!groupedPengadaan[kuasaPenggunaBarang][program]) groupedPengadaan[kuasaPenggunaBarang][program] = {};
-        if (!groupedPengadaan[kuasaPenggunaBarang][program][kegiatan]) groupedPengadaan[kuasaPenggunaBarang][program][kegiatan] = {};
-        if (!groupedPengadaan[kuasaPenggunaBarang][program][kegiatan][output]) groupedPengadaan[kuasaPenggunaBarang][program][kegiatan][output] = [];
-        groupedPengadaan[kuasaPenggunaBarang][program][kegiatan][output].push(item);
+        const { penggunaBarang, kuasaPenggunaBarang, program, kegiatan, output } = item;
+
+        // Menambahkan penggunaBarang ke dalam hierarki grouping
+        if (!groupedPengadaan[penggunaBarang]) groupedPengadaan[penggunaBarang] = {};
+        if (!groupedPengadaan[penggunaBarang][kuasaPenggunaBarang]) groupedPengadaan[penggunaBarang][kuasaPenggunaBarang] = {};
+        if (!groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program]) groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program] = {};
+        if (!groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan]) groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan] = {};
+        if (!groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan][output]) groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan][output] = [];
+
+        groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan][output].push(item);
     });
 
     const rowsPengadaan: any[][] = [];
+
+    // Mengambil nama pengguna barang untuk header atas (default ke string kosong jika data kosong)
+    const headerPenggunaBarang = pengadaanData.length > 0 ? pengadaanData[0].penggunaBarang : "................(2)";
+
     rowsPengadaan.push(["RENCANA KEBUTUHAN BARANG MILIK DAERAH"]);
     rowsPengadaan.push(["(RENCANA PENGADAAN)"]);
-    rowsPengadaan.push(["PENGGUNA BARANG", ":", "................(2)"]);
+    rowsPengadaan.push(["PENGGUNA BARANG", ":", headerPenggunaBarang]); // Header terisi otomatis
     rowsPengadaan.push(["TAHUN ANGGARAN", ":", "2027"]);
     rowsPengadaan.push([]);
     rowsPengadaan.push(["KAB/KOTA", ":", "PASURUAN"]);
@@ -54,34 +69,53 @@ export async function exportRkbmdToExcel(
     rowsPengadaan.push(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]);
 
     const startIdxPengadaan = rowsPengadaan.length;
-    let kuasaIdxP = 1;
-    for (const [kuasa, programs] of Object.entries(groupedPengadaan)) {
-        rowsPengadaan.push(["", `${kuasaIdxP}. ${kuasa}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
-        let progIdx = 0;
-        for (const [program, kegiatans] of Object.entries(programs as Record<string, any>)) {
-            rowsPengadaan.push(["", `     ${getAlpha(progIdx)}. ${program}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
-            let kegIdx = 1;
-            for (const [kegiatan, outputs] of Object.entries(kegiatans as Record<string, any>)) {
-                rowsPengadaan.push(["", `          ${kegIdx}). ${kegiatan}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
-                let outIdx = 0;
-                for (const [output, items] of Object.entries(outputs as Record<string, any>)) {
-                    rowsPengadaan.push(["", `               ${getLowerAlpha(outIdx)}. ${output}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
-                    for (const item of items as FormPengadaanData[]) {
-                        rowsPengadaan.push([
-                            "", "",
-                            item.usulan.kodeBarang, item.usulan.namaBarang, item.usulan.jumlah, item.usulan.satuan,
-                            "-", "-",
-                            item.bmdBisaDioptimalkan?.kodeBarang || "-", item.bmdBisaDioptimalkan?.namaBarang || "-", item.bmdBisaDioptimalkan?.jumlah || "-", item.bmdBisaDioptimalkan?.satuan || "-",
-                            item.kebutuhanRiil?.jumlah || "-", item.kebutuhanRiil?.satuan || "-", ""
-                        ]);
-                    }
-                    outIdx++;
-                }
-                kegIdx++;
+
+    // Loop berjenjang dimulai dari penggunaBarang
+    let pengIdx = 0;
+    for (const [pengguna, kuasas] of Object.entries(groupedPengadaan)) {
+        // Tulis row Pengguna Barang
+        rowsPengadaan.push(["", `${getRoman(pengIdx)}. ${pengguna}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+
+        let kuasaIdxP = 1;
+        for (const [kuasa, programs] of Object.entries(kuasas as Record<string, any>)) {
+
+            // CEK: Jika kuasa pengguna barang tidak kosong, maka tulis row-nya
+            const isKuasaEmpty = !kuasa || kuasa.trim() === "" || kuasa === "-" || kuasa === "null";
+            if (!isKuasaEmpty) {
+                rowsPengadaan.push(["", `     ${kuasaIdxP}. ${kuasa}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+                kuasaIdxP++; // Increment hanya jika row kuasa ditulis
             }
-            progIdx++;
+
+            let progIdx = 0;
+            for (const [program, kegiatans] of Object.entries(programs as Record<string, any>)) {
+                // Indentasi disesuaikan secara visual
+                rowsPengadaan.push(["", `         ${getAlpha(progIdx)}. ${program}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+
+                let kegIdx = 1;
+                for (const [kegiatan, outputs] of Object.entries(kegiatans as Record<string, any>)) {
+                    rowsPengadaan.push(["", `             ${kegIdx}). ${kegiatan}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+
+                    let outIdx = 0;
+                    for (const [output, items] of Object.entries(outputs as Record<string, any>)) {
+                        rowsPengadaan.push(["", `                 ${getLowerAlpha(outIdx)}. ${output}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+
+                        for (const item of items as ListPengadaan[]) {
+                            rowsPengadaan.push([
+                                "", "",
+                                item.usulan?.kodeBarang || "-", item.usulan?.namaBarang || "-", item.usulan?.jumlah || "-", item.usulan?.satuan || "-",
+                                "-", "-",
+                                item.bmdBisaDioptimalkan?.kodeBarang || "-", item.bmdBisaDioptimalkan?.namaBarang || "-", item.bmdBisaDioptimalkan?.jumlah || "-", item.bmdBisaDioptimalkan?.satuan || "-",
+                                item.kebutuhanRiil?.jumlah || "-", item.kebutuhanRiil?.satuan || "-", ""
+                            ]);
+                        }
+                        outIdx++;
+                    }
+                    kegIdx++;
+                }
+                progIdx++;
+            }
         }
-        kuasaIdxP++;
+        pengIdx++;
     }
     const endIdxPengadaan = rowsPengadaan.length;
 
@@ -94,31 +128,6 @@ export async function exportRkbmdToExcel(
     rowsPengadaan.push([]);
     rowsPengadaan.push(["", "", "", "", "", "", "", "", "", "", "", "", "..........................................................(23)", "", ""]);
     rowsPengadaan.push(["", "", "", "", "", "", "", "", "", "", "", "", "NIP ………………………….………… (23)", "", ""]);
-    rowsPengadaan.push([]);
-    rowsPengadaan.push(["Petunjuk Pengisian"]);
-    rowsPengadaan.push(["(1)", "Diisi nomor halaman."]);
-    rowsPengadaan.push(["(2)", "Diisi nama pengguna barang."]);
-    rowsPengadaan.push(["(3)", "Diisi tahun anggaran RKBMD yang diusulkan."]);
-    rowsPengadaan.push(["(4)", "Diisi nama Pemerintah Provinsi."]);
-    rowsPengadaan.push(["(5)", "Diisi nama Pemerintah Kabupaten/Kota."]);
-    rowsPengadaan.push(["(6)", "Diisi no urut."]);
-    rowsPengadaan.push(["(7)", "Diisi Kuasa Pengguna Barang/Program/Kegiatan/Output berdasarkan rencana kerja SKPD."]);
-    rowsPengadaan.push(["(8)", "Diisi kode barang yang diusulkan berdasarkan ketentuan penggolongan barang."]);
-    rowsPengadaan.push(["(9)", "Diisi nama barang yang diusulkan."]);
-    rowsPengadaan.push(["(10)", "Diisi kuantitas barang yang diusulkan."]);
-    rowsPengadaan.push(["(11)", "Diisi satuan barang yang diusulkan (m, m², unit, buah, set, dsb)."]);
-    rowsPengadaan.push(["(12)", "Diisi kuantitas standar kebutuhan maksimum."]);
-    rowsPengadaan.push(["(13)", "Diisi satuan standar kebutuhan maksimum."]);
-    rowsPengadaan.push(["(14)", "Diisi kode barang yang masih dimungkinkan untuk dioptimalkan."]);
-    rowsPengadaan.push(["(15)", "Diisi nama barang yang masih dimungkinkan untuk dioptimalkan."]);
-    rowsPengadaan.push(["(16)", "Diisi jumlah barang yang masih dimungkinkan untuk dioptimalkan."]);
-    rowsPengadaan.push(["(17)", "Diisi satuan barang yang masih dimungkinkan untuk dioptimalkan."]);
-    rowsPengadaan.push(["(18)", "Diisi kuantitas kebutuhan riil."]);
-    rowsPengadaan.push(["(19)", "Diisi satuan kebutuhan riil."]);
-    rowsPengadaan.push(["(20)", "Diisi keterangan penting lainnya."]);
-    rowsPengadaan.push(["(21)", "Diisi tempat dan tanggal disahkan."]);
-    rowsPengadaan.push(["(22)", "Diisi jabatan Pengguna Barang yang menandatangani."]);
-    rowsPengadaan.push(["(23)", "Diisi nama dan NIP pejabat yang mengesahkan."]);
 
     const wsPengadaan = XLSX.utils.aoa_to_sheet(rowsPengadaan);
     wsPengadaan["!cols"] = [
@@ -141,6 +150,7 @@ export async function exportRkbmdToExcel(
         for (let C = 0; C < 15; ++C) {
             const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
             if (!wsPengadaan[cellRef]) wsPengadaan[cellRef] = { t: "s", v: "" };
+
             if (R === 0 || R === 1) {
                 wsPengadaan[cellRef].s = { font: { bold: true, sz: 12 }, alignment: { horizontal: "center", vertical: "center" } };
             } else if (R >= 2 && R <= 6) {

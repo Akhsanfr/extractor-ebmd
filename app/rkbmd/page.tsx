@@ -3,14 +3,16 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@heroui/react";
-import { loadAllFromStorage } from "@/lib/bmd-storage";
+import { loadAllFromStorage, loadStorage, PENGADAAN_STORAGE_KEY } from "@/lib/bmd-storage";
 import { exportRkbmdToExcel } from "@/lib/exportExcel"; // Fungsi gabungan baru
 import type { BarangAll } from "@/types/bmd";
 import type { FormPemeliharaanData } from "@/app/rkbmd/pemeliharaan/addData";
-import type { FormPengadaanData } from "@/app/rkbmd/pengadaan/addData";
+import { ListPengadaan } from "@/types/rkbmd";
+import ProfilePerangkatDaerah from "../perangkatDaerah";
+import { convertPengadaanV1toV2 } from "./pengadaan/util";
 
 const PEMELIHARAAN_KEY = "bmd_list_pemeliharaan";
-const PENGADAAN_KEY = "bmd_list_pengadaan";
+// const PENGADAAN_KEY = "bmd_list_pengadaan";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function loadData<T>(key: string): T[] {
@@ -45,16 +47,35 @@ function StatCard({ label, value, sub, color = "default" }: {
 export default function RkbmdDashboardPage() {
     const [barangAll, setBarangAll] = useState<BarangAll[]>([]);
     const [pemeliharaan, setPemeliharaan] = useState<FormPemeliharaanData[]>([]);
-    const [pengadaan, setPengadaan] = useState<FormPengadaanData[]>([]);
+    const [pengadaan, setListPengadaan] = useState<ListPengadaan[]>([]);
     const [isExporting, setIsExporting] = useState(false);
     const [mounted, setMounted] = useState(false);
 
+    // useEffect(() => {
+    //     setBarangAll(loadAllFromStorage());
+    //     setPemeliharaan(loadData<FormPemeliharaanData>(PEMELIHARAAN_KEY));
+    //     setPengadaan(loadData<ListPengadaan>(PENGADAAN_STORAGE_KEY));
+    //     setMounted(true);
+    // }, []);
+
     useEffect(() => {
-        setBarangAll(loadAllFromStorage());
-        setPemeliharaan(loadData<FormPemeliharaanData>(PEMELIHARAAN_KEY));
-        setPengadaan(loadData<FormPengadaanData>(PENGADAAN_KEY));
-        setMounted(true);
+        try {
+            const v2 = loadStorage<ListPengadaan[]>(PENGADAAN_STORAGE_KEY);
+            console.log(v2)
+            if (v2 === null) {
+                const v1 = convertPengadaanV1toV2();
+                setListPengadaan(v1);
+            } else {
+                setListPengadaan(v2);
+            }
+        } catch (error) {
+            console.error("Gagal membaca dari localStorage:", error);
+        } finally {
+            setMounted(true);
+        }
     }, []);
+
+
 
     if (!mounted) return null;
 

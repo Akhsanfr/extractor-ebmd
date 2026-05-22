@@ -1,28 +1,41 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@heroui/react";
-import FormPengadaanModal, { FormPengadaanData } from "@/app/rkbmd/pengadaan/addData";
+import { Button, EmptyState, Table, TableBody, TableCell, TableRow } from "@heroui/react";
+import FormPengadaanModal from "@/app/rkbmd/pengadaan/addData";
+import { FormPengadaan, ListPengadaan } from "@/types/rkbmd";
+import { loadStorage, PENGADAAN_STORAGE_KEY, PERANGKAT_DAERAH_KEY } from "@/lib/bmd-storage";
+import { Copy, Pen, Plus, ShoppingBasket, Trash } from "lucide-react";
+import { convertPengadaanV1toV2 } from "./util";
+import { JenisPerangkatDaerah, PerangkatDaerah } from "@/types/perangkatDaerah";
 
-const PENGADAAN_STORAGE_KEY = "bmd_list_pengadaan";
+// const PENGADAAN_STORAGE_KEY = "bmd_list_pengadaan";
+
+const initialPengadaan: FormPengadaan = {
+    penggunaBarang: "",
+    kuasaPenggunaBarang: "",
+    program: "",
+    kegiatan: "",
+    output: "",
+    bmdBisaDioptimalkan: null,
+    usulan: null,
+    kebutuhanRiil: null
+}
 
 export default function RekapPengadaanPage() {
     // ── State ────────────────────────────────────────────────────────────────
     const [isLoaded, setIsLoaded] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [listPengadaan, setListPengadaan] = useState<FormPengadaanData[]>([]);
+    const [listPengadaan, setListPengadaan] = useState<ListPengadaan[]>([]);
+    const [perangkatDaerah, setPerangkatDaerah] = useState<PerangkatDaerah | null>(null)
 
     const [editIndex, setEditIndex] = useState<number | null>(null);
-    const [duplicateData, setDuplicateData] = useState<{
-        kuasaPenggunaBarang: string;
-        program: string;
-        kegiatan: string;
-        output: string;
-    } | null>(null);
 
     // ── Helper: Sorting Otomatis ─────────────────────────────────────────────
-    const sortPengadaan = (data: FormPengadaanData[]) => {
+    const sortPengadaan = (data: ListPengadaan[]) => {
         return [...data].sort((a, b) => {
+            const pengguna = a.penggunaBarang.localeCompare(b.kuasaPenggunaBarang);
+            if (pengguna !== 0) return pengguna;
             const kuasa = a.kuasaPenggunaBarang.localeCompare(b.kuasaPenggunaBarang);
             if (kuasa !== 0) return kuasa;
             const prog = a.program.localeCompare(b.program);
@@ -36,11 +49,13 @@ export default function RekapPengadaanPage() {
     // ── Effects ──────────────────────────────────────────────────────────────
     useEffect(() => {
         try {
-            const savedData = localStorage.getItem(PENGADAAN_STORAGE_KEY);
-            if (savedData) {
-                const parsed = JSON.parse(savedData);
-                setListPengadaan(sortPengadaan(parsed));
-            }
+            // load list pengadaan
+            const listPengadaan = loadStorage<ListPengadaan[]>(PENGADAAN_STORAGE_KEY);
+            setListPengadaan(listPengadaan ?? []);
+
+            // load profile
+            setPerangkatDaerah(loadStorage<PerangkatDaerah>(PERANGKAT_DAERAH_KEY));
+
         } catch (error) {
             console.error("Gagal membaca dari localStorage:", error);
         } finally {
@@ -56,29 +71,18 @@ export default function RekapPengadaanPage() {
             console.error("Gagal menyimpan ke localStorage:", error);
         }
     }, [listPengadaan, isLoaded]);
-
+    const [initialData, setInitialData] = useState<FormPengadaan>(initialPengadaan)
     // ── Handlers Modal & Aksi ─────────────────────────────────────────────────
-    const handleOpenModalCreate = () => {
-        setEditIndex(null);
-        setDuplicateData(null);
-        setIsModalOpen(true);
-    };
-
-    const handleOpenModalEdit = (index: number) => {
-        setEditIndex(index);
-        setDuplicateData(null);
-        setIsModalOpen(true);
-    };
-
-    const handleOpenModalDuplicate = (index: number) => {
-        const item = listPengadaan[index];
-        setEditIndex(null);
-        setDuplicateData({
-            kuasaPenggunaBarang: item.kuasaPenggunaBarang,
-            program: item.program,
-            kegiatan: item.kegiatan,
-            output: item.output,
-        });
+    const handleOpen = (initial: FormPengadaan | null) => {
+        if (!perangkatDaerah) {
+            alert("Lengkapi profile perankat daerah terlebih dahulu")
+            return;
+        }
+        if (initial) {
+            setInitialData(initial)
+        } else {
+            setInitialData({ penggunaBarang: perangkatDaerah.penggunaBarang, kuasaPenggunaBarang: perangkatDaerah.kuasaPenggunaBarang, program: "", kegiatan: "", output: "", usulan: null, bmdBisaDioptimalkan: null, kebutuhanRiil: null })
+        }
         setIsModalOpen(true);
     };
 
@@ -89,10 +93,11 @@ export default function RekapPengadaanPage() {
     };
 
     const handleCloseModal = () => {
+        setInitialData(initialPengadaan)
         setIsModalOpen(false);
     };
 
-    const handleSubmitPengadaan = (newData: FormPengadaanData) => {
+    const handleSubmitPengadaan = (newData: ListPengadaan) => {
         setListPengadaan((prev) => {
             let nextState;
             if (editIndex !== null) {
@@ -105,6 +110,21 @@ export default function RekapPengadaanPage() {
         });
         setIsModalOpen(false);
     };
+    const handleDuplicate = (item: ListPengadaan) => {
+        setIsModalOpen(true)
+        setInitialData({
+            program: item.program,
+            penggunaBarang: item.penggunaBarang,
+            kuasaPenggunaBarang: item.kuasaPenggunaBarang,
+            kegiatan: item.kegiatan,
+            output: item.output,
+            bmdBisaDioptimalkan: null,
+            usulan: null,
+            kebutuhanRiil: null
+        })
+    }
+
+
 
     if (!isLoaded) return null;
 
@@ -116,58 +136,58 @@ export default function RekapPengadaanPage() {
                     <h1 className="text-2xl font-bold tracking-tight text-foreground">
                         Data Usulan Pengadaan Barang
                     </h1>
-                    <p className="text-sm text-foreground/60 mt-1">
+                    <p className="text-sm text-muted mt-1">
                         Kelola dan catat seluruh usulan RKBMD pengadaan aset barang baru.
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Button
-                        onPress={handleOpenModalCreate}
-                        className="font-medium shadow-sm"
+                        onClick={() => handleOpen(null)}
                     >
-                        + Tambah Pengadaan
+                        <Plus /> Tambah Pengadaan
                     </Button>
                 </div>
             </div>
 
             {/* ── Render Tabel Data ── */}
-            <div className="overflow-x-auto border rounded-xl shadow-sm bg-background">
-                <table className="w-full text-sm text-left border-collapse">
-                    <thead className="bg-muted/50 text-foreground/70 uppercase text-[11px] font-semibold tracking-wider border-b">
-                        <tr>
-                            <th className="px-4 py-3">Kuasa Pengguna Barang</th>
-                            <th className="px-4 py-3">Program / Kegiatan / Output</th>
-                            <th className="px-4 py-3">Usulan Pengadaan</th>
-                            <th className="px-4 py-3">BMD Dapat Dioptimalkan</th>
-                            <th className="px-4 py-3">Kebutuhan Riil</th>
-                            <th className="px-4 py-3 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y">
-                        {listPengadaan.length === 0 ? (
-                            <tr>
-                                <td colSpan={6} className="px-4 py-12 text-center text-foreground/40">
-                                    Belum ada data usulan pengadaan. Klik tombol di atas untuk menambah data.
-                                </td>
-                            </tr>
-                        ) : (
-                            listPengadaan.map((item, index) => (
-                                <tr key={index} className="hover:bg-muted/30 transition-colors">
-
+            {/* <div className="overflow-x-auto border rounded-xl shadow-sm bg-background"> */}
+            <Table>
+                <Table.ScrollContainer>
+                    <Table.Content aria-label="Team members" className="min-w-[600px]">
+                        <Table.Header>
+                            <Table.Column isRowHeader className="flex flex-col">
+                                <span className="font-bold text-foreground">Pengguna Barang</span>
+                                <span className="text-xs text-muted">Kuasa Pengguna Barang</span></Table.Column>
+                            <Table.Column>Program / Kegiatan / Output</Table.Column>
+                            <Table.Column>Usulan Pengadaan</Table.Column>
+                            <Table.Column>BMD Dapat Dioptimalkan</Table.Column>
+                            <Table.Column>Kebutuhan Riil</Table.Column>
+                            <Table.Column>Aksi</Table.Column>
+                        </Table.Header>
+                        <TableBody
+                            renderEmptyState={() => (
+                                <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center">
+                                    <ShoppingBasket />
+                                    <span className="text-sm text-muted">Belum ada data usulan pengadaan. Klik tombol di atas untuk menambah data.</span>
+                                </EmptyState>
+                            )}>
+                            {listPengadaan.map((item, index) => (
+                                <TableRow key={index}>
                                     {/* Kolom 1: Kuasa Pengguna Barang */}
-                                    <td className="px-4 py-3.5 font-medium vertical-top w-48">
-                                        {item.kuasaPenggunaBarang}
-                                    </td>
+                                    <TableCell className="align-top font-medium">
+                                        <span>{item.penggunaBarang}</span>
+                                        <span>{item.kuasaPenggunaBarang}</span>
+                                    </TableCell>
 
                                     {/* Kolom 2: Program / Kegiatan / Output */}
-                                    <td className="px-4 py-3.5 vertical-top w-56">
+                                    <TableCell className="align-top">
                                         <div className="font-semibold text-foreground text-xs">{item.program}</div>
                                         <div className="text-[11px] text-foreground/70 mt-1">- {item.kegiatan}</div>
                                         <div className="text-[10px] text-foreground/50 mt-0.5">- {item.output}</div>
-                                    </td>
+                                    </TableCell>
 
                                     {/* Kolom 3: Usulan Pengadaan */}
-                                    <td className="px-4 py-3.5 vertical-top w-52">
+                                    <TableCell className="align-top">
                                         <div className="flex items-center gap-2 mb-1">
                                             <div className="font-semibold text-foreground text-xs">{item.usulan.namaBarang}</div>
                                             <span className="px-1.5 py-0.5 text-[8px] rounded bg-primary/10 text-primary font-bold uppercase tracking-wider whitespace-nowrap">
@@ -178,10 +198,10 @@ export default function RekapPengadaanPage() {
                                         <div className="text-xs font-semibold text-primary">
                                             {item.usulan.jumlah} <span className="font-normal text-foreground/60">{item.usulan.satuan}</span>
                                         </div>
-                                    </td>
+                                    </TableCell>
 
                                     {/* Kolom 4: BMD Bisa Dioptimalkan */}
-                                    <td className="px-4 py-3.5 vertical-top w-48">
+                                    <TableCell className="align-top">
                                         {item.bmdBisaDioptimalkan ? (
                                             <>
                                                 <div className="font-semibold text-foreground text-xs">{item.bmdBisaDioptimalkan.namaBarang}</div>
@@ -193,66 +213,57 @@ export default function RekapPengadaanPage() {
                                         ) : (
                                             <span className="text-foreground/40 text-[11px] italic">Belum dioptimalkan</span>
                                         )}
-                                    </td>
+                                    </TableCell>
 
                                     {/* Kolom 5: Kebutuhan Riil */}
-                                    <td className="px-4 py-3.5 vertical-top font-semibold text-foreground w-28">
+                                    <TableCell className="align-top font-semibold text-foreground">
                                         {item.kebutuhanRiil ? (
                                             `${item.kebutuhanRiil.jumlah} ${item.kebutuhanRiil.satuan}`
                                         ) : (
                                             <span className="text-foreground/40 text-[11px] font-normal italic">-</span>
                                         )}
-                                    </td>
+                                    </TableCell>
 
                                     {/* Kolom 6: Aksi */}
-                                    <td className="px-4 py-3.5 vertical-top w-32">
+                                    <TableCell className="align-top">
                                         <div className="flex items-center justify-center gap-1.5">
                                             <Button
+                                                variant="secondary"
                                                 isIconOnly
-                                                size="sm"
-                                                onPress={() => handleOpenModalDuplicate(index)}
-                                                className="text-foreground/70"
+                                                onPress={() => handleDuplicate(item)}
                                                 aria-label="Duplikat"
-                                            >
-                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                                            </Button>
-
+                                            ><Copy /></Button>
                                             <Button
                                                 isIconOnly
-                                                size="sm"
-                                                onPress={() => handleOpenModalEdit(index)}
-                                                className="text-primary-600 bg-primary/10 hover:bg-primary/20"
+                                                variant="secondary"
+                                                onPress={() => handleOpen(item)}
                                                 aria-label="Edit"
-                                            >
-                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                                            </Button>
-
+                                            ><Pen /></Button>
                                             <Button
                                                 isIconOnly
-                                                size="sm"
+                                                variant="danger-soft"
                                                 onPress={() => handleDelete(index)}
-                                                className="text-danger-600 bg-danger/10 hover:bg-danger/20"
                                                 aria-label="Hapus"
-                                            >
-                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                            </Button>
+                                            ><Trash /></Button>
                                         </div>
-                                    </td>
-                                </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table.Content>
+                </Table.ScrollContainer>
+            </Table>
 
-            {/* Modal */}
-            <FormPengadaanModal
-                open={isModalOpen}
-                onClose={handleCloseModal}
-                onSubmit={handleSubmitPengadaan}
-                initialData={editIndex !== null ? listPengadaan[editIndex] : null}
-                duplicateData={duplicateData}
-            />
-        </div>
+            {/* Modal */}{
+                perangkatDaerah &&
+                <FormPengadaanModal
+                    isPenggunaBarang={perangkatDaerah.jenis === JenisPerangkatDaerah.penggunaBarang}
+                    open={isModalOpen}
+                    onClose={handleCloseModal}
+                    onSubmit={handleSubmitPengadaan}
+                    initialData={initialData}
+                />
+            }
+        </div >
     );
 }

@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Modal, useOverlayState } from "@heroui/react";
 import * as XLSX from "xlsx";
-import { BarangSelected } from "./addData";
+import { Barang } from "@/types/bmd";
 
 interface ExcelBarangSelectProps {
-    value: BarangSelected | null;
-    onChange: (value: BarangSelected) => void;
+    value: Barang | null;
+    onChange: (value: Barang) => void;
     error?: string;
 }
 
@@ -79,7 +79,7 @@ export function AvailableKodeBarang({ value, onChange, error }: ExcelBarangSelec
                     ].join(" ")}
                 >
                     <span className={value ? "text-foreground truncate" : "text-default-400"}>
-                        {value ? `${value.kodeBarang} — ${value.namaBarang}` : "Klik untuk memilih barang dari Excel..."}
+                        {value ? `${value.kodeBarang} — ${value.namaBarang}` : "Klik untuk memilih data barang"}
                     </span>
                     <span className="text-xs font-medium text-default-500 shrink-0 px-2 py-0.5 rounded bg-default-200">
                         Cari
@@ -94,7 +94,7 @@ export function AvailableKodeBarang({ value, onChange, error }: ExcelBarangSelec
                     <Modal.Container>
                         <Modal.Dialog className="max-w-5xl max-h-[85vh] flex flex-col">
                             <Modal.Header className="flex flex-col gap-2">
-                                <h2 className="text-xl font-bold">Pilih Kode Barang (Excel)</h2>
+                                <h2 className="text-xl font-bold">Pilih Kode Barang</h2>
                                 <Input
                                     placeholder="Cari nama barang atau kode..."
                                     value={searchTerm}
@@ -103,7 +103,7 @@ export function AvailableKodeBarang({ value, onChange, error }: ExcelBarangSelec
                             </Modal.Header>
                             <Modal.Body className="overflow-y-auto">
                                 {loading ? (
-                                    <p className="p-4 text-center text-foreground/50">Memuat data Excel...</p>
+                                    <p className="p-4 text-center text-foreground/50">Memuat kode barang...</p>
                                 ) : (
                                     <table className="w-full text-left border-collapse text-sm">
                                         <thead className="bg-muted sticky top-0 z-10 shadow-sm">
@@ -136,7 +136,6 @@ export function AvailableKodeBarang({ value, onChange, error }: ExcelBarangSelec
                                                                             satuan: "Unit", // Sesuaikan jika di excel ada kolom satuan
                                                                             asetType: "peralatan_mesin", // Default atau sesuaikan mapping
                                                                             jumlah: 0,
-                                                                            nomor: 0
                                                                         });
                                                                         setIsOpen(false);
                                                                     }}

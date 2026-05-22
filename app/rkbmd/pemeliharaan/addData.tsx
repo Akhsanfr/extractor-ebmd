@@ -20,19 +20,7 @@ import type { AsetType, BarangAll } from "@/types/bmd";
 
 export type { AsetType } from "@/types/bmd";
 export type BarangSelected = BarangAll;
-export interface FormPemeliharaanData {
-    kuasaPenggunaBarang: string;
-    program: string;
-    kegiatan: string;
-    output: string;
-    kodeBarang: string;
-    namaBarang: string;
-    jumlahTersedia: number;
-    satuan: string;
-    asetType: AsetType;
-    namaPemeliharaan: string;
-    jumlah: number;
-}
+
 
 export interface FormPemeliharaanModalProps {
     open: boolean;

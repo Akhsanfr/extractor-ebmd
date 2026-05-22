@@ -3,7 +3,7 @@ export type AsetType =
     | "peralatan_mesin"
     | "bangunan"
     | "jalan_irigasi_jaringan"
-    | "aset_tetap_lainnya";
+    | "aset_tetap_lain";
 
 export interface BarangMerged {
     nomor: number;
@@ -14,6 +14,14 @@ export interface BarangMerged {
 }
 
 export interface BarangAll extends BarangMerged {
+    asetType: AsetType;
+}
+
+export type Barang = {
+    kodeBarang: string;
+    namaBarang: string;
+    jumlah: number;
+    satuan: string;
     asetType: AsetType;
 }
 
@@ -36,7 +44,7 @@ export const ASET_LABEL: Record<AsetType, string> = {
     peralatan_mesin: "Peralatan dan Mesin",
     bangunan: "Bangunan",
     jalan_irigasi_jaringan: "Jalan, Irigasi, dan Jaringan",
-    aset_tetap_lainnya: "Aset Tetap Lainnya",
+    aset_tetap_lain: "Aset Tetap Lain",
 };
 
 export const ALL_ASET_TYPES = Object.keys(ASET_LABEL) as AsetType[];

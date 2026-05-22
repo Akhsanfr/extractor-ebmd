@@ -317,6 +317,54 @@ export async function exportRkbmdToExcel(
     // ============================================================================
     // 3. GENERATE & DOWNLOAD WORKBOOK GABUNGAN
     // ============================================================================
+
+    // A. Kumpulkan semua relasi Kode Barang dan Aset Type
+    const globalAsetTypeMap = new Map<string, string>();
+
+    pengadaanData.forEach((item) => {
+        if (item.usulan?.kodeBarang && item.usulan?.asetType) {
+            globalAsetTypeMap.set(item.usulan.kodeBarang, item.usulan.asetType);
+        }
+        if (item.bmdBisaDioptimalkan?.kodeBarang && item.bmdBisaDioptimalkan?.asetType) {
+            globalAsetTypeMap.set(item.bmdBisaDioptimalkan.kodeBarang, item.bmdBisaDioptimalkan.asetType);
+        }
+    });
+
+    pemeliharaanData.forEach((item) => {
+        const bmdData = (item as any).bmd || item; // Fallback jika format flat/nested
+        if (bmdData?.kodeBarang && bmdData?.asetType) {
+            globalAsetTypeMap.set(bmdData.kodeBarang, bmdData.asetType);
+        }
+    });
+
+    // B. Buat Row untuk Sheet METADATA
+    const metadataRows: any[][] = [["KODE_BARANG", "ASET_TYPE"]];
+    globalAsetTypeMap.forEach((asetType, kodeBarang) => {
+        metadataRows.push([kodeBarang, asetType]);
+    });
+
+    // C. Convert ke Sheet dan Append
+    const wsMetadata = XLSX.utils.aoa_to_sheet(metadataRows);
+    XLSX.utils.book_append_sheet(wb, wsMetadata, "METADATA");
+
+    // D. Sembunyikan Sheet METADATA
+    // SheetJS mengatur visibilitas melalui properti wb.Workbook.Sheets array
+    if (!wb.Workbook) {
+        wb.Workbook = { Views: [{ activeTab: 0 } as any] };
+    }
+
+    if (!wb.Workbook.Sheets) {
+        wb.Workbook.Sheets = [];
+    }
+
+    // Index mengikuti urutan append: 0=PENGADAAN, 1=PEMELIHARAAN, 2=METADATA
+    wb.Workbook.Sheets = [
+        {}, // PENGADAAN (Normal)
+        {}, // PEMELIHARAAN (Normal)
+        { Hidden: 1 } // METADATA (Hidden)
+    ];
+
+
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     const blob = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
     saveAs(blob, "RKBMD_Gabungan_Pengadaan_dan_Pemeliharaan.xlsx");

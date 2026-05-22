@@ -154,29 +154,34 @@ function ModalInner({
                             {
                                 name: "penggunaBarang" as const,
                                 isReadOnly: true,
+                                isRequired: true,
                                 label: "Pengguna Barang",
                                 placeholder: "Dinas/Badan/Kecamatan",
                             },
                             {
                                 name: "kuasaPenggunaBarang" as const,
+                                isRequired: false, // Ini tidak wajib
                                 isReadOnly: !isPenggunaBarang,
                                 label: "Kuasa Pengguna Barang",
                                 placeholder: "UPT/Puskesmas/Sekolah/Bagian ...",
                             },
                             {
                                 name: "program" as const,
+                                isRequired: true,
                                 isReadOnly: false,
                                 label: "Program",
                                 placeholder: "Program ...",
                             },
                             {
                                 name: "kegiatan" as const,
+                                isRequired: true,
                                 isReadOnly: false,
                                 label: "Kegiatan",
                                 placeholder: "Kegiatan ...",
                             },
                             {
                                 name: "output" as const,
+                                isRequired: true,
                                 isReadOnly: false,
                                 label: "Output",
                                 placeholder: "Terlaksananya ...",
@@ -187,19 +192,31 @@ function ModalInner({
                             key={fieldInfo.name}
                             control={control}
                             name={fieldInfo.name}
-                            rules={{ required: `${fieldInfo.label} wajib diisi.` }}
-                            render={({ field, fieldState: { error } }) => (
-                                <TextField {...field} isReadOnly={fieldInfo.isReadOnly} isRequired isInvalid={!!error} className="flex flex-col gap-1.5">
+                            rules={{ required: fieldInfo.isRequired ? `${fieldInfo.label} wajib diisi.` : false }}
+
+                            // 1. Pecah field untuk mengambil ref dan value secara spesifik
+                            render={({ field: { ref, value, ...fieldProps }, fieldState: { error } }) => (
+                                <TextField
+                                    {...fieldProps}
+                                    value={value || ""} // 2. Fallback ke "" agar tidak pernah undefined (mencegah uncontrolled state)
+                                    isReadOnly={fieldInfo.isReadOnly}
+                                    isRequired={fieldInfo.isRequired}
+                                    isInvalid={!!error}
+                                    className="flex flex-col gap-1.5"
+                                >
                                     <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                                        {fieldInfo.label} <span className="text-danger ml-0.5">*</span>
+                                        {fieldInfo.label}
+                                        {fieldInfo.isRequired && <span className="text-danger ml-0.5">*</span>}
                                     </Label>
-                                    <Input placeholder={fieldInfo.placeholder} />
+
+                                    {/* 3. Masukkan ref dari RHF LANGSUNG ke dalam elemen Input aslinya */}
+                                    <Input ref={ref} placeholder={fieldInfo.placeholder} />
+
                                     {error && <p className="text-[11px] text-danger font-medium mt-0.5">{error.message}</p>}
                                 </TextField>
                             )}
                         />
                     ))}
-
                     <SectionLabel>Detail Pemeliharaan</SectionLabel>
 
                     <Controller
@@ -236,14 +253,14 @@ function ModalInner({
                                 name={field.name}
                                 isRequired
                                 isDisabled={!selectedBarang}
-                                minValue={1}
+                                minValue={0}
                                 isInvalid={!!error}
                                 value={field.value ?? undefined}
                                 onChange={(v) => field.onChange(isNaN(v) ? null : v)}
                                 className="flex flex-col gap-1.5"
                             >
                                 <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                                    Jumlah <span className="text-danger ml-0.5">*</span>
+                                    Jumlah
                                 </Label>
                                 <div className="flex items-center gap-2">
                                     <NumberField.Group className="flex-1">
@@ -266,7 +283,7 @@ function ModalInner({
                             </NumberField>
                         )}
                     />
-                    
+
                     <Controller
                         control={control}
                         name="keterangan"

@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
     { href: "/rkbmd", label: "Dashboard", exact: true },
-    { href: "/rkbmd/pemeliharaan", label: "Pemeliharaan", exact: false },
     { href: "/rkbmd/pengadaan", label: "Pengadaan", exact: false },
+    { href: "/rkbmd/pemeliharaan", label: "Pemeliharaan", exact: false },
 ];
 
 export default function RkbmdLayout({ children }: { children: React.ReactNode }) {
@@ -42,8 +42,8 @@ export default function RkbmdLayout({ children }: { children: React.ReactNode })
                                     className={[
                                         "px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
                                         isActive
-                                            ? "bg-primary text-primary-foreground shadow-sm"
-                                            : "text-default-500 hover:text-foreground hover:bg-default-100",
+                                            ? "bg-accent text-accent-foreground shadow-sm"
+                                            : "hover:text-accent",
                                     ].join(" ")}
                                 >
                                     {label}

@@ -68,14 +68,20 @@ export async function importRkbmdFromExcel(file: File): Promise<{
 
                         if (colGroup && !colKodeBarang) {
                             // Cek pola menggunakan Regex untuk menentukan level hierarki
+                            // PENTING: reset variabel level bawah saat level atas berubah,
+                            // agar nilai lama tidak "bleeding" ke grup berikutnya.
                             if (/^[IVXLCDM]+\.\s+(.*)$/.test(colGroup)) {
                                 curPengguna = colGroup.match(/^[IVXLCDM]+\.\s+(.*)$/)?.[1] || colGroup;
+                                curKuasa = ""; curProgram = ""; curKegiatan = ""; curOutput = "";
                             } else if (/^\d+\.\s+(.*)$/.test(colGroup)) {
                                 curKuasa = colGroup.match(/^\d+\.\s+(.*)$/)?.[1] || colGroup;
+                                curProgram = ""; curKegiatan = ""; curOutput = "";
                             } else if (/^[A-Z]\.\s+(.*)$/.test(colGroup)) {
                                 curProgram = colGroup.match(/^[A-Z]\.\s+(.*)$/)?.[1] || colGroup;
+                                curKegiatan = ""; curOutput = "";
                             } else if (/^\d+\)\.\s+(.*)$/.test(colGroup)) {
                                 curKegiatan = colGroup.match(/^\d+\)\.\s+(.*)$/)?.[1] || colGroup;
+                                curOutput = "";
                             } else if (/^[a-z]\.\s+(.*)$/.test(colGroup)) {
                                 curOutput = colGroup.match(/^[a-z]\.\s+(.*)$/)?.[1] || colGroup;
                             }
@@ -130,14 +136,19 @@ export async function importRkbmdFromExcel(file: File): Promise<{
                         const colKodeBarang = row[2] ? String(row[2]).trim() : "";
 
                         if (colGroup && !colKodeBarang) {
+                            // Reset variabel level bawah saat level atas berubah (sama seperti PENGADAAN)
                             if (/^[IVXLCDM]+\.\s+(.*)$/.test(colGroup)) {
                                 curPengguna = colGroup.match(/^[IVXLCDM]+\.\s+(.*)$/)?.[1] || colGroup;
+                                curKuasa = ""; curProgram = ""; curKegiatan = ""; curOutput = "";
                             } else if (/^\d+\.\s+(.*)$/.test(colGroup)) {
                                 curKuasa = colGroup.match(/^\d+\.\s+(.*)$/)?.[1] || colGroup;
+                                curProgram = ""; curKegiatan = ""; curOutput = "";
                             } else if (/^[A-Z]\.\s+(.*)$/.test(colGroup)) {
                                 curProgram = colGroup.match(/^[A-Z]\.\s+(.*)$/)?.[1] || colGroup;
+                                curKegiatan = ""; curOutput = "";
                             } else if (/^\d+\)\.\s+(.*)$/.test(colGroup)) {
                                 curKegiatan = colGroup.match(/^\d+\)\.\s+(.*)$/)?.[1] || colGroup;
+                                curOutput = "";
                             } else if (/^[a-z]\.\s+(.*)$/.test(colGroup)) {
                                 curOutput = colGroup.match(/^[a-z]\.\s+(.*)$/)?.[1] || colGroup;
                             }

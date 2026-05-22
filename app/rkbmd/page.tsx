@@ -114,47 +114,51 @@ export default function RkbmdDashboardPage() {
 
         setIsImporting(true);
         try {
-            // 1. Parse Excel
             const { pengadaanData: importedPengadaan, pemeliharaanData: importedPemeliharaan } = await importRkbmdFromExcel(selectedFile);
 
-            // 2. Logika Merge Pengadaan
-            const mergedPengadaan = [...pengadaan];
-            importedPengadaan.forEach((importItem) => {
-                const existIdx = mergedPengadaan.findIndex((ex) =>
-                    ex.penggunaBarang === importItem.penggunaBarang &&
-                    ex.kuasaPenggunaBarang === importItem.kuasaPenggunaBarang &&
-                    ex.program === importItem.program &&
-                    ex.kegiatan === importItem.kegiatan &&
-                    ex.output === importItem.output &&
-                    (ex.usulan?.kodeBarang || "") === (importItem.usulan?.kodeBarang || "")
-                );
+            console.table(importedPemeliharaan)
 
-                if (existIdx >= 0) {
-                    mergedPengadaan[existIdx] = importItem; // Overwrite jika kembar
+            // 1. Helper untuk membuat "Unique Key" untuk setiap item
+            //    - Pengadaan : path + kodeBarang usulan
+            //    - Pemeliharaan : path + kodeBarang BMD + namaPemeliharaan
+            //      (satu BMD bisa punya >1 jenis pemeliharaan → harus dianggap item berbeda)
+            const generateKey = (item: any, type: 'pengadaan' | 'pemeliharaan') => {
+                const path = `${item.penggunaBarang}|${item.kuasaPenggunaBarang}|${item.program}|${item.kegiatan}|${item.output}`;
+                if (type === 'pengadaan') {
+                    const kode = item.usulan?.kodeBarang ?? '';
+                    return `${path}|${kode}`;
                 } else {
-                    mergedPengadaan.push(importItem); // Append jika baru
+                    const kode = item.bmd?.kodeBarang ?? item.kodeBarang ?? '';
+                    const namaUsul = item.usulanPemeliharaan?.namaPemeliharaan ?? '';
+                    return `${path}|${kode}|${namaUsul}`;
                 }
+            };
+
+            // 2. LOGIKA MERGE PENGADAAN
+            // Kita masukkan data existing ke Map agar mudah dicari
+            const pengadaanMap = new Map();
+            pengadaan.forEach(item => pengadaanMap.set(generateKey(item, 'pengadaan'), item));
+
+            // Update/Tambahkan data dari Excel
+            importedPengadaan.forEach(item => {
+                pengadaanMap.set(generateKey(item, 'pengadaan'), item); // Key sama akan tertimpa (update), key baru akan ditambah
+            });
+            const mergedPengadaan = Array.from(pengadaanMap.values());
+
+            // 3. LOGIKA MERGE PEMELIHARAAN
+            const pemeliharaanMap = new Map();
+            pemeliharaan.forEach(item => {
+                const key = generateKey(item, 'pemeliharaan');
+                console.log("key generated from localStorage", key)
+                pemeliharaanMap.set(key, item);
             });
 
-            // 3. Logika Merge Pemeliharaan
-            const mergedPemeliharaan = [...pemeliharaan];
-            importedPemeliharaan.forEach((importItem) => {
-                const existIdx = mergedPemeliharaan.findIndex((ex) =>
-                    ex.penggunaBarang === importItem.penggunaBarang &&
-                    ex.kuasaPenggunaBarang === importItem.kuasaPenggunaBarang &&
-                    ex.program === importItem.program &&
-                    ex.kegiatan === importItem.kegiatan &&
-                    ex.output === importItem.output &&
-                    // Support baik tipe data root (kodeBarang) atau dari object (bmd.kodeBarang)
-                    (ex.bmd?.kodeBarang || ex.kodeBarang || "") === (importItem.bmd?.kodeBarang || "")
-                );
-
-                if (existIdx >= 0) {
-                    mergedPemeliharaan[existIdx] = importItem; // Overwrite
-                } else {
-                    mergedPemeliharaan.push(importItem); // Append
-                }
+            importedPemeliharaan.forEach(item => {
+                const key = generateKey(item, 'pemeliharaan');
+                console.log("key generated from excel", key)
+                pemeliharaanMap.set(key, item);
             });
+            const mergedPemeliharaan = Array.from(pemeliharaanMap.values());
 
             // 4. Update State & LocalStorage
             setListPengadaan(mergedPengadaan);
@@ -162,17 +166,16 @@ export default function RkbmdDashboardPage() {
             saveStorage(PENGADAAN_STORAGE_KEY, mergedPengadaan);
             saveStorage(PEMELIHARAAN_STORAGE_KEY, mergedPemeliharaan);
 
-            alert("Data berhasil diimport dan digabungkan!");
-            state.close(); // Tutup modal
-            setSelectedFile(null); // Reset file
+            alert("Data berhasil disinkronisasi dengan Excel!");
+            state.close();
+            setSelectedFile(null);
         } catch (e) {
             console.error(e);
-            alert("Gagal melakukan import RKBMD. Pastikan format excel sesuai.");
+            alert("Gagal melakukan import RKBMD.");
         } finally {
             setIsImporting(false);
         }
     };
-
     return (
         <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
             {/* Header */}

@@ -1,19 +1,19 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { BarangAll, ASET_LABEL } from "@/types/bmd";
+import { Barang, ASET_LABEL } from "@/types/bmd";
 import { loadAllFromStorage } from "@/lib/bmd-storage";
 import { BarangTable } from "./barangTable";
 
 interface BarangSelectFieldProps {
-    value: BarangAll | null;
-    onChange: (item: BarangAll) => void;
+    value: Barang | null;
+    onChange: (item: Barang) => void;
     error?: string;
 }
 
 export function BarangSelectField({ value, onChange, error }: BarangSelectFieldProps) {
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState<BarangAll[]>([]);
+    const [data, setData] = useState<Barang[]>([]);
 
     const reload = useCallback(() => {
         setData(loadAllFromStorage());
@@ -23,7 +23,7 @@ export function BarangSelectField({ value, onChange, error }: BarangSelectFieldP
         reload();
     }, [reload]);
 
-    function handleSelect(item: BarangAll) {
+    function handleSelect(item: Barang) {
         onChange(item);
         setOpen(false);
     }

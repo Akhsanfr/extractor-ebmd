@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { BarangAll, ASET_LABEL, AsetType, ALL_ASET_TYPES } from "@/types/bmd"
+import { Barang, ASET_LABEL, AsetType, ALL_ASET_TYPES } from "@/types/bmd"
 
 type FilterKey = AsetType | "semua";
 
 interface BarangTableProps {
-    data: BarangAll[];
+    data: Barang[];
     // Mode "view" → tabel biasa, tidak ada interaksi pilih
     // Mode "select" → row bisa diklik, tampil tombol pilih
     mode?: "view" | "select";
-    onSelect?: (item: BarangAll) => void;
+    onSelect?: (item: Barang) => void;
     // Highlight row yang sudah dipilih (opsional, untuk select mode)
     selectedKode?: string;
     // Sembunyikan kolom kategori (opsional, misal sudah difilter 1 kategori)

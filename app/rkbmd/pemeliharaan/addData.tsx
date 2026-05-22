@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
     Button,
@@ -14,36 +13,17 @@ import {
     TextField,
     useOverlayState,
 } from "@heroui/react";
-import { BarangSelectField } from "@/component/barangSelectField"; // Sesuaikan path jika perlu
+import { BarangSelectField } from "@/component/barangSelectField";
 import { ASET_LABEL } from "@/types/bmd";
-import type { AsetType, BarangAll } from "@/types/bmd";
-
-export type { AsetType } from "@/types/bmd";
-export type BarangSelected = BarangAll;
-
+import type { Barang } from "@/types/bmd";
+import { FormPemeliharan, ListPemeliharaan } from "@/types/rkbmd";
 
 export interface FormPemeliharaanModalProps {
+    isPenggunaBarang: boolean;
     open: boolean;
-    initialData?: FormPemeliharaanData | null;
-    // Tambahkan properti duplicateData
-    duplicateData?: {
-        kuasaPenggunaBarang: string;
-        program: string;
-        kegiatan: string;
-        output: string;
-    } | null;
-    initialBarang?: BarangSelected | null;
+    initialData: FormPemeliharan;
     onClose: () => void;
-    onSubmit: (data: FormPemeliharaanData) => void;
-}
-interface FormValues {
-    barang: BarangSelected | null;
-    kuasaPenggunaBarang: string;
-    program: string;
-    kegiatan: string;
-    output: string;
-    namaPemeliharaan: string;
-    jumlah: number | null;
+    onSubmit: (data: ListPemeliharaan) => void;
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -58,7 +38,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     );
 }
 
-function BarangCard({ barang, jumlahDipakai }: { barang: BarangSelected; jumlahDipakai: number }) {
+function BarangCard({ barang, jumlahDipakai }: { barang: Barang; jumlahDipakai: number }) {
     const valid = jumlahDipakai > 0 && jumlahDipakai <= barang.jumlah;
     const pct = valid ? (jumlahDipakai / barang.jumlah) * 100 : 0;
 
@@ -70,7 +50,7 @@ function BarangCard({ barang, jumlahDipakai }: { barang: BarangSelected; jumlahD
                     <p className="text-xs font-mono text-foreground/50 mt-0.5">{barang.kodeBarang}</p>
                 </div>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium whitespace-nowrap shrink-0">
-                    {ASET_LABEL[barang.asetType]}
+                    {ASET_LABEL[barang.asetType] ?? barang.asetType}
                 </span>
             </div>
 
@@ -103,70 +83,34 @@ function BarangCard({ barang, jumlahDipakai }: { barang: BarangSelected; jumlahD
 
 function ModalInner({
     initialData,
-    duplicateData, // Terima prop baru
-    initialBarang,
+    isPenggunaBarang,
     onClose,
     onSubmit,
-}: {
-    initialData?: FormPemeliharaanData | null;
-    duplicateData?: FormPemeliharaanModalProps["duplicateData"];
-    initialBarang?: BarangSelected | null;
-    onClose: () => void;
-    onSubmit: (data: FormPemeliharaanData) => void;
-}) {
-    const defaultBarang = initialData
-        ? ({
-            kodeBarang: initialData.kodeBarang,
-            namaBarang: initialData.namaBarang,
-            jumlah: initialData.jumlahTersedia,
-            satuan: initialData.satuan,
-            asetType: initialData.asetType,
-        } as BarangSelected)
-        : (initialBarang ?? null);
-
-    // Prioritas pengisian data form: 
-    // 1. Data Edit (initialData) -> 2. Data Duplicate (duplicateData) -> 3. Kosong ("")
-    const { control, handleSubmit, watch, setValue, clearErrors } = useForm<FormValues>({
-        defaultValues: {
-            barang: defaultBarang,
-            kuasaPenggunaBarang: initialData?.kuasaPenggunaBarang ?? duplicateData?.kuasaPenggunaBarang ?? "",
-            program: initialData?.program ?? duplicateData?.program ?? "",
-            kegiatan: initialData?.kegiatan ?? duplicateData?.kegiatan ?? "",
-            output: initialData?.output ?? duplicateData?.output ?? "",
-            namaPemeliharaan: initialData?.namaPemeliharaan ?? "", // Kosongkan saat duplicate
-            jumlah: initialData?.jumlah ?? null, // Kosongkan saat duplicate
-        },
+}: FormPemeliharaanModalProps) {
+    const { control, handleSubmit, watch } = useForm<FormPemeliharan>({
+        defaultValues: initialData,
         mode: "onChange",
     });
 
-    const selectedBarang = watch("barang");
-    const currentJumlah = watch("jumlah");
-    const isMounted = useRef(false);
+    const selectedBarang = watch("bmd");
+    const currentJumlah = watch("usulanPemeliharaan.jumlah");
 
-    // 2. Reset field 'jumlah' HANYA jika terjadi pergantian barang oleh user.
-    // (Mencegah jumlah ter-reset otomatis saat modal Edit baru terbuka)
-    useEffect(() => {
-        if (isMounted.current) {
-            setValue("jumlah", null);
-            clearErrors("jumlah");
-        } else {
-            isMounted.current = true;
-        }
-    }, [selectedBarang?.kodeBarang, setValue, clearErrors]);
+    const onValidSubmit = (data: FormPemeliharan) => {
+        if (!data.bmd || !data.usulanPemeliharaan) return;
 
-    const onValidSubmit = (data: FormValues) => {
         onSubmit({
+            penggunaBarang: data.penggunaBarang,
             kuasaPenggunaBarang: data.kuasaPenggunaBarang,
             program: data.program,
             kegiatan: data.kegiatan,
             output: data.output,
-            kodeBarang: data.barang!.kodeBarang,
-            namaBarang: data.barang!.namaBarang,
-            jumlahTersedia: data.barang!.jumlah, // Jumlah tersedia (Max)
-            satuan: data.barang!.satuan,
-            asetType: data.barang!.asetType,
-            namaPemeliharaan: data.namaPemeliharaan,
-            jumlah: data.jumlah!, // Jumlah pengajuan
+            bmd: data.bmd,
+            usulanPemeliharaan: {
+                namaPemeliharaan: data.usulanPemeliharaan.namaPemeliharaan,
+                jumlah: data.usulanPemeliharaan.jumlah,
+                satuan: data.bmd.satuan, // Enforce satuan matches bmd
+            },
+            keterangan: data.keterangan || "",
         });
     };
 
@@ -174,10 +118,10 @@ function ModalInner({
         <Modal.Dialog>
             <Modal.Header>
                 <Modal.Heading className="text-base font-semibold">
-                    {initialData ? "Edit Pemeliharaan" : "Form Pemeliharaan Barang"}
+                    Form Pemeliharaan Barang
                 </Modal.Heading>
                 <Description className="text-xs text-foreground/50 mt-0.5">
-                    {initialData ? "Ubah data pemeliharaan terpilih" : "Isi data pemeliharaan untuk barang yang dipilih"}
+                    Isi data pemeliharaan untuk barang yang dipilih
                 </Description>
             </Modal.Header>
 
@@ -189,7 +133,7 @@ function ModalInner({
                         </Label>
                         <Controller
                             control={control}
-                            name="barang"
+                            name="bmd"
                             rules={{ required: "Pilih barang terlebih dahulu." }}
                             render={({ field, fieldState: { error } }) => (
                                 <BarangSelectField
@@ -208,22 +152,32 @@ function ModalInner({
                     {(
                         [
                             {
+                                name: "penggunaBarang" as const,
+                                isReadOnly: true,
+                                label: "Pengguna Barang",
+                                placeholder: "Dinas/Badan/Kecamatan",
+                            },
+                            {
                                 name: "kuasaPenggunaBarang" as const,
+                                isReadOnly: !isPenggunaBarang,
                                 label: "Kuasa Pengguna Barang",
-                                placeholder: "Dinas/Badan/Kecamatan/UPT/Puskesmas ...",
+                                placeholder: "UPT/Puskesmas/Sekolah/Bagian ...",
                             },
                             {
                                 name: "program" as const,
+                                isReadOnly: false,
                                 label: "Program",
                                 placeholder: "Program ...",
                             },
                             {
                                 name: "kegiatan" as const,
+                                isReadOnly: false,
                                 label: "Kegiatan",
                                 placeholder: "Kegiatan ...",
                             },
                             {
                                 name: "output" as const,
+                                isReadOnly: false,
                                 label: "Output",
                                 placeholder: "Terlaksananya ...",
                             },
@@ -235,7 +189,7 @@ function ModalInner({
                             name={fieldInfo.name}
                             rules={{ required: `${fieldInfo.label} wajib diisi.` }}
                             render={({ field, fieldState: { error } }) => (
-                                <TextField {...field} isRequired isInvalid={!!error} className="flex flex-col gap-1.5">
+                                <TextField {...field} isReadOnly={fieldInfo.isReadOnly} isRequired isInvalid={!!error} className="flex flex-col gap-1.5">
                                     <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
                                         {fieldInfo.label} <span className="text-danger ml-0.5">*</span>
                                     </Label>
@@ -250,7 +204,7 @@ function ModalInner({
 
                     <Controller
                         control={control}
-                        name="namaPemeliharaan"
+                        name="usulanPemeliharaan.namaPemeliharaan"
                         rules={{ required: "Nama Pemeliharaan wajib diisi." }}
                         render={({ field, fieldState: { error } }) => (
                             <TextField {...field} isRequired isInvalid={!!error} className="flex flex-col gap-1.5">
@@ -265,7 +219,7 @@ function ModalInner({
 
                     <Controller
                         control={control}
-                        name="jumlah"
+                        name="usulanPemeliharaan.jumlah"
                         rules={{
                             required: "Jumlah wajib diisi.",
                             min: { value: 1, message: "Masukkan angka minimal 1." },
@@ -312,6 +266,20 @@ function ModalInner({
                             </NumberField>
                         )}
                     />
+                    
+                    <Controller
+                        control={control}
+                        name="keterangan"
+                        render={({ field, fieldState: { error } }) => (
+                            <TextField {...field} isInvalid={!!error} className="flex flex-col gap-1.5">
+                                <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
+                                    Keterangan
+                                </Label>
+                                <Input placeholder="Opsional" />
+                                {error && <p className="text-[11px] text-danger font-medium mt-0.5">{error.message}</p>}
+                            </TextField>
+                        )}
+                    />
                 </form>
             </Modal.Body>
 
@@ -328,10 +296,9 @@ function ModalInner({
 }
 
 export default function FormPemeliharaanModal({
+    isPenggunaBarang,
     open,
     initialData,
-    duplicateData, // 1. TANGKAP PROP DUPLICATE DI SINI
-    initialBarang,
     onClose,
     onSubmit,
 }: FormPemeliharaanModalProps) {
@@ -340,13 +307,9 @@ export default function FormPemeliharaanModal({
         onOpenChange: (isOpen) => { if (!isOpen) onClose(); },
     });
 
-    // 2. BUAT KEY GENERATOR
-    // Memaksa React untuk me-remount form (mengulang defaultValues) setiap kali tombol Duplicate/Edit/Add ditekan
     const getModalKey = () => {
         if (!open) return "closed";
-        if (initialData) return `edit-${initialData.kodeBarang}-${initialData.namaPemeliharaan}`;
-        if (duplicateData) return `dup-${duplicateData.program}-${Date.now()}`;
-        return `new-${Date.now()}`;
+        return `modal-${Date.now()}`;
     };
 
     return (
@@ -354,10 +317,10 @@ export default function FormPemeliharaanModal({
             <Modal.Backdrop>
                 <Modal.Container>
                     <ModalInner
-                        key={getModalKey()} // 3. GUNAKAN KEY BARU
+                        key={getModalKey()}
+                        isPenggunaBarang={isPenggunaBarang}
+                        open={open}
                         initialData={initialData}
-                        duplicateData={duplicateData} // 4. PASSING DATA KE DALAM FORM
-                        initialBarang={initialBarang}
                         onClose={onClose}
                         onSubmit={onSubmit}
                     />

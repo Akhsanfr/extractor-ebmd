@@ -1,48 +1,41 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@heroui/react";
-import FormPemeliharaanModal, { FormPemeliharaanData } from "@/app/rkbmd/pemeliharaan/addData";
+import { Button, Table, TableBody, TableCell, TableRow, EmptyState } from "@heroui/react";
+import { Plus, Copy, Pen, Trash, Wrench } from "lucide-react";
+import FormPemeliharaanModal from "./addData";
+import { ListPemeliharaan, FormPemeliharan } from "@/types/rkbmd";
+import { loadStorage, saveStorage, PEMELIHARAAN_STORAGE_KEY, PERANGKAT_DAERAH_KEY } from "@/lib/bmd-storage";
+import { convertPemeliharaanV1toV2 } from "./util";
+import { JenisPerangkatDaerah, PerangkatDaerah } from "@/types/perangkatDaerah";
 
-const PEMELIHARAAN_STORAGE_KEY = "bmd_list_pemeliharaan";
-
-export default function CreatePage() {
-    // ── State ────────────────────────────────────────────────────────────────
+export default function PemeliharaanPage() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [listPemeliharaan, setListPemeliharaan] = useState<FormPemeliharaanData[]>([]);
-
+    const [listPemeliharaan, setListPemeliharaan] = useState<ListPemeliharaan[]>([]);
     const [editIndex, setEditIndex] = useState<number | null>(null);
-    // State baru untuk menampung data duplikat parsial
-    const [duplicateData, setDuplicateData] = useState<{
-        kuasaPenggunaBarang: string;
-        program: string;
-        kegiatan: string;
-        output: string;
-    } | null>(null);
+    const [duplicateData, setDuplicateData] = useState<FormPemeliharan | null>(null);
 
-    const [isExporting, setIsExporting] = useState(false);
+    const [isPenggunaBarang, setIsPenggunaBarang] = useState(true);
+    const [profile, setProfile] = useState<PerangkatDaerah | null>(null);
 
-    // ── Helper: Sorting Otomatis ─────────────────────────────────────────────
-    const sortPemeliharaan = (data: FormPemeliharaanData[]) => {
-        return [...data].sort((a, b) => {
-            const kuasa = a.kuasaPenggunaBarang.localeCompare(b.kuasaPenggunaBarang);
-            if (kuasa !== 0) return kuasa;
-            const prog = a.program.localeCompare(b.program);
-            if (prog !== 0) return prog;
-            const keg = a.kegiatan.localeCompare(b.kegiatan);
-            if (keg !== 0) return keg;
-            return a.output.localeCompare(b.output);
-        });
-    };
-
-    // ── Effects ──────────────────────────────────────────────────────────────
     useEffect(() => {
         try {
-            const savedData = localStorage.getItem(PEMELIHARAAN_STORAGE_KEY);
+            const currentProfile = loadStorage<PerangkatDaerah>(PERANGKAT_DAERAH_KEY);
+            if (currentProfile) {
+                setProfile(currentProfile);
+                setIsPenggunaBarang(currentProfile.jenis === JenisPerangkatDaerah.penggunaBarang);
+            }
+
+            let savedData = loadStorage<ListPemeliharaan[]>(PEMELIHARAAN_STORAGE_KEY);
+
+            // Fallback migrasi jika kosong (mungkin data masih di v1)
+            if (!savedData || savedData.length === 0) {
+                savedData = convertPemeliharaanV1toV2();
+            }
+
             if (savedData) {
-                const parsed = JSON.parse(savedData);
-                setListPemeliharaan(sortPemeliharaan(parsed));
+                setListPemeliharaan(savedData);
             }
         } catch (error) {
             console.error("Gagal membaca dari localStorage:", error);
@@ -53,35 +46,45 @@ export default function CreatePage() {
 
     useEffect(() => {
         if (!isLoaded) return;
-        try {
-            localStorage.setItem(PEMELIHARAAN_STORAGE_KEY, JSON.stringify(listPemeliharaan));
-        } catch (error) {
-            console.error("Gagal menyimpan ke localStorage:", error);
-        }
+        saveStorage(PEMELIHARAAN_STORAGE_KEY, listPemeliharaan);
     }, [listPemeliharaan, isLoaded]);
 
-    // ── Handlers Modal & Aksi ─────────────────────────────────────────────────
-    const handleOpenModalCreate = () => {
-        setEditIndex(null);
-        setDuplicateData(null); // Bersihkan data duplikat
+    const handleOpen = (item: ListPemeliharaan | null, index?: number) => {
+        if (item && index !== undefined) {
+            setEditIndex(index);
+            setDuplicateData(item);
+        } else {
+            setEditIndex(null);
+            setDuplicateData({
+                penggunaBarang: profile?.penggunaBarang || "",
+                kuasaPenggunaBarang: profile?.kuasaPenggunaBarang || "",
+                program: "",
+                kegiatan: "",
+                output: "",
+                bmd: null, // validasi akan mencegah submit
+                usulanPemeliharaan: {
+                    namaPemeliharaan: "",
+                    jumlah: 0,
+                    satuan: "",
+                },
+                keterangan: "",
+            });
+        }
         setIsModalOpen(true);
     };
 
-    const handleOpenModalEdit = (index: number) => {
-        setEditIndex(index);
-        setDuplicateData(null); // Bersihkan data duplikat
-        setIsModalOpen(true);
-    };
-
-    // Handler Baru: Buka Modal dengan data awal tersalin
-    const handleOpenModalDuplicate = (index: number) => {
-        const item = listPemeliharaan[index];
-        setEditIndex(null); // Dianggap sebagai input Create baru
+    const handleDuplicate = (item: ListPemeliharaan) => {
+        setEditIndex(null); // Create baru
         setDuplicateData({
-            kuasaPenggunaBarang: item.kuasaPenggunaBarang,
-            program: item.program,
-            kegiatan: item.kegiatan,
-            output: item.output,
+            ...item,
+            // Hapus data barang agar dipilih ulang, tapi biarkan Renja tetap ada
+            bmd: null,
+            usulanPemeliharaan: {
+                namaPemeliharaan: "",
+                jumlah: 0,
+                satuan: "",
+            },
+            keterangan: "",
         });
         setIsModalOpen(true);
     };
@@ -92,20 +95,14 @@ export default function CreatePage() {
         }
     };
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleSubmitPemeliharaan = (newData: FormPemeliharaanData) => {
+    const handleSubmitPemeliharaan = (newData: ListPemeliharaan) => {
         setListPemeliharaan((prev) => {
-            let nextState;
             if (editIndex !== null) {
-                nextState = [...prev];
-                nextState[editIndex] = newData;
-            } else {
-                nextState = [...prev, newData];
+                const next = [...prev];
+                next[editIndex] = newData;
+                return next;
             }
-            return sortPemeliharaan(nextState);
+            return [...prev, newData];
         });
         setIsModalOpen(false);
     };
@@ -114,7 +111,6 @@ export default function CreatePage() {
 
     return (
         <div className="p-6 max-w-7xl mx-auto space-y-6">
-            {/* ── Header Halaman ── */}
             <div className="flex items-center justify-between border-b pb-4">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight text-foreground">
@@ -125,129 +121,111 @@ export default function CreatePage() {
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Button
-                        onPress={handleOpenModalCreate}
-                        className="font-medium shadow-sm bg-primary text-primary-foreground"
-                    >
-                        + Tambah Pemeliharaan
+                    <Button onPress={() => handleOpen(null)}>
+                        <Plus size={16} /> Tambah Pemeliharaan
                     </Button>
                 </div>
             </div>
 
-            {/* ── Render Tabel Data ── */}
-            <div className="overflow-x-auto border rounded-xl shadow-sm bg-background">
-                <table className="w-full text-sm text-left border-collapse">
-                    <thead className="bg-muted/50 text-foreground/70 uppercase text-xs font-semibold tracking-wider border-b">
-                        <tr>
-                            <th className="px-4 py-3">Kuasa Pengguna Barang</th>
-                            <th className="px-4 py-3">Program / Kegiatan / Output</th>
-                            <th className="px-4 py-3">Barang & Ketersediaan</th>
-                            <th className="px-4 py-3">Rencana Pemeliharaan</th>
-                            <th className="px-4 py-3 text-right">Jumlah</th>
-                            <th className="px-4 py-3 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y">
-                        {listPemeliharaan.length === 0 ? (
-                            <tr>
-                                <td colSpan={6} className="px-4 py-12 text-center text-foreground/40">
-                                    Belum ada data pemeliharaan. Klik tombol di atas untuk menambah data.
-                                </td>
-                            </tr>
-                        ) : (
-                            listPemeliharaan.map((item, index) => (
-                                <tr key={index} className="hover:bg-muted/30 transition-colors">
-                                    <td className="px-4 py-3.5 font-medium vertical-top w-52">
-                                        {item.kuasaPenggunaBarang}
-                                    </td>
+            <Table>
+                <Table.ScrollContainer>
+                    <Table.Content aria-label="Pemeliharaan" className="min-w-[600px]">
+                        <Table.Header>
+                            <Table.Column isRowHeader className="flex flex-col">
+                                <span className="font-bold text-foreground">Pengguna Barang</span>
+                                <span className="text-xs text-muted">Kuasa Pengguna Barang</span>
+                            </Table.Column>
+                            <Table.Column>Program / Kegiatan / Output</Table.Column>
+                            <Table.Column>Barang</Table.Column>
+                            <Table.Column>Rencana Pemeliharaan</Table.Column>
+                            <Table.Column>Aksi</Table.Column>
+                        </Table.Header>
+                        <TableBody
+                            renderEmptyState={() => (
+                                <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center">
+                                    <Wrench size={40} className="text-muted" />
+                                    <span className="text-sm text-muted">Belum ada data pemeliharaan. Klik tombol di atas untuk menambah data.</span>
+                                </EmptyState>
+                            )}
+                        >
+                            {listPemeliharaan.map((item, index) => (
+                                <TableRow key={index}>
+                                    <TableCell className="align-top font-medium">
+                                        <div className="flex flex-col">
+                                            <span>{item.penggunaBarang}</span>
+                                            <span className="text-foreground/70">{item.kuasaPenggunaBarang}</span>
+                                        </div>
+                                    </TableCell>
 
-                                    <td className="px-4 py-3.5 vertical-top w-64">
+                                    <TableCell className="align-top">
                                         <div className="font-semibold text-foreground text-xs">{item.program}</div>
-                                        <div className="text-xs text-foreground/70 mt-1">- {item.kegiatan}</div>
-                                        <div className="text-[11px] text-foreground/50 mt-0.5">- {item.output}</div>
-                                    </td>
+                                        <div className="text-[11px] text-foreground/70 mt-1">- {item.kegiatan}</div>
+                                        <div className="text-[10px] text-foreground/50 mt-0.5">- {item.output}</div>
+                                    </TableCell>
 
-                                    <td className="px-4 py-3.5 vertical-top">
-                                        <div className="flex items-center gap-2">
-                                            <div className="font-semibold text-foreground">{item.namaBarang}</div>
-                                            <span className="px-1.5 py-0.5 text-[9px] rounded bg-primary/10 text-primary font-bold uppercase tracking-wider whitespace-nowrap">
-                                                {item.asetType.replace(/_/g, " ")}
+                                    <TableCell className="align-top">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <div className="font-semibold text-foreground text-xs">{item.bmd.namaBarang}</div>
+                                            <span className="px-1.5 py-0.5 text-[8px] rounded bg-primary/10 text-primary font-bold uppercase tracking-wider whitespace-nowrap">
+                                                {item.bmd.asetType.replace(/_/g, " ")}
                                             </span>
                                         </div>
-                                        <div className="text-[11px] font-mono text-foreground/50 mt-0.5">{item.kodeBarang}</div>
-                                        <span className="inline-block text-[10px] px-1.5 py-0.5 mt-1.5 rounded border text-foreground/60 font-medium">
-                                            Tersedia: {item.jumlahTersedia} {item.satuan}
-                                        </span>
-                                    </td>
+                                        <div className="text-[10px] font-mono text-foreground/50 mb-1.5">{item.bmd.kodeBarang}</div>
+                                        <div className="text-xs font-semibold text-primary">
+                                            Tersedia: {item.bmd.jumlah} <span className="font-normal text-foreground/60">{item.bmd.satuan}</span>
+                                        </div>
+                                    </TableCell>
 
-                                    <td className="px-4 py-3.5 text-foreground/90 font-medium vertical-top w-48">
-                                        {item.namaPemeliharaan}
-                                    </td>
+                                    <TableCell className="align-top">
+                                        <div className="font-semibold text-foreground text-xs">{item.usulanPemeliharaan.namaPemeliharaan}</div>
+                                        <div className="text-xs font-semibold text-warning-600 mt-1.5">
+                                            {item.usulanPemeliharaan.jumlah} <span className="font-normal text-foreground/60">{item.usulanPemeliharaan.satuan}</span>
+                                        </div>
+                                        {item.keterangan && (
+                                            <div className="text-[10px] text-foreground/60 mt-1 italic max-w-[200px] truncate">
+                                                Ket: {item.keterangan}
+                                            </div>
+                                        )}
+                                    </TableCell>
 
-                                    <td className="px-4 py-3.5 text-right font-semibold text-primary vertical-top whitespace-nowrap w-32">
-                                        {item.jumlah} {item.satuan}
-                                    </td>
-
-                                    <td className="px-4 py-3.5 vertical-top w-36">
+                                    <TableCell className="align-top">
                                         <div className="flex items-center justify-center gap-1.5">
-                                            {/* Tombol DUPLICATE */}
                                             <Button
+                                                variant="secondary"
                                                 isIconOnly
-                                                size="sm"
-                                                onPress={() => handleOpenModalDuplicate(index)}
+                                                onPress={() => handleDuplicate(item)}
                                                 aria-label="Duplikat"
-                                            >
-                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                                </svg>
-                                            </Button>
-
-                                            {/* Tombol EDIT */}
+                                            ><Copy size={16} /></Button>
                                             <Button
                                                 isIconOnly
-                                                size="sm"
-                                                onPress={() => handleOpenModalEdit(index)}
+                                                variant="secondary"
+                                                onPress={() => handleOpen(item, index)}
                                                 aria-label="Edit"
-                                            >
-                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <path d="M12 20h9"></path>
-                                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                                                </svg>
-                                            </Button>
-
-                                            {/* Tombol HAPUS */}
+                                            ><Pen size={16} /></Button>
                                             <Button
                                                 isIconOnly
-                                                size="sm"
-                                                variant="danger"
+                                                variant="danger-soft"
                                                 onPress={() => handleDelete(index)}
                                                 aria-label="Hapus"
-                                            >
-                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                </svg>
-                                            </Button>
+                                            ><Trash size={16} /></Button>
                                         </div>
-                                    </td>
-                                </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table.Content>
+                </Table.ScrollContainer>
+            </Table>
 
-            {/* ── Call Modal Component ── */}
-            <FormPemeliharaanModal
-                open={isModalOpen}
-                onClose={handleCloseModal}
-                onSubmit={handleSubmitPemeliharaan}
-                initialData={editIndex !== null ? listPemeliharaan[editIndex] : null}
-                duplicateData={duplicateData} // Kirim prop duplicateData
-            />
+            {duplicateData && (
+                <FormPemeliharaanModal
+                    isPenggunaBarang={isPenggunaBarang}
+                    open={isModalOpen}
+                    initialData={duplicateData}
+                    onClose={() => setIsModalOpen(false)}
+                    onSubmit={handleSubmitPemeliharaan}
+                />
+            )}
         </div>
     );
 }

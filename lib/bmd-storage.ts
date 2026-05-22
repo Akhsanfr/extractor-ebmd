@@ -5,6 +5,8 @@ const STORAGE_KEY = (asetType: AsetType) => `bmd_merged_${asetType}`;
 
 export const PENGADAAN_STORAGE_KEY_V1 = 'bmd_list_pengadaan'
 export const PENGADAAN_STORAGE_KEY = 'bmd_list_pengadaan_v2'
+export const PEMELIHARAAN_STORAGE_KEY_V1 = 'bmd_list_pemeliharaan'
+export const PEMELIHARAAN_STORAGE_KEY = 'bmd_list_pemeliharaan_v2'
 export const PERANGKAT_DAERAH_KEY = 'perangkat_daerah_key'
 
 export function loadFromStorage(asetType: AsetType): BarangMerged[] {

@@ -6,7 +6,6 @@ import FormPengadaanModal from "@/app/rkbmd/pengadaan/addData";
 import { FormPengadaan, ListPengadaan } from "@/types/rkbmd";
 import { loadStorage, PENGADAAN_STORAGE_KEY, PERANGKAT_DAERAH_KEY } from "@/lib/bmd-storage";
 import { Copy, Pen, Plus, ShoppingBasket, Trash } from "lucide-react";
-import { convertPengadaanV1toV2 } from "./util";
 import { JenisPerangkatDaerah, PerangkatDaerah } from "@/types/perangkatDaerah";
 
 // const PENGADAAN_STORAGE_KEY = "bmd_list_pengadaan";

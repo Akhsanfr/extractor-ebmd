@@ -1,0 +1,1282 @@
+[
+  {
+    "PROGRAM": "Program Pengelolaan Pendidikan",
+    "KEGIATAN": "Pengelolaan Pendidikan Sekolah Dasar"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Pendidikan",
+    "KEGIATAN": "Pengelolaan Pendidikan Sekolah Menengah Pertama"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Pendidikan",
+    "KEGIATAN": "Pengelolaan Pendidikan Anak Usia Dini (PAUD)"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Pendidikan",
+    "KEGIATAN": "Pengelolaan Pendidikan Nonformal/Kesetaraan"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kurikulum",
+    "KEGIATAN": "Penetapan Kurikulum Muatan Lokal Pendidikan Dasar"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kurikulum",
+    "KEGIATAN": "Penetapan Kurikulum Muatan Lokal Pendidikan Anak Usia Dini dan Pendidikan Nonformal"
+  },
+  {
+    "PROGRAM": "Program Pendidik Dan Tenaga Kependidikan",
+    "KEGIATAN": "Pemerataan Kuantitas dan Kualitas Pendidik dan Tenaga Kependidikan bagi Satuan Pendidikan Dasar, PAUD, dan Pendidikan Nonformal/Kesetaraan"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Perencanaan, Penganggaran, dan Evaluasi Kinerja Perangkat Daerah"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Administrasi Keuangan Perangkat Daerah"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Administrasi Kepegawaian Perangkat Daerah"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Administrasi Umum Perangkat Daerah"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Pengadaan Barang Milik Daerah Penunjang Urusan Pemerintah Daerah"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Penyediaan Jasa Penunjang Urusan Pemerintahan Daerah"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Pemeliharaan Barang Milik Daerah Penunjang Urusan Pemerintahan Daerah"
+  },
+  {
+    "PROGRAM": "Program Pemenuhan Upaya Kesehatan Perorangan Dan Upaya Kesehatan Masyarakat",
+    "KEGIATAN": "Penyediaan Fasilitas Pelayanan Kesehatan untuk UKM dan UKP Kewenangan Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemenuhan Upaya Kesehatan Perorangan Dan Upaya Kesehatan Masyarakat",
+    "KEGIATAN": "Penyediaan Layanan Kesehatan untuk UKM dan UKP Rujukan Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemenuhan Upaya Kesehatan Perorangan Dan Upaya Kesehatan Masyarakat",
+    "KEGIATAN": "Penyelenggaraan Sistem Informasi Kesehatan Secara Terintegrasi"
+  },
+  {
+    "PROGRAM": "Program Pemenuhan Upaya Kesehatan Perorangan Dan Upaya Kesehatan Masyarakat",
+    "KEGIATAN": "Penerbitan Izin Rumah Sakit Kelas C, D dan Fasilitas Pelayanan Kesehatan Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Kapasitas Sumber Daya Manusia Kesehatan",
+    "KEGIATAN": "Perencanaan Kebutuhan dan Pendayagunaan Sumber Daya Manusia Kesehatan untuk UKP dan UKM di Wilayah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Kapasitas Sumber Daya Manusia Kesehatan",
+    "KEGIATAN": "Pengembangan Mutu dan Peningkatan Kompetensi Teknis Sumber Daya Manusia Kesehatan Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Sediaan Farmasi, Alat Kesehatan Dan Makanan Minuman",
+    "KEGIATAN": "Pemberian Izin Apotek, Toko Obat, Toko Alat Kesehatan dan Optikal, Usaha Mikro Obat Tradisional (UMOT)"
+  },
+  {
+    "PROGRAM": "Program Sediaan Farmasi, Alat Kesehatan Dan Makanan Minuman",
+    "KEGIATAN": "Penerbitan Sertifikat Produksi Pangan Industri Rumah Tangga dan Nomor P-IRT sebagai Izin Produksi, untuk Produk Makanan Minuman Tertentu yang Dapat Diproduksi oleh Industri Rumah Tangga"
+  },
+  {
+    "PROGRAM": "Program Sediaan Farmasi, Alat Kesehatan Dan Makanan Minuman",
+    "KEGIATAN": "Penerbitan Sertifikat Laik Higiene Sanitasi Tempat Pengelolaan Makanan (TPM) antara lain Jasa Boga, Rumah Makan/Restoran dan Depot Air Minum (DAM)"
+  },
+  {
+    "PROGRAM": "Program Sediaan Farmasi, Alat Kesehatan Dan Makanan Minuman",
+    "KEGIATAN": "Pemeriksaan dan Tindak Lanjut Hasil Pemeriksaan Post Market pada Produksi dan Produk Makanan Minuman Industri Rumah Tangga"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Masyarakat Bidang Kesehatan",
+    "KEGIATAN": "Advokasi, Pemberdayaan, Kemitraan, Peningkatan Peran serta Masyarakat dan Lintas Sektor Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Masyarakat Bidang Kesehatan",
+    "KEGIATAN": "Pelaksanaan Sehat dalam rangka Promotif Preventif Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Masyarakat Bidang Kesehatan",
+    "KEGIATAN": "Pengembangan dan Pelaksanaan Upaya Kesehatan Bersumber Daya Masyarakat (UKBM) Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Peningkatan Pelayanan BLUD"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Penduduk",
+    "KEGIATAN": "Pemaduan dan Sinkronisasi Kebijakan Pemerintah Daerah Provinsi dengan Pemerintah Daerah Kabupaten/Kota dalam rangka Pengendalian Kuantitas Penduduk"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Penduduk",
+    "KEGIATAN": "Pemetaan Perkiraan Pengendalian Penduduk Cakupan Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pembinaan Keluarga Berencana (Kb)",
+    "KEGIATAN": "Pelaksanaan Advokasi, Komunikasi, Informasi dan Edukasi (KIE) Pengendalian Penduduk dan KB Sesuai Kearifan Budaya Lokal"
+  },
+  {
+    "PROGRAM": "Program Pembinaan Keluarga Berencana (Kb)",
+    "KEGIATAN": "Pendayagunaan Tenaga Penyuluh KB/Petugas Lapangan KB (PKB/PLKB)"
+  },
+  {
+    "PROGRAM": "Program Pembinaan Keluarga Berencana (Kb)",
+    "KEGIATAN": "Pengendalian dan Pendistribusian Kebutuhan Alat dan Obat Kontrasepsi serta Pelaksanaan Pelayanan KB di Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Dan Peningkatan Keluarga Sejahtera (Ks)",
+    "KEGIATAN": "Pelaksanaan Pembangunan Keluarga Melalui Pembinaan Ketahanan dan Kesejahteraan Keluarga"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Dan Peningkatan Keluarga Sejahtera (Ks)",
+    "KEGIATAN": "Pelaksanaan dan Peningkatan Peran Serta Organisasi Kemasyarakatan Tingkat Daerah Kabupaten/ Kota dalam Pembangunan Keluarga Melalui Pembinaan Ketahanan dan Kesejahteraan Keluarga"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Sumber Daya Air (Sda)",
+    "KEGIATAN": "Pengelolaan SDA dan Bangunan Pengaman Pantai pada Wilayah Sungai (WS) dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Sumber Daya Air (Sda)",
+    "KEGIATAN": "Pengembangan dan Pengelolaan Sistem Irigasi Primer dan Sekunder pada Daerah Irigasi yang Luasnya di Bawah 1000 Ha dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Dan Pengembangan Sistem Drainase",
+    "KEGIATAN": "Pengelolaan dan Pengembangan Sistem Drainase yang Terhubung Langsung dengan Sungai dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Jalan",
+    "KEGIATAN": "Penyelenggaraan Jalan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Jasa Konstruksi",
+    "KEGIATAN": "Penyelenggaraan Pelatihan Tenaga Terampil Konstruksi"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Jasa Konstruksi",
+    "KEGIATAN": "Penyelenggaraan Sistem Informasi Jasa Konstruksi Cakupan Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Jasa Konstruksi",
+    "KEGIATAN": "Pengawasan Tertib Usaha, Tertib Penyelenggaraan dan Tertib Pemanfaatan Jasa Konstruksi"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Administrasi Barang Milik Daerah pada Perangkat Daerah"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Administrasi Pendapatan Daerah Kewenangan Perangkat Daerah"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Dan Pengembangan Sistem Penyediaan Air Minum",
+    "KEGIATAN": "Pengelolaan dan Pengembangan Sistem Penyediaan Air Minum (SPAM) di Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Sistem Dan Pengelolaan Persampahan Regional",
+    "KEGIATAN": "Pengembangan Sistem dan Pengelolaan Persampahan di Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Dan Pengembangan Sistem Air Limbah",
+    "KEGIATAN": "Pengelolaan dan Pengembangan Sistem Air Limbah Domestik dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penataan Bangunan Gedung",
+    "KEGIATAN": "Penyelenggaraan Bangunan Gedung di Wilayah Daerah Kabupaten/Kota, Pemberian Izin Mendirikan Bangunan (IMB) dan Sertifikat Laik Fungsi Bangunan Gedung"
+  },
+  {
+    "PROGRAM": "Program Penataan Bangunan Dan Lingkungannya",
+    "KEGIATAN": "Penyelenggaraan Penataan Bangunan dan Lingkungannya di Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Penataan Ruang",
+    "KEGIATAN": "Penetapan Rencana Tata Ruang Wilayah (RTRW) dan Rencana Rinci Tata Ruang (RRTR) Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Penataan Ruang",
+    "KEGIATAN": "Koordinasi dan Sinkronisasi Perencanaan Tata Ruang Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Penataan Ruang",
+    "KEGIATAN": "Koordinasi dan Sinkronisasi Pemanfaatan Ruang Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Penataan Ruang",
+    "KEGIATAN": "Koordinasi dan Sinkronisasi Pengendalian Pemanfaatan Ruang Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Perumahan",
+    "KEGIATAN": "Pendataan Penyediaan dan Rehabilitasi Rumah Korban Bencana atau Relokasi Program Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Perumahan",
+    "KEGIATAN": "Sosialisasi dan Persiapan Penyediaan dan Rehabilitasi Rumah Korban Bencana atau Relokasi Program Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Perumahan",
+    "KEGIATAN": "Pembangunan dan Rehabilitasi Rumah Korban Bencana atau Relokasi Program Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Perumahan",
+    "KEGIATAN": "Penerbitan Izin Pembangunan dan Pengembangan Perumahan"
+  },
+  {
+    "PROGRAM": "Program Kawasan Permukiman",
+    "KEGIATAN": "Penerbitan Izin Pembangunan dan Pengembangan Kawasan Permukiman"
+  },
+  {
+    "PROGRAM": "Program Kawasan Permukiman",
+    "KEGIATAN": "Penataan dan Peningkatan Kualitas Kawasan Permukiman Kumuh dengan Luas di Bawah 10 (Sepuluh) Ha"
+  },
+  {
+    "PROGRAM": "Program Kawasan Permukiman",
+    "KEGIATAN": "Peningkatan Kualitas Kawasan Permukiman Kumuh dengan Luas di Bawah 10 (Sepuluh) Ha"
+  },
+  {
+    "PROGRAM": "Program Perumahan Dan Kawasan Permukiman Kumuh",
+    "KEGIATAN": "Pencegahan Perumahan dan Kawasan Permukiman Kumuh pada Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Prasarana, Sarana Dan Utilitas Umum (Psu)",
+    "KEGIATAN": "Urusan Penyelenggaraan PSU Perumahan"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Pelayanan Sertifikasi, Kualifikasi, Klasifikasi, Dan Registrasi Bidang Perumahan Dan Kawasan Permukiman",
+    "KEGIATAN": "Sertifikasi dan Registrasi bagi Orang atau Badan Hukum yang Melaksanakan Perancangan dan Perencanaan Rumah serta Perencanaan Prasarana, Sarana dan Utilitas Umum PSU Tingkat Kemampuan Kecil"
+  },
+  {
+    "PROGRAM": "Program Penyelesaian Sengketa Tanah Garapan",
+    "KEGIATAN": "Penyelesaian Sengketa Tanah Garapan dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelesaian Ganti Kerugian Dan Santunan Tanah Untuk Pembangunan",
+    "KEGIATAN": "Penyelesaian Masalah Ganti Kerugian dan Santunan Tanah untuk Pembangunan oleh Pemerintah Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Redistribusi Tanah, Dan Ganti Kerugian Program Tanah Kelebihan Maksimum Dan Tanah Absentee",
+    "KEGIATAN": "Penetapan Subjek dan Objek Redistribusi Tanah serta Ganti Kerugian Tanah Kelebihan Maksimum dan Tanah Absentee dalam 1 (Satu) Daerah Kabupaten/Kota "
+  },
+  {
+    "PROGRAM": "Program Redistribusi Tanah, Dan Ganti Kerugian Program Tanah Kelebihan Maksimum Dan Tanah Absentee",
+    "KEGIATAN": "Penetapan Ganti Kerugian Tanah Kelebihan Maksimum dan Tanah Absentee Lintas Daerah Kabupaten/Kota dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penatagunaan Tanah ",
+    "KEGIATAN": "Penggunaan Tanah yang Hamparannya dalam satu Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Ketenteraman Dan Ketertiban Umum",
+    "KEGIATAN": "Penanganan Gangguan Ketenteraman dan Ketertiban Umum dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Ketenteraman Dan Ketertiban Umum",
+    "KEGIATAN": "Penegakan Peraturan Daerah Kabupaten/Kota dan Peraturan Bupati/Wali Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Ketenteraman Dan Ketertiban Umum",
+    "KEGIATAN": "Pembinaan Penyidik Pegawai Negeri Sipil (PPNS) Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pencegahan, Penanggulangan, Penyelamatan Kebakaran Dan Penyelamatan Non Kebakaran",
+    "KEGIATAN": "Pencegahan, Pengendalian, Pemadaman, Penyelamatan, dan Penanganan Bahan Berbahaya dan Beracun Kebakaran dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pencegahan, Penanggulangan, Penyelamatan Kebakaran Dan Penyelamatan Non Kebakaran",
+    "KEGIATAN": "Pemberdayaan Masyarakat dalam Pencegahan Kebakaran"
+  },
+  {
+    "PROGRAM": "Program Penanggulangan Bencana",
+    "KEGIATAN": "Pelayanan Informasi Rawan Bencana Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penanggulangan Bencana",
+    "KEGIATAN": "Pelayanan Pencegahan dan Kesiapsiagaan Terhadap Bencana"
+  },
+  {
+    "PROGRAM": "Program Penanggulangan Bencana",
+    "KEGIATAN": "Pelayanan Penyelamatan dan Evakuasi Korban Bencana"
+  },
+  {
+    "PROGRAM": "Program Penanggulangan Bencana",
+    "KEGIATAN": "Penataan Sistem Dasar Penanggulangan Bencana"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Sosial",
+    "KEGIATAN": "Pengumpulan Sumbangan dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Sosial",
+    "KEGIATAN": "Pengembangan Potensi Sumber Kesejahteraan Sosial Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Rehabilitasi Sosial",
+    "KEGIATAN": "Rehabilitasi Sosial Dasar Penyandang Disabilitas Terlantar, Anak Terlantar, Lanjut Usia Terlantar, serta Gelandangan Pengemis di Luar Panti Sosial"
+  },
+  {
+    "PROGRAM": "Program Rehabilitasi Sosial",
+    "KEGIATAN": "Rehabilitasi Sosial Penyandang Masalah Kesejahteraan Sosial (PMKS) Lainnya Bukan Korban HIV/AIDS dan NAPZA di Luar Panti Sosial"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Dan Jaminan Sosial",
+    "KEGIATAN": "Pengelolaan Data Fakir Miskin Cakupan Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penanganan Bencana",
+    "KEGIATAN": "Perlindungan Sosial Korban Bencana Alam dan Sosial Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penanganan Bencana",
+    "KEGIATAN": "Penyelenggaraan Pemberdayaan Masyarakat Terhadap Kesiapsiagaan Bencana Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Taman Makam Pahlawan",
+    "KEGIATAN": "Pemeliharaan Taman Makam Pahlawan Nasional Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengarusutamaan Gender Dan Pemberdayaan Perempuan",
+    "KEGIATAN": "Pelembagaan Pengarusutamaan Gender (PUG) pada Lembaga Pemerintah Kewenangan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengarusutamaan Gender Dan Pemberdayaan Perempuan",
+    "KEGIATAN": "Pemberdayaan Perempuan Bidang Politik, Hukum, Sosial, dan Ekonomi pada Organisasi Kemasyarakatan Kewenangan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Perempuan",
+    "KEGIATAN": "Pencegahan Kekerasan Terhadap Perempuan Lingkup Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Perempuan",
+    "KEGIATAN": "Penyediaan Layanan Rujukan Lanjutan bagi Perempuan Korban Kekerasan yang Memerlukan Koordinasi Kewenangan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Perempuan",
+    "KEGIATAN": "Penguatan dan Pengembangan Lembaga Penyedia Layanan Perlindungan Perempuan Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemenuhan Hak Anak (Pha)",
+    "KEGIATAN": "Pelembagaan PHA pada Lembaga Pemerintah, Nonpemerintah, dan Dunia Usaha Kewenangan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemenuhan Hak Anak (Pha)",
+    "KEGIATAN": "Penguatan dan Pengembangan Lembaga Penyedia Layanan Peningkatan Kualitas Hidup Anak Kewenangan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Khusus Anak",
+    "KEGIATAN": "Pencegahan Kekerasan Terhadap Anak yang Melibatkan para Pihak Lingkup Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Khusus Anak",
+    "KEGIATAN": "Penyediaan Layanan bagi Anak yang Memerlukan Perlindungan Khusus yang Memerlukan Koordinasi Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Khusus Anak",
+    "KEGIATAN": "Penguatan dan Pengembangan Lembaga Penyedia Layanan bagi Anak yang Memerlukan Perlindungan Khusus Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perencanaan Tenaga Kerja",
+    "KEGIATAN": "Penyusunan Rencana Tenaga Kerja (RTK)"
+  },
+  {
+    "PROGRAM": "Program Pelatihan Kerja Dan Produktivitas Tenaga Kerja",
+    "KEGIATAN": "Pelaksanaan Pelatihan berdasarkan Unit Kompetensi"
+  },
+  {
+    "PROGRAM": "Program Pelatihan Kerja Dan Produktivitas Tenaga Kerja",
+    "KEGIATAN": "Pembinaan Lembaga Pelatihan Kerja Swasta"
+  },
+  {
+    "PROGRAM": "Program Pelatihan Kerja Dan Produktivitas Tenaga Kerja",
+    "KEGIATAN": "Perizinan dan Pendaftaran Lembaga Pelatihan Kerja"
+  },
+  {
+    "PROGRAM": "Program Pelatihan Kerja Dan Produktivitas Tenaga Kerja",
+    "KEGIATAN": "Konsultansi Produktivitas pada Perusahaan Kecil"
+  },
+  {
+    "PROGRAM": "Program Pelatihan Kerja Dan Produktivitas Tenaga Kerja",
+    "KEGIATAN": "Pengukuran Produktivitas Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penempatan Tenaga Kerja",
+    "KEGIATAN": "Pelayanan antar Kerja di Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penempatan Tenaga Kerja",
+    "KEGIATAN": "Pengelolaan Informasi Pasar Kerja"
+  },
+  {
+    "PROGRAM": "Program Penempatan Tenaga Kerja",
+    "KEGIATAN": "Pelindungan PMI (Pra dan Purna Penempatan) di Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Hubungan Industrial",
+    "KEGIATAN": "Pengesahan Peraturan Perusahaan dan Pendaftaran Perjanjian Kerja Bersama untuk Perusahaan yang Hanya Beroperasi dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Hubungan Industrial",
+    "KEGIATAN": "Pencegahan dan Penyelesaian Perselisihan Hubungan Industrial, Mogok Kerja dan Penutupan Perusahaan di Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pembangunan Kawasan Transmigrasi",
+    "KEGIATAN": "Penataan Persebaran Penduduk yang Berasal dari 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Sumber Daya Ekonomi Untuk Kedaulatan Dan Kemandirian Pangan",
+    "KEGIATAN": "Penyediaan Infrastruktur dan Seluruh Pendukung Kemandirian Pangan sesuai Kewenangan Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Diversifikasi Dan Ketahanan Pangan Masyarakat",
+    "KEGIATAN": "Penyediaan dan Penyaluran Pangan Pokok atau Pangan Lainnya sesuai dengan Kebutuhan Daerah Kabupaten/Kota dalam rangka Stabilisasi Pasokan dan Harga Pangan"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Diversifikasi Dan Ketahanan Pangan Masyarakat",
+    "KEGIATAN": "Pengelolaan dan Keseimbangan Cadangan Pangan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Diversifikasi Dan Ketahanan Pangan Masyarakat",
+    "KEGIATAN": "Penentuan Harga Minimum Daerah untuk Pangan Lokal yang Tidak Ditetapkan oleh Pemerintah Pusat dan Pemerintah Provinsi"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Diversifikasi Dan Ketahanan Pangan Masyarakat",
+    "KEGIATAN": "Pelaksanaan Pencapaian Target Konsumsi Pangan Perkapita/Tahun sesuai dengan Angka Kecukupan Gizi"
+  },
+  {
+    "PROGRAM": "Program Penanganan Kerawanan Pangan",
+    "KEGIATAN": "Penyusunan Peta Kerentanan dan Ketahanan Pangan Kecamatan"
+  },
+  {
+    "PROGRAM": "Program Penanganan Kerawanan Pangan",
+    "KEGIATAN": "Penanganan Kerawanan Pangan Kewenangan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengawasan Keamanan Pangan",
+    "KEGIATAN": "Pelaksanaan Pengawasan Keamanan Pangan Segar Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Perikanan Tangkap",
+    "KEGIATAN": "Pengelolaan Penangkapan Ikan di Wilayah Sungai, Danau, Waduk, Rawa, dan Genangan Air Lainnya yang Dapat Diusahakan dalam 1 (Satu) Daerah Kabupaten/ Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Perikanan Tangkap",
+    "KEGIATAN": "Pemberdayaan Nelayan Kecil dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Perikanan Tangkap",
+    "KEGIATAN": "Pengelolaan dan Penyelenggaraan Tempat Pelelangan Ikan (TPI)"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Perikanan Tangkap",
+    "KEGIATAN": "Penerbitan Tanda Daftar Kapal Perikanan Berukuran sampai dengan 10 GT di Wilayah Sungai, Danau, Waduk, Rawa, dan Genangan Air Lainnya yang Dapat Diusahakan dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Perikanan Budidaya",
+    "KEGIATAN": "Pemberdayaan Pembudi Daya Ikan Kecil"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Perikanan Budidaya",
+    "KEGIATAN": "Pengelolaan Pembudidayaan Ikan"
+  },
+  {
+    "PROGRAM": "Program Pengawasan Sumber Daya Kelautan Dan Perikanan",
+    "KEGIATAN": "Pengawasan Sumber Daya Perikanan di Wilayah Sungai, Danau, Waduk, Rawa, dan Genangan Air Lainnya yang Dapat Diusahakan Dalam Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengolahan Dan Pemasaran Hasil Perikanan",
+    "KEGIATAN": "Penerbitan Tanda Daftar Usaha Pengolahan Hasil Perikanan bagi Usaha Skala Mikro dan Kecil"
+  },
+  {
+    "PROGRAM": "Program Pengolahan Dan Pemasaran Hasil Perikanan",
+    "KEGIATAN": "Pembinaan Mutu dan Keamanan Hasil Perikanan bagi Usaha Pengolahan dan Pemasaran Skala Mikro dan Kecil"
+  },
+  {
+    "PROGRAM": "Program Pengolahan Dan Pemasaran Hasil Perikanan",
+    "KEGIATAN": "Penyediaan dan Penyaluran Bahan Baku Industri Pengolahan Ikan dalam 1 (Satu) Daerah Kabupaten/ Kota"
+  },
+  {
+    "PROGRAM": "Program Penyediaan Dan Pengembangan Sarana Pertanian",
+    "KEGIATAN": "Pengawasan Penggunaan Sarana Pertanian"
+  },
+  {
+    "PROGRAM": "Program Penyediaan Dan Pengembangan Sarana Pertanian",
+    "KEGIATAN": "Pengelolaan Sumber Daya Genetik (SDG) Hewan, Tumbuhan, dan Mikro Organisme Kewenangan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyediaan Dan Pengembangan Sarana Pertanian",
+    "KEGIATAN": "Peningkatan Mutu dan Peredaran Benih/Bibit Ternak dan Tanaman Pakan Ternak serta Pakan dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyediaan Dan Pengembangan Sarana Pertanian",
+    "KEGIATAN": "Pengawasan Obat Hewan di Tingkat Pengecer"
+  },
+  {
+    "PROGRAM": "Program Penyediaan Dan Pengembangan Sarana Pertanian",
+    "KEGIATAN": "Pengendalian dan Pengawasan Penyediaan dan Peredaran Benih/Bibit Ternak, dan Hijauan Pakan Ternak dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyediaan Dan Pengembangan Sarana Pertanian",
+    "KEGIATAN": "Penyediaan Benih/Bibit Ternak dan Hijauan Pakan Ternak yang Sumbernya dalam 1 (Satu) Daerah Kabupaten/Kota Lain"
+  },
+  {
+    "PROGRAM": "Program Penyediaan Dan Pengembangan Prasarana Pertanian",
+    "KEGIATAN": "Pengembangan Prasarana Pertanian"
+  },
+  {
+    "PROGRAM": "Program Penyediaan Dan Pengembangan Prasarana Pertanian",
+    "KEGIATAN": "Pembangunan Prasarana Pertanian"
+  },
+  {
+    "PROGRAM": "Program Penyediaan Dan Pengembangan Prasarana Pertanian",
+    "KEGIATAN": "Pengelolaan Wilayah Sumber Bibit Ternak dan Rumpun/Galur Ternak dalam Daerah Kabupaten/ Kota"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Kesehatan Hewan Dan Kesehatan Masyarakat Veteriner",
+    "KEGIATAN": "Penjaminan Kesehatan Hewan, Penutupan dan Pembukaan Daerah Wabah Penyakit Hewan Menular Dalam daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Kesehatan Hewan Dan Kesehatan Masyarakat Veteriner",
+    "KEGIATAN": "Pengawasan Pemasukan dan Pengeluaran Hewan dan Produk Hewan Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Kesehatan Hewan Dan Kesehatan Masyarakat Veteriner",
+    "KEGIATAN": "Pengelolaan Pelayanan Jasa Laboratorium dan Jasa Medik Veteriner dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Kesehatan Hewan Dan Kesehatan Masyarakat Veteriner",
+    "KEGIATAN": "Penerapan dan Pengawasan Persyaratan Teknis Kesehatan Masyarakat Veteriner"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Kesehatan Hewan Dan Kesehatan Masyarakat Veteriner",
+    "KEGIATAN": "Penerapan dan Pengawasan Persyaratan Teknis Kesejahteraan Hewan"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Dan Penanggulangan Bencana Pertanian",
+    "KEGIATAN": "Pengendalian dan Penanggulangan Bencana Pertanian Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perizinan Usaha Pertanian",
+    "KEGIATAN": "Penerbitan Izin Usaha Pertanian yang Kegiatan Usahanya dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyuluhan Pertanian",
+    "KEGIATAN": "Pelaksanaan Penyuluhan Pertanian"
+  },
+  {
+    "PROGRAM": "Program Perencanaan Lingkungan Hidup",
+    "KEGIATAN": "Rencana Perlindungan dan Pengelolaan Lingkungan Hidup (RPPLH) Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perencanaan Lingkungan Hidup",
+    "KEGIATAN": "Penyelenggaraan Kajian Lingkungan Hidup Strategis (KLHS) Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Pencemaran Dan/Atau Kerusakan Lingkungan Hidup",
+    "KEGIATAN": "Pencegahan Pencemaran dan/atau Kerusakan Lingkungan Hidup Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Pencemaran Dan/Atau Kerusakan Lingkungan Hidup",
+    "KEGIATAN": "Penanggulangan Pencemaran dan/atau Kerusakan Lingkungan Hidup Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Pencemaran Dan/Atau Kerusakan Lingkungan Hidup",
+    "KEGIATAN": "Pemulihan Pencemaran dan/atau Kerusakan Lingkungan Hidup Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Keanekaragaman Hayati (Kehati)",
+    "KEGIATAN": "Pengelolaan Keanekaragaman Hayati Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Bahan Berbahaya Dan Beracun (B3) Dan Limbah Bahan Berbahaya Dan Beracun (Limbah B3)",
+    "KEGIATAN": "Penyimpanan sementara Limbah B3"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Bahan Berbahaya Dan Beracun (B3) Dan Limbah Bahan Berbahaya Dan Beracun (Limbah B3)",
+    "KEGIATAN": "Pengumpulan Limbah B3 dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pembinaan Dan Pengawasan Terhadap Izin Lingkungan Dan Izin Perlindungan Dan Pengelolaan Lingkungan Hidup (Pplh)",
+    "KEGIATAN": "Pembinaan dan Pengawasan Terhadap Usaha dan/atau Kegiatan yang Izin Lingkungan dan Izin PPLH Diterbitkan oleh Pemerintah Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengakuan Keberadaan Masyarakat Hukum Adat (Mha), Kearifan Lokal Dan Hak Mha Yang Terkait Dengan Pplh",
+    "KEGIATAN": "Pengakuan MHA, Kearifan Lokal, Pengetahuan Tradisional, dan Hak MHA yang Terkait dengan PPLH"
+  },
+  {
+    "PROGRAM": "Program Pengakuan Keberadaan Masyarakat Hukum Adat (Mha), Kearifan Lokal Dan Hak Mha Yang Terkait Dengan Pplh",
+    "KEGIATAN": "Peningkatan Kapasitas MHA dan Kearifan Lokal, Pengetahuan Tradisional dan Hak MHA yang Terkait dengan PPLH"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Pendidikan, Pelatihan Dan Penyuluhan Lingkungan Hidup Untuk Masyarakat",
+    "KEGIATAN": "Penyelenggaraan Pendidikan, Pelatihan, dan Penyuluhan Lingkungan Hidup untuk Lembaga Kemasyarakatan Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penghargaan Lingkungan Hidup Untuk Masyarakat",
+    "KEGIATAN": "Pemberian Penghargaan Lingkungan Hidup Tingkat Daerah Kabupaten/Kota "
+  },
+  {
+    "PROGRAM": "Program Penanganan Pengaduan Lingkungan Hidup",
+    "KEGIATAN": "Penyelesaian Pengaduan Masyarakat di Bidang Perlindungan dan Pengelolaan Lingkungan Hidup (PPLH) Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Persampahan",
+    "KEGIATAN": "Pengelolaan Sampah"
+  },
+  {
+    "PROGRAM": "Program Pendaftaran Penduduk",
+    "KEGIATAN": "Pelayanan Pendaftaran Penduduk"
+  },
+  {
+    "PROGRAM": "Program Pendaftaran Penduduk",
+    "KEGIATAN": "Penataan Pendaftaran Penduduk"
+  },
+  {
+    "PROGRAM": "Program Pendaftaran Penduduk",
+    "KEGIATAN": "Penyelenggaraan Pendaftaran Penduduk"
+  },
+  {
+    "PROGRAM": "Program Pendaftaran Penduduk",
+    "KEGIATAN": "Pembinaan dan Pengawasan Penyelenggaraan Pendaftaran Penduduk"
+  },
+  {
+    "PROGRAM": "Program Pencatatan Sipil",
+    "KEGIATAN": "Pelayanan Pencatatan Sipil"
+  },
+  {
+    "PROGRAM": "Program Pencatatan Sipil",
+    "KEGIATAN": "Penyelenggaraan Pencatatan Sipil"
+  },
+  {
+    "PROGRAM": "Program Pencatatan Sipil",
+    "KEGIATAN": "Pembinaan dan Pengawasan Penyelenggaraan Pencatatan Sipil"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Informasi Administrasi Kependudukan",
+    "KEGIATAN": "Pengumpulan Data Kependudukan dan Pemanfaatan dan Penyajian Database Kependudukan"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Informasi Administrasi Kependudukan",
+    "KEGIATAN": "Penyelenggaraan Pengelolaan Informasi Administrasi Kependudukan"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Informasi Administrasi Kependudukan",
+    "KEGIATAN": "Pembinaan dan Pengawasan Pengelolaan Informasi Administrasi Kependudukan"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Profil Kependudukan",
+    "KEGIATAN": "Penyusunan Profil Kependudukan"
+  },
+  {
+    "PROGRAM": "Program Penataan Desa",
+    "KEGIATAN": "Penyelenggaraan Penataan Desa"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Kerja Sama Desa",
+    "KEGIATAN": "Fasilitasi Kerja Sama antar Desa"
+  },
+  {
+    "PROGRAM": "Program Administrasi Pemerintahan Desa",
+    "KEGIATAN": "Pembinaan dan Pengawasan Penyelenggaraan Administrasi Pemerintahan Desa"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Lembaga Kemasyarakatan, Lembaga Adat Dan Masyarakat Hukum Adat",
+    "KEGIATAN": "Pemberdayaan Lembaga Kemasyarakatan yang Bergerak di Bidang Pemberdayaan Desa dan Lembaga Adat Tingkat Daerah Kabupaten/Kota serta Pemberdayaan Masyarakat Hukum Adat yang Masyarakat Pelakunya Hukum Adat yang Sama dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Penetapan Rencana Induk Jaringan LLAJ Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Penyediaan Perlengkapan Jalan di Jalan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Pengelolaan Terminal Penumpang Tipe C"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Penerbitan Izin Penyelenggaraan dan Pembangunan Fasilitas Parkir"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Pengujian Berkala Kendaraan Bermotor"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Pelaksanaan Manajemen dan Rekayasa Lalu Lintas untuk Jaringan Jalan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Persetujuan Hasil Analisis Dampak Lalu Lintas (Andalalin) untuk Jalan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Audit dan Inspeksi Keselamatan LLAJ di Jalan"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Penyediaan Angkutan Umum untuk Jasa Angkutan Orang dan/atau Barang Antar Kota dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Penetapan Rencana Umum Jaringan Trayek Perkotaan dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Penetapan Rencana Umum Jaringan Trayek Pedesaan dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Penetapan Wilayah Operasi Angkutan Orang dengan Menggunakan Taksi dalam Kawasan Perkotaan yang Wilayah Operasinya dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Penerbitan Izin Penyelenggaraan Angkutan Orang dalam Trayek Lintas Daerah Kabupaten/Kota dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Penerbitan Izin Penyelenggaraan Angkutan Taksi yang Wilayah Operasinya dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Lalu Lintas Dan Angkutan Jalan (Llaj)",
+    "KEGIATAN": "Penetapan Tarif Kelas Ekonomi untuk Angkutan Orang yang Melayani Trayek serta Angkutan Perkotaan dan Perdesaan dalam 1 (Satu) Daerah Kabupaten/Kota "
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Perkeretaapian",
+    "KEGIATAN": "Penetapan Rencana Induk Perkeretaapian"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Informasi Dan Komunikasi Publik",
+    "KEGIATAN": "Pengelolaan Informasi dan Komunikasi Publik Pemerintah Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Aplikasi Informatika",
+    "KEGIATAN": "Pengelolaan Nama Domain yang Telah Ditetapkan oleh Pemerintah Pusat dan Sub Domain di Lingkup Pemerintah Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Aplikasi Informatika",
+    "KEGIATAN": "Pengelolaan E-government di Lingkup Pemerintah Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Statistik Sektoral",
+    "KEGIATAN": "Penyelenggaraan Statistik Sektoral di Lingkup Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Persandian Untuk Pengamanan Informasi",
+    "KEGIATAN": "Penyelenggaraan Persandian untuk Pengamanan Informasi Pemerintah Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pelayanan Izin Usaha Simpan Pinjam",
+    "KEGIATAN": "Penerbitan Izin Usaha Simpan Pinjam untuk Koperasi dengan Wilayah Keanggotaan dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengawasan Dan Pemeriksaan Koperasi",
+    "KEGIATAN": "Pemeriksaan dan Pengawasan Koperasi, Koperasi Simpan Pinjam/Unit Simpan Pinjam Koperasi yang Wilayah Keanggotaannya dalam Daerah Kabupaten/ Kota"
+  },
+  {
+    "PROGRAM": "Program Penilaian Kesehatan Ksp/Usp Koperasi",
+    "KEGIATAN": "Penilaian Kesehatan Koperasi Simpan Pinjam/Unit Simpan Pinjam Koperasi yang Wilayah Keanggotaanya dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pendidikan Dan Latihan Perkoperasian",
+    "KEGIATAN": "Pendidikan dan Latihan Perkoperasian Bagi Koperasi yang Wilayah Keanggotaan dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Dan Perlindungan Koperasi",
+    "KEGIATAN": "Pemberdayaan dan Perlindungan Koperasi yang Keanggotaannya dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Usaha Menengah, Usaha Kecil, Dan Usaha Mikro (Umkm)",
+    "KEGIATAN": "Pemberdayaan Usaha Mikro yang Dilakukan Melalui Pendataan, Kemitraan, Kemudahan Perizinan, Penguatan Kelembagaan dan Koordinasi dengan Para Pemangku Kepentingan"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Umkm",
+    "KEGIATAN": "Pengembangan Usaha Mikro dengan Orientasi Peningkatan Skala Usaha Menjadi Usaha Kecil"
+  },
+  {
+    "PROGRAM": "Program Perizinan Dan Pendaftaran Perusahaan",
+    "KEGIATAN": "Penerbitan Izin Pengelolaan Pasar Rakyat, Pusat Perbelanjaan, dan Izin Usaha Toko Swalayan"
+  },
+  {
+    "PROGRAM": "Program Perizinan Dan Pendaftaran Perusahaan",
+    "KEGIATAN": "Pengendalian Fasilitas Penyimpanan Bahan Berbahaya dan Pengawasan Distribusi, Pengemasan dan Pelabelan Bahan Berbahaya di Tingkat Daerah Kabupaten/ Kota"
+  },
+  {
+    "PROGRAM": "Program Perizinan Dan Pendaftaran Perusahaan",
+    "KEGIATAN": "Penerbitan Surat Keterangan Asal (bagi Daerah Kabupaten/Kota yang Telah Ditetapkan sebagai Instansi Penerbit Surat Keterangan Asal) "
+  },
+  {
+    "PROGRAM": "Program Peningkatan Sarana Distribusi Perdagangan",
+    "KEGIATAN": "Pembangunan dan Pengelolaan Sarana Distribusi Perdagangan"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Sarana Distribusi Perdagangan",
+    "KEGIATAN": "Pembinaan Terhadap Pengelola Sarana Distribusi Perdagangan Masyarakat di Wilayah Kerjanya"
+  },
+  {
+    "PROGRAM": "Program Stabilisasi Harga Barang Kebutuhan Pokok Dan Barang Penting",
+    "KEGIATAN": "Pengendalian Harga, dan Stok Barang Kebutuhan Pokok dan Barang Penting di Tingkat Pasar Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Stabilisasi Harga Barang Kebutuhan Pokok Dan Barang Penting",
+    "KEGIATAN": "Pengawasan Pupuk dan Pestisida Bersubsidi di Tingkat Daerah Kabupaten/Kota "
+  },
+  {
+    "PROGRAM": "Program Pengembangan Ekspor",
+    "KEGIATAN": "Penyelenggaraan Promosi Dagang Melalui Pameran Dagang dan Misi Dagang bagi Produk Ekspor Unggulan yang Terdapat pada 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Standardisasi Dan Perlindungan Konsumen",
+    "KEGIATAN": "Pelaksanaan Metrologi Legal, Berupa Tera, Tera Ulang, dan Pengawasan"
+  },
+  {
+    "PROGRAM": "Program Penggunaan Dan Pemasaran Produk Dalam Negeri",
+    "KEGIATAN": "Pelaksanaan Promosi, Pemasaran dan Peningkatan Penggunaan Produk Dalam Negeri"
+  },
+  {
+    "PROGRAM": "Program Perencanaan Dan Pembangunan Industri",
+    "KEGIATAN": "Penyusunan dan Evaluasi Rencana Pembangunan Industri Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Izin Usaha Industri",
+    "KEGIATAN": "Penerbitan Izin Usaha Industri (IUI), Izin Perluasan Usaha Industri (IPUI), Izin Usaha Kawasan Industri (IUKI) dan Izin Perluasan Kawasan Industri (IPKI) Kewenangan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Sistem Informasi Industri Nasional",
+    "KEGIATAN": "Penyediaan Informasi Industri untuk Informasi Industri untuk IUI, IPUI, IUKI dan IPKI Kewenangan Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Iklim Penanaman Modal",
+    "KEGIATAN": "Penetapan Pemberian Fasilitas/Insentif Dibidang Penanaman Modal yang Menjadi Kewenangan Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Iklim Penanaman Modal",
+    "KEGIATAN": "Pembuatan Peta Potensi Investasi Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Promosi Penanaman Modal",
+    "KEGIATAN": "Penyelenggaraan Promosi Penanaman Modal yang Menjadi Kewenangan Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pelayanan Penanaman Modal",
+    "KEGIATAN": "Pelayanan Perizinan dan Non Perizinan Secara Terpadu Satu Pintu dibidang Penanaman Modal yang Menjadi Kewenangan Daerah Kabupaten/ Kota"
+  },
+  {
+    "PROGRAM": "Program Pengendalian Pelaksanaan Penanaman Modal",
+    "KEGIATAN": "Pengendalian Pelaksanaan Penanaman Modal yang Menjadi Kewenangan Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Data Dan Sistem Informasi Penanaman Modal",
+    "KEGIATAN": "Pengelolaan Data dan Informasi Perizinan dan Non Perizinan yang Terintegrasi pada Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kapasitas Daya Saing Kepemudaan",
+    "KEGIATAN": "Penyadaran, Pemberdayaan, dan Pengembangan Pemuda dan Kepemudaan Terhadap Pemuda Pelopor Kabupaten/Kota, Wirausaha Muda Pemula, dan Pemuda Kader Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kapasitas Daya Saing Kepemudaan",
+    "KEGIATAN": "Pemberdayaan dan Pengembangan Organisasi Kepemudaan Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kapasitas Daya Saing Keolahragaan",
+    "KEGIATAN": "Pembinaan dan Pengembangan Olahraga Pendidikan pada Jenjang Pendidikan yang Menjadi Kewenangan Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kapasitas Daya Saing Keolahragaan",
+    "KEGIATAN": "Penyelenggaraan Kejuaraan Olahraga Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kapasitas Daya Saing Keolahragaan",
+    "KEGIATAN": "Pembinaan dan Pengembangan Olahraga Prestasi Tingkat Daerah Provinsi"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kapasitas Daya Saing Keolahragaan",
+    "KEGIATAN": "Pembinaan dan Pengembangan Organisasi Olahraga"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kapasitas Daya Saing Keolahragaan",
+    "KEGIATAN": "Pembinaan dan Pengembangan Olahraga Rekreasi"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kapasitas Kepramukaan",
+    "KEGIATAN": "Pembinaan dan Pengembangan Organisasi Kepramukaan"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kebudayaan",
+    "KEGIATAN": "Pengelolaan Kebudayaan yang Masyarakat Pelakunya dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kebudayaan",
+    "KEGIATAN": "Pelestarian Kesenian Tradisional yang Masyarakat Pelakunya dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kebudayaan",
+    "KEGIATAN": "Pembinaan Lembaga Adat yang Penganutnya dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Kesenian Tradisional",
+    "KEGIATAN": "Pembinaan Kesenian yang Masyarakat Pelakunya dalam Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pembinaan Sejarah",
+    "KEGIATAN": "Pembinaan Sejarah Lokal dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pelestarian Dan Pengelolaan Cagar Budaya",
+    "KEGIATAN": "Penetapan Cagar Budaya Peringkat Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pelestarian Dan Pengelolaan Cagar Budaya",
+    "KEGIATAN": "Pengelolaan Cagar Budaya Peringkat Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pelestarian Dan Pengelolaan Cagar Budaya",
+    "KEGIATAN": "Penerbitan Izin Membawa Cagar Budaya ke Luar Daerah Kabupaten/Kota dalam 1 (Satu) Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Permuseuman",
+    "KEGIATAN": "Pengelolaan Museum Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Daya Tarik Destinasi Pariwisata",
+    "KEGIATAN": "Pengelolaan Daya Tarik Wisata Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Daya Tarik Destinasi Pariwisata",
+    "KEGIATAN": "Pengelolaan Kawasan Strategis Pariwisata Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Daya Tarik Destinasi Pariwisata",
+    "KEGIATAN": "Pengelolaan Destinasi Pariwisata Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Daya Tarik Destinasi Pariwisata",
+    "KEGIATAN": "Penetapan Tanda Daftar Usaha Pariwisata Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemasaran Pariwisata",
+    "KEGIATAN": "Pemasaran Pariwisata Dalam dan Luar Negeri Daya Tarik, Destinasi dan Kawasan Strategis Pariwisata Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Ekonomi Kreatif Melalui Pemanfaatan Dan Perlindungan Hak Kekayaan Intelektual",
+    "KEGIATAN": "Penyediaan Prasarana (Zona Kreatif/Ruang Kreatif/Kota Kreatif) sebagai Ruang Berekspresi, Berpromosi dan Berinteraksi bagi Insan Kreatif di Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Ekonomi Kreatif Melalui Pemanfaatan Dan Perlindungan Hak Kekayaan Intelektual",
+    "KEGIATAN": "Pengembangan Ekosistem Ekonomi Kreatif "
+  },
+  {
+    "PROGRAM": "Program Pengembangan Sumber Daya Pariwisata Dan Ekonomi Kreatif",
+    "KEGIATAN": "Pelaksanaan Peningkatan Kapasitas Sumber Daya Manusia Pariwisata dan Ekonomi Kreatif Tingkat Dasar"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Sumber Daya Pariwisata Dan Ekonomi Kreatif",
+    "KEGIATAN": "Pengembangan Kapasitas Pelaku Ekonomi Kreatif"
+  },
+  {
+    "PROGRAM": "Program Pembinaan Perpustakaan",
+    "KEGIATAN": "Pengelolaan Perpustakaan Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pembinaan Perpustakaan",
+    "KEGIATAN": "Pembudayaan Gemar Membaca Tingkat Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pelestarian Koleksi Nasional Dan Naskah Kuno",
+    "KEGIATAN": "Pelestarian Naskah Kuno Milik Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pelestarian Koleksi Nasional Dan Naskah Kuno",
+    "KEGIATAN": "Pengembangan Koleksi Budaya Etnis Nusantara yang Ditemukan oleh Pemerintah Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Arsip",
+    "KEGIATAN": "Pengelolaan Arsip Dinamis Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Arsip",
+    "KEGIATAN": "Pengelolaan Arsip Statis Daerah Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Arsip",
+    "KEGIATAN": "Pengelolaan Simpul Jaringan Informasi Kearsipan Nasional Tingkat Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Dan Penyelamatan Arsip",
+    "KEGIATAN": "Pemusnahan Arsip Dilingkungan Pemerintah Daerah Kabupaten/Kota yang Memiliki Retensi di Bawah 10 (Sepuluh) Tahun"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Dan Penyelamatan Arsip",
+    "KEGIATAN": "Perlindungan dan Penyelamatan Arsip Akibat Bencana yang Berskala Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Dan Penyelamatan Arsip",
+    "KEGIATAN": "Penyelamatan Arsip Perangkat Daerah Kabupaten/Kota yang Digabung dan/atau Dibubarkan, dan Pemekaran Daerah Kecamatan dan Desa/Kelurahan"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Dan Penyelamatan Arsip",
+    "KEGIATAN": "Autentikasi Arsip Statis dan Arsip Hasil Alih Media Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Perlindungan Dan Penyelamatan Arsip",
+    "KEGIATAN": "Pencarian Arsip Statis Kabupaten/Kota yang Dinyatakan Hilang"
+  },
+  {
+    "PROGRAM": "Program Perizinan Penggunaan Arsip",
+    "KEGIATAN": "Pelayanan Izin Penggunaan Arsip yang Bersifat Tertutup di Kabupaten/Kota"
+  },
+  {
+    "PROGRAM": "Program Pemerintahan Dan Kesejahteraan Rakyat",
+    "KEGIATAN": "Administrasi Tata Pemerintahan"
+  },
+  {
+    "PROGRAM": "Program Pemerintahan Dan Kesejahteraan Rakyat",
+    "KEGIATAN": "Pelaksanaan Kebijakan Kesejahteraan Rakyat"
+  },
+  {
+    "PROGRAM": "Program Pemerintahan Dan Kesejahteraan Rakyat",
+    "KEGIATAN": "Fasilitasi dan Koordinasi Hukum"
+  },
+  {
+    "PROGRAM": "Program Pemerintahan Dan Kesejahteraan Rakyat",
+    "KEGIATAN": "Fasilitasi Kerja Sama Daerah"
+  },
+  {
+    "PROGRAM": "Program Perekonomian Dan Pembangunan",
+    "KEGIATAN": "Pelaksanaan Kebijakan Perekonomian"
+  },
+  {
+    "PROGRAM": "Program Perekonomian Dan Pembangunan",
+    "KEGIATAN": "Pelaksanaan Administrasi Pembangunan"
+  },
+  {
+    "PROGRAM": "Program Perekonomian Dan Pembangunan",
+    "KEGIATAN": "Pengelolaan Pengadaan Barang dan Jasa"
+  },
+  {
+    "PROGRAM": "Program Perekonomian Dan Pembangunan",
+    "KEGIATAN": "Pemantauan Kebijakan Sumber Daya Alam"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Administrasi Keuangan dan Operasional Kepala Daerah dan Wakil Kepala Daerah"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Fasilitasi Kerumahtanggaan Sekretariat Daerah"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Penataan Organisasi"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Pelaksanaan Protokol dan Komunikasi Pimpinan"
+  },
+  {
+    "PROGRAM": "Program Dukungan Pelaksanaan Tugas Dan Fungsi Dprd",
+    "KEGIATAN": "Pembentukan Peraturan Daerah dan Peraturan DPRD"
+  },
+  {
+    "PROGRAM": "Program Dukungan Pelaksanaan Tugas Dan Fungsi Dprd",
+    "KEGIATAN": "Pembahasan Kebijakan Anggaran"
+  },
+  {
+    "PROGRAM": "Program Dukungan Pelaksanaan Tugas Dan Fungsi Dprd",
+    "KEGIATAN": "Pengawasan Penyelenggaraan Pemerintahan"
+  },
+  {
+    "PROGRAM": "Program Dukungan Pelaksanaan Tugas Dan Fungsi Dprd",
+    "KEGIATAN": "Peningkatan Kapasitas DPRD"
+  },
+  {
+    "PROGRAM": "Program Dukungan Pelaksanaan Tugas Dan Fungsi Dprd",
+    "KEGIATAN": "Penyerapan dan Penghimpunan Aspirasi Masyarakat"
+  },
+  {
+    "PROGRAM": "Program Dukungan Pelaksanaan Tugas Dan Fungsi Dprd",
+    "KEGIATAN": "Pelaksanaan dan Pengawasan Kode Etik DPRD"
+  },
+  {
+    "PROGRAM": "Program Dukungan Pelaksanaan Tugas Dan Fungsi Dprd",
+    "KEGIATAN": "Fasilitasi Tugas DPRD"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Layanan Keuangan dan Kesejahteraan DPRD"
+  },
+  {
+    "PROGRAM": "Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+    "KEGIATAN": "Layanan Administrasi DPRD"
+  },
+  {
+    "PROGRAM": "Program Perencanaan, Pengendalian Dan Evaluasi Pembangunan Daerah",
+    "KEGIATAN": "Penyusunan Perencanaan dan Pendanaan"
+  },
+  {
+    "PROGRAM": "Program Perencanaan, Pengendalian Dan Evaluasi Pembangunan Daerah",
+    "KEGIATAN": "Analisis Data dan Informasi Pemerintahan Daerah Bidang Perencanaan Pembangunan Daerah "
+  },
+  {
+    "PROGRAM": "Program Perencanaan, Pengendalian Dan Evaluasi Pembangunan Daerah",
+    "KEGIATAN": "Pengendalian, Evaluasi dan Pelaporan Bidang Perencanaan Pembangunan Daerah"
+  },
+  {
+    "PROGRAM": "Program Koordinasi Dan Sinkronisasi Perencanaan Pembangunan Daerah",
+    "KEGIATAN": "Koordinasi Perencanaan Bidang Pemerintahan dan Pembangunan Manusia"
+  },
+  {
+    "PROGRAM": "Program Koordinasi Dan Sinkronisasi Perencanaan Pembangunan Daerah",
+    "KEGIATAN": "Koordinasi Perencanaan Bidang Perekonomian dan SDA (Sumber Daya Alam)"
+  },
+  {
+    "PROGRAM": "Program Koordinasi Dan Sinkronisasi Perencanaan Pembangunan Daerah",
+    "KEGIATAN": "Koordinasi Perencanaan Bidang Infrastruktur dan Kewilayahan"
+  },
+  {
+    "PROGRAM": "Program Penelitian Dan Pengembangan Daerah",
+    "KEGIATAN": "Penelitian dan Pengembangan Bidang Sosial dan Kependudukan"
+  },
+  {
+    "PROGRAM": "Program Penelitian Dan Pengembangan Daerah",
+    "KEGIATAN": "Penelitian dan Pengembangan Bidang Ekonomi dan Pembangunan"
+  },
+  {
+    "PROGRAM": "Program Penelitian Dan Pengembangan Daerah",
+    "KEGIATAN": "Pengembangan Inovasi dan Teknologi"
+  },
+  {
+    "PROGRAM": "Program Riset Dan Inovasi Daerah",
+    "KEGIATAN": "Penelitian, Pengembangan, Pengkajian, dan Penerapan"
+  },
+  {
+    "PROGRAM": "Program Riset Dan Inovasi Daerah",
+    "KEGIATAN": "Invensi dan Inovasi"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Keuangan Daerah",
+    "KEGIATAN": "Koordinasi dan Penyusunan Rencana Anggaran Daerah"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Keuangan Daerah",
+    "KEGIATAN": "Koordinasi dan Pengelolaan Perbendaharaan Daerah"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Keuangan Daerah",
+    "KEGIATAN": "Koordinasi dan Pelaksanaan Akuntansi dan Pelaporan Keuangan Daerah"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Keuangan Daerah",
+    "KEGIATAN": "Penunjang Urusan Kewenangan Pengelolaan Keuangan Daerah"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Barang Milik Daerah",
+    "KEGIATAN": "Pengelolaan Barang Milik Daerah"
+  },
+  {
+    "PROGRAM": "Program Pengelolaan Pendapatan Daerah",
+    "KEGIATAN": "Kegiatan Pengelolaan Pendapatan Daerah"
+  },
+  {
+    "PROGRAM": "Program Kepegawaian Daerah",
+    "KEGIATAN": "Pengadaan, Pemberhentian dan Informasi Kepegawaian ASN"
+  },
+  {
+    "PROGRAM": "Program Kepegawaian Daerah",
+    "KEGIATAN": "Mutasi dan Promosi ASN"
+  },
+  {
+    "PROGRAM": "Program Kepegawaian Daerah",
+    "KEGIATAN": "Pengembangan Kompetensi ASN"
+  },
+  {
+    "PROGRAM": "Program Kepegawaian Daerah",
+    "KEGIATAN": "Penilaian dan Evaluasi Kinerja Aparatur"
+  },
+  {
+    "PROGRAM": "Program Pengembangan Sumber Daya Manusia",
+    "KEGIATAN": "Sertifikasi, Kelembagaan, Pengembangan Kompetensi Manajerial dan Fungsional"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Pengawasan",
+    "KEGIATAN": "Penyelenggaraan Pengawasan Internal"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Pengawasan",
+    "KEGIATAN": "Penyelenggaraan Pengawasan dengan Tujuan Tertentu"
+  },
+  {
+    "PROGRAM": "Program Perumusan Kebijakan, Pendampingan Dan Asistensi",
+    "KEGIATAN": "Pendampingan dan Asistensi"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Pemerintahan Dan Pelayanan Publik",
+    "KEGIATAN": "Koordinasi Penyelenggaraan KegiatanPemerintahan di Tingkat Kecamatan"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Pemerintahan Dan Pelayanan Publik",
+    "KEGIATAN": "Penyelenggaraan Urusan Pemerintahan yang Tidak Dilaksanakan oleh Unit Kerja Perangkat Daerah yang Ada di Kecamatan"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Pemerintahan Dan Pelayanan Publik",
+    "KEGIATAN": "Pelaksanaan Urusan Pemerintahan yang Dilimpahkan kepada Camat"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Masyarakat Desa Dan Kelurahan",
+    "KEGIATAN": "Koordinasi Kegiatan Pemberdayaan Desa"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Masyarakat Desa Dan Kelurahan",
+    "KEGIATAN": "Pemberdayaan dan Kesejahteraan Keluarga Tingkat Kecamatan dan Kelurahan"
+  },
+  {
+    "PROGRAM": "Program Koordinasi Ketentraman Dan Ketertiban Umum",
+    "KEGIATAN": "Koordinasi Upaya Penyelenggaraan Ketenteraman dan Ketertiban Umum"
+  },
+  {
+    "PROGRAM": "Program Penyelenggaraan Urusan Pemerintahan Umum",
+    "KEGIATAN": "Penyelenggaraan Urusan Pemerintahan Umum Sesuai Penugasan Kepala Daerah"
+  },
+  {
+    "PROGRAM": "Program Pembinaan Dan Pengawasan Pemerintahan Desa",
+    "KEGIATAN": "Fasilitasi, Rekomendasi dan KoordinasiPembinaan dan Pengawasan Pemerintahan Desa"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Masyarakat Desa Dan Kelurahan",
+    "KEGIATAN": "Kegiatan Pemberdayaan Kelurahan"
+  },
+  {
+    "PROGRAM": "Program Koordinasi Ketentraman Dan Ketertiban Umum",
+    "KEGIATAN": "Koordinasi Penerapan dan Penegakan Peraturan Daerah dan Peraturan Kepala Daerah"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Masyarakat Desa Dan Kelurahan",
+    "KEGIATAN": "Pemberdayaan Lembaga Kemasyarakatan Tingkat Kecamatan"
+  },
+  {
+    "PROGRAM": "Program Penguatan Ideologi Pancasila Dan Karakter Kebangsaan",
+    "KEGIATAN": "Perumusan Kebijakan Teknis dan Pemantapan Pelaksanaan Bidang Ideologi Pancasila dan Karakter Kebangsaan"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Peran Partai Politik Dan Lembaga Pendidikan Melalui Pendidikan Politik Dan Pengembangan Etika Serta Budaya Politik",
+    "KEGIATAN": "Perumusan Kebijakan Teknis dan Pemantapan Pelaksanaan Bidang Pendidikan Politik, Etika Budaya Politik, Peningkatan Demokrasi, Fasilitasi Kelembagaan Pemerintahan, Perwakilan dan Partai Politik, Pemilihan Umum/Pemilihan Umum Kepala Daerah, serta Pemantauan Situasi Politik"
+  },
+  {
+    "PROGRAM": "Program Pemberdayaan Dan Pengawasan Organisasi Kemasyarakatan",
+    "KEGIATAN": "Perumusan Kebijakan Teknis dan Pemantapan Pelaksanaan Bidang Pemberdayaan dan Pengawasan Organisasi Kemasyarakatan"
+  },
+  {
+    "PROGRAM": "Program Pembinaan Dan Pengembangan Ketahanan Ekonomi, Sosial, Dan Budaya",
+    "KEGIATAN": "Perumusan Kebijakan Teknis dan Pemantapan Pelaksanaan Bidang Ketahanan Ekonomi, Sosial dan Budaya"
+  },
+  {
+    "PROGRAM": "Program Peningkatan Kewaspadaan Nasional Dan Peningkatan Kualitas Dan Fasilitasi Penanganan Konflik Sosial",
+    "KEGIATAN": "Perumusan Kebijakan Teknis dan Pelaksanaan Pemantapan Kewaspadaan Nasional dan Penanganan Konflik Sosial"
+  }
+]

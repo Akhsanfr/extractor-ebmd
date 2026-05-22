@@ -132,67 +132,75 @@ function ModalInner({
                         <BarangCard barang={bmdBisaDioptimalkan} />
                     }
                     <SectionLabel>Data Anggaran</SectionLabel>
-                    {(
-                        [
-                            {
-                                name: "penggunaBarang" as const,
-                                isReadOnly: true,
-                                label: "Pengguna Barang",
-                                placeholder: "Dinas/Badan/Kecamatan",
-                            },
-                            {
-                                name: "kuasaPenggunaBarang" as const,
-                                isReadOnly: !isPenggunaBarang,
-                                label: "Kuasa Pengguna Barang",
-                                placeholder: "UPT/Puskesmas/Sekolah/Bagian ...",
-                            },
-                            {
-                                name: "program" as const,
-                                label: "Program",
-                                placeholder: "Program ...",
-                                isReadOnly: false,
-                            },
-                            {
-                                name: "kegiatan" as const,
-                                label: "Kegiatan",
-                                placeholder: "Kegiatan ...",
-                                isReadOnly: false,
-                            },
-                            {
-                                name: "output" as const,
-                                label: "Output",
-                                placeholder: "Terlaksananya ...",
-                                isReadOnly: false,
-                            },
-                        ]
-                    ).map((fieldInfo) => (
-                        <Controller
-                            key={fieldInfo.name}
-                            control={control}
-                            name={fieldInfo.name}
-                            rules={{ required: `${fieldInfo.label} wajib diisi.` }}
-                            render={({ field, fieldState: { error } }) => (
-                                <TextField
-                                    isReadOnly={fieldInfo.isReadOnly}
-                                    {...field}
-                                    isRequired
-                                    isInvalid={!!error}
-                                    className="flex flex-col gap-1.5"
-                                >
-                                    <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                                        {fieldInfo.label}{" "}
-                                        {/* <span className="text-danger ml-0.5">*</span> */}
-                                    </Label>
-                                    <Input placeholder={fieldInfo.placeholder} />
-                                    {error && (
-                                        <p className="text-[11px] text-danger font-medium mt-0.5">
-                                            {error.message}
-                                        </p>
-                                    )}
-                                </TextField>
-                            )}
-                        />
-                    ))}
+                    
+                                        {(
+                                            [
+                                                {
+                                                    name: "penggunaBarang" as const,
+                                                    isReadOnly: true,
+                                                    isRequired: true,
+                                                    label: "Pengguna Barang",
+                                                    placeholder: "Dinas/Badan/Kecamatan",
+                                                },
+                                                {
+                                                    name: "kuasaPenggunaBarang" as const,
+                                                    isRequired: false, // Ini tidak wajib
+                                                    isReadOnly: !isPenggunaBarang,
+                                                    label: "Kuasa Pengguna Barang",
+                                                    placeholder: "UPT/Puskesmas/Sekolah/Bagian ...",
+                                                },
+                                                {
+                                                    name: "program" as const,
+                                                    isRequired: true,
+                                                    isReadOnly: false,
+                                                    label: "Program",
+                                                    placeholder: "Program ...",
+                                                },
+                                                {
+                                                    name: "kegiatan" as const,
+                                                    isRequired: true,
+                                                    isReadOnly: false,
+                                                    label: "Kegiatan",
+                                                    placeholder: "Kegiatan ...",
+                                                },
+                                                {
+                                                    name: "output" as const,
+                                                    isRequired: true,
+                                                    isReadOnly: false,
+                                                    label: "Output",
+                                                    placeholder: "Terlaksananya ...",
+                                                },
+                                            ]
+                                        ).map((fieldInfo) => (
+                                            <Controller
+                                                key={fieldInfo.name}
+                                                control={control}
+                                                name={fieldInfo.name}
+                                                rules={{ required: fieldInfo.isRequired ? `${fieldInfo.label} wajib diisi.` : false }}
+                    
+                                                // 1. Pecah field untuk mengambil ref dan value secara spesifik
+                                                render={({ field: { ref, value, ...fieldProps }, fieldState: { error } }) => (
+                                                    <TextField
+                                                        {...fieldProps}
+                                                        value={value || ""} // 2. Fallback ke "" agar tidak pernah undefined (mencegah uncontrolled state)
+                                                        isReadOnly={fieldInfo.isReadOnly}
+                                                        isRequired={fieldInfo.isRequired}
+                                                        isInvalid={!!error}
+                                                        className="flex flex-col gap-1.5"
+                                                    >
+                                                        <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
+                                                            {fieldInfo.label}
+                                                            {fieldInfo.isRequired && <span className="text-danger ml-0.5">*</span>}
+                                                        </Label>
+                    
+                                                        {/* 3. Masukkan ref dari RHF LANGSUNG ke dalam elemen Input aslinya */}
+                                                        <Input ref={ref} placeholder={fieldInfo.placeholder} />
+                    
+                                                        {error && <p className="text-[11px] text-danger font-medium mt-0.5">{error.message}</p>}
+                                                    </TextField>
+                                                )}
+                                            />
+                                        ))}
 
                     <SectionLabel>Usulan Pengadaan</SectionLabel>
 

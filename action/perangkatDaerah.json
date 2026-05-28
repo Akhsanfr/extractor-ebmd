@@ -1,0 +1,6141 @@
+[
+  {
+    "No": "1",
+    "Kode Lokasi": "00.00.00",
+    "Nama Lokasi": "PENGELOLA BARANG",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "2",
+    "Kode Lokasi": "01.00.00",
+    "Nama Lokasi": "DINAS PENDIDIKAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "3",
+    "Kode Lokasi": "01.00.00.0001",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN BANGIL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "4",
+    "Kode Lokasi": "01.00.00.0001.0001",
+    "Nama Lokasi": "SDN KIDULDALEM I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "5",
+    "Kode Lokasi": "01.00.00.0001.0002",
+    "Nama Lokasi": "SDN KIDULDALEM III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "6",
+    "Kode Lokasi": "01.00.00.0001.0003",
+    "Nama Lokasi": "SDN KIDULDALEM IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "7",
+    "Kode Lokasi": "01.00.00.0001.0004",
+    "Nama Lokasi": "SDN GEMPENG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "8",
+    "Kode Lokasi": "01.00.00.0001.0005",
+    "Nama Lokasi": "SDN GEMPENG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "9",
+    "Kode Lokasi": "01.00.00.0001.0006",
+    "Nama Lokasi": "SDN DERMO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "10",
+    "Kode Lokasi": "01.00.00.0001.0007",
+    "Nama Lokasi": "SDN DERMO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "11",
+    "Kode Lokasi": "01.00.00.0001.0008",
+    "Nama Lokasi": "SDN KAUMAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "12",
+    "Kode Lokasi": "01.00.00.0001.0009",
+    "Nama Lokasi": "SDN KOLURSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "13",
+    "Kode Lokasi": "01.00.00.0001.0010",
+    "Nama Lokasi": "SDN KOLURSARI 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "14",
+    "Kode Lokasi": "01.00.00.0001.0011",
+    "Nama Lokasi": "SDN KALIREJO PLUS BANGIL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "15",
+    "Kode Lokasi": "01.00.00.0001.0012",
+    "Nama Lokasi": "SDN KERSIKAN I BANGIL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "16",
+    "Kode Lokasi": "01.00.00.0001.0013",
+    "Nama Lokasi": "SDN KERSIKAN II BANGIL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "17",
+    "Kode Lokasi": "01.00.00.0001.0014",
+    "Nama Lokasi": "SDN MANARUWI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "18",
+    "Kode Lokasi": "01.00.00.0001.0015",
+    "Nama Lokasi": "SDN MANARUWI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "19",
+    "Kode Lokasi": "01.00.00.0001.0016",
+    "Nama Lokasi": "SDN POGAR I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "20",
+    "Kode Lokasi": "01.00.00.0001.0017",
+    "Nama Lokasi": "SDN POGAR II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "21",
+    "Kode Lokasi": "01.00.00.0001.0018",
+    "Nama Lokasi": "SDN POGAR III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "22",
+    "Kode Lokasi": "01.00.00.0001.0019",
+    "Nama Lokasi": "SDN RACI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "23",
+    "Kode Lokasi": "01.00.00.0001.0020",
+    "Nama Lokasi": "SDN RACI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "24",
+    "Kode Lokasi": "01.00.00.0001.0021",
+    "Nama Lokasi": "SDN BENDOMUNGAL I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "25",
+    "Kode Lokasi": "01.00.00.0001.0022",
+    "Nama Lokasi": "SDN BENDOMUNGAL II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "26",
+    "Kode Lokasi": "01.00.00.0001.0023",
+    "Nama Lokasi": "SDN LATEK",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "27",
+    "Kode Lokasi": "01.00.00.0001.0024",
+    "Nama Lokasi": "SDN TAMBAKAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "28",
+    "Kode Lokasi": "01.00.00.0001.0025",
+    "Nama Lokasi": "SDN MASANGAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "29",
+    "Kode Lokasi": "01.00.00.0001.0026",
+    "Nama Lokasi": "SDN KALIANYAR I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "30",
+    "Kode Lokasi": "01.00.00.0001.0027",
+    "Nama Lokasi": "SDN KALIANYAR II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "31",
+    "Kode Lokasi": "01.00.00.0001.0028",
+    "Nama Lokasi": "TK PEMBINA KEC. BANGIL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "32",
+    "Kode Lokasi": "01.00.00.0002",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN BEJI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "33",
+    "Kode Lokasi": "01.00.00.0002.0001",
+    "Nama Lokasi": "SDN BEJI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "34",
+    "Kode Lokasi": "01.00.00.0002.0002",
+    "Nama Lokasi": "SDN BEJI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "35",
+    "Kode Lokasi": "01.00.00.0002.0003",
+    "Nama Lokasi": "SDN BEJI IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "36",
+    "Kode Lokasi": "01.00.00.0002.0004",
+    "Nama Lokasi": "SDN GUNUNGGANGSIR I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "37",
+    "Kode Lokasi": "01.00.00.0002.0005",
+    "Nama Lokasi": "SDN GUNUNGGANGSIR II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "38",
+    "Kode Lokasi": "01.00.00.0002.0006",
+    "Nama Lokasi": "SDN GUNUNGGANGSIR III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "39",
+    "Kode Lokasi": "01.00.00.0002.0007",
+    "Nama Lokasi": "SDN CANGKRINGMALANG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "40",
+    "Kode Lokasi": "01.00.00.0002.0008",
+    "Nama Lokasi": "SDN CANGKRINGMALANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "41",
+    "Kode Lokasi": "01.00.00.0002.0009",
+    "Nama Lokasi": "SDN CANGKRINGMALANG III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "42",
+    "Kode Lokasi": "01.00.00.0002.0010",
+    "Nama Lokasi": "SDN KEDUNGRINGIN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "43",
+    "Kode Lokasi": "01.00.00.0002.0011",
+    "Nama Lokasi": "SDN KEDUNGRINGIN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "44",
+    "Kode Lokasi": "01.00.00.0002.0012",
+    "Nama Lokasi": "SDN KEDUNGRINGIN III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "45",
+    "Kode Lokasi": "01.00.00.0002.0013",
+    "Nama Lokasi": "SDN KEDUNGRINGIN IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "46",
+    "Kode Lokasi": "01.00.00.0002.0014",
+    "Nama Lokasi": "SDN SUMBERSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "47",
+    "Kode Lokasi": "01.00.00.0002.0015",
+    "Nama Lokasi": "SDN SUMBERSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "48",
+    "Kode Lokasi": "01.00.00.0002.0016",
+    "Nama Lokasi": "SDN PAGAK",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "49",
+    "Kode Lokasi": "01.00.00.0002.0017",
+    "Nama Lokasi": "SDN GUNUNGSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "50",
+    "Kode Lokasi": "01.00.00.0002.0018",
+    "Nama Lokasi": "SDN GUNUNGSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "51",
+    "Kode Lokasi": "01.00.00.0002.0019",
+    "Nama Lokasi": "SDN SIDOWAYAH",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "52",
+    "Kode Lokasi": "01.00.00.0002.0020",
+    "Nama Lokasi": "SDN KENEP",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "53",
+    "Kode Lokasi": "01.00.00.0002.0021",
+    "Nama Lokasi": "SDN KEDUNGBOTO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "54",
+    "Kode Lokasi": "01.00.00.0002.0022",
+    "Nama Lokasi": "SDN BAUJENG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "55",
+    "Kode Lokasi": "01.00.00.0002.0023",
+    "Nama Lokasi": "SDN BAUJENG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "56",
+    "Kode Lokasi": "01.00.00.0002.0024",
+    "Nama Lokasi": "SDN GLANGGANG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "57",
+    "Kode Lokasi": "01.00.00.0002.0025",
+    "Nama Lokasi": "SDN GLANGGANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "58",
+    "Kode Lokasi": "01.00.00.0002.0026",
+    "Nama Lokasi": "SDN GAJAHBENDO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "59",
+    "Kode Lokasi": "01.00.00.0002.0027",
+    "Nama Lokasi": "SDN NGEMBE",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "60",
+    "Kode Lokasi": "01.00.00.0003",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN GEMPOL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "61",
+    "Kode Lokasi": "01.00.00.0003.0001",
+    "Nama Lokasi": "SDN GEMPOL 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "62",
+    "Kode Lokasi": "01.00.00.0003.0002",
+    "Nama Lokasi": "SDN GEMPOL 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "63",
+    "Kode Lokasi": "01.00.00.0003.0003",
+    "Nama Lokasi": "SDN GEMPOL 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "64",
+    "Kode Lokasi": "01.00.00.0003.0004",
+    "Nama Lokasi": "SDN WINONG 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "65",
+    "Kode Lokasi": "01.00.00.0003.0005",
+    "Nama Lokasi": "SDN WINONG 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "66",
+    "Kode Lokasi": "01.00.00.0003.0006",
+    "Nama Lokasi": "SDN PANDEREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "67",
+    "Kode Lokasi": "01.00.00.0003.0007",
+    "Nama Lokasi": "SDN KEJAPANAN 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "68",
+    "Kode Lokasi": "01.00.00.0003.0008",
+    "Nama Lokasi": "SDN KEJAPANAN 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "69",
+    "Kode Lokasi": "01.00.00.0003.0009",
+    "Nama Lokasi": "SDN KEJAPANAN 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "70",
+    "Kode Lokasi": "01.00.00.0003.0010",
+    "Nama Lokasi": "SDN KEJAPANAN 4",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "71",
+    "Kode Lokasi": "01.00.00.0003.0011",
+    "Nama Lokasi": "SDN KEJAPANAN 5",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "72",
+    "Kode Lokasi": "01.00.00.0003.0012",
+    "Nama Lokasi": "SDN CARAT 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "73",
+    "Kode Lokasi": "01.00.00.0003.0013",
+    "Nama Lokasi": "SDN CARAT 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "74",
+    "Kode Lokasi": "01.00.00.0003.0014",
+    "Nama Lokasi": "SDN WATUKOSEK",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "75",
+    "Kode Lokasi": "01.00.00.0003.0015",
+    "Nama Lokasi": "SDN KARANGREJO 1 GEMPOL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "76",
+    "Kode Lokasi": "01.00.00.0003.0016",
+    "Nama Lokasi": "SDN KARANGREJO 2 GEMPOL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "77",
+    "Kode Lokasi": "01.00.00.0003.0017",
+    "Nama Lokasi": "SDN KARANGREJO 3 GEMPOL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "78",
+    "Kode Lokasi": "01.00.00.0003.0018",
+    "Nama Lokasi": "SDN BULUSARI 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "79",
+    "Kode Lokasi": "01.00.00.0003.0019",
+    "Nama Lokasi": "SDN BULUSARI 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "80",
+    "Kode Lokasi": "01.00.00.0003.0020",
+    "Nama Lokasi": "SDN JERUKPURUT 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "81",
+    "Kode Lokasi": "01.00.00.0003.0021",
+    "Nama Lokasi": "SDN JERUKPURUT 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "82",
+    "Kode Lokasi": "01.00.00.0003.0022",
+    "Nama Lokasi": "SDN NGERONG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "83",
+    "Kode Lokasi": "01.00.00.0003.0023",
+    "Nama Lokasi": "SDN KEPULUNGAN 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "84",
+    "Kode Lokasi": "01.00.00.0003.0024",
+    "Nama Lokasi": "SDN KEPULUNGAN 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "85",
+    "Kode Lokasi": "01.00.00.0003.0025",
+    "Nama Lokasi": "SDN KEPULUNGAN 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "86",
+    "Kode Lokasi": "01.00.00.0003.0026",
+    "Nama Lokasi": "SDN SUMBERSUKO 1 GEMPOL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "87",
+    "Kode Lokasi": "01.00.00.0003.0027",
+    "Nama Lokasi": "SDN SUMBERSUKO 2 GEMPOL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "88",
+    "Kode Lokasi": "01.00.00.0003.0028",
+    "Nama Lokasi": "SDN WONOSARI GEMPOL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "89",
+    "Kode Lokasi": "01.00.00.0003.0029",
+    "Nama Lokasi": "SDN RANDUPITU",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "90",
+    "Kode Lokasi": "01.00.00.0003.0030",
+    "Nama Lokasi": "SDN WONOSUNYO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "91",
+    "Kode Lokasi": "01.00.00.0003.0031",
+    "Nama Lokasi": "SDN WONOSUNYO 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "92",
+    "Kode Lokasi": "01.00.00.0004",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN GONDANGWETAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "93",
+    "Kode Lokasi": "01.00.00.0004.0001",
+    "Nama Lokasi": "SDN GONDANGWETAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "94",
+    "Kode Lokasi": "01.00.00.0004.0002",
+    "Nama Lokasi": "SDN GONDANGWETAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "95",
+    "Kode Lokasi": "01.00.00.0004.0003",
+    "Nama Lokasi": "SDN TENGGILISREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "96",
+    "Kode Lokasi": "01.00.00.0004.0004",
+    "Nama Lokasi": "SDN GROGOL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "97",
+    "Kode Lokasi": "01.00.00.0004.0005",
+    "Nama Lokasi": "SDN BAYEMAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "98",
+    "Kode Lokasi": "01.00.00.0004.0006",
+    "Nama Lokasi": "SDN BAYEMAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "99",
+    "Kode Lokasi": "01.00.00.0004.0007",
+    "Nama Lokasi": "SDN GAYAM",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "100",
+    "Kode Lokasi": "01.00.00.0004.0008",
+    "Nama Lokasi": "SDN WONOJATI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "101",
+    "Kode Lokasi": "01.00.00.0004.0009",
+    "Nama Lokasi": "SDN KALIREJO GONDANGWETAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "102",
+    "Kode Lokasi": "01.00.00.0004.0010",
+    "Nama Lokasi": "SDN BAJANGAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "103",
+    "Kode Lokasi": "01.00.00.0004.0011",
+    "Nama Lokasi": "SDN PATEGUHAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "104",
+    "Kode Lokasi": "01.00.00.0004.0012",
+    "Nama Lokasi": "SDN TEBAS",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "105",
+    "Kode Lokasi": "01.00.00.0004.0013",
+    "Nama Lokasi": "SDN SEKARPUTIH",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "106",
+    "Kode Lokasi": "01.00.00.0004.0014",
+    "Nama Lokasi": "SDN RANGGEH",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "107",
+    "Kode Lokasi": "01.00.00.0004.0015",
+    "Nama Lokasi": "SDN PEKANGKUNGAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "108",
+    "Kode Lokasi": "01.00.00.0004.0016",
+    "Nama Lokasi": "SDN KARANGSENTUL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "109",
+    "Kode Lokasi": "01.00.00.0004.0017",
+    "Nama Lokasi": "SDN KERSIKAN GONDANGWETAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "110",
+    "Kode Lokasi": "01.00.00.0004.0018",
+    "Nama Lokasi": "SDN GONDANGREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "111",
+    "Kode Lokasi": "01.00.00.0004.0019",
+    "Nama Lokasi": "SDN WONOSARI GONDANGWETAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "112",
+    "Kode Lokasi": "01.00.00.0004.0020",
+    "Nama Lokasi": "SDN KEBONCANDI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "113",
+    "Kode Lokasi": "01.00.00.0004.0021",
+    "Nama Lokasi": "SDN LAJUK",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "114",
+    "Kode Lokasi": "01.00.00.0004.0022",
+    "Nama Lokasi": "SDN BRAMBANG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "115",
+    "Kode Lokasi": "01.00.00.0004.0023",
+    "Nama Lokasi": "TK NEGERI PEMBINA KEC.GONDANGWETAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "116",
+    "Kode Lokasi": "01.00.00.0005",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN GRATI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "117",
+    "Kode Lokasi": "01.00.00.0005.0001",
+    "Nama Lokasi": "SDN GRATI 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "118",
+    "Kode Lokasi": "01.00.00.0005.0002",
+    "Nama Lokasi": "SDN GRATI 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "119",
+    "Kode Lokasi": "01.00.00.0005.0003",
+    "Nama Lokasi": "SDN GRATI 4",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "120",
+    "Kode Lokasi": "01.00.00.0005.0004",
+    "Nama Lokasi": "SDN CUKURGONDANG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "121",
+    "Kode Lokasi": "01.00.00.0005.0005",
+    "Nama Lokasi": "SDN CUKURGONDANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "122",
+    "Kode Lokasi": "01.00.00.0005.0006",
+    "Nama Lokasi": "SDN RANUKLINDUNGAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "123",
+    "Kode Lokasi": "01.00.00.0005.0007",
+    "Nama Lokasi": "SDN RANUKLINDUNGAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "124",
+    "Kode Lokasi": "01.00.00.0005.0008",
+    "Nama Lokasi": "SDN TREWUNG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "125",
+    "Kode Lokasi": "01.00.00.0005.0009",
+    "Nama Lokasi": "SDN SUMBERDAWESARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "126",
+    "Kode Lokasi": "01.00.00.0005.0010",
+    "Nama Lokasi": "SDN SUMBERDAWESARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "127",
+    "Kode Lokasi": "01.00.00.0005.0011",
+    "Nama Lokasi": "SDN SUMBERDAWESARI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "128",
+    "Kode Lokasi": "01.00.00.0005.0012",
+    "Nama Lokasi": "SDN SUMBERDAWESARI IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "129",
+    "Kode Lokasi": "01.00.00.0005.0013",
+    "Nama Lokasi": "SDN KEDAWUNGWETAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "130",
+    "Kode Lokasi": "01.00.00.0005.0014",
+    "Nama Lokasi": "SDN KEDAWUNGWETAN 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "131",
+    "Kode Lokasi": "01.00.00.0005.0015",
+    "Nama Lokasi": "SDN KEDAWUNGWETAN 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "132",
+    "Kode Lokasi": "01.00.00.0005.0016",
+    "Nama Lokasi": "SDN KEDAWUNGWETAN 4",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "133",
+    "Kode Lokasi": "01.00.00.0005.0017",
+    "Nama Lokasi": "SDN PLOSOSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "134",
+    "Kode Lokasi": "01.00.00.0005.0018",
+    "Nama Lokasi": "SDN PLOSOSARI 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "135",
+    "Kode Lokasi": "01.00.00.0005.0019",
+    "Nama Lokasi": "SDN PLOSOSARI 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "136",
+    "Kode Lokasi": "01.00.00.0005.0020",
+    "Nama Lokasi": "SDN KARANGKLIWON",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "137",
+    "Kode Lokasi": "01.00.00.0005.0021",
+    "Nama Lokasi": "SDN REBALAS I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "138",
+    "Kode Lokasi": "01.00.00.0005.0022",
+    "Nama Lokasi": "SDN REBALAS 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "139",
+    "Kode Lokasi": "01.00.00.0005.0023",
+    "Nama Lokasi": "SDN REBALAS 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "140",
+    "Kode Lokasi": "01.00.00.0005.0024",
+    "Nama Lokasi": "SDN KARANGLO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "141",
+    "Kode Lokasi": "01.00.00.0005.0025",
+    "Nama Lokasi": "SDN KARANGLO 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "142",
+    "Kode Lokasi": "01.00.00.0005.0026",
+    "Nama Lokasi": "SDN SUMBERAGUNG 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "143",
+    "Kode Lokasi": "01.00.00.0005.0027",
+    "Nama Lokasi": "SDN SUMBERAGUNG 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "144",
+    "Kode Lokasi": "01.00.00.0005.0028",
+    "Nama Lokasi": "SDN KEDAWUNGKULON I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "145",
+    "Kode Lokasi": "01.00.00.0005.0029",
+    "Nama Lokasi": "SDN KEDAWUNGKULON II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "146",
+    "Kode Lokasi": "01.00.00.0005.0030",
+    "Nama Lokasi": "SDN KEDAWUNGKULON III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "147",
+    "Kode Lokasi": "01.00.00.0005.0031",
+    "Nama Lokasi": "SDN KAMBINGANREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "148",
+    "Kode Lokasi": "01.00.00.0005.0032",
+    "Nama Lokasi": "SDN KALIPANG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "149",
+    "Kode Lokasi": "01.00.00.0005.0033",
+    "Nama Lokasi": "SDN KALIPANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "150",
+    "Kode Lokasi": "01.00.00.0005.0034",
+    "Nama Lokasi": "SDN KEBONREJO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "151",
+    "Kode Lokasi": "01.00.00.0005.0035",
+    "Nama Lokasi": "SDN KEBONREJO 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "152",
+    "Kode Lokasi": "01.00.00.0006",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN KEJAYAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "153",
+    "Kode Lokasi": "01.00.00.0006.0001",
+    "Nama Lokasi": "SDN KEJAYAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "154",
+    "Kode Lokasi": "01.00.00.0006.0002",
+    "Nama Lokasi": "SDN PACARKELING I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "155",
+    "Kode Lokasi": "01.00.00.0006.0003",
+    "Nama Lokasi": "SDN PACARKELING II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "156",
+    "Kode Lokasi": "01.00.00.0006.0004",
+    "Nama Lokasi": "SDN KEPUH",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "157",
+    "Kode Lokasi": "01.00.00.0006.0005",
+    "Nama Lokasi": "SDN LINGGO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "158",
+    "Kode Lokasi": "01.00.00.0006.0006",
+    "Nama Lokasi": "SDN KLINTER",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "159",
+    "Kode Lokasi": "01.00.00.0006.0007",
+    "Nama Lokasi": "SDN WRATI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "160",
+    "Kode Lokasi": "01.00.00.0006.0008",
+    "Nama Lokasi": "SDN WRATI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "161",
+    "Kode Lokasi": "01.00.00.0006.0009",
+    "Nama Lokasi": "SDN WRATI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "162",
+    "Kode Lokasi": "01.00.00.0006.0010",
+    "Nama Lokasi": "SDN BENERWOJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "163",
+    "Kode Lokasi": "01.00.00.0006.0011",
+    "Nama Lokasi": "SDN COBANJOYO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "164",
+    "Kode Lokasi": "01.00.00.0006.0012",
+    "Nama Lokasi": "SDN COBANJOYO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "165",
+    "Kode Lokasi": "01.00.00.0006.0013",
+    "Nama Lokasi": "SDN KEDEMUNGAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "166",
+    "Kode Lokasi": "01.00.00.0006.0014",
+    "Nama Lokasi": "SDN KEDEMUNGAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "167",
+    "Kode Lokasi": "01.00.00.0006.0015",
+    "Nama Lokasi": "SDN KETANGIREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "168",
+    "Kode Lokasi": "01.00.00.0006.0016",
+    "Nama Lokasi": "SDN KETANGIREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "169",
+    "Kode Lokasi": "01.00.00.0006.0017",
+    "Nama Lokasi": "SDN WANGKALWETAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "170",
+    "Kode Lokasi": "01.00.00.0006.0018",
+    "Nama Lokasi": "SDN AMBAL-AMBIL I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "171",
+    "Kode Lokasi": "01.00.00.0006.0019",
+    "Nama Lokasi": "SDN AMBAL-AMBIL II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "172",
+    "Kode Lokasi": "01.00.00.0006.0020",
+    "Nama Lokasi": "SDN KLANGRONG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "173",
+    "Kode Lokasi": "01.00.00.0006.0021",
+    "Nama Lokasi": "SDN KLANGRONG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "174",
+    "Kode Lokasi": "01.00.00.0006.0022",
+    "Nama Lokasi": "SDN ORO - ORO PULE",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "175",
+    "Kode Lokasi": "01.00.00.0006.0023",
+    "Nama Lokasi": "SDN SUMBERBANTENG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "176",
+    "Kode Lokasi": "01.00.00.0006.0024",
+    "Nama Lokasi": "SDN TANGGULANGIN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "177",
+    "Kode Lokasi": "01.00.00.0006.0025",
+    "Nama Lokasi": "SDN LOROKAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "178",
+    "Kode Lokasi": "01.00.00.0006.0026",
+    "Nama Lokasi": "SDN LOROKAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "179",
+    "Kode Lokasi": "01.00.00.0006.0027",
+    "Nama Lokasi": "SDN PATEBON",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "180",
+    "Kode Lokasi": "01.00.00.0006.0028",
+    "Nama Lokasi": "SDN TUNDOSORO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "181",
+    "Kode Lokasi": "01.00.00.0006.0029",
+    "Nama Lokasi": "SDN SUMBERSUKO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "182",
+    "Kode Lokasi": "01.00.00.0006.0030",
+    "Nama Lokasi": "SDN LUWUK",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "183",
+    "Kode Lokasi": "01.00.00.0006.0031",
+    "Nama Lokasi": "SDN SLADI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "184",
+    "Kode Lokasi": "01.00.00.0006.0032",
+    "Nama Lokasi": "SDN KEDUNGPENGARON I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "185",
+    "Kode Lokasi": "01.00.00.0006.0033",
+    "Nama Lokasi": "SDN KEDUNGPENGARON II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "186",
+    "Kode Lokasi": "01.00.00.0006.0034",
+    "Nama Lokasi": "SDN RANDUGONG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "187",
+    "Kode Lokasi": "01.00.00.0006.0035",
+    "Nama Lokasi": "SDN KURUNG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "188",
+    "Kode Lokasi": "01.00.00.0006.0036",
+    "Nama Lokasi": "SDN KURUNG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "189",
+    "Kode Lokasi": "01.00.00.0007",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN KRATON",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "190",
+    "Kode Lokasi": "01.00.00.0007.0001",
+    "Nama Lokasi": "SDN KRATON",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "191",
+    "Kode Lokasi": "01.00.00.0007.0002",
+    "Nama Lokasi": "SDN TAMBAKREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "192",
+    "Kode Lokasi": "01.00.00.0007.0003",
+    "Nama Lokasi": "SDN NGEMPIT",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "193",
+    "Kode Lokasi": "01.00.00.0007.0004",
+    "Nama Lokasi": "SDN SIDOGIRI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "194",
+    "Kode Lokasi": "01.00.00.0007.0005",
+    "Nama Lokasi": "SDN PLINGGISAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "195",
+    "Kode Lokasi": "01.00.00.0007.0006",
+    "Nama Lokasi": "SDN TAMBAKSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "196",
+    "Kode Lokasi": "01.00.00.0007.0007",
+    "Nama Lokasi": "SDN JERUK",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "197",
+    "Kode Lokasi": "01.00.00.0007.0008",
+    "Nama Lokasi": "SDN BENDUNGAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "198",
+    "Kode Lokasi": "01.00.00.0007.0009",
+    "Nama Lokasi": "SDN PULOKERTO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "199",
+    "Kode Lokasi": "01.00.00.0007.0010",
+    "Nama Lokasi": "SDN SEMARE",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "200",
+    "Kode Lokasi": "01.00.00.0007.0011",
+    "Nama Lokasi": "SDN KALIREJO KRATON",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "201",
+    "Kode Lokasi": "01.00.00.0007.0012",
+    "Nama Lokasi": "SDN SELOTAMBAK",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "202",
+    "Kode Lokasi": "01.00.00.0007.0013",
+    "Nama Lokasi": "SDN KARANGANYAR I KRATON",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "203",
+    "Kode Lokasi": "01.00.00.0007.0014",
+    "Nama Lokasi": "SDN KARANGANYAR II KRATON",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "204",
+    "Kode Lokasi": "01.00.00.0007.0015",
+    "Nama Lokasi": "SDN MULYOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "205",
+    "Kode Lokasi": "01.00.00.0007.0016",
+    "Nama Lokasi": "SDN DHOMPO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "206",
+    "Kode Lokasi": "01.00.00.0007.0017",
+    "Nama Lokasi": "SDN DHOMPO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "207",
+    "Kode Lokasi": "01.00.00.0007.0018",
+    "Nama Lokasi": "SDN GAMBIRKUNING",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "208",
+    "Kode Lokasi": "01.00.00.0007.0019",
+    "Nama Lokasi": "SDN SLAMBRIT",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "209",
+    "Kode Lokasi": "01.00.00.0007.0020",
+    "Nama Lokasi": "SDN NGABAR 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "210",
+    "Kode Lokasi": "01.00.00.0007.0021",
+    "Nama Lokasi": "SDN KLAMPISREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "211",
+    "Kode Lokasi": "01.00.00.0007.0022",
+    "Nama Lokasi": "SDN PUKUL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "212",
+    "Kode Lokasi": "01.00.00.0007.0023",
+    "Nama Lokasi": "SDN REJOSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "213",
+    "Kode Lokasi": "01.00.00.0007.0024",
+    "Nama Lokasi": "SDN ASEMKANDANG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "214",
+    "Kode Lokasi": "01.00.00.0007.0025",
+    "Nama Lokasi": "SDN KEBOTOHAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "215",
+    "Kode Lokasi": "01.00.00.0007.0026",
+    "Nama Lokasi": "SDN GERONGAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "216",
+    "Kode Lokasi": "01.00.00.0007.0027",
+    "Nama Lokasi": "SDN CURAH DUKUH I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "217",
+    "Kode Lokasi": "01.00.00.0007.0028",
+    "Nama Lokasi": "SDN CURAHDUKUH II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "218",
+    "Kode Lokasi": "01.00.00.0008",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN LEKOK",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "219",
+    "Kode Lokasi": "01.00.00.0008.0001",
+    "Nama Lokasi": "SDN TAMBAK LEKOK I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "220",
+    "Kode Lokasi": "01.00.00.0008.0002",
+    "Nama Lokasi": "SDN TAMBAK LEKOK II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "221",
+    "Kode Lokasi": "01.00.00.0008.0003",
+    "Nama Lokasi": "SDN TAMBAK LEKOK III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "222",
+    "Kode Lokasi": "01.00.00.0008.0004",
+    "Nama Lokasi": "SDN TAMPUNG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "223",
+    "Kode Lokasi": "01.00.00.0008.0005",
+    "Nama Lokasi": "SDN TAMPUNG 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "224",
+    "Kode Lokasi": "01.00.00.0008.0006",
+    "Nama Lokasi": "SDN BRANANG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "225",
+    "Kode Lokasi": "01.00.00.0008.0007",
+    "Nama Lokasi": "SDN BRANANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "226",
+    "Kode Lokasi": "01.00.00.0008.0008",
+    "Nama Lokasi": "SDN ROWOGEMPOL I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "227",
+    "Kode Lokasi": "01.00.00.0008.0009",
+    "Nama Lokasi": "SDN ROWOGEMPOL II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "228",
+    "Kode Lokasi": "01.00.00.0008.0010",
+    "Nama Lokasi": "SDN ROWOGEMPOL III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "229",
+    "Kode Lokasi": "01.00.00.0008.0011",
+    "Nama Lokasi": "SDN GEJUGJATI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "230",
+    "Kode Lokasi": "01.00.00.0008.0012",
+    "Nama Lokasi": "SDN GEJUGJATI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "231",
+    "Kode Lokasi": "01.00.00.0008.0013",
+    "Nama Lokasi": "SDN GEJUGJATI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "232",
+    "Kode Lokasi": "01.00.00.0008.0014",
+    "Nama Lokasi": "SDN ALASTLOGO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "233",
+    "Kode Lokasi": "01.00.00.0008.0015",
+    "Nama Lokasi": "SDN ALASTLOGO 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "234",
+    "Kode Lokasi": "01.00.00.0008.0016",
+    "Nama Lokasi": "SDN ALASTLOGO 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "235",
+    "Kode Lokasi": "01.00.00.0008.0017",
+    "Nama Lokasi": "SDN WATES I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "236",
+    "Kode Lokasi": "01.00.00.0008.0018",
+    "Nama Lokasi": "SDN WATES II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "237",
+    "Kode Lokasi": "01.00.00.0008.0019",
+    "Nama Lokasi": "SDN WATES III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "238",
+    "Kode Lokasi": "01.00.00.0008.0020",
+    "Nama Lokasi": "SDN SEMEDUSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "239",
+    "Kode Lokasi": "01.00.00.0008.0021",
+    "Nama Lokasi": "SDN SEMEDUSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "240",
+    "Kode Lokasi": "01.00.00.0008.0022",
+    "Nama Lokasi": "SDN JATIREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "241",
+    "Kode Lokasi": "01.00.00.0008.0023",
+    "Nama Lokasi": "SDN JATIREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "242",
+    "Kode Lokasi": "01.00.00.0008.0024",
+    "Nama Lokasi": "SDN JATIREJO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "243",
+    "Kode Lokasi": "01.00.00.0008.0025",
+    "Nama Lokasi": "SDN PASINAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "244",
+    "Kode Lokasi": "01.00.00.0008.0026",
+    "Nama Lokasi": "SDN PASINAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "245",
+    "Kode Lokasi": "01.00.00.0008.0027",
+    "Nama Lokasi": "SDN PASINAN III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "246",
+    "Kode Lokasi": "01.00.00.0008.0028",
+    "Nama Lokasi": "SDN BALUNGANYAR",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "247",
+    "Kode Lokasi": "01.00.00.0009",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN LUMBANG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "248",
+    "Kode Lokasi": "01.00.00.0009.0001",
+    "Nama Lokasi": "SDN LUMBANG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "249",
+    "Kode Lokasi": "01.00.00.0009.0002",
+    "Nama Lokasi": "SDN LUMBANG III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "250",
+    "Kode Lokasi": "01.00.00.0009.0003",
+    "Nama Lokasi": "SDN CUKURGULING I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "251",
+    "Kode Lokasi": "01.00.00.0009.0004",
+    "Nama Lokasi": "SDN CUKURGULING II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "252",
+    "Kode Lokasi": "01.00.00.0009.0005",
+    "Nama Lokasi": "SDN CUKURGULING III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "253",
+    "Kode Lokasi": "01.00.00.0009.0006",
+    "Nama Lokasi": "SDN PANCUR I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "254",
+    "Kode Lokasi": "01.00.00.0009.0007",
+    "Nama Lokasi": "SDN PANCUR II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "255",
+    "Kode Lokasi": "01.00.00.0009.0008",
+    "Nama Lokasi": "SDN PANCUR III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "256",
+    "Kode Lokasi": "01.00.00.0009.0009",
+    "Nama Lokasi": "SDN KRONTO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "257",
+    "Kode Lokasi": "01.00.00.0009.0010",
+    "Nama Lokasi": "SDN KRONTO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "258",
+    "Kode Lokasi": "01.00.00.0009.0011",
+    "Nama Lokasi": "SDN WONOREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "259",
+    "Kode Lokasi": "01.00.00.0009.0012",
+    "Nama Lokasi": "SDN WONOREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "260",
+    "Kode Lokasi": "01.00.00.0009.0013",
+    "Nama Lokasi": "SDN KARANGASEM I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "261",
+    "Kode Lokasi": "01.00.00.0009.0014",
+    "Nama Lokasi": "SDN KARANGASEM II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "262",
+    "Kode Lokasi": "01.00.00.0009.0015",
+    "Nama Lokasi": "SDN WATULUMBUNG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "263",
+    "Kode Lokasi": "01.00.00.0009.0016",
+    "Nama Lokasi": "SDN WATULUMBUNG III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "264",
+    "Kode Lokasi": "01.00.00.0009.0017",
+    "Nama Lokasi": "SDN WATULUMBUNG IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "265",
+    "Kode Lokasi": "01.00.00.0009.0018",
+    "Nama Lokasi": "SDN BULUKANDANG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "266",
+    "Kode Lokasi": "01.00.00.0009.0019",
+    "Nama Lokasi": "SDN BULUKANDANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "267",
+    "Kode Lokasi": "01.00.00.0009.0020",
+    "Nama Lokasi": "SDN KARANGJATI I LUMBANG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "268",
+    "Kode Lokasi": "01.00.00.0009.0021",
+    "Nama Lokasi": "SDN KARANGJATI II LUMBANG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "269",
+    "Kode Lokasi": "01.00.00.0009.0022",
+    "Nama Lokasi": "SDN BANJARIMBO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "270",
+    "Kode Lokasi": "01.00.00.0009.0023",
+    "Nama Lokasi": "SDN BANJARIMBO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "271",
+    "Kode Lokasi": "01.00.00.0009.0024",
+    "Nama Lokasi": "SDN WELULANG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "272",
+    "Kode Lokasi": "01.00.00.0009.0025",
+    "Nama Lokasi": "SDN WELULANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "273",
+    "Kode Lokasi": "01.00.00.0009.0026",
+    "Nama Lokasi": "SDN PANDITAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "274",
+    "Kode Lokasi": "01.00.00.0009.0027",
+    "Nama Lokasi": "SDN PANDITAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "275",
+    "Kode Lokasi": "01.00.00.0010",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN NGULING",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "276",
+    "Kode Lokasi": "01.00.00.0010.0001",
+    "Nama Lokasi": "SDN NGULING I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "277",
+    "Kode Lokasi": "01.00.00.0010.0002",
+    "Nama Lokasi": "SDN NGULING 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "278",
+    "Kode Lokasi": "01.00.00.0010.0003",
+    "Nama Lokasi": "SDN NGULING 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "279",
+    "Kode Lokasi": "01.00.00.0010.0004",
+    "Nama Lokasi": "SDN PENUNGGUL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "280",
+    "Kode Lokasi": "01.00.00.0010.0005",
+    "Nama Lokasi": "SDN MLATEN 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "281",
+    "Kode Lokasi": "01.00.00.0010.0006",
+    "Nama Lokasi": "SDN KEDAWANG 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "282",
+    "Kode Lokasi": "01.00.00.0010.0007",
+    "Nama Lokasi": "SDN KEDAWANG 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "283",
+    "Kode Lokasi": "01.00.00.0010.0008",
+    "Nama Lokasi": "SDN KAPASAN 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "284",
+    "Kode Lokasi": "01.00.00.0010.0009",
+    "Nama Lokasi": "SDN KAPASAN 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "285",
+    "Kode Lokasi": "01.00.00.0010.0010",
+    "Nama Lokasi": "SDN WATUPRAPAT 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "286",
+    "Kode Lokasi": "01.00.00.0010.0011",
+    "Nama Lokasi": "SDN WATUPRAPAT 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "287",
+    "Kode Lokasi": "01.00.00.0010.0012",
+    "Nama Lokasi": "SDN RANDUATI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "288",
+    "Kode Lokasi": "01.00.00.0010.0013",
+    "Nama Lokasi": "SDN SUDIMULYO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "289",
+    "Kode Lokasi": "01.00.00.0010.0014",
+    "Nama Lokasi": "SDN SEDARUM 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "290",
+    "Kode Lokasi": "01.00.00.0010.0015",
+    "Nama Lokasi": "SDN SEDARUM 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "291",
+    "Kode Lokasi": "01.00.00.0010.0016",
+    "Nama Lokasi": "SDN SUMBERANYAR 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "292",
+    "Kode Lokasi": "01.00.00.0010.0017",
+    "Nama Lokasi": "SDN SUMBERANYAR 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "293",
+    "Kode Lokasi": "01.00.00.0010.0018",
+    "Nama Lokasi": "SDN SUMBERANYAR 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "294",
+    "Kode Lokasi": "01.00.00.0010.0019",
+    "Nama Lokasi": "SDN SUMBERANYAR 4",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "295",
+    "Kode Lokasi": "01.00.00.0010.0020",
+    "Nama Lokasi": "SDN DANDANGGENDIS 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "296",
+    "Kode Lokasi": "01.00.00.0010.0021",
+    "Nama Lokasi": "SDN WOTGALIH 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "297",
+    "Kode Lokasi": "01.00.00.0010.0022",
+    "Nama Lokasi": "SDN WOTGALIH 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "298",
+    "Kode Lokasi": "01.00.00.0010.0023",
+    "Nama Lokasi": "SDN WATESTANI 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "299",
+    "Kode Lokasi": "01.00.00.0010.0024",
+    "Nama Lokasi": "SDN WATESTANI 4",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "300",
+    "Kode Lokasi": "01.00.00.0010.0025",
+    "Nama Lokasi": "SDN SEBALONG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "301",
+    "Kode Lokasi": "01.00.00.0010.0026",
+    "Nama Lokasi": "SDN SANGANOM 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "302",
+    "Kode Lokasi": "01.00.00.0010.0027",
+    "Nama Lokasi": "SDN SANGANOM 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "303",
+    "Kode Lokasi": "01.00.00.0010.0028",
+    "Nama Lokasi": "SDN WATUPRAPAT 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "304",
+    "Kode Lokasi": "01.00.00.0011",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN PANDAAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "305",
+    "Kode Lokasi": "01.00.00.0011.0001",
+    "Nama Lokasi": "SDN PETUNGASRI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "306",
+    "Kode Lokasi": "01.00.00.0011.0002",
+    "Nama Lokasi": "SDN PETUNGASRI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "307",
+    "Kode Lokasi": "01.00.00.0011.0003",
+    "Nama Lokasi": "SDN PANDAAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "308",
+    "Kode Lokasi": "01.00.00.0011.0004",
+    "Nama Lokasi": "SDN PANDAAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "309",
+    "Kode Lokasi": "01.00.00.0011.0005",
+    "Nama Lokasi": "SDN JOGOSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "310",
+    "Kode Lokasi": "01.00.00.0011.0006",
+    "Nama Lokasi": "SDN JOGOSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "311",
+    "Kode Lokasi": "01.00.00.0011.0007",
+    "Nama Lokasi": "SDN KEBONWARIS",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "312",
+    "Kode Lokasi": "01.00.00.0011.0008",
+    "Nama Lokasi": "SDN TAWANGREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "313",
+    "Kode Lokasi": "01.00.00.0011.0009",
+    "Nama Lokasi": "SDN TAWANGREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "314",
+    "Kode Lokasi": "01.00.00.0011.0010",
+    "Nama Lokasi": "SDN DURENSEWU I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "315",
+    "Kode Lokasi": "01.00.00.0011.0011",
+    "Nama Lokasi": "SDN DURENSEWU II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "316",
+    "Kode Lokasi": "01.00.00.0011.0012",
+    "Nama Lokasi": "SDN TUNGGULWULUNG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "317",
+    "Kode Lokasi": "01.00.00.0011.0013",
+    "Nama Lokasi": "SDN TUNGGULWULUNG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "318",
+    "Kode Lokasi": "01.00.00.0011.0014",
+    "Nama Lokasi": "SDN SUMBEREJO I PANDAAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "319",
+    "Kode Lokasi": "01.00.00.0011.0015",
+    "Nama Lokasi": "SDN SUMBEREJO II PANDAAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "320",
+    "Kode Lokasi": "01.00.00.0011.0016",
+    "Nama Lokasi": "SDN KARANGJATI 1 PANDAAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "321",
+    "Kode Lokasi": "01.00.00.0011.0017",
+    "Nama Lokasi": "SDN KARANGJATI 2 PANDAAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "322",
+    "Kode Lokasi": "01.00.00.0011.0018",
+    "Nama Lokasi": "SDN KARANGJATI 3 PANDAAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "323",
+    "Kode Lokasi": "01.00.00.0011.0019",
+    "Nama Lokasi": "SDN SUMBERGEDANG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "324",
+    "Kode Lokasi": "01.00.00.0011.0020",
+    "Nama Lokasi": "SDN SUMBERGEDANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "325",
+    "Kode Lokasi": "01.00.00.0011.0021",
+    "Nama Lokasi": "SDN SUMBERGEDANG III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "326",
+    "Kode Lokasi": "01.00.00.0011.0022",
+    "Nama Lokasi": "SDN SEBANI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "327",
+    "Kode Lokasi": "01.00.00.0011.0023",
+    "Nama Lokasi": "SDN BANJARSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "328",
+    "Kode Lokasi": "01.00.00.0011.0024",
+    "Nama Lokasi": "SDN BANJARKEJEN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "329",
+    "Kode Lokasi": "01.00.00.0011.0025",
+    "Nama Lokasi": "SDN KUTOREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "330",
+    "Kode Lokasi": "01.00.00.0011.0026",
+    "Nama Lokasi": "SDN KUTOREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "331",
+    "Kode Lokasi": "01.00.00.0011.0027",
+    "Nama Lokasi": "SDN KEMIRISEWU I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "332",
+    "Kode Lokasi": "01.00.00.0011.0028",
+    "Nama Lokasi": "SDN KEMIRISEWU II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "333",
+    "Kode Lokasi": "01.00.00.0011.0029",
+    "Nama Lokasi": "SDN WEDORO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "334",
+    "Kode Lokasi": "01.00.00.0011.0030",
+    "Nama Lokasi": "SDN WEDORO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "335",
+    "Kode Lokasi": "01.00.00.0011.0031",
+    "Nama Lokasi": "SDN PLINTAHAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "336",
+    "Kode Lokasi": "01.00.00.0011.0032",
+    "Nama Lokasi": "SDN PLINTAHAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "337",
+    "Kode Lokasi": "01.00.00.0011.0033",
+    "Nama Lokasi": "SDN NOGOSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "338",
+    "Kode Lokasi": "01.00.00.0011.0034",
+    "Nama Lokasi": "SDNLBN KUTOREJO IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "339",
+    "Kode Lokasi": "01.00.00.0012",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN PASREPAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "340",
+    "Kode Lokasi": "01.00.00.0012.0001",
+    "Nama Lokasi": "SDN PASREPAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "341",
+    "Kode Lokasi": "01.00.00.0012.0002",
+    "Nama Lokasi": "SDN PASREPAN III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "342",
+    "Kode Lokasi": "01.00.00.0012.0003",
+    "Nama Lokasi": "SDN SAPULANTE",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "343",
+    "Kode Lokasi": "01.00.00.0012.0004",
+    "Nama Lokasi": "SDN TEMPURAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "344",
+    "Kode Lokasi": "01.00.00.0012.0005",
+    "Nama Lokasi": "SDN TEMPURAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "345",
+    "Kode Lokasi": "01.00.00.0012.0006",
+    "Nama Lokasi": "SDN TEMPURAN III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "346",
+    "Kode Lokasi": "01.00.00.0012.0007",
+    "Nama Lokasi": "SDN AMPELSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "347",
+    "Kode Lokasi": "01.00.00.0012.0008",
+    "Nama Lokasi": "SDN AMPELSARI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "348",
+    "Kode Lokasi": "01.00.00.0012.0009",
+    "Nama Lokasi": "SDN MANGGUAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "349",
+    "Kode Lokasi": "01.00.00.0012.0010",
+    "Nama Lokasi": "SDN MANGGUAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "350",
+    "Kode Lokasi": "01.00.00.0012.0011",
+    "Nama Lokasi": "SDN NGANTUNGAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "351",
+    "Kode Lokasi": "01.00.00.0012.0012",
+    "Nama Lokasi": "SDN NGANTUNGAN 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "352",
+    "Kode Lokasi": "01.00.00.0012.0013",
+    "Nama Lokasi": "SDN GALIH I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "353",
+    "Kode Lokasi": "01.00.00.0012.0014",
+    "Nama Lokasi": "SDN GALIH II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "354",
+    "Kode Lokasi": "01.00.00.0012.0015",
+    "Nama Lokasi": "SDN PETUNG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "355",
+    "Kode Lokasi": "01.00.00.0012.0016",
+    "Nama Lokasi": "SDN PETUNG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "356",
+    "Kode Lokasi": "01.00.00.0012.0017",
+    "Nama Lokasi": "SDN PETUNG III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "357",
+    "Kode Lokasi": "01.00.00.0012.0018",
+    "Nama Lokasi": "SDN KLAKAH",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "358",
+    "Kode Lokasi": "01.00.00.0012.0019",
+    "Nama Lokasi": "SDN LEMAHBANG PASREPAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "359",
+    "Kode Lokasi": "01.00.00.0012.0020",
+    "Nama Lokasi": "SDN SIBON I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "360",
+    "Kode Lokasi": "01.00.00.0012.0021",
+    "Nama Lokasi": "SDN SIBON II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "361",
+    "Kode Lokasi": "01.00.00.0012.0022",
+    "Nama Lokasi": "SDN TAMBAKREJO PASREPAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "362",
+    "Kode Lokasi": "01.00.00.0012.0023",
+    "Nama Lokasi": "SDN CENGKRONG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "363",
+    "Kode Lokasi": "01.00.00.0012.0024",
+    "Nama Lokasi": "SDN POHGADING",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "364",
+    "Kode Lokasi": "01.00.00.0012.0025",
+    "Nama Lokasi": "SDN POHGEDANG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "365",
+    "Kode Lokasi": "01.00.00.0012.0026",
+    "Nama Lokasi": "SDN REJOSALAM I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "366",
+    "Kode Lokasi": "01.00.00.0012.0027",
+    "Nama Lokasi": "SDN REJOSALAM II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "367",
+    "Kode Lokasi": "01.00.00.0012.0028",
+    "Nama Lokasi": "SDN JOGOREPUH",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "368",
+    "Kode Lokasi": "01.00.00.0013",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN POHJENTREK",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "369",
+    "Kode Lokasi": "01.00.00.0013.0001",
+    "Nama Lokasi": "SDN PLERET I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "370",
+    "Kode Lokasi": "01.00.00.0013.0002",
+    "Nama Lokasi": "SDN PLERET II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "371",
+    "Kode Lokasi": "01.00.00.0013.0003",
+    "Nama Lokasi": "SDN PLERET III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "372",
+    "Kode Lokasi": "01.00.00.0013.0004",
+    "Nama Lokasi": "SDN WARUNGDOWO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "373",
+    "Kode Lokasi": "01.00.00.0013.0005",
+    "Nama Lokasi": "SDN PARAS REJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "374",
+    "Kode Lokasi": "01.00.00.0013.0006",
+    "Nama Lokasi": "SDN PARASREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "375",
+    "Kode Lokasi": "01.00.00.0013.0007",
+    "Nama Lokasi": "SDN SUSUKANREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "376",
+    "Kode Lokasi": "01.00.00.0013.0008",
+    "Nama Lokasi": "SDN SUSUKANREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "377",
+    "Kode Lokasi": "01.00.00.0013.0009",
+    "Nama Lokasi": "SDN SUSUKANREJO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "378",
+    "Kode Lokasi": "01.00.00.0013.0010",
+    "Nama Lokasi": "SDN TIDU I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "379",
+    "Kode Lokasi": "01.00.00.0013.0011",
+    "Nama Lokasi": "SDN TIDU II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "380",
+    "Kode Lokasi": "01.00.00.0013.0012",
+    "Nama Lokasi": "SDN LOGOWOK I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "381",
+    "Kode Lokasi": "01.00.00.0013.0013",
+    "Nama Lokasi": "SDN LOGOWOK II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "382",
+    "Kode Lokasi": "01.00.00.0013.0014",
+    "Nama Lokasi": "SDN SUNGIWETAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "383",
+    "Kode Lokasi": "01.00.00.0013.0015",
+    "Nama Lokasi": "SDN SUNGIKULON",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "384",
+    "Kode Lokasi": "01.00.00.0013.0016",
+    "Nama Lokasi": "SDN SUKOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "385",
+    "Kode Lokasi": "01.00.00.0014",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN PRIGEN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "386",
+    "Kode Lokasi": "01.00.00.0014.0001",
+    "Nama Lokasi": "SDN PRIGEN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "387",
+    "Kode Lokasi": "01.00.00.0014.0002",
+    "Nama Lokasi": "SDN PRIGEN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "388",
+    "Kode Lokasi": "01.00.00.0014.0003",
+    "Nama Lokasi": "SDN GAMBIRAN 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "389",
+    "Kode Lokasi": "01.00.00.0014.0004",
+    "Nama Lokasi": "SDN GAMBIRAN 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "390",
+    "Kode Lokasi": "01.00.00.0014.0005",
+    "Nama Lokasi": "SDN LEDUG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "391",
+    "Kode Lokasi": "01.00.00.0014.0006",
+    "Nama Lokasi": "SDN LEDUG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "392",
+    "Kode Lokasi": "01.00.00.0014.0007",
+    "Nama Lokasi": "SDN SEKARJOHO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "393",
+    "Kode Lokasi": "01.00.00.0014.0008",
+    "Nama Lokasi": "SDN SEKARJOHO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "394",
+    "Kode Lokasi": "01.00.00.0014.0009",
+    "Nama Lokasi": "SDN SUKOLILO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "395",
+    "Kode Lokasi": "01.00.00.0014.0010",
+    "Nama Lokasi": "SDN SUKOLILO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "396",
+    "Kode Lokasi": "01.00.00.0014.0011",
+    "Nama Lokasi": "SDN SUKORENO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "397",
+    "Kode Lokasi": "01.00.00.0014.0012",
+    "Nama Lokasi": "SDN SUKORENO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "398",
+    "Kode Lokasi": "01.00.00.0014.0013",
+    "Nama Lokasi": "SDN SUKORENO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "399",
+    "Kode Lokasi": "01.00.00.0014.0014",
+    "Nama Lokasi": "SDN SUKORENO IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "400",
+    "Kode Lokasi": "01.00.00.0014.0015",
+    "Nama Lokasi": "SDN PECALUKAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "401",
+    "Kode Lokasi": "01.00.00.0014.0016",
+    "Nama Lokasi": "SDN PECALUKAN IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "402",
+    "Kode Lokasi": "01.00.00.0014.0017",
+    "Nama Lokasi": "SDN PECALUKAN V",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "403",
+    "Kode Lokasi": "01.00.00.0014.0018",
+    "Nama Lokasi": "SDN LUMBANGREJO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "404",
+    "Kode Lokasi": "01.00.00.0014.0019",
+    "Nama Lokasi": "SDN LUMBANGREJO 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "405",
+    "Kode Lokasi": "01.00.00.0014.0020",
+    "Nama Lokasi": "SDN DAYUREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "406",
+    "Kode Lokasi": "01.00.00.0014.0021",
+    "Nama Lokasi": "SDN DAYUREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "407",
+    "Kode Lokasi": "01.00.00.0014.0022",
+    "Nama Lokasi": "SDN DAYUREJO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "408",
+    "Kode Lokasi": "01.00.00.0014.0023",
+    "Nama Lokasi": "SDN DAYUREJO IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "409",
+    "Kode Lokasi": "01.00.00.0014.0024",
+    "Nama Lokasi": "SDN WATUAGUNG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "410",
+    "Kode Lokasi": "01.00.00.0014.0025",
+    "Nama Lokasi": "SDN WATUAGUNG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "411",
+    "Kode Lokasi": "01.00.00.0014.0026",
+    "Nama Lokasi": "SDN JATIARJO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "412",
+    "Kode Lokasi": "01.00.00.0014.0027",
+    "Nama Lokasi": "SDN JATIARJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "413",
+    "Kode Lokasi": "01.00.00.0014.0028",
+    "Nama Lokasi": "SDN BULUKANDANG I KEC. PRIGEN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "414",
+    "Kode Lokasi": "01.00.00.0014.0029",
+    "Nama Lokasi": "SDN BULUKANDANG II KEC. PRIGEN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "415",
+    "Kode Lokasi": "01.00.00.0014.0030",
+    "Nama Lokasi": "SDN CANDIWATES I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "416",
+    "Kode Lokasi": "01.00.00.0014.0031",
+    "Nama Lokasi": "SDN CANDIWATES II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "417",
+    "Kode Lokasi": "01.00.00.0014.0032",
+    "Nama Lokasi": "SDN KETANIRENG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "418",
+    "Kode Lokasi": "01.00.00.0014.0033",
+    "Nama Lokasi": "TK PEMBINA KEC. PRIGEN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "419",
+    "Kode Lokasi": "01.00.00.0015",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN PURWODADI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "420",
+    "Kode Lokasi": "01.00.00.0015.0001",
+    "Nama Lokasi": "SDN PURWODADI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "421",
+    "Kode Lokasi": "01.00.00.0015.0002",
+    "Nama Lokasi": "SDN PURWODADI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "422",
+    "Kode Lokasi": "01.00.00.0015.0003",
+    "Nama Lokasi": "SDN PURWODADI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "423",
+    "Kode Lokasi": "01.00.00.0015.0004",
+    "Nama Lokasi": "SDN PAREREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "424",
+    "Kode Lokasi": "01.00.00.0015.0005",
+    "Nama Lokasi": "SDN PAREREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "425",
+    "Kode Lokasi": "01.00.00.0015.0006",
+    "Nama Lokasi": "SDN PAREREJO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "426",
+    "Kode Lokasi": "01.00.00.0015.0007",
+    "Nama Lokasi": "SDN GERBO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "427",
+    "Kode Lokasi": "01.00.00.0015.0008",
+    "Nama Lokasi": "SDN GERBO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "428",
+    "Kode Lokasi": "01.00.00.0015.0009",
+    "Nama Lokasi": "SDN GERBO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "429",
+    "Kode Lokasi": "01.00.00.0015.0010",
+    "Nama Lokasi": "SDN GERBO IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "430",
+    "Kode Lokasi": "01.00.00.0015.0011",
+    "Nama Lokasi": "SDN GERBO V",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "431",
+    "Kode Lokasi": "01.00.00.0015.0012",
+    "Nama Lokasi": "SDN GERBO VI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "432",
+    "Kode Lokasi": "01.00.00.0015.0013",
+    "Nama Lokasi": "SDN DAWUHAN SENGON 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "433",
+    "Kode Lokasi": "01.00.00.0015.0014",
+    "Nama Lokasi": "SDN DAWUHANSENGON 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "434",
+    "Kode Lokasi": "01.00.00.0015.0015",
+    "Nama Lokasi": "SDN DAWUHANSENGON 3",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "435",
+    "Kode Lokasi": "01.00.00.0015.0016",
+    "Nama Lokasi": "SDN DAWUHAN SENGON 4",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "436",
+    "Kode Lokasi": "01.00.00.0015.0017",
+    "Nama Lokasi": "SDN LEBAKREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "437",
+    "Kode Lokasi": "01.00.00.0015.0018",
+    "Nama Lokasi": "SDN LEBAKREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "438",
+    "Kode Lokasi": "01.00.00.0015.0019",
+    "Nama Lokasi": "SDN LEBAKREJO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "439",
+    "Kode Lokasi": "01.00.00.0015.0020",
+    "Nama Lokasi": "SDN LEBAKREJO IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "440",
+    "Kode Lokasi": "01.00.00.0015.0021",
+    "Nama Lokasi": "SDN CAPANG 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "441",
+    "Kode Lokasi": "01.00.00.0015.0022",
+    "Nama Lokasi": "SDN CAPANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "442",
+    "Kode Lokasi": "01.00.00.0015.0023",
+    "Nama Lokasi": "SDN TAMBAKSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "443",
+    "Kode Lokasi": "01.00.00.0015.0024",
+    "Nama Lokasi": "SDN TAMBAKSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "444",
+    "Kode Lokasi": "01.00.00.0015.0025",
+    "Nama Lokasi": "SDN TAMBAKSARI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "445",
+    "Kode Lokasi": "01.00.00.0015.0026",
+    "Nama Lokasi": "SDN GAJAHREJO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "446",
+    "Kode Lokasi": "01.00.00.0015.0027",
+    "Nama Lokasi": "SDN GAJAHREJO 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "447",
+    "Kode Lokasi": "01.00.00.0015.0028",
+    "Nama Lokasi": "SDN COWEK I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "448",
+    "Kode Lokasi": "01.00.00.0015.0029",
+    "Nama Lokasi": "SDN COWEK II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "449",
+    "Kode Lokasi": "01.00.00.0015.0030",
+    "Nama Lokasi": "SDN COWEK III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "450",
+    "Kode Lokasi": "01.00.00.0015.0031",
+    "Nama Lokasi": "SDN SENTUL I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "451",
+    "Kode Lokasi": "01.00.00.0015.0032",
+    "Nama Lokasi": "SDN SENTUL II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "452",
+    "Kode Lokasi": "01.00.00.0015.0033",
+    "Nama Lokasi": "SDN PUCANGSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "453",
+    "Kode Lokasi": "01.00.00.0015.0034",
+    "Nama Lokasi": "SDN PUCANGSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "454",
+    "Kode Lokasi": "01.00.00.0015.0035",
+    "Nama Lokasi": "SDN JATISARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "455",
+    "Kode Lokasi": "01.00.00.0015.0036",
+    "Nama Lokasi": "SDN JATISARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "456",
+    "Kode Lokasi": "01.00.00.0015.0037",
+    "Nama Lokasi": "SDN JATISARI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "457",
+    "Kode Lokasi": "01.00.00.0015.0038",
+    "Nama Lokasi": "SDN JATISARI IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "458",
+    "Kode Lokasi": "01.00.00.0015.0039",
+    "Nama Lokasi": "SDN SEMUT",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "459",
+    "Kode Lokasi": "01.00.00.0016",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN PURWOSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "460",
+    "Kode Lokasi": "01.00.00.0016.0001",
+    "Nama Lokasi": "SDN PURWOSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "461",
+    "Kode Lokasi": "01.00.00.0016.0002",
+    "Nama Lokasi": "SDN PURWOSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "462",
+    "Kode Lokasi": "01.00.00.0016.0003",
+    "Nama Lokasi": "SDN PURWOSARI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "463",
+    "Kode Lokasi": "01.00.00.0016.0004",
+    "Nama Lokasi": "SDN MARTOPURO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "464",
+    "Kode Lokasi": "01.00.00.0016.0005",
+    "Nama Lokasi": "SDN MARTOPURO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "465",
+    "Kode Lokasi": "01.00.00.0016.0006",
+    "Nama Lokasi": "SDN MARTOPURO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "466",
+    "Kode Lokasi": "01.00.00.0016.0007",
+    "Nama Lokasi": "SDN MARTOPURO IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "467",
+    "Kode Lokasi": "01.00.00.0016.0008",
+    "Nama Lokasi": "SDN MARTOPURO V",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "468",
+    "Kode Lokasi": "01.00.00.0016.0009",
+    "Nama Lokasi": "SDN SENGON I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "469",
+    "Kode Lokasi": "01.00.00.0016.0010",
+    "Nama Lokasi": "SDN SENGON II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "470",
+    "Kode Lokasi": "01.00.00.0016.0011",
+    "Nama Lokasi": "SDN KARANGREJO I PURWOSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "471",
+    "Kode Lokasi": "01.00.00.0016.0012",
+    "Nama Lokasi": "SDN KARANGREJO II PURWOSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "472",
+    "Kode Lokasi": "01.00.00.0016.0013",
+    "Nama Lokasi": "SDN SUKODERMO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "473",
+    "Kode Lokasi": "01.00.00.0016.0014",
+    "Nama Lokasi": "SDN PAGER I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "474",
+    "Kode Lokasi": "01.00.00.0016.0015",
+    "Nama Lokasi": "SDN PAGER II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "475",
+    "Kode Lokasi": "01.00.00.0016.0016",
+    "Nama Lokasi": "SDN SEKARMOJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "476",
+    "Kode Lokasi": "01.00.00.0016.0017",
+    "Nama Lokasi": "SDN SEKARMOJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "477",
+    "Kode Lokasi": "01.00.00.0016.0018",
+    "Nama Lokasi": "SDN SEKARMOJO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "478",
+    "Kode Lokasi": "01.00.00.0016.0019",
+    "Nama Lokasi": "SDN BAKALAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "479",
+    "Kode Lokasi": "01.00.00.0016.0020",
+    "Nama Lokasi": "SDN BAKALAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "480",
+    "Kode Lokasi": "01.00.00.0016.0021",
+    "Nama Lokasi": "SDN BAKALAN III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "481",
+    "Kode Lokasi": "01.00.00.0016.0022",
+    "Nama Lokasi": "SDN CENDONO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "482",
+    "Kode Lokasi": "01.00.00.0016.0023",
+    "Nama Lokasi": "SDN CENDONO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "483",
+    "Kode Lokasi": "01.00.00.0016.0024",
+    "Nama Lokasi": "SDN TEJOWANGI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "484",
+    "Kode Lokasi": "01.00.00.0016.0025",
+    "Nama Lokasi": "SDN TEJOWANGI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "485",
+    "Kode Lokasi": "01.00.00.0016.0026",
+    "Nama Lokasi": "SDN TEJOWANGI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "486",
+    "Kode Lokasi": "01.00.00.0016.0027",
+    "Nama Lokasi": "SDN SUMBERSUKO I PURWOSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "487",
+    "Kode Lokasi": "01.00.00.0016.0028",
+    "Nama Lokasi": "SDN SUMBERSUKO II PURWOSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "488",
+    "Kode Lokasi": "01.00.00.0016.0029",
+    "Nama Lokasi": "SDN KERTOSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "489",
+    "Kode Lokasi": "01.00.00.0016.0030",
+    "Nama Lokasi": "SDN KERTOSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "490",
+    "Kode Lokasi": "01.00.00.0016.0031",
+    "Nama Lokasi": "SDN PUCANGSARI I PURWOSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "491",
+    "Kode Lokasi": "01.00.00.0016.0032",
+    "Nama Lokasi": "SDN PUCANGSARI II PURWOSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "492",
+    "Kode Lokasi": "01.00.00.0016.0033",
+    "Nama Lokasi": "SDN KAYOMAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "493",
+    "Kode Lokasi": "01.00.00.0016.0034",
+    "Nama Lokasi": "SDN SUMBEREJO 1 PURWOSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "494",
+    "Kode Lokasi": "01.00.00.0016.0035",
+    "Nama Lokasi": "SDN SUMBEREJO 2 PURWOSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "495",
+    "Kode Lokasi": "01.00.00.0016.0036",
+    "Nama Lokasi": "SDN SUMBEREJO 3 PURWOSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "496",
+    "Kode Lokasi": "01.00.00.0016.0037",
+    "Nama Lokasi": "TK PEMBINA KEC. PURWOSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "497",
+    "Kode Lokasi": "01.00.00.0016.0038",
+    "Nama Lokasi": "SDLB SENGON",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "498",
+    "Kode Lokasi": "01.00.00.0017",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN PUSPO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "499",
+    "Kode Lokasi": "01.00.00.0017.0001",
+    "Nama Lokasi": "SDN PUSPO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "500",
+    "Kode Lokasi": "01.00.00.0017.0002",
+    "Nama Lokasi": "SDN PUSPO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "501",
+    "Kode Lokasi": "01.00.00.0017.0003",
+    "Nama Lokasi": "SDN PUSPO IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "502",
+    "Kode Lokasi": "01.00.00.0017.0004",
+    "Nama Lokasi": "SDN PUSPO V",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "503",
+    "Kode Lokasi": "01.00.00.0017.0005",
+    "Nama Lokasi": "SDN JIMBARAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "504",
+    "Kode Lokasi": "01.00.00.0017.0006",
+    "Nama Lokasi": "SDN JIMBARAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "505",
+    "Kode Lokasi": "01.00.00.0017.0007",
+    "Nama Lokasi": "SDN JIMBARAN III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "506",
+    "Kode Lokasi": "01.00.00.0017.0008",
+    "Nama Lokasi": "SDN JIMBARAN IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "507",
+    "Kode Lokasi": "01.00.00.0017.0009",
+    "Nama Lokasi": "SDN KEDUWUNG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "508",
+    "Kode Lokasi": "01.00.00.0017.0010",
+    "Nama Lokasi": "SDN KEDUWUNG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "509",
+    "Kode Lokasi": "01.00.00.0017.0011",
+    "Nama Lokasi": "SDN PUSUNGMALANG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "510",
+    "Kode Lokasi": "01.00.00.0017.0012",
+    "Nama Lokasi": "SDN PUSUNGMALANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "511",
+    "Kode Lokasi": "01.00.00.0017.0013",
+    "Nama Lokasi": "SDN PALANGSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "512",
+    "Kode Lokasi": "01.00.00.0017.0014",
+    "Nama Lokasi": "SDN PALANGSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "513",
+    "Kode Lokasi": "01.00.00.0017.0015",
+    "Nama Lokasi": "SDN PALANGSARI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "514",
+    "Kode Lokasi": "01.00.00.0017.0016",
+    "Nama Lokasi": "SDN JANJANGWULUNG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "515",
+    "Kode Lokasi": "01.00.00.0017.0017",
+    "Nama Lokasi": "SDN JANJANGWULUNG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "516",
+    "Kode Lokasi": "01.00.00.0017.0018",
+    "Nama Lokasi": "SDN JANJANGWULUNG III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "517",
+    "Kode Lokasi": "01.00.00.0017.0019",
+    "Nama Lokasi": "SDN KEMIRI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "518",
+    "Kode Lokasi": "01.00.00.0018",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN REJOSO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "519",
+    "Kode Lokasi": "01.00.00.0018.0001",
+    "Nama Lokasi": "SDN REJOSOLOR 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "520",
+    "Kode Lokasi": "01.00.00.0018.0002",
+    "Nama Lokasi": "SDN REJOSOLOR 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "521",
+    "Kode Lokasi": "01.00.00.0018.0003",
+    "Nama Lokasi": "SDN REJOSOKIDUL 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "522",
+    "Kode Lokasi": "01.00.00.0018.0004",
+    "Nama Lokasi": "SDN REJOSOKIDUL 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "523",
+    "Kode Lokasi": "01.00.00.0018.0005",
+    "Nama Lokasi": "SDN KEMANTRENREJO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "524",
+    "Kode Lokasi": "01.00.00.0018.0006",
+    "Nama Lokasi": "SDN KEMANTRENREJO 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "525",
+    "Kode Lokasi": "01.00.00.0018.0007",
+    "Nama Lokasi": "SDN SEGOROPURO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "526",
+    "Kode Lokasi": "01.00.00.0018.0008",
+    "Nama Lokasi": "SDN ARJOSARI 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "527",
+    "Kode Lokasi": "01.00.00.0018.0009",
+    "Nama Lokasi": "SDN ARJOSARI 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "528",
+    "Kode Lokasi": "01.00.00.0018.0010",
+    "Nama Lokasi": "SDN TOYANING 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "529",
+    "Kode Lokasi": "01.00.00.0018.0011",
+    "Nama Lokasi": "SDN TOYANING 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "530",
+    "Kode Lokasi": "01.00.00.0018.0012",
+    "Nama Lokasi": "SDN PANDANREJO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "531",
+    "Kode Lokasi": "01.00.00.0018.0013",
+    "Nama Lokasi": "SDN PANDANREJO 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "532",
+    "Kode Lokasi": "01.00.00.0018.0014",
+    "Nama Lokasi": "SDN KETEGAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "533",
+    "Kode Lokasi": "01.00.00.0018.0015",
+    "Nama Lokasi": "SDN KAWISREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "534",
+    "Kode Lokasi": "01.00.00.0018.0016",
+    "Nama Lokasi": "SDN SAMBIREJO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "535",
+    "Kode Lokasi": "01.00.00.0018.0017",
+    "Nama Lokasi": "SDN SAMBIREJO 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "536",
+    "Kode Lokasi": "01.00.00.0018.0018",
+    "Nama Lokasi": "SDN KEDUNGBAKO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "537",
+    "Kode Lokasi": "01.00.00.0018.0019",
+    "Nama Lokasi": "SDN MANIKREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "538",
+    "Kode Lokasi": "01.00.00.0018.0020",
+    "Nama Lokasi": "SDN PATUGURAN 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "539",
+    "Kode Lokasi": "01.00.00.0018.0021",
+    "Nama Lokasi": "SDN PATUGURAN 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "540",
+    "Kode Lokasi": "01.00.00.0018.0022",
+    "Nama Lokasi": "SDN JARANGAN 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "541",
+    "Kode Lokasi": "01.00.00.0018.0023",
+    "Nama Lokasi": "SDN JARANGAN 2",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "542",
+    "Kode Lokasi": "01.00.00.0018.0024",
+    "Nama Lokasi": "SDN SADENGREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "543",
+    "Kode Lokasi": "01.00.00.0019",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN REMBANG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "544",
+    "Kode Lokasi": "01.00.00.0019.0001",
+    "Nama Lokasi": "SDN REMBANG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "545",
+    "Kode Lokasi": "01.00.00.0019.0002",
+    "Nama Lokasi": "SDN PEKOREN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "546",
+    "Kode Lokasi": "01.00.00.0019.0003",
+    "Nama Lokasi": "SDN PEKOREN III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "547",
+    "Kode Lokasi": "01.00.00.0019.0004",
+    "Nama Lokasi": "SDN MOJOPARON",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "548",
+    "Kode Lokasi": "01.00.00.0019.0005",
+    "Nama Lokasi": "SDN PANDEAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "549",
+    "Kode Lokasi": "01.00.00.0019.0006",
+    "Nama Lokasi": "SDN PANDEAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "550",
+    "Kode Lokasi": "01.00.00.0019.0007",
+    "Nama Lokasi": "SDN ORO-ORO OMBO KULON I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "551",
+    "Kode Lokasi": "01.00.00.0019.0008",
+    "Nama Lokasi": "SDN ORO ORO OMBO KULON II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "552",
+    "Kode Lokasi": "01.00.00.0019.0009",
+    "Nama Lokasi": "SDN ORO-ORO OMBO WETAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "553",
+    "Kode Lokasi": "01.00.00.0019.0010",
+    "Nama Lokasi": "SDN ORO-ORO OMBO WETAN III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "554",
+    "Kode Lokasi": "01.00.00.0019.0011",
+    "Nama Lokasi": "SDN ORO-ORO OMBO WETAN IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "555",
+    "Kode Lokasi": "01.00.00.0019.0012",
+    "Nama Lokasi": "SDN KEDUNG BANTENG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "556",
+    "Kode Lokasi": "01.00.00.0019.0013",
+    "Nama Lokasi": "SDN KEDUNG BANTENG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "557",
+    "Kode Lokasi": "01.00.00.0019.0014",
+    "Nama Lokasi": "SDN OROBULU",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "558",
+    "Kode Lokasi": "01.00.00.0019.0015",
+    "Nama Lokasi": "SDN KALISAT I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "559",
+    "Kode Lokasi": "01.00.00.0019.0016",
+    "Nama Lokasi": "SDN PAJARAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "560",
+    "Kode Lokasi": "01.00.00.0019.0017",
+    "Nama Lokasi": "SDN PAJARAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "561",
+    "Kode Lokasi": "01.00.00.0019.0018",
+    "Nama Lokasi": "SDN KANIGORO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "562",
+    "Kode Lokasi": "01.00.00.0019.0019",
+    "Nama Lokasi": "SDN SUMBER GLAGAH",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "563",
+    "Kode Lokasi": "01.00.00.0019.0020",
+    "Nama Lokasi": "SDN TAMPUNG I REMBANG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "564",
+    "Kode Lokasi": "01.00.00.0019.0021",
+    "Nama Lokasi": "SDN TAMPUNG II REMBANG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "565",
+    "Kode Lokasi": "01.00.00.0019.0022",
+    "Nama Lokasi": "SDN KRENGIH",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "566",
+    "Kode Lokasi": "01.00.00.0019.0023",
+    "Nama Lokasi": "SDN GENENG WARU",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "567",
+    "Kode Lokasi": "01.00.00.0019.0024",
+    "Nama Lokasi": "SDN SIYAR",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "568",
+    "Kode Lokasi": "01.00.00.0019.0025",
+    "Nama Lokasi": "SDN PEJANGKUNGAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "569",
+    "Kode Lokasi": "01.00.00.0019.0026",
+    "Nama Lokasi": "SDN PEJANGKUNGAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "570",
+    "Kode Lokasi": "01.00.00.0020",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN SUKOREJO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "571",
+    "Kode Lokasi": "01.00.00.0020.0001",
+    "Nama Lokasi": "SDN GLAGAHSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "572",
+    "Kode Lokasi": "01.00.00.0020.0002",
+    "Nama Lokasi": "SDN SUWAYUWO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "573",
+    "Kode Lokasi": "01.00.00.0020.0003",
+    "Nama Lokasi": "SDN SUWAYUWO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "574",
+    "Kode Lokasi": "01.00.00.0020.0004",
+    "Nama Lokasi": "SDN SUKOREJO I SUKOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "575",
+    "Kode Lokasi": "01.00.00.0020.0005",
+    "Nama Lokasi": "SDN KARANGSONO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "576",
+    "Kode Lokasi": "01.00.00.0020.0006",
+    "Nama Lokasi": "SDN LEMAHBANG I SUKOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "577",
+    "Kode Lokasi": "01.00.00.0020.0007",
+    "Nama Lokasi": "SDN LEMAHBANG II SUKOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "578",
+    "Kode Lokasi": "01.00.00.0020.0008",
+    "Nama Lokasi": "SDN PAKUKERTO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "579",
+    "Kode Lokasi": "01.00.00.0020.0009",
+    "Nama Lokasi": "SDN PAKUKERTO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "580",
+    "Kode Lokasi": "01.00.00.0020.0010",
+    "Nama Lokasi": "SDN GUNTING I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "581",
+    "Kode Lokasi": "01.00.00.0020.0011",
+    "Nama Lokasi": "SDN GUNTING II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "582",
+    "Kode Lokasi": "01.00.00.0020.0012",
+    "Nama Lokasi": "SDN LECARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "583",
+    "Kode Lokasi": "01.00.00.0020.0013",
+    "Nama Lokasi": "SDN NGADIMULYO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "584",
+    "Kode Lokasi": "01.00.00.0020.0014",
+    "Nama Lokasi": "SDN MOJOTENGAH I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "585",
+    "Kode Lokasi": "01.00.00.0020.0015",
+    "Nama Lokasi": "SDN MOJOTENGAH II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "586",
+    "Kode Lokasi": "01.00.00.0020.0016",
+    "Nama Lokasi": "SDN KALIREJO 01 SUKOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "587",
+    "Kode Lokasi": "01.00.00.0020.0017",
+    "Nama Lokasi": "SDN KALIREJO 02 SUKOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "588",
+    "Kode Lokasi": "01.00.00.0020.0018",
+    "Nama Lokasi": "SDN TANJUNGARUM",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "589",
+    "Kode Lokasi": "01.00.00.0020.0019",
+    "Nama Lokasi": "SDN WONOKERTO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "590",
+    "Kode Lokasi": "01.00.00.0020.0020",
+    "Nama Lokasi": "SDN DUKUHSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "591",
+    "Kode Lokasi": "01.00.00.0020.0021",
+    "Nama Lokasi": "SDN CANDIBINANGUN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "592",
+    "Kode Lokasi": "01.00.00.0020.0022",
+    "Nama Lokasi": "SDN CANDIBINANGUN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "593",
+    "Kode Lokasi": "01.00.00.0020.0023",
+    "Nama Lokasi": "SDN SEBANDUNG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "594",
+    "Kode Lokasi": "01.00.00.0020.0024",
+    "Nama Lokasi": "SDN CURAHREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "595",
+    "Kode Lokasi": "01.00.00.0020.0025",
+    "Nama Lokasi": "SDN KENDURUAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "596",
+    "Kode Lokasi": "01.00.00.0020.0026",
+    "Nama Lokasi": "SDN KENDURUAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "597",
+    "Kode Lokasi": "01.00.00.0020.0027",
+    "Nama Lokasi": "SDN SUKORAME",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "598",
+    "Kode Lokasi": "01.00.00.0020.0028",
+    "Nama Lokasi": "SDN GLAGAHSARI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "599",
+    "Kode Lokasi": "01.00.00.0020.0029",
+    "Nama Lokasi": "SDN KALIREJO 03 SUKOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "600",
+    "Kode Lokasi": "01.00.00.0020.0030",
+    "Nama Lokasi": "SDN SUKOREJO III SUKOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "601",
+    "Kode Lokasi": "01.00.00.0020.0031",
+    "Nama Lokasi": "SDN CURAHREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "602",
+    "Kode Lokasi": "01.00.00.0020.0032",
+    "Nama Lokasi": "SDN CANDIBINANGUN IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "603",
+    "Kode Lokasi": "01.00.00.0020.0033",
+    "Nama Lokasi": "SDN SUKOREJO IV SUKOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "604",
+    "Kode Lokasi": "01.00.00.0020.0034",
+    "Nama Lokasi": "SDN SEBANDUNG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "605",
+    "Kode Lokasi": "01.00.00.0021",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN TOSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "606",
+    "Kode Lokasi": "01.00.00.0021.0001",
+    "Nama Lokasi": "SDN TOSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "607",
+    "Kode Lokasi": "01.00.00.0021.0002",
+    "Nama Lokasi": "SDN TOSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "608",
+    "Kode Lokasi": "01.00.00.0021.0003",
+    "Nama Lokasi": "SDN BALEDONO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "609",
+    "Kode Lokasi": "01.00.00.0021.0004",
+    "Nama Lokasi": "SDN BALEDONO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "610",
+    "Kode Lokasi": "01.00.00.0021.0005",
+    "Nama Lokasi": "SDN WONOKITRI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "611",
+    "Kode Lokasi": "01.00.00.0021.0006",
+    "Nama Lokasi": "SDN SEDAENG I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "612",
+    "Kode Lokasi": "01.00.00.0021.0007",
+    "Nama Lokasi": "SDN SEDAENG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "613",
+    "Kode Lokasi": "01.00.00.0021.0008",
+    "Nama Lokasi": "SDN PODOKOYO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "614",
+    "Kode Lokasi": "01.00.00.0021.0009",
+    "Nama Lokasi": "SDN PODOKOYO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "615",
+    "Kode Lokasi": "01.00.00.0021.0010",
+    "Nama Lokasi": "SDN PODOKOYO III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "616",
+    "Kode Lokasi": "01.00.00.0021.0011",
+    "Nama Lokasi": "SDN NGADIWONO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "617",
+    "Kode Lokasi": "01.00.00.0021.0012",
+    "Nama Lokasi": "SDN NGADIWONO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "618",
+    "Kode Lokasi": "01.00.00.0021.0013",
+    "Nama Lokasi": "SDN MOROREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "619",
+    "Kode Lokasi": "01.00.00.0021.0014",
+    "Nama Lokasi": "SDN MOROREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "620",
+    "Kode Lokasi": "01.00.00.0021.0015",
+    "Nama Lokasi": "SDN KANDANGAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "621",
+    "Kode Lokasi": "01.00.00.0021.0016",
+    "Nama Lokasi": "SDN KANDANGAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "622",
+    "Kode Lokasi": "01.00.00.0022",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN TUTUR",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "623",
+    "Kode Lokasi": "01.00.00.0022.0001",
+    "Nama Lokasi": "SDN NONGKOJAJAR I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "624",
+    "Kode Lokasi": "01.00.00.0022.0002",
+    "Nama Lokasi": "SDN WONOSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "625",
+    "Kode Lokasi": "01.00.00.0022.0003",
+    "Nama Lokasi": "SDN WONOSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "626",
+    "Kode Lokasi": "01.00.00.0022.0004",
+    "Nama Lokasi": "SDN KAYUKEBEK I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "627",
+    "Kode Lokasi": "01.00.00.0022.0005",
+    "Nama Lokasi": "SDN KAYU KEBEK III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "628",
+    "Kode Lokasi": "01.00.00.0022.0006",
+    "Nama Lokasi": "SDN KALIPUCANG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "629",
+    "Kode Lokasi": "01.00.00.0022.0007",
+    "Nama Lokasi": "SDN KALIPUCANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "630",
+    "Kode Lokasi": "01.00.00.0022.0008",
+    "Nama Lokasi": "SDN KALIPUCANG III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "631",
+    "Kode Lokasi": "01.00.00.0022.0009",
+    "Nama Lokasi": "SDN SUMBERPITU",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "632",
+    "Kode Lokasi": "01.00.00.0022.0010",
+    "Nama Lokasi": "SDN SUMBERPITU II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "633",
+    "Kode Lokasi": "01.00.00.0022.0011",
+    "Nama Lokasi": "SDN TUTUR 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "634",
+    "Kode Lokasi": "01.00.00.0022.0012",
+    "Nama Lokasi": "SDN TUTUR II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "635",
+    "Kode Lokasi": "01.00.00.0022.0013",
+    "Nama Lokasi": "SDN TLOGOBODOSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "636",
+    "Kode Lokasi": "01.00.00.0022.0014",
+    "Nama Lokasi": "SDN TLOGOBODOSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "637",
+    "Kode Lokasi": "01.00.00.0022.0015",
+    "Nama Lokasi": "SDN GENDRO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "638",
+    "Kode Lokasi": "01.00.00.0022.0016",
+    "Nama Lokasi": "SDN GENDRO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "639",
+    "Kode Lokasi": "01.00.00.0022.0017",
+    "Nama Lokasi": "SDN BLARANG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "640",
+    "Kode Lokasi": "01.00.00.0022.0018",
+    "Nama Lokasi": "SDN BLARANG II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "641",
+    "Kode Lokasi": "01.00.00.0022.0019",
+    "Nama Lokasi": "SDN BLARANG III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "642",
+    "Kode Lokasi": "01.00.00.0022.0020",
+    "Nama Lokasi": "SDN NGEMBAL I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "643",
+    "Kode Lokasi": "01.00.00.0022.0021",
+    "Nama Lokasi": "SDN NGEMBAL II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "644",
+    "Kode Lokasi": "01.00.00.0022.0022",
+    "Nama Lokasi": "SDN NGEMBAL III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "645",
+    "Kode Lokasi": "01.00.00.0022.0023",
+    "Nama Lokasi": "SDN NGEMBAL IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "646",
+    "Kode Lokasi": "01.00.00.0022.0024",
+    "Nama Lokasi": "SDN ANDONOSARI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "647",
+    "Kode Lokasi": "01.00.00.0022.0025",
+    "Nama Lokasi": "SDN ANDONOSARI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "648",
+    "Kode Lokasi": "01.00.00.0022.0026",
+    "Nama Lokasi": "SDN ANDONOSARI III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "649",
+    "Kode Lokasi": "01.00.00.0022.0027",
+    "Nama Lokasi": "SDN ANDONOSARI IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "650",
+    "Kode Lokasi": "01.00.00.0022.0028",
+    "Nama Lokasi": "SDN PUNGGING",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "651",
+    "Kode Lokasi": "01.00.00.0022.0029",
+    "Nama Lokasi": "SDN NGADIREJO 1",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "652",
+    "Kode Lokasi": "01.00.00.0022.0030",
+    "Nama Lokasi": "SDN NGADIREJO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "653",
+    "Kode Lokasi": "01.00.00.0023",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN WINONGAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "654",
+    "Kode Lokasi": "01.00.00.0023.0001",
+    "Nama Lokasi": "SDN WINONGAN LOR I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "655",
+    "Kode Lokasi": "01.00.00.0023.0002",
+    "Nama Lokasi": "SDN WINONGAN LOR II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "656",
+    "Kode Lokasi": "01.00.00.0023.0003",
+    "Nama Lokasi": "SDN WINONGAN KIDUL",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "657",
+    "Kode Lokasi": "01.00.00.0023.0004",
+    "Nama Lokasi": "SDN BANDARAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "658",
+    "Kode Lokasi": "01.00.00.0023.0005",
+    "Nama Lokasi": "SDN BANDARAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "659",
+    "Kode Lokasi": "01.00.00.0023.0006",
+    "Nama Lokasi": "SDN BANDARAN III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "660",
+    "Kode Lokasi": "01.00.00.0023.0007",
+    "Nama Lokasi": "SDN SUMBEREJO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "661",
+    "Kode Lokasi": "01.00.00.0023.0008",
+    "Nama Lokasi": "SDN LEBAK",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "662",
+    "Kode Lokasi": "01.00.00.0023.0009",
+    "Nama Lokasi": "SDN GADING I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "663",
+    "Kode Lokasi": "01.00.00.0023.0010",
+    "Nama Lokasi": "SDN GADING II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "664",
+    "Kode Lokasi": "01.00.00.0023.0011",
+    "Nama Lokasi": "SDN SRUWI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "665",
+    "Kode Lokasi": "01.00.00.0023.0012",
+    "Nama Lokasi": "SDN PRODO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "666",
+    "Kode Lokasi": "01.00.00.0023.0013",
+    "Nama Lokasi": "SDN MINGGIR",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "667",
+    "Kode Lokasi": "01.00.00.0023.0014",
+    "Nama Lokasi": "SDN PENATAAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "668",
+    "Kode Lokasi": "01.00.00.0023.0015",
+    "Nama Lokasi": "SDN MENYARIK",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "669",
+    "Kode Lokasi": "01.00.00.0023.0016",
+    "Nama Lokasi": "SDN MENDALAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "670",
+    "Kode Lokasi": "01.00.00.0023.0017",
+    "Nama Lokasi": "SDN KANDUNG",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "671",
+    "Kode Lokasi": "01.00.00.0023.0018",
+    "Nama Lokasi": "SDN SIDEPAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "672",
+    "Kode Lokasi": "01.00.00.0023.0019",
+    "Nama Lokasi": "SDN KARANGTENGAH I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "673",
+    "Kode Lokasi": "01.00.00.0023.0020",
+    "Nama Lokasi": "SDN KEDUNGREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "674",
+    "Kode Lokasi": "01.00.00.0023.0021",
+    "Nama Lokasi": "SDN JELADRI I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "675",
+    "Kode Lokasi": "01.00.00.0023.0022",
+    "Nama Lokasi": "SDN JELADRI II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "676",
+    "Kode Lokasi": "01.00.00.0023.0023",
+    "Nama Lokasi": "SDN UMBULAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "677",
+    "Kode Lokasi": "01.00.00.0023.0024",
+    "Nama Lokasi": "SDLB BANDARAN",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "678",
+    "Kode Lokasi": "01.00.00.0024",
+    "Nama Lokasi": "UPT PENDIDIKAN KECAMATAN WONOREJO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "679",
+    "Kode Lokasi": "01.00.00.0024.0001",
+    "Nama Lokasi": "SDN WONOREJO I WONOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "680",
+    "Kode Lokasi": "01.00.00.0024.0002",
+    "Nama Lokasi": "SDN WONOREJO IV",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "681",
+    "Kode Lokasi": "01.00.00.0024.0003",
+    "Nama Lokasi": "SDN WONOREJO V",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "682",
+    "Kode Lokasi": "01.00.00.0024.0004",
+    "Nama Lokasi": "SDN PAKIJANGAN I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "683",
+    "Kode Lokasi": "01.00.00.0024.0005",
+    "Nama Lokasi": "SDN PAKIJANGAN II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "684",
+    "Kode Lokasi": "01.00.00.0024.0006",
+    "Nama Lokasi": "SDN SAMBISIRAH I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "685",
+    "Kode Lokasi": "01.00.00.0024.0007",
+    "Nama Lokasi": "SDN SAMBISIRAH II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "686",
+    "Kode Lokasi": "01.00.00.0024.0008",
+    "Nama Lokasi": "SDN KLUWUT",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "687",
+    "Kode Lokasi": "01.00.00.0024.0009",
+    "Nama Lokasi": "SDN KARANGASEM",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "688",
+    "Kode Lokasi": "01.00.00.0024.0010",
+    "Nama Lokasi": "SDN JATIGUNTING I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "689",
+    "Kode Lokasi": "01.00.00.0024.0011",
+    "Nama Lokasi": "SDN JATIGUNTING II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "690",
+    "Kode Lokasi": "01.00.00.0024.0012",
+    "Nama Lokasi": "SDN REBONO I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "691",
+    "Kode Lokasi": "01.00.00.0024.0013",
+    "Nama Lokasi": "SDN REBONO II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "692",
+    "Kode Lokasi": "01.00.00.0024.0014",
+    "Nama Lokasi": "SDN KARANGSONO WONOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "693",
+    "Kode Lokasi": "01.00.00.0024.0015",
+    "Nama Lokasi": "SDN KENDANGDUKUH",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "694",
+    "Kode Lokasi": "01.00.00.0024.0016",
+    "Nama Lokasi": "SDN LEBAKSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "695",
+    "Kode Lokasi": "01.00.00.0024.0017",
+    "Nama Lokasi": "SDN WONOSARI WONOREJO",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "696",
+    "Kode Lokasi": "01.00.00.0024.0018",
+    "Nama Lokasi": "SDN TAMANSARI",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "697",
+    "Kode Lokasi": "01.00.00.0024.0019",
+    "Nama Lokasi": "SDN COBANBLIMBING I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "698",
+    "Kode Lokasi": "01.00.00.0024.0020",
+    "Nama Lokasi": "SDN COBANBLIMBING II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "699",
+    "Kode Lokasi": "01.00.00.0024.0021",
+    "Nama Lokasi": "SDN KARANGMENGGAH",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "700",
+    "Kode Lokasi": "01.00.00.0024.0022",
+    "Nama Lokasi": "SDN KARANGJATIANYAR I",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "701",
+    "Kode Lokasi": "01.00.00.0024.0023",
+    "Nama Lokasi": "SDN KARANGJATIANYAR II",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "702",
+    "Kode Lokasi": "01.00.00.0024.0024",
+    "Nama Lokasi": "SDN KARANGJATIANYAR III",
+    "Jabatan": "sub kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "703",
+    "Kode Lokasi": "01.00.00.0025",
+    "Nama Lokasi": "SMP NEGERI 1 BANGIL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "704",
+    "Kode Lokasi": "01.00.00.0026",
+    "Nama Lokasi": "SMP NEGERI 2 BANGIL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "705",
+    "Kode Lokasi": "01.00.00.0027",
+    "Nama Lokasi": "SMP NEGERI 3 BANGIL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "706",
+    "Kode Lokasi": "01.00.00.0028",
+    "Nama Lokasi": "SMP NEGERI 1 BEJI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "707",
+    "Kode Lokasi": "01.00.00.0029",
+    "Nama Lokasi": "SMP NEGERI 2 BEJI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "708",
+    "Kode Lokasi": "01.00.00.0030",
+    "Nama Lokasi": "SMP NEGERI 1 GEMPOL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "709",
+    "Kode Lokasi": "01.00.00.0031",
+    "Nama Lokasi": "SMP NEGERI 2 GEMPOL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "710",
+    "Kode Lokasi": "01.00.00.0032",
+    "Nama Lokasi": "SMP NEGERI 1 GONDANG WETAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "711",
+    "Kode Lokasi": "01.00.00.0033",
+    "Nama Lokasi": "SMP NEGERI 2 GONDANG WETAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "712",
+    "Kode Lokasi": "01.00.00.0034",
+    "Nama Lokasi": "SMP NEGERI 1 GRATI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "713",
+    "Kode Lokasi": "01.00.00.0035",
+    "Nama Lokasi": "SMP NEGERI 2 GRATI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "714",
+    "Kode Lokasi": "01.00.00.0036",
+    "Nama Lokasi": "SMP NEGERI 1 KEJAYAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "715",
+    "Kode Lokasi": "01.00.00.0037",
+    "Nama Lokasi": "SMP NEGERI 2 KEJAYAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "716",
+    "Kode Lokasi": "01.00.00.0038",
+    "Nama Lokasi": "SMP NEGERI 1 KRATON",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "717",
+    "Kode Lokasi": "01.00.00.0039",
+    "Nama Lokasi": "SMP NEGERI 2 KRATON",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "718",
+    "Kode Lokasi": "01.00.00.0040",
+    "Nama Lokasi": "SMP NEGERI 1 LEKOK",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "719",
+    "Kode Lokasi": "01.00.00.0041",
+    "Nama Lokasi": "SMP NEGERI 1 LUMBANG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "720",
+    "Kode Lokasi": "01.00.00.0042",
+    "Nama Lokasi": "SMP NEGERI 2 LUMBANG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "721",
+    "Kode Lokasi": "01.00.00.0043",
+    "Nama Lokasi": "SMP NEGERI 1 NGULING",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "722",
+    "Kode Lokasi": "01.00.00.0044",
+    "Nama Lokasi": "SMP NEGERI 2 NGULING",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "723",
+    "Kode Lokasi": "01.00.00.0045",
+    "Nama Lokasi": "SMP NEGERI 3 NGULING",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "724",
+    "Kode Lokasi": "01.00.00.0046",
+    "Nama Lokasi": "SMP NEGERI 4 NGULING",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "725",
+    "Kode Lokasi": "01.00.00.0047",
+    "Nama Lokasi": "SMP NEGERI 1 PANDAAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "726",
+    "Kode Lokasi": "01.00.00.0048",
+    "Nama Lokasi": "SMP NEGERI 2 PANDAAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "727",
+    "Kode Lokasi": "01.00.00.0049",
+    "Nama Lokasi": "SMP NEGERI 1 PASREPAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "728",
+    "Kode Lokasi": "01.00.00.0050",
+    "Nama Lokasi": "SMP NEGERI 2 PASREPAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "729",
+    "Kode Lokasi": "01.00.00.0051",
+    "Nama Lokasi": "SMP NEGERI 1 PRIGEN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "730",
+    "Kode Lokasi": "01.00.00.0052",
+    "Nama Lokasi": "SMP NEGERI 2 PRIGEN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "731",
+    "Kode Lokasi": "01.00.00.0053",
+    "Nama Lokasi": "SMP NEGERI 1 POHJENTREK",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "732",
+    "Kode Lokasi": "01.00.00.0054",
+    "Nama Lokasi": "SMP NEGERI 1 PURWODADI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "733",
+    "Kode Lokasi": "01.00.00.0055",
+    "Nama Lokasi": "SMP NEGERI 2 PURWODADI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "734",
+    "Kode Lokasi": "01.00.00.0056",
+    "Nama Lokasi": "SMP NEGERI 3 PURWODADI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "735",
+    "Kode Lokasi": "01.00.00.0057",
+    "Nama Lokasi": "SMP NEGERI 1 PURWOSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "736",
+    "Kode Lokasi": "01.00.00.0058",
+    "Nama Lokasi": "SMP NEGERI 2 PURWOSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "737",
+    "Kode Lokasi": "01.00.00.0059",
+    "Nama Lokasi": "SMP NEGERI 1 PUSPO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "738",
+    "Kode Lokasi": "01.00.00.0060",
+    "Nama Lokasi": "SMP NEGERI 1 REJOSO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "739",
+    "Kode Lokasi": "01.00.00.0061",
+    "Nama Lokasi": "SMP NEGERI 2 REJOSO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "740",
+    "Kode Lokasi": "01.00.00.0062",
+    "Nama Lokasi": "SMP NEGERI 1 REMBANG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "741",
+    "Kode Lokasi": "01.00.00.0063",
+    "Nama Lokasi": "SMP NEGERI 2 REMBANG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "742",
+    "Kode Lokasi": "01.00.00.0064",
+    "Nama Lokasi": "SMP NEGERI 1 SUKOREJO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "743",
+    "Kode Lokasi": "01.00.00.0065",
+    "Nama Lokasi": "SMP NEGERI 2 SUKOREJO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "744",
+    "Kode Lokasi": "01.00.00.0066",
+    "Nama Lokasi": "SMP NEGERI 1 TOSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "745",
+    "Kode Lokasi": "01.00.00.0067",
+    "Nama Lokasi": "SMP NEGERI 1 TUTUR",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "746",
+    "Kode Lokasi": "01.00.00.0068",
+    "Nama Lokasi": "SMP NEGERI 2 TUTUR",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "747",
+    "Kode Lokasi": "01.00.00.0069",
+    "Nama Lokasi": "SMP NEGERI 1 WINONGAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "748",
+    "Kode Lokasi": "01.00.00.0070",
+    "Nama Lokasi": "SMP NEGERI 2 WINONGAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "749",
+    "Kode Lokasi": "01.00.00.0071",
+    "Nama Lokasi": "SMP NEGERI 1 WONOREJO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "750",
+    "Kode Lokasi": "01.00.00.0072",
+    "Nama Lokasi": "SMP NEGERI 2 WONOREJO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "751",
+    "Kode Lokasi": "01.00.00.0073",
+    "Nama Lokasi": "SMP NEGERI 2 TOSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "752",
+    "Kode Lokasi": "01.00.00.0074",
+    "Nama Lokasi": "SMP NEGERI 2 PUSPO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "753",
+    "Kode Lokasi": "01.00.00.0075",
+    "Nama Lokasi": "SMP NEGERI 3 LUMBANG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "754",
+    "Kode Lokasi": "01.00.00.0076",
+    "Nama Lokasi": "SMP NEGERI 3 PASREPAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "755",
+    "Kode Lokasi": "01.00.00.0077",
+    "Nama Lokasi": "SMP NEGERI 3 TOSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "756",
+    "Kode Lokasi": "01.00.00.0078",
+    "Nama Lokasi": "SMP NEGERI 3 TUTUR",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "757",
+    "Kode Lokasi": "01.00.00.0079",
+    "Nama Lokasi": "SMP NEGERI 3 PURWOSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "758",
+    "Kode Lokasi": "01.00.00.0080",
+    "Nama Lokasi": "SMP NEGERI 4 PUSPO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "759",
+    "Kode Lokasi": "01.00.00.0081",
+    "Nama Lokasi": "SMP NEGERI 3 PUSPO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "760",
+    "Kode Lokasi": "01.00.00.0082",
+    "Nama Lokasi": "SMP NEGERI 4 TOSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "761",
+    "Kode Lokasi": "01.00.00.0083",
+    "Nama Lokasi": "SMP NEGERI 3 GEMPOL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "762",
+    "Kode Lokasi": "01.00.00.0084",
+    "Nama Lokasi": "SMP NEGERI 4 PASREPAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "763",
+    "Kode Lokasi": "01.00.00.0085",
+    "Nama Lokasi": "SMP NEGERI 3 GRATI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "764",
+    "Kode Lokasi": "01.00.00.0086",
+    "Nama Lokasi": "SMP NEGERI 4 BANGIL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "765",
+    "Kode Lokasi": "01.00.00.0087",
+    "Nama Lokasi": "SMP NEGERI 4 LUMBANG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "766",
+    "Kode Lokasi": "02.00.00",
+    "Nama Lokasi": "DINAS KESEHATAN DAERAH, PENGENDALIAN PENDUDUK, DAN KELUARGA BERENCANA",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "767",
+    "Kode Lokasi": "02.00.00.0001",
+    "Nama Lokasi": "PUSKESMAS PURWODADI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "768",
+    "Kode Lokasi": "02.00.00.0002",
+    "Nama Lokasi": "PUSKESMAS NONGKOJAJAR",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "769",
+    "Kode Lokasi": "02.00.00.0003",
+    "Nama Lokasi": "PUSKESMAS SUMBERPITU",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "770",
+    "Kode Lokasi": "02.00.00.0004",
+    "Nama Lokasi": "PUSKESMAS PUSPO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "771",
+    "Kode Lokasi": "02.00.00.0005",
+    "Nama Lokasi": "PUSKESMAS TOSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "772",
+    "Kode Lokasi": "02.00.00.0006",
+    "Nama Lokasi": "PUSKESMAS LUMBANG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "773",
+    "Kode Lokasi": "02.00.00.0007",
+    "Nama Lokasi": "PUSKESMAS PASREPAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "774",
+    "Kode Lokasi": "02.00.00.0008",
+    "Nama Lokasi": "PUSKESMAS KEJAYAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "775",
+    "Kode Lokasi": "02.00.00.0009",
+    "Nama Lokasi": "PUSKESMAS AMBAL-AMBIL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "776",
+    "Kode Lokasi": "02.00.00.0010",
+    "Nama Lokasi": "PUSKESMAS WONOREJO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "777",
+    "Kode Lokasi": "02.00.00.0011",
+    "Nama Lokasi": "PUSKESMAS PURWOSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "778",
+    "Kode Lokasi": "02.00.00.0012",
+    "Nama Lokasi": "PUSKESMAS KARANGREJO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "779",
+    "Kode Lokasi": "02.00.00.0013",
+    "Nama Lokasi": "PUSKESMAS PRIGEN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "780",
+    "Kode Lokasi": "02.00.00.0014",
+    "Nama Lokasi": "PUSKESMAS BULUKANDANG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "781",
+    "Kode Lokasi": "02.00.00.0015",
+    "Nama Lokasi": "PUSKESMAS SUKOREJO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "782",
+    "Kode Lokasi": "02.00.00.0016",
+    "Nama Lokasi": "PUSKESMAS PANDAAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "783",
+    "Kode Lokasi": "02.00.00.0017",
+    "Nama Lokasi": "PUSKESMAS SEBANI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "784",
+    "Kode Lokasi": "02.00.00.0018",
+    "Nama Lokasi": "PUSKESMAS GEMPOL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "785",
+    "Kode Lokasi": "02.00.00.0019",
+    "Nama Lokasi": "PUSKESMAS KEPULUNGAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "786",
+    "Kode Lokasi": "02.00.00.0020",
+    "Nama Lokasi": "PUSKESMAS BEJI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "787",
+    "Kode Lokasi": "02.00.00.0021",
+    "Nama Lokasi": "PUSKESMAS BANGIL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "788",
+    "Kode Lokasi": "02.00.00.0022",
+    "Nama Lokasi": "PUSKESMAS RACI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "789",
+    "Kode Lokasi": "02.00.00.0023",
+    "Nama Lokasi": "PUSKESMAS REMBANG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "790",
+    "Kode Lokasi": "02.00.00.0024",
+    "Nama Lokasi": "PUSKESMAS KRATON",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "791",
+    "Kode Lokasi": "02.00.00.0025",
+    "Nama Lokasi": "PUSKESMAS NGEMPIT",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "792",
+    "Kode Lokasi": "02.00.00.0026",
+    "Nama Lokasi": "PUSKESMAS POHJENTREK",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "793",
+    "Kode Lokasi": "02.00.00.0027",
+    "Nama Lokasi": "PUSKESMAS GONDANGWETAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "794",
+    "Kode Lokasi": "02.00.00.0028",
+    "Nama Lokasi": "PUSKESMAS REJOSO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "795",
+    "Kode Lokasi": "02.00.00.0029",
+    "Nama Lokasi": "PUSKESMAS WINONGAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "796",
+    "Kode Lokasi": "02.00.00.0030",
+    "Nama Lokasi": "PUSKESMAS GRATI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "797",
+    "Kode Lokasi": "02.00.00.0031",
+    "Nama Lokasi": "PUSKESMAS KEDAWUNGWETAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "798",
+    "Kode Lokasi": "02.00.00.0032",
+    "Nama Lokasi": "PUSKESMAS LEKOK",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "799",
+    "Kode Lokasi": "02.00.00.0033",
+    "Nama Lokasi": "PUSKESMAS NGULING",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "800",
+    "Kode Lokasi": "02.00.00.0034",
+    "Nama Lokasi": "LABKESDA",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "801",
+    "Kode Lokasi": "02.00.00.0035",
+    "Nama Lokasi": "POP-PK",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "802",
+    "Kode Lokasi": "03.00.00",
+    "Nama Lokasi": "RUMAH SAKIT UMUM DAERAH BANGIL",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "803",
+    "Kode Lokasi": "04.00.00",
+    "Nama Lokasi": "RUMAH SAKIT UMUM DAERAH GRATI",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "804",
+    "Kode Lokasi": "05.00.00",
+    "Nama Lokasi": "DINAS CIPTA KARYA DAN TATA RUANG",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "805",
+    "Kode Lokasi": "06.00.00",
+    "Nama Lokasi": "DINAS SUMBER DAYA AIR, BINA MARGA, DAN BINA KONSTRUKSI",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "806",
+    "Kode Lokasi": "07.00.00",
+    "Nama Lokasi": "DINAS PERUMAHAN DAN KAWASAN PERMUKIMAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "807",
+    "Kode Lokasi": "08.00.00",
+    "Nama Lokasi": "SATUAN POLISI PAMONG PRAJA",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "808",
+    "Kode Lokasi": "09.00.00",
+    "Nama Lokasi": "BADAN PENANGGULANGAN BENCANA DAERAH",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "809",
+    "Kode Lokasi": "10.00.00",
+    "Nama Lokasi": "DINAS SOSIAL, PEMBERDAYAAN PEREMPUAN, DAN PERLINDUNGAN ANAK",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "810",
+    "Kode Lokasi": "11.00.00",
+    "Nama Lokasi": "DINAS KETENAGAKERJAAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "811",
+    "Kode Lokasi": "12.00.00",
+    "Nama Lokasi": "DINAS PEMBERDAYAAN PEREMPUAN, PERLINDUNGAN ANAK, PENGENDALIAN PENDUDUK DAN KELUARGA BERENCANA",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "812",
+    "Kode Lokasi": "13.00.00",
+    "Nama Lokasi": "DINAS KETAHANAN PANGAN DAN PERTANIAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "813",
+    "Kode Lokasi": "14.00.00",
+    "Nama Lokasi": "DINAS LINGKUNGAN HIDUP",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "814",
+    "Kode Lokasi": "15.00.00",
+    "Nama Lokasi": "DINAS KEPENDUDUKAN DAN CATATAN SIPIL",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "815",
+    "Kode Lokasi": "16.00.00",
+    "Nama Lokasi": "DINAS PEMERDAYAAN MASYARAKAT DAN DESA",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "816",
+    "Kode Lokasi": "17.00.00",
+    "Nama Lokasi": "DINAS PERHUBUNGAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "817",
+    "Kode Lokasi": "18.00.00",
+    "Nama Lokasi": "DINAS KOMUNIKASI DAN INFORMATIKA",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "818",
+    "Kode Lokasi": "19.00.00",
+    "Nama Lokasi": "DINAS KOPERASI, USAHA KECIL, MENENGAH, PERINDUSTRIAN DAN PERDAGANGAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "819",
+    "Kode Lokasi": "20.00.00",
+    "Nama Lokasi": "DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "820",
+    "Kode Lokasi": "21.00.00",
+    "Nama Lokasi": "DINAS PEMUDA DAN OLAHRAGA",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "821",
+    "Kode Lokasi": "22.00.00",
+    "Nama Lokasi": "DINAS PERPUSTAKAAN DAN ARSIP",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "822",
+    "Kode Lokasi": "23.00.00",
+    "Nama Lokasi": "DINAS PERIKANAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "823",
+    "Kode Lokasi": "24.00.00",
+    "Nama Lokasi": "DINAS PARIWISATA",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "824",
+    "Kode Lokasi": "25.00.00",
+    "Nama Lokasi": "DINAS PETERNAKAN DAN KESEHATAN HEWAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "825",
+    "Kode Lokasi": "26.00.00",
+    "Nama Lokasi": "DINAS PERINDUSTRIAN DAN PERDAGANGAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "826",
+    "Kode Lokasi": "27.00.00",
+    "Nama Lokasi": "SEKRETARIAT DAERAH",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "827",
+    "Kode Lokasi": "27.00.00.0001",
+    "Nama Lokasi": "BAGIAN PENGADAAN BARANG/JASA",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "828",
+    "Kode Lokasi": "27.00.00.0002",
+    "Nama Lokasi": "BAGIAN UMUM",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "829",
+    "Kode Lokasi": "27.00.00.0003",
+    "Nama Lokasi": "BAGIAN ORGANISASI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "830",
+    "Kode Lokasi": "27.00.00.0004",
+    "Nama Lokasi": "BAGIAN PERENCANAAN DAN KEUANGAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "831",
+    "Kode Lokasi": "27.00.00.0005",
+    "Nama Lokasi": "BAGIAN TATA PEMERINTAHAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "832",
+    "Kode Lokasi": "27.00.00.0006",
+    "Nama Lokasi": "BAGIAN PEREKONOMIAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "833",
+    "Kode Lokasi": "27.00.00.0007",
+    "Nama Lokasi": "BAGIAN HUKUM",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "834",
+    "Kode Lokasi": "27.00.00.0008",
+    "Nama Lokasi": "BAGIAN KESEJAHTERAAN MASYARAKAT",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "835",
+    "Kode Lokasi": "27.00.00.0009",
+    "Nama Lokasi": "BAGIAN ADMINISTRASI PEMBANGUNAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "836",
+    "Kode Lokasi": "27.00.00.0010",
+    "Nama Lokasi": "BAGIAN PROTOKOL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "837",
+    "Kode Lokasi": "28.00.00",
+    "Nama Lokasi": "BADAN PERENCANAAN PEMBANGUNAN, PENELITIAN DAN PENGEMBANGAN DAERAH",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "838",
+    "Kode Lokasi": "29.00.00",
+    "Nama Lokasi": "BADAN PENGELOLAAN KEUANGAN DAN PENDAPATAN DAERAH",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "839",
+    "Kode Lokasi": "30.00.00",
+    "Nama Lokasi": "BADAN KEPEGAWAIAN DAN PENGEMBANGAN SUMBER DAYA MANUSIA",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "840",
+    "Kode Lokasi": "31.00.00",
+    "Nama Lokasi": "INSPEKTORAT DAERAH",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "841",
+    "Kode Lokasi": "32.00.00",
+    "Nama Lokasi": "KECAMATAN BANGIL",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "842",
+    "Kode Lokasi": "32.00.00.0001",
+    "Nama Lokasi": "KELURAHAN BENDOMUNGAL",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "843",
+    "Kode Lokasi": "32.00.00.0002",
+    "Nama Lokasi": "KELURAHAN DERMO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "844",
+    "Kode Lokasi": "32.00.00.0003",
+    "Nama Lokasi": "KELURAHAN GEMPENG",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "845",
+    "Kode Lokasi": "32.00.00.0004",
+    "Nama Lokasi": "KELURAHAN KALIANYAR",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "846",
+    "Kode Lokasi": "32.00.00.0005",
+    "Nama Lokasi": "KELURAHAN KALIREJO",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "847",
+    "Kode Lokasi": "32.00.00.0006",
+    "Nama Lokasi": "KELURAHAN KERSIKAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "848",
+    "Kode Lokasi": "32.00.00.0007",
+    "Nama Lokasi": "KELURAHAN KAUMAN",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "849",
+    "Kode Lokasi": "32.00.00.0008",
+    "Nama Lokasi": "KELURAHAN KIDULDALEM",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "850",
+    "Kode Lokasi": "32.00.00.0009",
+    "Nama Lokasi": "KELURAHAN KOLURSARI",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "851",
+    "Kode Lokasi": "32.00.00.0010",
+    "Nama Lokasi": "KELURAHAN LATEK",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "852",
+    "Kode Lokasi": "32.00.00.0011",
+    "Nama Lokasi": "KELURAHAN POGAR",
+    "Jabatan": "kuasa penguna barang",
+    "Action": ""
+  },
+  {
+    "No": "853",
+    "Kode Lokasi": "33.00.00",
+    "Nama Lokasi": "KECAMATAN BEJI",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "854",
+    "Kode Lokasi": "34.00.00",
+    "Nama Lokasi": "KECAMATAN GEMPOL",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "855",
+    "Kode Lokasi": "35.00.00",
+    "Nama Lokasi": "KECAMATAN GONDANGWETAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "856",
+    "Kode Lokasi": "36.00.00",
+    "Nama Lokasi": "KECAMATAN GRATI",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "857",
+    "Kode Lokasi": "37.00.00",
+    "Nama Lokasi": "KECAMATAN KEJAYAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "858",
+    "Kode Lokasi": "38.00.00",
+    "Nama Lokasi": "KECAMATAN KRATON",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "859",
+    "Kode Lokasi": "39.00.00",
+    "Nama Lokasi": "KECAMATAN LEKOK",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "860",
+    "Kode Lokasi": "40.00.00",
+    "Nama Lokasi": "KECAMATAN LUMBANG",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "861",
+    "Kode Lokasi": "41.00.00",
+    "Nama Lokasi": "KECAMATAN NGULING",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "862",
+    "Kode Lokasi": "42.00.00",
+    "Nama Lokasi": "KECAMATAN PANDAAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "863",
+    "Kode Lokasi": "43.00.00",
+    "Nama Lokasi": "KECAMATAN PASREPAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "864",
+    "Kode Lokasi": "44.00.00",
+    "Nama Lokasi": "KECAMATAN POHJENTREK",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "865",
+    "Kode Lokasi": "45.00.00",
+    "Nama Lokasi": "KECAMATAN PRIGEN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "866",
+    "Kode Lokasi": "46.00.00",
+    "Nama Lokasi": "KECAMATAN PURWODADI",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "867",
+    "Kode Lokasi": "47.00.00",
+    "Nama Lokasi": "KECAMATAN PURWOSARI",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "868",
+    "Kode Lokasi": "48.00.00",
+    "Nama Lokasi": "KECAMATAN PUSPO",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "869",
+    "Kode Lokasi": "49.00.00",
+    "Nama Lokasi": "KECAMATAN REJOSO",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "870",
+    "Kode Lokasi": "50.00.00",
+    "Nama Lokasi": "KECAMATAN REMBANG",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "871",
+    "Kode Lokasi": "51.00.00",
+    "Nama Lokasi": "KECAMATAN SUKOREJO",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "872",
+    "Kode Lokasi": "52.00.00",
+    "Nama Lokasi": "KECAMATAN TOSARI",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "873",
+    "Kode Lokasi": "53.00.00",
+    "Nama Lokasi": "KECAMATAN TUTUR",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "874",
+    "Kode Lokasi": "54.00.00",
+    "Nama Lokasi": "KECAMATAN WINONGAN",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "875",
+    "Kode Lokasi": "55.00.00",
+    "Nama Lokasi": "KECAMATAN WONOREJO",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "876",
+    "Kode Lokasi": "97.00.00",
+    "Nama Lokasi": "BADAN KESATUAN BANGSA DAN POLITIK",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  },
+  {
+    "No": "877",
+    "Kode Lokasi": "99.00.00",
+    "Nama Lokasi": "SEKRETARIAT DPRD",
+    "Jabatan": "pengguna barang",
+    "Action": ""
+  }
+]

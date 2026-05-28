@@ -12,6 +12,7 @@
     "@heroui/react": "^3.0.5",
     "@heroui/styles": "^3.0.5",
     "axios": "^1.16.1",
+    "drizzle-orm": "^0.45.2",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "lucide-react": "^1.16.0",

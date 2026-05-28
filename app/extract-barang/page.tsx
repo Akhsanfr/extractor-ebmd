@@ -14,10 +14,13 @@ export default function Page() {
 
         try {
             // Memanggil Server Action langsung dari fungsi onClick
-            const res = await actionExtractDaftarBarang()
+            const res = await actionExtractDaftarBarang('01.00.00', 'DINAS PENDIDIKAN')
 
             if (res.success && res.data) {
                 setResult(res.data)
+                console.info("Data Mentah")
+                console.table(res.rawData)
+                console.info("Data Final")
                 console.table(res.data)
             } else {
                 setError(res.error || "Terjadi kesalahan yang tidak diketahui")

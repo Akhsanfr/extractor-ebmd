@@ -1,0 +1,5264 @@
+[
+    {
+        "ID": "00.00.00",
+        "LOKASI": "PENGELOLA BARANG",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "01.00.00",
+        "LOKASI": "DINAS PENDIDIKAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "01.00.00.0001",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN BANGIL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0001.0001",
+        "LOKASI": "SDN KIDULDALEM I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0002",
+        "LOKASI": "SDN KIDULDALEM III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0003",
+        "LOKASI": "SDN KIDULDALEM IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0004",
+        "LOKASI": "SDN GEMPENG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0005",
+        "LOKASI": "SDN GEMPENG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0006",
+        "LOKASI": "SDN DERMO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0007",
+        "LOKASI": "SDN DERMO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0008",
+        "LOKASI": "SDN KAUMAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0009",
+        "LOKASI": "SDN KOLURSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0010",
+        "LOKASI": "SDN KOLURSARI 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0011",
+        "LOKASI": "SDN KALIREJO PLUS BANGIL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0012",
+        "LOKASI": "SDN KERSIKAN I BANGIL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0013",
+        "LOKASI": "SDN KERSIKAN II BANGIL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0014",
+        "LOKASI": "SDN MANARUWI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0015",
+        "LOKASI": "SDN MANARUWI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0016",
+        "LOKASI": "SDN POGAR I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0017",
+        "LOKASI": "SDN POGAR II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0018",
+        "LOKASI": "SDN POGAR III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0019",
+        "LOKASI": "SDN RACI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0020",
+        "LOKASI": "SDN RACI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0021",
+        "LOKASI": "SDN BENDOMUNGAL I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0022",
+        "LOKASI": "SDN BENDOMUNGAL II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0023",
+        "LOKASI": "SDN LATEK",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0024",
+        "LOKASI": "SDN TAMBAKAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0025",
+        "LOKASI": "SDN MASANGAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0026",
+        "LOKASI": "SDN KALIANYAR I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0027",
+        "LOKASI": "SDN KALIANYAR II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0001.0028",
+        "LOKASI": "TK PEMBINA KEC. BANGIL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0001"
+    },
+    {
+        "ID": "01.00.00.0002",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN BEJI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0002.0001",
+        "LOKASI": "SDN BEJI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0002",
+        "LOKASI": "SDN BEJI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0003",
+        "LOKASI": "SDN BEJI IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0004",
+        "LOKASI": "SDN GUNUNGGANGSIR I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0005",
+        "LOKASI": "SDN GUNUNGGANGSIR II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0006",
+        "LOKASI": "SDN GUNUNGGANGSIR III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0007",
+        "LOKASI": "SDN CANGKRINGMALANG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0008",
+        "LOKASI": "SDN CANGKRINGMALANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0009",
+        "LOKASI": "SDN CANGKRINGMALANG III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0010",
+        "LOKASI": "SDN KEDUNGRINGIN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0011",
+        "LOKASI": "SDN KEDUNGRINGIN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0012",
+        "LOKASI": "SDN KEDUNGRINGIN III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0013",
+        "LOKASI": "SDN KEDUNGRINGIN IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0014",
+        "LOKASI": "SDN SUMBERSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0015",
+        "LOKASI": "SDN SUMBERSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0016",
+        "LOKASI": "SDN PAGAK",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0017",
+        "LOKASI": "SDN GUNUNGSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0018",
+        "LOKASI": "SDN GUNUNGSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0019",
+        "LOKASI": "SDN SIDOWAYAH",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0020",
+        "LOKASI": "SDN KENEP",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0021",
+        "LOKASI": "SDN KEDUNGBOTO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0022",
+        "LOKASI": "SDN BAUJENG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0023",
+        "LOKASI": "SDN BAUJENG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0024",
+        "LOKASI": "SDN GLANGGANG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0025",
+        "LOKASI": "SDN GLANGGANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0026",
+        "LOKASI": "SDN GAJAHBENDO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0002.0027",
+        "LOKASI": "SDN NGEMBE",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0002"
+    },
+    {
+        "ID": "01.00.00.0003",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN GEMPOL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0003.0001",
+        "LOKASI": "SDN GEMPOL 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0002",
+        "LOKASI": "SDN GEMPOL 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0003",
+        "LOKASI": "SDN GEMPOL 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0004",
+        "LOKASI": "SDN WINONG 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0005",
+        "LOKASI": "SDN WINONG 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0006",
+        "LOKASI": "SDN PANDEREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0007",
+        "LOKASI": "SDN KEJAPANAN 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0008",
+        "LOKASI": "SDN KEJAPANAN 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0009",
+        "LOKASI": "SDN KEJAPANAN 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0010",
+        "LOKASI": "SDN KEJAPANAN 4",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0011",
+        "LOKASI": "SDN KEJAPANAN 5",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0012",
+        "LOKASI": "SDN CARAT 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0013",
+        "LOKASI": "SDN CARAT 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0014",
+        "LOKASI": "SDN WATUKOSEK",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0015",
+        "LOKASI": "SDN KARANGREJO 1 GEMPOL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0016",
+        "LOKASI": "SDN KARANGREJO 2 GEMPOL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0017",
+        "LOKASI": "SDN KARANGREJO 3 GEMPOL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0018",
+        "LOKASI": "SDN BULUSARI 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0019",
+        "LOKASI": "SDN BULUSARI 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0020",
+        "LOKASI": "SDN JERUKPURUT 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0021",
+        "LOKASI": "SDN JERUKPURUT 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0022",
+        "LOKASI": "SDN NGERONG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0023",
+        "LOKASI": "SDN KEPULUNGAN 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0024",
+        "LOKASI": "SDN KEPULUNGAN 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0025",
+        "LOKASI": "SDN KEPULUNGAN 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0026",
+        "LOKASI": "SDN SUMBERSUKO 1 GEMPOL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0027",
+        "LOKASI": "SDN SUMBERSUKO 2 GEMPOL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0028",
+        "LOKASI": "SDN WONOSARI GEMPOL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0029",
+        "LOKASI": "SDN RANDUPITU",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0030",
+        "LOKASI": "SDN WONOSUNYO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0003.0031",
+        "LOKASI": "SDN WONOSUNYO 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0003"
+    },
+    {
+        "ID": "01.00.00.0004",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN GONDANGWETAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0004.0001",
+        "LOKASI": "SDN GONDANGWETAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0002",
+        "LOKASI": "SDN GONDANGWETAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0003",
+        "LOKASI": "SDN TENGGILISREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0004",
+        "LOKASI": "SDN GROGOL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0005",
+        "LOKASI": "SDN BAYEMAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0006",
+        "LOKASI": "SDN BAYEMAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0007",
+        "LOKASI": "SDN GAYAM",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0008",
+        "LOKASI": "SDN WONOJATI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0009",
+        "LOKASI": "SDN KALIREJO GONDANGWETAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0010",
+        "LOKASI": "SDN BAJANGAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0011",
+        "LOKASI": "SDN PATEGUHAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0012",
+        "LOKASI": "SDN TEBAS",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0013",
+        "LOKASI": "SDN SEKARPUTIH",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0014",
+        "LOKASI": "SDN RANGGEH",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0015",
+        "LOKASI": "SDN PEKANGKUNGAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0016",
+        "LOKASI": "SDN KARANGSENTUL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0017",
+        "LOKASI": "SDN KERSIKAN GONDANGWETAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0018",
+        "LOKASI": "SDN GONDANGREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0019",
+        "LOKASI": "SDN WONOSARI GONDANGWETAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0020",
+        "LOKASI": "SDN KEBONCANDI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0021",
+        "LOKASI": "SDN LAJUK",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0022",
+        "LOKASI": "SDN BRAMBANG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0004.0023",
+        "LOKASI": "TK NEGERI PEMBINA KEC.GONDANGWETAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0004"
+    },
+    {
+        "ID": "01.00.00.0005",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN GRATI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0005.0001",
+        "LOKASI": "SDN GRATI 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0002",
+        "LOKASI": "SDN GRATI 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0003",
+        "LOKASI": "SDN GRATI 4",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0004",
+        "LOKASI": "SDN CUKURGONDANG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0005",
+        "LOKASI": "SDN CUKURGONDANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0006",
+        "LOKASI": "SDN RANUKLINDUNGAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0007",
+        "LOKASI": "SDN RANUKLINDUNGAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0008",
+        "LOKASI": "SDN TREWUNG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0009",
+        "LOKASI": "SDN SUMBERDAWESARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0010",
+        "LOKASI": "SDN SUMBERDAWESARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0011",
+        "LOKASI": "SDN SUMBERDAWESARI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0012",
+        "LOKASI": "SDN SUMBERDAWESARI IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0013",
+        "LOKASI": "SDN KEDAWUNGWETAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0014",
+        "LOKASI": "SDN KEDAWUNGWETAN 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0015",
+        "LOKASI": "SDN KEDAWUNGWETAN 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0016",
+        "LOKASI": "SDN KEDAWUNGWETAN 4",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0017",
+        "LOKASI": "SDN PLOSOSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0018",
+        "LOKASI": "SDN PLOSOSARI 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0019",
+        "LOKASI": "SDN PLOSOSARI 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0020",
+        "LOKASI": "SDN KARANGKLIWON",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0021",
+        "LOKASI": "SDN REBALAS I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0022",
+        "LOKASI": "SDN REBALAS 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0023",
+        "LOKASI": "SDN REBALAS 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0024",
+        "LOKASI": "SDN KARANGLO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0025",
+        "LOKASI": "SDN KARANGLO 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0026",
+        "LOKASI": "SDN SUMBERAGUNG 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0027",
+        "LOKASI": "SDN SUMBERAGUNG 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0028",
+        "LOKASI": "SDN KEDAWUNGKULON I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0029",
+        "LOKASI": "SDN KEDAWUNGKULON II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0030",
+        "LOKASI": "SDN KEDAWUNGKULON III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0031",
+        "LOKASI": "SDN KAMBINGANREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0032",
+        "LOKASI": "SDN KALIPANG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0033",
+        "LOKASI": "SDN KALIPANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0034",
+        "LOKASI": "SDN KEBONREJO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0005.0035",
+        "LOKASI": "SDN KEBONREJO 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0005"
+    },
+    {
+        "ID": "01.00.00.0006",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN KEJAYAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0006.0001",
+        "LOKASI": "SDN KEJAYAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0002",
+        "LOKASI": "SDN PACARKELING I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0003",
+        "LOKASI": "SDN PACARKELING II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0004",
+        "LOKASI": "SDN KEPUH",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0005",
+        "LOKASI": "SDN LINGGO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0006",
+        "LOKASI": "SDN KLINTER",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0007",
+        "LOKASI": "SDN WRATI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0008",
+        "LOKASI": "SDN WRATI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0009",
+        "LOKASI": "SDN WRATI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0010",
+        "LOKASI": "SDN BENERWOJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0011",
+        "LOKASI": "SDN COBANJOYO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0012",
+        "LOKASI": "SDN COBANJOYO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0013",
+        "LOKASI": "SDN KEDEMUNGAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0014",
+        "LOKASI": "SDN KEDEMUNGAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0015",
+        "LOKASI": "SDN KETANGIREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0016",
+        "LOKASI": "SDN KETANGIREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0017",
+        "LOKASI": "SDN WANGKALWETAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0018",
+        "LOKASI": "SDN AMBAL-AMBIL I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0019",
+        "LOKASI": "SDN AMBAL-AMBIL II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0020",
+        "LOKASI": "SDN KLANGRONG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0021",
+        "LOKASI": "SDN KLANGRONG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0022",
+        "LOKASI": "SDN ORO - ORO PULE",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0023",
+        "LOKASI": "SDN SUMBERBANTENG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0024",
+        "LOKASI": "SDN TANGGULANGIN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0025",
+        "LOKASI": "SDN LOROKAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0026",
+        "LOKASI": "SDN LOROKAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0027",
+        "LOKASI": "SDN PATEBON",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0028",
+        "LOKASI": "SDN TUNDOSORO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0029",
+        "LOKASI": "SDN SUMBERSUKO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0030",
+        "LOKASI": "SDN LUWUK",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0031",
+        "LOKASI": "SDN SLADI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0032",
+        "LOKASI": "SDN KEDUNGPENGARON I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0033",
+        "LOKASI": "SDN KEDUNGPENGARON II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0034",
+        "LOKASI": "SDN RANDUGONG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0035",
+        "LOKASI": "SDN KURUNG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0006.0036",
+        "LOKASI": "SDN KURUNG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0006"
+    },
+    {
+        "ID": "01.00.00.0007",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN KRATON",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0007.0001",
+        "LOKASI": "SDN KRATON",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0002",
+        "LOKASI": "SDN TAMBAKREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0003",
+        "LOKASI": "SDN NGEMPIT",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0004",
+        "LOKASI": "SDN SIDOGIRI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0005",
+        "LOKASI": "SDN PLINGGISAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0006",
+        "LOKASI": "SDN TAMBAKSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0007",
+        "LOKASI": "SDN JERUK",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0008",
+        "LOKASI": "SDN BENDUNGAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0009",
+        "LOKASI": "SDN PULOKERTO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0010",
+        "LOKASI": "SDN SEMARE",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0011",
+        "LOKASI": "SDN KALIREJO KRATON",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0012",
+        "LOKASI": "SDN SELOTAMBAK",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0013",
+        "LOKASI": "SDN KARANGANYAR I KRATON",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0014",
+        "LOKASI": "SDN KARANGANYAR II KRATON",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0015",
+        "LOKASI": "SDN MULYOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0016",
+        "LOKASI": "SDN DHOMPO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0017",
+        "LOKASI": "SDN DHOMPO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0018",
+        "LOKASI": "SDN GAMBIRKUNING",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0019",
+        "LOKASI": "SDN SLAMBRIT",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0020",
+        "LOKASI": "SDN NGABAR 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0021",
+        "LOKASI": "SDN KLAMPISREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0022",
+        "LOKASI": "SDN PUKUL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0023",
+        "LOKASI": "SDN REJOSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0024",
+        "LOKASI": "SDN ASEMKANDANG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0025",
+        "LOKASI": "SDN KEBOTOHAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0026",
+        "LOKASI": "SDN GERONGAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0027",
+        "LOKASI": "SDN CURAH DUKUH I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0007.0028",
+        "LOKASI": "SDN CURAHDUKUH II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0007"
+    },
+    {
+        "ID": "01.00.00.0008",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN LEKOK",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0008.0001",
+        "LOKASI": "SDN TAMBAK LEKOK I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0002",
+        "LOKASI": "SDN TAMBAK LEKOK II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0003",
+        "LOKASI": "SDN TAMBAK LEKOK III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0004",
+        "LOKASI": "SDN TAMPUNG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0005",
+        "LOKASI": "SDN TAMPUNG 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0006",
+        "LOKASI": "SDN BRANANG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0007",
+        "LOKASI": "SDN BRANANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0008",
+        "LOKASI": "SDN ROWOGEMPOL I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0009",
+        "LOKASI": "SDN ROWOGEMPOL II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0010",
+        "LOKASI": "SDN ROWOGEMPOL III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0011",
+        "LOKASI": "SDN GEJUGJATI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0012",
+        "LOKASI": "SDN GEJUGJATI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0013",
+        "LOKASI": "SDN GEJUGJATI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0014",
+        "LOKASI": "SDN ALASTLOGO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0015",
+        "LOKASI": "SDN ALASTLOGO 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0016",
+        "LOKASI": "SDN ALASTLOGO 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0017",
+        "LOKASI": "SDN WATES I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0018",
+        "LOKASI": "SDN WATES II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0019",
+        "LOKASI": "SDN WATES III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0020",
+        "LOKASI": "SDN SEMEDUSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0021",
+        "LOKASI": "SDN SEMEDUSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0022",
+        "LOKASI": "SDN JATIREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0023",
+        "LOKASI": "SDN JATIREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0024",
+        "LOKASI": "SDN JATIREJO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0025",
+        "LOKASI": "SDN PASINAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0026",
+        "LOKASI": "SDN PASINAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0027",
+        "LOKASI": "SDN PASINAN III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0008.0028",
+        "LOKASI": "SDN BALUNGANYAR",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0008"
+    },
+    {
+        "ID": "01.00.00.0009",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN LUMBANG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0009.0001",
+        "LOKASI": "SDN LUMBANG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0002",
+        "LOKASI": "SDN LUMBANG III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0003",
+        "LOKASI": "SDN CUKURGULING I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0004",
+        "LOKASI": "SDN CUKURGULING II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0005",
+        "LOKASI": "SDN CUKURGULING III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0006",
+        "LOKASI": "SDN PANCUR I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0007",
+        "LOKASI": "SDN PANCUR II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0008",
+        "LOKASI": "SDN PANCUR III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0009",
+        "LOKASI": "SDN KRONTO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0010",
+        "LOKASI": "SDN KRONTO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0011",
+        "LOKASI": "SDN WONOREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0012",
+        "LOKASI": "SDN WONOREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0013",
+        "LOKASI": "SDN KARANGASEM I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0014",
+        "LOKASI": "SDN KARANGASEM II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0015",
+        "LOKASI": "SDN WATULUMBUNG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0016",
+        "LOKASI": "SDN WATULUMBUNG III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0017",
+        "LOKASI": "SDN WATULUMBUNG IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0018",
+        "LOKASI": "SDN BULUKANDANG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0019",
+        "LOKASI": "SDN BULUKANDANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0020",
+        "LOKASI": "SDN KARANGJATI I LUMBANG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0021",
+        "LOKASI": "SDN KARANGJATI II LUMBANG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0022",
+        "LOKASI": "SDN BANJARIMBO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0023",
+        "LOKASI": "SDN BANJARIMBO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0024",
+        "LOKASI": "SDN WELULANG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0025",
+        "LOKASI": "SDN WELULANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0026",
+        "LOKASI": "SDN PANDITAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0009.0027",
+        "LOKASI": "SDN PANDITAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0009"
+    },
+    {
+        "ID": "01.00.00.0010",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN NGULING",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0010.0001",
+        "LOKASI": "SDN NGULING I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0002",
+        "LOKASI": "SDN NGULING 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0003",
+        "LOKASI": "SDN NGULING 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0004",
+        "LOKASI": "SDN PENUNGGUL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0005",
+        "LOKASI": "SDN MLATEN 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0006",
+        "LOKASI": "SDN KEDAWANG 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0007",
+        "LOKASI": "SDN KEDAWANG 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0008",
+        "LOKASI": "SDN KAPASAN 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0009",
+        "LOKASI": "SDN KAPASAN 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0010",
+        "LOKASI": "SDN WATUPRAPAT 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0011",
+        "LOKASI": "SDN WATUPRAPAT 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0012",
+        "LOKASI": "SDN RANDUATI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0013",
+        "LOKASI": "SDN SUDIMULYO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0014",
+        "LOKASI": "SDN SEDARUM 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0015",
+        "LOKASI": "SDN SEDARUM 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0016",
+        "LOKASI": "SDN SUMBERANYAR 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0017",
+        "LOKASI": "SDN SUMBERANYAR 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0018",
+        "LOKASI": "SDN SUMBERANYAR 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0019",
+        "LOKASI": "SDN SUMBERANYAR 4",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0020",
+        "LOKASI": "SDN DANDANGGENDIS 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0021",
+        "LOKASI": "SDN WOTGALIH 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0022",
+        "LOKASI": "SDN WOTGALIH 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0023",
+        "LOKASI": "SDN WATESTANI 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0024",
+        "LOKASI": "SDN WATESTANI 4",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0025",
+        "LOKASI": "SDN SEBALONG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0026",
+        "LOKASI": "SDN SANGANOM 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0027",
+        "LOKASI": "SDN SANGANOM 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0010.0028",
+        "LOKASI": "SDN WATUPRAPAT 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0010"
+    },
+    {
+        "ID": "01.00.00.0011",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN PANDAAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0011.0001",
+        "LOKASI": "SDN PETUNGASRI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0002",
+        "LOKASI": "SDN PETUNGASRI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0003",
+        "LOKASI": "SDN PANDAAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0004",
+        "LOKASI": "SDN PANDAAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0005",
+        "LOKASI": "SDN JOGOSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0006",
+        "LOKASI": "SDN JOGOSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0007",
+        "LOKASI": "SDN KEBONWARIS",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0008",
+        "LOKASI": "SDN TAWANGREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0009",
+        "LOKASI": "SDN TAWANGREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0010",
+        "LOKASI": "SDN DURENSEWU I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0011",
+        "LOKASI": "SDN DURENSEWU II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0012",
+        "LOKASI": "SDN TUNGGULWULUNG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0013",
+        "LOKASI": "SDN TUNGGULWULUNG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0014",
+        "LOKASI": "SDN SUMBEREJO I PANDAAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0015",
+        "LOKASI": "SDN SUMBEREJO II PANDAAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0016",
+        "LOKASI": "SDN KARANGJATI 1 PANDAAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0017",
+        "LOKASI": "SDN KARANGJATI 2 PANDAAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0018",
+        "LOKASI": "SDN KARANGJATI 3 PANDAAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0019",
+        "LOKASI": "SDN SUMBERGEDANG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0020",
+        "LOKASI": "SDN SUMBERGEDANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0021",
+        "LOKASI": "SDN SUMBERGEDANG III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0022",
+        "LOKASI": "SDN SEBANI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0023",
+        "LOKASI": "SDN BANJARSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0024",
+        "LOKASI": "SDN BANJARKEJEN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0025",
+        "LOKASI": "SDN KUTOREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0026",
+        "LOKASI": "SDN KUTOREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0027",
+        "LOKASI": "SDN KEMIRISEWU I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0028",
+        "LOKASI": "SDN KEMIRISEWU II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0029",
+        "LOKASI": "SDN WEDORO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0030",
+        "LOKASI": "SDN WEDORO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0031",
+        "LOKASI": "SDN PLINTAHAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0032",
+        "LOKASI": "SDN PLINTAHAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0033",
+        "LOKASI": "SDN NOGOSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0011.0034",
+        "LOKASI": "SDNLBN KUTOREJO IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0011"
+    },
+    {
+        "ID": "01.00.00.0012",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN PASREPAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0012.0001",
+        "LOKASI": "SDN PASREPAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0002",
+        "LOKASI": "SDN PASREPAN III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0003",
+        "LOKASI": "SDN SAPULANTE",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0004",
+        "LOKASI": "SDN TEMPURAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0005",
+        "LOKASI": "SDN TEMPURAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0006",
+        "LOKASI": "SDN TEMPURAN III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0007",
+        "LOKASI": "SDN AMPELSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0008",
+        "LOKASI": "SDN AMPELSARI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0009",
+        "LOKASI": "SDN MANGGUAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0010",
+        "LOKASI": "SDN MANGGUAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0011",
+        "LOKASI": "SDN NGANTUNGAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0012",
+        "LOKASI": "SDN NGANTUNGAN 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0013",
+        "LOKASI": "SDN GALIH I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0014",
+        "LOKASI": "SDN GALIH II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0015",
+        "LOKASI": "SDN PETUNG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0016",
+        "LOKASI": "SDN PETUNG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0017",
+        "LOKASI": "SDN PETUNG III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0018",
+        "LOKASI": "SDN KLAKAH",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0019",
+        "LOKASI": "SDN LEMAHBANG PASREPAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0020",
+        "LOKASI": "SDN SIBON I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0021",
+        "LOKASI": "SDN SIBON II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0022",
+        "LOKASI": "SDN TAMBAKREJO PASREPAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0023",
+        "LOKASI": "SDN CENGKRONG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0024",
+        "LOKASI": "SDN POHGADING",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0025",
+        "LOKASI": "SDN POHGEDANG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0026",
+        "LOKASI": "SDN REJOSALAM I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0027",
+        "LOKASI": "SDN REJOSALAM II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0012.0028",
+        "LOKASI": "SDN JOGOREPUH",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0012"
+    },
+    {
+        "ID": "01.00.00.0013",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN POHJENTREK",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0013.0001",
+        "LOKASI": "SDN PLERET I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0002",
+        "LOKASI": "SDN PLERET II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0003",
+        "LOKASI": "SDN PLERET III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0004",
+        "LOKASI": "SDN WARUNGDOWO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0005",
+        "LOKASI": "SDN PARAS REJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0006",
+        "LOKASI": "SDN PARASREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0007",
+        "LOKASI": "SDN SUSUKANREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0008",
+        "LOKASI": "SDN SUSUKANREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0009",
+        "LOKASI": "SDN SUSUKANREJO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0010",
+        "LOKASI": "SDN TIDU I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0011",
+        "LOKASI": "SDN TIDU II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0012",
+        "LOKASI": "SDN LOGOWOK I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0013",
+        "LOKASI": "SDN LOGOWOK II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0014",
+        "LOKASI": "SDN SUNGIWETAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0015",
+        "LOKASI": "SDN SUNGIKULON",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0013.0016",
+        "LOKASI": "SDN SUKOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0013"
+    },
+    {
+        "ID": "01.00.00.0014",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN PRIGEN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0014.0001",
+        "LOKASI": "SDN PRIGEN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0002",
+        "LOKASI": "SDN PRIGEN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0003",
+        "LOKASI": "SDN GAMBIRAN 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0004",
+        "LOKASI": "SDN GAMBIRAN 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0005",
+        "LOKASI": "SDN LEDUG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0006",
+        "LOKASI": "SDN LEDUG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0007",
+        "LOKASI": "SDN SEKARJOHO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0008",
+        "LOKASI": "SDN SEKARJOHO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0009",
+        "LOKASI": "SDN SUKOLILO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0010",
+        "LOKASI": "SDN SUKOLILO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0011",
+        "LOKASI": "SDN SUKORENO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0012",
+        "LOKASI": "SDN SUKORENO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0013",
+        "LOKASI": "SDN SUKORENO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0014",
+        "LOKASI": "SDN SUKORENO IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0015",
+        "LOKASI": "SDN PECALUKAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0016",
+        "LOKASI": "SDN PECALUKAN IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0017",
+        "LOKASI": "SDN PECALUKAN V",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0018",
+        "LOKASI": "SDN LUMBANGREJO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0019",
+        "LOKASI": "SDN LUMBANGREJO 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0020",
+        "LOKASI": "SDN DAYUREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0021",
+        "LOKASI": "SDN DAYUREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0022",
+        "LOKASI": "SDN DAYUREJO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0023",
+        "LOKASI": "SDN DAYUREJO IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0024",
+        "LOKASI": "SDN WATUAGUNG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0025",
+        "LOKASI": "SDN WATUAGUNG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0026",
+        "LOKASI": "SDN JATIARJO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0027",
+        "LOKASI": "SDN JATIARJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0028",
+        "LOKASI": "SDN BULUKANDANG I KEC. PRIGEN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0029",
+        "LOKASI": "SDN BULUKANDANG II KEC. PRIGEN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0030",
+        "LOKASI": "SDN CANDIWATES I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0031",
+        "LOKASI": "SDN CANDIWATES II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0032",
+        "LOKASI": "SDN KETANIRENG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0014.0033",
+        "LOKASI": "TK PEMBINA KEC. PRIGEN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0014"
+    },
+    {
+        "ID": "01.00.00.0015",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN PURWODADI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0015.0001",
+        "LOKASI": "SDN PURWODADI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0002",
+        "LOKASI": "SDN PURWODADI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0003",
+        "LOKASI": "SDN PURWODADI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0004",
+        "LOKASI": "SDN PAREREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0005",
+        "LOKASI": "SDN PAREREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0006",
+        "LOKASI": "SDN PAREREJO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0007",
+        "LOKASI": "SDN GERBO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0008",
+        "LOKASI": "SDN GERBO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0009",
+        "LOKASI": "SDN GERBO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0010",
+        "LOKASI": "SDN GERBO IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0011",
+        "LOKASI": "SDN GERBO V",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0012",
+        "LOKASI": "SDN GERBO VI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0013",
+        "LOKASI": "SDN DAWUHAN SENGON 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0014",
+        "LOKASI": "SDN DAWUHANSENGON 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0015",
+        "LOKASI": "SDN DAWUHANSENGON 3",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0016",
+        "LOKASI": "SDN DAWUHAN SENGON 4",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0017",
+        "LOKASI": "SDN LEBAKREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0018",
+        "LOKASI": "SDN LEBAKREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0019",
+        "LOKASI": "SDN LEBAKREJO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0020",
+        "LOKASI": "SDN LEBAKREJO IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0021",
+        "LOKASI": "SDN CAPANG 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0022",
+        "LOKASI": "SDN CAPANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0023",
+        "LOKASI": "SDN TAMBAKSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0024",
+        "LOKASI": "SDN TAMBAKSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0025",
+        "LOKASI": "SDN TAMBAKSARI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0026",
+        "LOKASI": "SDN GAJAHREJO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0027",
+        "LOKASI": "SDN GAJAHREJO 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0028",
+        "LOKASI": "SDN COWEK I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0029",
+        "LOKASI": "SDN COWEK II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0030",
+        "LOKASI": "SDN COWEK III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0031",
+        "LOKASI": "SDN SENTUL I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0032",
+        "LOKASI": "SDN SENTUL II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0033",
+        "LOKASI": "SDN PUCANGSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0034",
+        "LOKASI": "SDN PUCANGSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0035",
+        "LOKASI": "SDN JATISARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0036",
+        "LOKASI": "SDN JATISARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0037",
+        "LOKASI": "SDN JATISARI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0038",
+        "LOKASI": "SDN JATISARI IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0015.0039",
+        "LOKASI": "SDN SEMUT",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0015"
+    },
+    {
+        "ID": "01.00.00.0016",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN PURWOSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0016.0001",
+        "LOKASI": "SDN PURWOSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0002",
+        "LOKASI": "SDN PURWOSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0003",
+        "LOKASI": "SDN PURWOSARI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0004",
+        "LOKASI": "SDN MARTOPURO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0005",
+        "LOKASI": "SDN MARTOPURO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0006",
+        "LOKASI": "SDN MARTOPURO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0007",
+        "LOKASI": "SDN MARTOPURO IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0008",
+        "LOKASI": "SDN MARTOPURO V",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0009",
+        "LOKASI": "SDN SENGON I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0010",
+        "LOKASI": "SDN SENGON II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0011",
+        "LOKASI": "SDN KARANGREJO I PURWOSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0012",
+        "LOKASI": "SDN KARANGREJO II PURWOSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0013",
+        "LOKASI": "SDN SUKODERMO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0014",
+        "LOKASI": "SDN PAGER I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0015",
+        "LOKASI": "SDN PAGER II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0016",
+        "LOKASI": "SDN SEKARMOJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0017",
+        "LOKASI": "SDN SEKARMOJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0018",
+        "LOKASI": "SDN SEKARMOJO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0019",
+        "LOKASI": "SDN BAKALAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0020",
+        "LOKASI": "SDN BAKALAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0021",
+        "LOKASI": "SDN BAKALAN III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0022",
+        "LOKASI": "SDN CENDONO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0023",
+        "LOKASI": "SDN CENDONO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0024",
+        "LOKASI": "SDN TEJOWANGI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0025",
+        "LOKASI": "SDN TEJOWANGI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0026",
+        "LOKASI": "SDN TEJOWANGI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0027",
+        "LOKASI": "SDN SUMBERSUKO I PURWOSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0028",
+        "LOKASI": "SDN SUMBERSUKO II PURWOSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0029",
+        "LOKASI": "SDN KERTOSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0030",
+        "LOKASI": "SDN KERTOSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0031",
+        "LOKASI": "SDN PUCANGSARI I PURWOSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0032",
+        "LOKASI": "SDN PUCANGSARI II PURWOSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0033",
+        "LOKASI": "SDN KAYOMAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0034",
+        "LOKASI": "SDN SUMBEREJO 1 PURWOSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0035",
+        "LOKASI": "SDN SUMBEREJO 2 PURWOSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0036",
+        "LOKASI": "SDN SUMBEREJO 3 PURWOSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0037",
+        "LOKASI": "TK PEMBINA KEC. PURWOSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0016.0038",
+        "LOKASI": "SDLB SENGON",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0016"
+    },
+    {
+        "ID": "01.00.00.0017",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN PUSPO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0017.0001",
+        "LOKASI": "SDN PUSPO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0002",
+        "LOKASI": "SDN PUSPO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0003",
+        "LOKASI": "SDN PUSPO IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0004",
+        "LOKASI": "SDN PUSPO V",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0005",
+        "LOKASI": "SDN JIMBARAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0006",
+        "LOKASI": "SDN JIMBARAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0007",
+        "LOKASI": "SDN JIMBARAN III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0008",
+        "LOKASI": "SDN JIMBARAN IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0009",
+        "LOKASI": "SDN KEDUWUNG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0010",
+        "LOKASI": "SDN KEDUWUNG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0011",
+        "LOKASI": "SDN PUSUNGMALANG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0012",
+        "LOKASI": "SDN PUSUNGMALANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0013",
+        "LOKASI": "SDN PALANGSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0014",
+        "LOKASI": "SDN PALANGSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0015",
+        "LOKASI": "SDN PALANGSARI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0016",
+        "LOKASI": "SDN JANJANGWULUNG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0017",
+        "LOKASI": "SDN JANJANGWULUNG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0018",
+        "LOKASI": "SDN JANJANGWULUNG III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0017.0019",
+        "LOKASI": "SDN KEMIRI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0017"
+    },
+    {
+        "ID": "01.00.00.0018",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN REJOSO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0018.0001",
+        "LOKASI": "SDN REJOSOLOR 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0002",
+        "LOKASI": "SDN REJOSOLOR 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0003",
+        "LOKASI": "SDN REJOSOKIDUL 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0004",
+        "LOKASI": "SDN REJOSOKIDUL 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0005",
+        "LOKASI": "SDN KEMANTRENREJO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0006",
+        "LOKASI": "SDN KEMANTRENREJO 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0007",
+        "LOKASI": "SDN SEGOROPURO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0008",
+        "LOKASI": "SDN ARJOSARI 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0009",
+        "LOKASI": "SDN ARJOSARI 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0010",
+        "LOKASI": "SDN TOYANING 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0011",
+        "LOKASI": "SDN TOYANING 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0012",
+        "LOKASI": "SDN PANDANREJO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0013",
+        "LOKASI": "SDN PANDANREJO 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0014",
+        "LOKASI": "SDN KETEGAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0015",
+        "LOKASI": "SDN KAWISREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0016",
+        "LOKASI": "SDN SAMBIREJO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0017",
+        "LOKASI": "SDN SAMBIREJO 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0018",
+        "LOKASI": "SDN KEDUNGBAKO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0019",
+        "LOKASI": "SDN MANIKREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0020",
+        "LOKASI": "SDN PATUGURAN 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0021",
+        "LOKASI": "SDN PATUGURAN 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0022",
+        "LOKASI": "SDN JARANGAN 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0023",
+        "LOKASI": "SDN JARANGAN 2",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0018.0024",
+        "LOKASI": "SDN SADENGREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0018"
+    },
+    {
+        "ID": "01.00.00.0019",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN REMBANG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0019.0001",
+        "LOKASI": "SDN REMBANG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0002",
+        "LOKASI": "SDN PEKOREN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0003",
+        "LOKASI": "SDN PEKOREN III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0004",
+        "LOKASI": "SDN MOJOPARON",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0005",
+        "LOKASI": "SDN PANDEAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0006",
+        "LOKASI": "SDN PANDEAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0007",
+        "LOKASI": "SDN ORO-ORO OMBO KULON I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0008",
+        "LOKASI": "SDN ORO ORO OMBO KULON II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0009",
+        "LOKASI": "SDN ORO-ORO OMBO WETAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0010",
+        "LOKASI": "SDN ORO-ORO OMBO WETAN III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0011",
+        "LOKASI": "SDN ORO-ORO OMBO WETAN IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0012",
+        "LOKASI": "SDN KEDUNG BANTENG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0013",
+        "LOKASI": "SDN KEDUNG BANTENG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0014",
+        "LOKASI": "SDN OROBULU",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0015",
+        "LOKASI": "SDN KALISAT I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0016",
+        "LOKASI": "SDN PAJARAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0017",
+        "LOKASI": "SDN PAJARAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0018",
+        "LOKASI": "SDN KANIGORO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0019",
+        "LOKASI": "SDN SUMBER GLAGAH",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0020",
+        "LOKASI": "SDN TAMPUNG I REMBANG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0021",
+        "LOKASI": "SDN TAMPUNG II REMBANG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0022",
+        "LOKASI": "SDN KRENGIH",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0023",
+        "LOKASI": "SDN GENENG WARU",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0024",
+        "LOKASI": "SDN SIYAR",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0025",
+        "LOKASI": "SDN PEJANGKUNGAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0019.0026",
+        "LOKASI": "SDN PEJANGKUNGAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0019"
+    },
+    {
+        "ID": "01.00.00.0020",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN SUKOREJO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0020.0001",
+        "LOKASI": "SDN GLAGAHSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0002",
+        "LOKASI": "SDN SUWAYUWO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0003",
+        "LOKASI": "SDN SUWAYUWO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0004",
+        "LOKASI": "SDN SUKOREJO I SUKOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0005",
+        "LOKASI": "SDN KARANGSONO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0006",
+        "LOKASI": "SDN LEMAHBANG I SUKOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0007",
+        "LOKASI": "SDN LEMAHBANG II SUKOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0008",
+        "LOKASI": "SDN PAKUKERTO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0009",
+        "LOKASI": "SDN PAKUKERTO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0010",
+        "LOKASI": "SDN GUNTING I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0011",
+        "LOKASI": "SDN GUNTING II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0012",
+        "LOKASI": "SDN LECARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0013",
+        "LOKASI": "SDN NGADIMULYO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0014",
+        "LOKASI": "SDN MOJOTENGAH I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0015",
+        "LOKASI": "SDN MOJOTENGAH II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0016",
+        "LOKASI": "SDN KALIREJO 01 SUKOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0017",
+        "LOKASI": "SDN KALIREJO 02 SUKOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0018",
+        "LOKASI": "SDN TANJUNGARUM",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0019",
+        "LOKASI": "SDN WONOKERTO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0020",
+        "LOKASI": "SDN DUKUHSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0021",
+        "LOKASI": "SDN CANDIBINANGUN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0022",
+        "LOKASI": "SDN CANDIBINANGUN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0023",
+        "LOKASI": "SDN SEBANDUNG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0024",
+        "LOKASI": "SDN CURAHREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0025",
+        "LOKASI": "SDN KENDURUAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0026",
+        "LOKASI": "SDN KENDURUAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0027",
+        "LOKASI": "SDN SUKORAME",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0028",
+        "LOKASI": "SDN GLAGAHSARI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0029",
+        "LOKASI": "SDN KALIREJO 03 SUKOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0030",
+        "LOKASI": "SDN SUKOREJO III SUKOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0031",
+        "LOKASI": "SDN CURAHREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0032",
+        "LOKASI": "SDN CANDIBINANGUN IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0033",
+        "LOKASI": "SDN SUKOREJO IV SUKOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0020.0034",
+        "LOKASI": "SDN SEBANDUNG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0020"
+    },
+    {
+        "ID": "01.00.00.0021",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN TOSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0021.0001",
+        "LOKASI": "SDN TOSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0002",
+        "LOKASI": "SDN TOSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0003",
+        "LOKASI": "SDN BALEDONO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0004",
+        "LOKASI": "SDN BALEDONO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0005",
+        "LOKASI": "SDN WONOKITRI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0006",
+        "LOKASI": "SDN SEDAENG I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0007",
+        "LOKASI": "SDN SEDAENG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0008",
+        "LOKASI": "SDN PODOKOYO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0009",
+        "LOKASI": "SDN PODOKOYO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0010",
+        "LOKASI": "SDN PODOKOYO III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0011",
+        "LOKASI": "SDN NGADIWONO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0012",
+        "LOKASI": "SDN NGADIWONO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0013",
+        "LOKASI": "SDN MOROREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0014",
+        "LOKASI": "SDN MOROREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0015",
+        "LOKASI": "SDN KANDANGAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0021.0016",
+        "LOKASI": "SDN KANDANGAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0021"
+    },
+    {
+        "ID": "01.00.00.0022",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN TUTUR",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0022.0001",
+        "LOKASI": "SDN NONGKOJAJAR I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0002",
+        "LOKASI": "SDN WONOSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0003",
+        "LOKASI": "SDN WONOSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0004",
+        "LOKASI": "SDN KAYUKEBEK I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0005",
+        "LOKASI": "SDN KAYU KEBEK III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0006",
+        "LOKASI": "SDN KALIPUCANG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0007",
+        "LOKASI": "SDN KALIPUCANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0008",
+        "LOKASI": "SDN KALIPUCANG III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0009",
+        "LOKASI": "SDN SUMBERPITU",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0010",
+        "LOKASI": "SDN SUMBERPITU II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0011",
+        "LOKASI": "SDN TUTUR 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0012",
+        "LOKASI": "SDN TUTUR II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0013",
+        "LOKASI": "SDN TLOGOBODOSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0014",
+        "LOKASI": "SDN TLOGOBODOSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0015",
+        "LOKASI": "SDN GENDRO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0016",
+        "LOKASI": "SDN GENDRO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0017",
+        "LOKASI": "SDN BLARANG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0018",
+        "LOKASI": "SDN BLARANG II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0019",
+        "LOKASI": "SDN BLARANG III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0020",
+        "LOKASI": "SDN NGEMBAL I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0021",
+        "LOKASI": "SDN NGEMBAL II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0022",
+        "LOKASI": "SDN NGEMBAL III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0023",
+        "LOKASI": "SDN NGEMBAL IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0024",
+        "LOKASI": "SDN ANDONOSARI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0025",
+        "LOKASI": "SDN ANDONOSARI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0026",
+        "LOKASI": "SDN ANDONOSARI III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0027",
+        "LOKASI": "SDN ANDONOSARI IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0028",
+        "LOKASI": "SDN PUNGGING",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0029",
+        "LOKASI": "SDN NGADIREJO 1",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0022.0030",
+        "LOKASI": "SDN NGADIREJO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0022"
+    },
+    {
+        "ID": "01.00.00.0023",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN WINONGAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0023.0001",
+        "LOKASI": "SDN WINONGAN LOR I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0002",
+        "LOKASI": "SDN WINONGAN LOR II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0003",
+        "LOKASI": "SDN WINONGAN KIDUL",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0004",
+        "LOKASI": "SDN BANDARAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0005",
+        "LOKASI": "SDN BANDARAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0006",
+        "LOKASI": "SDN BANDARAN III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0007",
+        "LOKASI": "SDN SUMBEREJO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0008",
+        "LOKASI": "SDN LEBAK",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0009",
+        "LOKASI": "SDN GADING I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0010",
+        "LOKASI": "SDN GADING II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0011",
+        "LOKASI": "SDN SRUWI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0012",
+        "LOKASI": "SDN PRODO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0013",
+        "LOKASI": "SDN MINGGIR",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0014",
+        "LOKASI": "SDN PENATAAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0015",
+        "LOKASI": "SDN MENYARIK",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0016",
+        "LOKASI": "SDN MENDALAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0017",
+        "LOKASI": "SDN KANDUNG",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0018",
+        "LOKASI": "SDN SIDEPAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0019",
+        "LOKASI": "SDN KARANGTENGAH I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0020",
+        "LOKASI": "SDN KEDUNGREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0021",
+        "LOKASI": "SDN JELADRI I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0022",
+        "LOKASI": "SDN JELADRI II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0023",
+        "LOKASI": "SDN UMBULAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0023.0024",
+        "LOKASI": "SDLB BANDARAN",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0023"
+    },
+    {
+        "ID": "01.00.00.0024",
+        "LOKASI": "UPT PENDIDIKAN KECAMATAN WONOREJO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0024.0001",
+        "LOKASI": "SDN WONOREJO I WONOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0002",
+        "LOKASI": "SDN WONOREJO IV",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0003",
+        "LOKASI": "SDN WONOREJO V",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0004",
+        "LOKASI": "SDN PAKIJANGAN I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0005",
+        "LOKASI": "SDN PAKIJANGAN II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0006",
+        "LOKASI": "SDN SAMBISIRAH I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0007",
+        "LOKASI": "SDN SAMBISIRAH II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0008",
+        "LOKASI": "SDN KLUWUT",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0009",
+        "LOKASI": "SDN KARANGASEM",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0010",
+        "LOKASI": "SDN JATIGUNTING I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0011",
+        "LOKASI": "SDN JATIGUNTING II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0012",
+        "LOKASI": "SDN REBONO I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0013",
+        "LOKASI": "SDN REBONO II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0014",
+        "LOKASI": "SDN KARANGSONO WONOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0015",
+        "LOKASI": "SDN KENDANGDUKUH",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0016",
+        "LOKASI": "SDN LEBAKSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0017",
+        "LOKASI": "SDN WONOSARI WONOREJO",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0018",
+        "LOKASI": "SDN TAMANSARI",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0019",
+        "LOKASI": "SDN COBANBLIMBING I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0020",
+        "LOKASI": "SDN COBANBLIMBING II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0021",
+        "LOKASI": "SDN KARANGMENGGAH",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0022",
+        "LOKASI": "SDN KARANGJATIANYAR I",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0023",
+        "LOKASI": "SDN KARANGJATIANYAR II",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0024.0024",
+        "LOKASI": "SDN KARANGJATIANYAR III",
+        "STATUS": "Sub Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00.0024"
+    },
+    {
+        "ID": "01.00.00.0025",
+        "LOKASI": "SMP NEGERI 1 BANGIL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0026",
+        "LOKASI": "SMP NEGERI 2 BANGIL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0027",
+        "LOKASI": "SMP NEGERI 3 BANGIL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0028",
+        "LOKASI": "SMP NEGERI 1 BEJI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0029",
+        "LOKASI": "SMP NEGERI 2 BEJI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0030",
+        "LOKASI": "SMP NEGERI 1 GEMPOL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0031",
+        "LOKASI": "SMP NEGERI 2 GEMPOL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0032",
+        "LOKASI": "SMP NEGERI 1 GONDANG WETAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0033",
+        "LOKASI": "SMP NEGERI 2 GONDANG WETAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0034",
+        "LOKASI": "SMP NEGERI 1 GRATI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0035",
+        "LOKASI": "SMP NEGERI 2 GRATI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0036",
+        "LOKASI": "SMP NEGERI 1 KEJAYAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0037",
+        "LOKASI": "SMP NEGERI 2 KEJAYAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0038",
+        "LOKASI": "SMP NEGERI 1 KRATON",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0039",
+        "LOKASI": "SMP NEGERI 2 KRATON",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0040",
+        "LOKASI": "SMP NEGERI 1 LEKOK",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0041",
+        "LOKASI": "SMP NEGERI 1 LUMBANG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0042",
+        "LOKASI": "SMP NEGERI 2 LUMBANG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0043",
+        "LOKASI": "SMP NEGERI 1 NGULING",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0044",
+        "LOKASI": "SMP NEGERI 2 NGULING",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0045",
+        "LOKASI": "SMP NEGERI 3 NGULING",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0046",
+        "LOKASI": "SMP NEGERI 4 NGULING",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0047",
+        "LOKASI": "SMP NEGERI 1 PANDAAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0048",
+        "LOKASI": "SMP NEGERI 2 PANDAAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0049",
+        "LOKASI": "SMP NEGERI 1 PASREPAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0050",
+        "LOKASI": "SMP NEGERI 2 PASREPAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0051",
+        "LOKASI": "SMP NEGERI 1 PRIGEN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0052",
+        "LOKASI": "SMP NEGERI 2 PRIGEN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0053",
+        "LOKASI": "SMP NEGERI 1 POHJENTREK",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0054",
+        "LOKASI": "SMP NEGERI 1 PURWODADI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0055",
+        "LOKASI": "SMP NEGERI 2 PURWODADI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0056",
+        "LOKASI": "SMP NEGERI 3 PURWODADI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0057",
+        "LOKASI": "SMP NEGERI 1 PURWOSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0058",
+        "LOKASI": "SMP NEGERI 2 PURWOSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0059",
+        "LOKASI": "SMP NEGERI 1 PUSPO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0060",
+        "LOKASI": "SMP NEGERI 1 REJOSO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0061",
+        "LOKASI": "SMP NEGERI 2 REJOSO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0062",
+        "LOKASI": "SMP NEGERI 1 REMBANG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0063",
+        "LOKASI": "SMP NEGERI 2 REMBANG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0064",
+        "LOKASI": "SMP NEGERI 1 SUKOREJO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0065",
+        "LOKASI": "SMP NEGERI 2 SUKOREJO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0066",
+        "LOKASI": "SMP NEGERI 1 TOSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0067",
+        "LOKASI": "SMP NEGERI 1 TUTUR",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0068",
+        "LOKASI": "SMP NEGERI 2 TUTUR",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0069",
+        "LOKASI": "SMP NEGERI 1 WINONGAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0070",
+        "LOKASI": "SMP NEGERI 2 WINONGAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0071",
+        "LOKASI": "SMP NEGERI 1 WONOREJO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0072",
+        "LOKASI": "SMP NEGERI 2 WONOREJO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0073",
+        "LOKASI": "SMP NEGERI 2 TOSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0074",
+        "LOKASI": "SMP NEGERI 2 PUSPO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0075",
+        "LOKASI": "SMP NEGERI 3 LUMBANG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0076",
+        "LOKASI": "SMP NEGERI 3 PASREPAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0077",
+        "LOKASI": "SMP NEGERI 3 TOSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0078",
+        "LOKASI": "SMP NEGERI 3 TUTUR",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0079",
+        "LOKASI": "SMP NEGERI 3 PURWOSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0080",
+        "LOKASI": "SMP NEGERI 4 PUSPO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0081",
+        "LOKASI": "SMP NEGERI 3 PUSPO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0082",
+        "LOKASI": "SMP NEGERI 4 TOSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0083",
+        "LOKASI": "SMP NEGERI 3 GEMPOL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0084",
+        "LOKASI": "SMP NEGERI 4 PASREPAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0085",
+        "LOKASI": "SMP NEGERI 3 GRATI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0086",
+        "LOKASI": "SMP NEGERI 4 BANGIL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "01.00.00.0087",
+        "LOKASI": "SMP NEGERI 4 LUMBANG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "01.00.00"
+    },
+    {
+        "ID": "02.00.00",
+        "LOKASI": "DINAS KESEHATAN DAERAH, PENGENDALIAN PENDUDUK, DAN KELUARGA BERENCANA",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "02.00.00.0001",
+        "LOKASI": "PUSKESMAS PURWODADI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0002",
+        "LOKASI": "PUSKESMAS NONGKOJAJAR",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0003",
+        "LOKASI": "PUSKESMAS SUMBERPITU",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0004",
+        "LOKASI": "PUSKESMAS PUSPO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0005",
+        "LOKASI": "PUSKESMAS TOSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0006",
+        "LOKASI": "PUSKESMAS LUMBANG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0007",
+        "LOKASI": "PUSKESMAS PASREPAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0008",
+        "LOKASI": "PUSKESMAS KEJAYAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0009",
+        "LOKASI": "PUSKESMAS AMBAL-AMBIL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0010",
+        "LOKASI": "PUSKESMAS WONOREJO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0011",
+        "LOKASI": "PUSKESMAS PURWOSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0012",
+        "LOKASI": "PUSKESMAS KARANGREJO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0013",
+        "LOKASI": "PUSKESMAS PRIGEN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0014",
+        "LOKASI": "PUSKESMAS BULUKANDANG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0015",
+        "LOKASI": "PUSKESMAS SUKOREJO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0016",
+        "LOKASI": "PUSKESMAS PANDAAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0017",
+        "LOKASI": "PUSKESMAS SEBANI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0018",
+        "LOKASI": "PUSKESMAS GEMPOL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0019",
+        "LOKASI": "PUSKESMAS KEPULUNGAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0020",
+        "LOKASI": "PUSKESMAS BEJI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0021",
+        "LOKASI": "PUSKESMAS BANGIL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0022",
+        "LOKASI": "PUSKESMAS RACI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0023",
+        "LOKASI": "PUSKESMAS REMBANG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0024",
+        "LOKASI": "PUSKESMAS KRATON",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0025",
+        "LOKASI": "PUSKESMAS NGEMPIT",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0026",
+        "LOKASI": "PUSKESMAS POHJENTREK",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0027",
+        "LOKASI": "PUSKESMAS GONDANGWETAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0028",
+        "LOKASI": "PUSKESMAS REJOSO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0029",
+        "LOKASI": "PUSKESMAS WINONGAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0030",
+        "LOKASI": "PUSKESMAS GRATI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0031",
+        "LOKASI": "PUSKESMAS KEDAWUNGWETAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0032",
+        "LOKASI": "PUSKESMAS LEKOK",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0033",
+        "LOKASI": "PUSKESMAS NGULING",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0034",
+        "LOKASI": "LABKESDA",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "02.00.00.0035",
+        "LOKASI": "POP-PK",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "02.00.00"
+    },
+    {
+        "ID": "03.00.00",
+        "LOKASI": "RUMAH SAKIT UMUM DAERAH BANGIL",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "04.00.00",
+        "LOKASI": "RUMAH SAKIT UMUM DAERAH GRATI",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "05.00.00",
+        "LOKASI": "DINAS CIPTA KARYA DAN TATA RUANG",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "06.00.00",
+        "LOKASI": "DINAS SUMBER DAYA AIR, BINA MARGA, DAN BINA KONSTRUKSI",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "07.00.00",
+        "LOKASI": "DINAS PERUMAHAN DAN KAWASAN PERMUKIMAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "08.00.00",
+        "LOKASI": "SATUAN POLISI PAMONG PRAJA",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "09.00.00",
+        "LOKASI": "BADAN PENANGGULANGAN BENCANA DAERAH",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "10.00.00",
+        "LOKASI": "DINAS SOSIAL, PEMBERDAYAAN PEREMPUAN, DAN PERLINDUNGAN ANAK",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "11.00.00",
+        "LOKASI": "DINAS KETENAGAKERJAAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "12.00.00",
+        "LOKASI": "DINAS PEMBERDAYAAN PEREMPUAN, PERLINDUNGAN ANAK, PENGENDALIAN PENDUDUK DAN KELUARGA BERENCANA",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "13.00.00",
+        "LOKASI": "DINAS KETAHANAN PANGAN DAN PERTANIAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "14.00.00",
+        "LOKASI": "DINAS LINGKUNGAN HIDUP",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "15.00.00",
+        "LOKASI": "DINAS KEPENDUDUKAN DAN CATATAN SIPIL",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "16.00.00",
+        "LOKASI": "DINAS PEMERDAYAAN MASYARAKAT DAN DESA",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "17.00.00",
+        "LOKASI": "DINAS PERHUBUNGAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "18.00.00",
+        "LOKASI": "DINAS KOMUNIKASI DAN INFORMATIKA",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "19.00.00",
+        "LOKASI": "DINAS KOPERASI, USAHA KECIL, MENENGAH, PERINDUSTRIAN DAN PERDAGANGAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "20.00.00",
+        "LOKASI": "DINAS PENANAMAN MODAL DAN PELAYANAN TERPADU SATU PINTU",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "21.00.00",
+        "LOKASI": "DINAS PEMUDA DAN OLAHRAGA",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "22.00.00",
+        "LOKASI": "DINAS PERPUSTAKAAN DAN ARSIP",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "23.00.00",
+        "LOKASI": "DINAS PERIKANAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "24.00.00",
+        "LOKASI": "DINAS PARIWISATA",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "25.00.00",
+        "LOKASI": "DINAS PETERNAKAN DAN KESEHATAN HEWAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "26.00.00",
+        "LOKASI": "DINAS PERINDUSTRIAN DAN PERDAGANGAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "27.00.00",
+        "LOKASI": "SEKRETARIAT DAERAH",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "27.00.00.0001",
+        "LOKASI": "BAGIAN PENGADAAN BARANG/JASA",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "27.00.00"
+    },
+    {
+        "ID": "27.00.00.0002",
+        "LOKASI": "BAGIAN UMUM",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "27.00.00"
+    },
+    {
+        "ID": "27.00.00.0003",
+        "LOKASI": "BAGIAN ORGANISASI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "27.00.00"
+    },
+    {
+        "ID": "27.00.00.0004",
+        "LOKASI": "BAGIAN PERENCANAAN DAN KEUANGAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "27.00.00"
+    },
+    {
+        "ID": "27.00.00.0005",
+        "LOKASI": "BAGIAN TATA PEMERINTAHAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "27.00.00"
+    },
+    {
+        "ID": "27.00.00.0006",
+        "LOKASI": "BAGIAN PEREKONOMIAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "27.00.00"
+    },
+    {
+        "ID": "27.00.00.0007",
+        "LOKASI": "BAGIAN HUKUM",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "27.00.00"
+    },
+    {
+        "ID": "27.00.00.0008",
+        "LOKASI": "BAGIAN KESEJAHTERAAN MASYARAKAT",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "27.00.00"
+    },
+    {
+        "ID": "27.00.00.0009",
+        "LOKASI": "BAGIAN ADMINISTRASI PEMBANGUNAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "27.00.00"
+    },
+    {
+        "ID": "27.00.00.0010",
+        "LOKASI": "BAGIAN PROTOKOL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "27.00.00"
+    },
+    {
+        "ID": "28.00.00",
+        "LOKASI": "BADAN PERENCANAAN PEMBANGUNAN, PENELITIAN DAN PENGEMBANGAN DAERAH",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "29.00.00",
+        "LOKASI": "BADAN PENGELOLAAN KEUANGAN DAN PENDAPATAN DAERAH",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "30.00.00",
+        "LOKASI": "BADAN KEPEGAWAIAN DAN PENGEMBANGAN SUMBER DAYA MANUSIA",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "31.00.00",
+        "LOKASI": "INSPEKTORAT DAERAH",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "32.00.00",
+        "LOKASI": "KECAMATAN BANGIL",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "32.00.00.0001",
+        "LOKASI": "KELURAHAN BENDOMUNGAL",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "32.00.00"
+    },
+    {
+        "ID": "32.00.00.0002",
+        "LOKASI": "KELURAHAN DERMO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "32.00.00"
+    },
+    {
+        "ID": "32.00.00.0003",
+        "LOKASI": "KELURAHAN GEMPENG",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "32.00.00"
+    },
+    {
+        "ID": "32.00.00.0004",
+        "LOKASI": "KELURAHAN KALIANYAR",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "32.00.00"
+    },
+    {
+        "ID": "32.00.00.0005",
+        "LOKASI": "KELURAHAN KALIREJO",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "32.00.00"
+    },
+    {
+        "ID": "32.00.00.0006",
+        "LOKASI": "KELURAHAN KERSIKAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "32.00.00"
+    },
+    {
+        "ID": "32.00.00.0007",
+        "LOKASI": "KELURAHAN KAUMAN",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "32.00.00"
+    },
+    {
+        "ID": "32.00.00.0008",
+        "LOKASI": "KELURAHAN KIDULDALEM",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "32.00.00"
+    },
+    {
+        "ID": "32.00.00.0009",
+        "LOKASI": "KELURAHAN KOLURSARI",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "32.00.00"
+    },
+    {
+        "ID": "32.00.00.0010",
+        "LOKASI": "KELURAHAN LATEK",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "32.00.00"
+    },
+    {
+        "ID": "32.00.00.0011",
+        "LOKASI": "KELURAHAN POGAR",
+        "STATUS": "Kuasa Pengguna Barang",
+        "PARENT ID": "32.00.00"
+    },
+    {
+        "ID": "33.00.00",
+        "LOKASI": "KECAMATAN BEJI",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "34.00.00",
+        "LOKASI": "KECAMATAN GEMPOL",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "35.00.00",
+        "LOKASI": "KECAMATAN GONDANGWETAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "36.00.00",
+        "LOKASI": "KECAMATAN GRATI",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "37.00.00",
+        "LOKASI": "KECAMATAN KEJAYAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "38.00.00",
+        "LOKASI": "KECAMATAN KRATON",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "39.00.00",
+        "LOKASI": "KECAMATAN LEKOK",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "40.00.00",
+        "LOKASI": "KECAMATAN LUMBANG",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "41.00.00",
+        "LOKASI": "KECAMATAN NGULING",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "42.00.00",
+        "LOKASI": "KECAMATAN PANDAAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "43.00.00",
+        "LOKASI": "KECAMATAN PASREPAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "44.00.00",
+        "LOKASI": "KECAMATAN POHJENTREK",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "45.00.00",
+        "LOKASI": "KECAMATAN PRIGEN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "46.00.00",
+        "LOKASI": "KECAMATAN PURWODADI",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "47.00.00",
+        "LOKASI": "KECAMATAN PURWOSARI",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "48.00.00",
+        "LOKASI": "KECAMATAN PUSPO",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "49.00.00",
+        "LOKASI": "KECAMATAN REJOSO",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "50.00.00",
+        "LOKASI": "KECAMATAN REMBANG",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "51.00.00",
+        "LOKASI": "KECAMATAN SUKOREJO",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "52.00.00",
+        "LOKASI": "KECAMATAN TOSARI",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "53.00.00",
+        "LOKASI": "KECAMATAN TUTUR",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "54.00.00",
+        "LOKASI": "KECAMATAN WINONGAN",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "55.00.00",
+        "LOKASI": "KECAMATAN WONOREJO",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "97.00.00",
+        "LOKASI": "BADAN KESATUAN BANGSA DAN POLITIK",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    },
+    {
+        "ID": "99.00.00",
+        "LOKASI": "SEKRETARIAT DPRD",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
+    }
+]

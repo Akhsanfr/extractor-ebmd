@@ -20,10 +20,20 @@ import {
     ModalDialog,
     Label,
     ListBox,
+    Chip,
 } from "@heroui/react";
 import { JenisPerangkatDaerah, PerangkatDaerah } from "@/types/perangkatDaerah";
 import { loadStorage, PERANGKAT_DAERAH_KEY, saveStorage } from "@/lib/bmd-storage";
+import Image from "next/image";
+import { Building, Building2, IdCard, Tag, User } from "lucide-react";
 
+
+type PerangkatDaerahJson = {
+    ID: string;
+    LOKASI: string;
+    STATUS: JenisPerangkatDaerah;
+    "PARENT ID": string;
+}
 
 
 // --- 3. Main Component ---
@@ -57,6 +67,11 @@ export default function ProfilePerangkatDaerah() {
         }
     }, [state.isOpen, reset]);
 
+
+    const openModal = () => {
+        // load perangkat daerah json
+    }
+
     // Handler untuk membuka modal dalam mode Edit
     const handleEdit = () => {
         if (profile) {
@@ -76,60 +91,14 @@ export default function ProfilePerangkatDaerah() {
     };
 
     return (
-        <div className="p-4 w-full max-w-2xl mx-auto" >
-            {/* --- Bagian 1: Detail Perangkat Daerah --- */}
-            {
-                profile && (
-                    <Card className="w-full shadow-md" >
-                        <CardHeader className="flex justify-between items-center px-6 py-4" >
-                            <div className="flex flex-col" >
-                                <h2 className="text-xl font-bold text-default-900" >
-                                    Profil Perangkat Daerah
-                                </h2>
-                                < p className="text-sm text-default-500" >
-                                    Informasi detail satuan kerja
-                                </p>
-                            </div>
-                            <Button onPress={handleEdit} >
-                                Edit Profil
-                            </Button>
-                        </CardHeader>
-                        < Separator />
-                        <CardContent className="px-6 py-4 gap-4" >
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4" >
-                                <div>
-                                    <p className="text-sm text-default-500" > Pengguna Barang </p>
-                                    < p className="text-md font-semibold" > {profile.penggunaBarang} </p>
-                                </div>
-                                {
-                                    profile.jenis === JenisPerangkatDaerah.kuasaPenggunaBarang && <div>
-                                        <p className="text-sm text-default-500" >Kuasa Pengguna Barang </p>
-                                        < p className="text-md font-semibold" > {profile.kuasaPenggunaBarang} </p>
-                                    </div>
-                                }
-                                < div >
-                                    <p className="text-sm text-default-500" > Jenis </p>
-                                    < p className="text-md font-semibold" > {profile.jenis} </p>
-                                </div>
-                                < div >
-                                    <p className="text-sm text-default-500" > Nama Pimpinan </p>
-                                    < p className="text-md font-semibold" > {profile.namaPimpinan} </p>
-                                </div>
-                                < div >
-                                    <p className="text-sm text-default-500" > NIP Pimpinan </p>
-                                    < p className="text-md font-semibold" > {profile.nipPimpinan} </p>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                )
+        <>
+            {profile &&
+                <ProfileCard profile={profile}
+                    handleEdit={handleEdit} />
             }
-
-            {/* --- Bagian 2: Form Modal Create / Edit --- */}
             <Modal
                 isOpen={state.isOpen}
                 onOpenChange={state.toggle}
-            // hideCloseButton={!profile}
             ><ModalBackdrop
                 isDismissable={!!profile}
             >
@@ -266,6 +235,61 @@ export default function ProfilePerangkatDaerah() {
                     </ModalContainer>
                 </ModalBackdrop>
             </Modal>
+        </>
+    );
+}
+
+export function ProfileCard({ profile, handleEdit }: { profile: PerangkatDaerah, handleEdit: () => void }) {
+    const fields = [
+        { label: "Pengguna barang", value: profile.penggunaBarang, icon: <Building2 size={14} /> },
+        { label: "Kuasa pengguna barang", value: profile.kuasaPenggunaBarang, icon: <Building2 size={14} /> },
+        { label: "Jenis", value: profile.jenis, icon: <Tag size={14} />, isChip: true },
+        { label: "Nama pimpinan", value: profile.namaPimpinan, icon: <User size={14} /> },
+        { label: "NIP pimpinan", value: profile.nipPimpinan, icon: <IdCard size={14} />, mono: true },
+    ];
+    return (
+        <Card>
+            <CardContent className="flex flex-row  items-center gap-2">
+                {/* Kolom kiri */}
+                <div className="flex flex-col items-center gap-3 shrink-0">
+                    <Image
+                        src="/logo.png"
+                        width={88}
+                        height={88}
+                        alt="Logo instansi"
+                        className="object-cover"
+                    />
+                    <p className="text-xs font-medium text-default-500 text-center leading-snug">
+                        Pemerintah Kabupaten Pasuruan
+                    </p>
+                    <Button onPress={handleEdit}>
+                        Edit Profile
+                    </Button>
+                </div>
+
+                <Separator orientation="vertical" />
+                <div className="flex flex-col gap-2">
+                    <Field label="Pengguna Barang" value={profile.penggunaBarang} />
+                    <Field label="Jenis" value={profile.jenis} />
+                    {
+                        profile.jenis == JenisPerangkatDaerah.kuasaPenggunaBarang &&
+                        <Field label="Kuasa Pengguna Barang" value={profile.kuasaPenggunaBarang} />
+                    }
+                    <Field label="Nama Pimpinan" value={profile.namaPimpinan} />
+                    <Field label="NIP Pimpinan" value={profile.nipPimpinan} />
+                </div>
+            </CardContent>
+        </Card >
+    );
+}
+
+function Field({ label, value }: { label: string, value: string }) {
+    return (
+        <div className="flex flex-col">
+            <span className="text-xs text-muted font-medium ">
+                {label}
+            </span>
+            <span className="font-bold">{value}</span>
         </div>
     );
 }

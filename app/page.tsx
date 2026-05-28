@@ -22,42 +22,7 @@ const BANNER_KEY = `bmd_banner_dismissed_${BANNER_VERSION}`;
 
 // ─── Sub-tool navigation ──────────────────────────────────────────────────────
 
-const SUB_TOOLS: {
-  href: string;
-  label: string;
-  desc: string;
-  icon: React.ReactNode;
-  available: boolean;
-}[] = [
-    {
-      href: "/rkbmd",
-      label: "Dashboard RKBMD",
-      desc: "Penyusunan Rencana Kebutuhan Barang Milik Daerah berdasarkan data hasil import",
-      icon: <LayoutDashboard size={18} />,
-      available: true,
-    },
-    {
-      href: "#pengalihan",
-      label: "Pengalihan Status Penggunaan",
-      desc: "Pengelolaan proses alih status penggunaan BMD antar pengguna barang",
-      icon: <ArrowRightLeft size={18} />,
-      available: false,
-    },
-    {
-      href: "#penetapan",
-      label: "Penetapan Status Penggunaan",
-      desc: "Administrasi dan penetapan status penggunaan Barang Milik Daerah",
-      icon: <ClipboardCheck size={18} />,
-      available: false,
-    },
-    {
-      href: "sebaran",
-      label: "Sebaran BMD",
-      desc: "Visualisasi dan pemetaan sebaran aset/barang milik daerah per lokasi",
-      icon: <MapPin size={18} />,
-      available: false,
-    },
-  ];
+
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -110,6 +75,7 @@ import {
   Package,
 } from "lucide-react";
 import ProfilePerangkatDaerah from "./perangkatDaerah";
+import { Menu } from "./menu";
 
 const TABS: {
   key: AsetType;
@@ -288,46 +254,7 @@ function BannerInfo() {
   );
 }
 
-// ─── SubToolNav ───────────────────────────────────────────────────────────────
 
-function SubToolNav() {
-  return (
-    <div className="mb-5">
-      <p className="text-xs font-medium text-default-400 uppercase tracking-wide mb-2">Sub-tool tersedia</p>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        {SUB_TOOLS.map(({ href, label, desc, icon, available }) => (
-          available ? (
-            <Link
-              key={href}
-              href={href}
-              className="group flex flex-col gap-1.5 rounded-xl border border-default-200 bg-accent hover:border-primary hover:shadow-sm p-3 transition-all"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-foreground">{icon}</span>
-                <ArrowRight size={13} className="text-default-300 group-hover:text-primary transition-colors" />
-              </div>
-              <p className="text-xs font-semibold text-foreground leading-tight">{label}</p>
-              <p className="text-xs text-default-400 leading-tight">{desc}</p>
-            </Link>
-          ) : (
-            <div
-              key={href}
-              className="flex flex-col gap-1.5 rounded-xl border border-dashed border-default-200 bg-muted p-3 opacity-60 cursor-not-allowed"
-              title="Segera hadir"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-default-400">{icon}</span>
-                <span className="text-[10px] text-default-400 font-medium px-1.5 py-0.5 rounded">Soon</span>
-              </div>
-              <p className="text-xs font-semibold text-default-600 leading-tight">{label}</p>
-              <p className="text-xs text-default-400 leading-tight">{desc}</p>
-            </div>
-          )
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // ─── UploadZone ───────────────────────────────────────────────────────────────
 
@@ -546,7 +473,7 @@ function AsetTabContent({ asetType }: { asetType: AsetType }) {
             <TableContent>
 
               <TableHeader>
-                <TableColumn className="w-10">No</TableColumn>
+                <TableColumn isRowHeader className="w-10">No</TableColumn>
                 <TableColumn>Kode Barang</TableColumn>
                 <TableColumn>Nama Barang</TableColumn>
                 <TableColumn className="w-20 text-right">Jumlah</TableColumn>
@@ -614,78 +541,72 @@ export default function Home() {
   const totalImported = Object.values(tabData).reduce((s, v) => s + v, 0);
 
   return (
-    <div className="flex flex-col items-center p-6 min-h-screen">
-      <div className="w-full max-w-4xl">
+    <>
 
-        {/* Header */}
-        <div className="flex items-start justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-default-900">
-              Tool Pengelolaan BMD
-            </h1>
-            <p className="text-sm text-default-500 mt-1">
-              Membantu Pengelola Barang dan Pengurus Barang dalam administrasi BMD
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            {totalImported > 0 && (
-              <Chip
-                color="success"
-              >
-                {totalImported} kode terimport
-              </Chip>
-            )}
-          </div>
+      {/* Header */}
+      <div className="flex items-start justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-default-900">
+            Tool Pengelolaan BMD
+          </h1>
+          <p className="text-sm text-default-500 mt-1">
+            Membantu Pengelola Barang dan Pengurus Barang dalam administrasi BMD
+          </p>
         </div>
-
-        {/* Banner onboarding */}
-        <BannerInfo />
-        <ProfilePerangkatDaerah />
-
-        {/* Sub-tool navigation */}
-        <SubToolNav />
-
-        {/* Main card */}
-        <Card className="w-full shadow-sm bg-surface">
-          <Card.Content className="p-0">
-            <Tabs className="w-full">
-              <Tabs.ListContainer className="border-b border-default-200 px-4 pt-4">
-                <Tabs.List aria-label="Kategori Aset">
-                  {TABS.map(({ key, label, icon: Icon }) => (
-                    <Tabs.Tab key={key} id={key} className="gap-1.5">
-                      <Icon className="w-4 h-4" />
-                      <span>{label}</span>
-                      {tabData[key] > 0 && (
-                        <span className="ml-1 text-xs bg-success text-white rounded-full px-1.5 py-0.5 font-medium leading-none">
-                          {tabData[key]}
-                        </span>
-                      )}
-                      <Tabs.Indicator />
-                    </Tabs.Tab>
-                  ))}
-                </Tabs.List>
-              </Tabs.ListContainer>
-
-              {TABS.map(({ key, label, desc }) => (
-                <Tabs.Panel key={key} id={key} className="p-5">
-                  {/* Tab sub-header */}
-                  <div className="mb-4 pb-3 border-b border-default-100">
-                    <p className="text-xs text-default-400 font-medium uppercase tracking-wide">Kategori Aset</p>
-                    <p className="text-base font-semibold text-default-800 mt-0.5">{label}</p>
-                    <p className="text-xs text-default-500">{desc}</p>
-                  </div>
-                  <AsetTabContent asetType={key} />
-                </Tabs.Panel>
-              ))}
-            </Tabs>
-          </Card.Content>
-        </Card>
-
-        {/* Footer note */}
-        <p className="text-xs text-default-400 text-center mt-4">
-          Data tersimpan di browser (localStorage) · Tidak dikirim ke server · Aman untuk digunakan secara offline
-        </p>
+        <div className="flex items-center gap-3">
+          {totalImported > 0 && (
+            <Chip
+              color="success"
+            >
+              {totalImported} kode terimport
+            </Chip>
+          )}
+        </div>
       </div>
-    </div>
+      <BannerInfo />
+      <ProfilePerangkatDaerah />
+      <Menu />
+
+      {/* Main card */}
+      <Card className="w-full shadow-sm bg-surface">
+        <Card.Content className="p-0">
+          <Tabs className="w-full">
+            <Tabs.ListContainer className="border-b border-default-200 px-4 pt-4">
+              <Tabs.List aria-label="Kategori Aset">
+                {TABS.map(({ key, label, icon: Icon }) => (
+                  <Tabs.Tab key={key} id={key} className="gap-1.5">
+                    <Icon className="w-4 h-4" />
+                    <span>{label}</span>
+                    {tabData[key] > 0 && (
+                      <span className="ml-1 text-xs bg-success text-white rounded-full px-1.5 py-0.5 font-medium leading-none">
+                        {tabData[key]}
+                      </span>
+                    )}
+                    <Tabs.Indicator />
+                  </Tabs.Tab>
+                ))}
+              </Tabs.List>
+            </Tabs.ListContainer>
+
+            {TABS.map(({ key, label, desc }) => (
+              <Tabs.Panel key={key} id={key} className="p-5">
+                {/* Tab sub-header */}
+                <div className="mb-4 pb-3 border-b border-default-100">
+                  <p className="text-xs text-default-400 font-medium uppercase tracking-wide">Kategori Aset</p>
+                  <p className="text-base font-semibold text-default-800 mt-0.5">{label}</p>
+                  <p className="text-xs text-default-500">{desc}</p>
+                </div>
+                <AsetTabContent asetType={key} />
+              </Tabs.Panel>
+            ))}
+          </Tabs>
+        </Card.Content>
+      </Card>
+
+      {/* Footer note */}
+      <p className="text-xs text-default-400 text-center mt-4">
+        Data tersimpan di browser (localStorage) · Tidak dikirim ke server · Aman untuk digunakan secara offline
+      </p>
+    </>
   );
 }

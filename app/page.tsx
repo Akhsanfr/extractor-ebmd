@@ -569,9 +569,9 @@ export default function Home() {
 
       {/* Main card */}
       <Card className="w-full shadow-sm bg-surface">
-        <Card.Content className="p-0">
+        <Card.Content >
           <Tabs className="w-full">
-            <Tabs.ListContainer className="border-b border-default-200 px-4 pt-4">
+            <Tabs.ListContainer>
               <Tabs.List aria-label="Kategori Aset">
                 {TABS.map(({ key, label, icon: Icon }) => (
                   <Tabs.Tab key={key} id={key} className="gap-1.5">

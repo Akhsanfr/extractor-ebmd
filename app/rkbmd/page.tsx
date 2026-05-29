@@ -9,6 +9,7 @@ import {
     ModalBody,
     ModalFooter,
     useOverlayState,
+    Card,
 } from "@heroui/react"; // Sesuaikan jika menggunakan NextUI
 import { loadStorage, PENGADAAN_STORAGE_KEY, PEMELIHARAAN_STORAGE_KEY } from "@/lib/bmd-storage";
 import { exportRkbmdToExcel } from "@/lib/exportExcel";
@@ -32,23 +33,24 @@ function saveStorage(key: string, data: any) {
 }
 
 // ─── Stat Card ───────────────────────────────────────────────────────────────
-function StatCard({ label, value, sub, color = "default" }: {
+function StatCard({ label, value, sub }: {
     label: string,
     value: string | number,
     sub?: string,
-    color?: "default" | "primary" | "secondary"
 }) {
-    const colors = {
-        default: "border-default-200 bg-background",
-        primary: "border-primary/30 bg-primary/5",
-        secondary: "border-secondary/30 bg-secondary/5"
-    };
     return (
-        <div className={`rounded-2xl border px-6 py-5 flex flex-col gap-1 ${colors[color]}`}>
-            <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">{label}</p>
-            <p className="text-3xl font-bold text-foreground">{value}</p>
-            {sub && <p className="text-xs text-default-400">{sub}</p>}
-        </div>
+        <Card>
+            <Card.Content className="bg-surface">
+                <p className="text-sm font-bold uppercase">{label}</p>
+                <p className="text-3xl font-bold text-foreground">{value}</p>
+                {sub && <p className="text-xs">{sub}</p>}
+            </Card.Content>
+        </Card>
+        // <div className={`rounded-2xl border px-6 py-5 flex flex-col gap-1 ${colors[color]}`}>
+        //     <p className="text-[10px] font-bold text-default-400 uppercase tracking-widest">{label}</p>
+        //     <p className="text-3xl font-bold text-foreground">{value}</p>
+        //     {sub && <p className="text-xs text-default-400">{sub}</p>}
+        // </div>
     );
 }
 
@@ -203,18 +205,18 @@ export default function RkbmdDashboardPage() {
             {/* Statistik */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <StatCard label="Total Aset Tersedia" value={barangAll.length} sub="Barang Milik Daerah" />
-                <StatCard label="Total Usulan RKBMD" value={totalAnggaran} sub="Pengadaan & Pemeliharaan" color="primary" />
-                <StatCard label="Rencana Pengadaan" value={totalPengadaan} sub="Item Usulan Baru" color="secondary" />
+                <StatCard label="Total Usulan RKBMD" value={totalAnggaran} sub="Pengadaan & Pemeliharaan" />
+                <StatCard label="Rencana Pengadaan" value={totalPengadaan} sub="Item Usulan Baru" />
                 <StatCard label="Rencana Pemeliharaan" value={totalPemeliharaan} sub="Item Perbaikan" />
             </div>
 
             {/* Quick Links */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Link href="/rkbmd/pengadaan" className="p-6 rounded-2xl border bg-secondary/5 border-secondary/20 hover:border-secondary transition-all">
+                <Link href="/rkbmd/pengadaan" className="p-6 rounded-2xl bg-surface shadow">
                     <h3 className="font-bold text-secondary">Manajemen Pengadaan</h3>
                     <p className="text-sm text-default-600 mt-2">Kelola usulan barang baru, hitung kebutuhan riil, dan optimalkan stok aset yang ada.</p>
                 </Link>
-                <Link href="/rkbmd/pemeliharaan" className="p-6 rounded-2xl border bg-default-100/50 border-default-200 hover:border-primary transition-all">
+                <Link href="/rkbmd/pemeliharaan" className="p-6 rounded-2xl bg-surface shadow">
                     <h3 className="font-bold text-foreground">Manajemen Pemeliharaan</h3>
                     <p className="text-sm text-default-600 mt-2">Kelola rencana perbaikan aset agar usia pakai barang tetap optimal.</p>
                 </Link>

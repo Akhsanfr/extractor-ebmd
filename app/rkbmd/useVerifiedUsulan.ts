@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
 import { PerangkatDaerahJson } from "@/types/perangkatDaerah";
-import { Renja, VerifiedUsulan } from "@/types/rkbmd";
+import { ProgramKegiatanJson, Renja, VerifiedUsulan } from "@/types/rkbmd";
 import { buildVerifiedList, countNotVerified } from "./verificationUtil";
 
 interface UseVerifiedUsulanReturn<T extends Renja> {
     /** Data asli (tanpa verified flag) */
     data: T[];
-    /** Data dengan flag penggunaBarangVerified & kuasaPenggunaBarangVerified */
+    /** Data dengan flag verified lengkap */
     verifiedData: VerifiedUsulan<T>[];
     /** true jika seluruh item sudah terverifikasi */
     isAllVerified: boolean;
@@ -19,16 +19,20 @@ interface UseVerifiedUsulanReturn<T extends Renja> {
 /**
  * Hook generik untuk mengelola daftar usulan RKBMD beserta status verifikasinya.
  *
- * Dapat dipakai untuk pengadaan maupun pemeliharaan — cukup berikan
- * storageKey yang sesuai dan initialData bertipe T.
+ * Memverifikasi 4 field sekaligus:
+ *  - penggunaBarang & kuasaPenggunaBarang  → referensi perangkatDaerah.json
+ *  - program                               → referensi program.json
+ *  - kegiatan                              → harus pasangan sah dari program di atas
+ *
+ * Dapat dipakai untuk pengadaan maupun pemeliharaan.
  *
  * @example — pengadaan
- * const { data, verifiedData, notVerifiedCount, setData } =
- *     useVerifiedUsulan<ListPengadaan>(PENGADAAN_STORAGE_KEY, []);
+ * const { verifiedData, notVerifiedCount, setData } =
+ *     useVerifiedUsulan<ListPengadaan>(PENGADAAN_STORAGE_KEY);
  *
  * @example — pemeliharaan
- * const { data, verifiedData, notVerifiedCount, setData } =
- *     useVerifiedUsulan<ListPemeliharaan>(PEMELIHARAAN_STORAGE_KEY, []);
+ * const { verifiedData, notVerifiedCount, setData } =
+ *     useVerifiedUsulan<ListPemeliharaan>(PEMELIHARAAN_STORAGE_KEY);
  */
 export function useVerifiedUsulan<T extends Renja>(
     storageKey: string,
@@ -36,6 +40,7 @@ export function useVerifiedUsulan<T extends Renja>(
 ): UseVerifiedUsulanReturn<T> {
     const [data, setData] = useState<T[]>(fallback);
     const [pdList, setPdList] = useState<PerangkatDaerahJson[]>([]);
+    const [programList, setProgramList] = useState<ProgramKegiatanJson[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
     // ── 1. Load dari localStorage ──────────────────────────────────────────
@@ -50,14 +55,23 @@ export function useVerifiedUsulan<T extends Renja>(
         }
     }, [storageKey]);
 
-    // ── 2. Fetch referensi perangkat daerah ────────────────────────────────
+    // ── 2. Fetch referensi (paralel) ───────────────────────────────────────
     useEffect(() => {
-        fetch("/data/perangkatDaerah.json")
-            .then((res) => res.json())
-            .then((json: PerangkatDaerahJson[]) => setPdList(json))
-            .catch((err) =>
-                console.error("[useVerifiedUsulan] Gagal load perangkatDaerah.json:", err)
-            );
+        Promise.allSettled([
+            fetch("/data/perangkatDaerah.json").then((r) => r.json()),
+            fetch("/data/program.json").then((r) => r.json()),
+        ]).then(([pdResult, progResult]) => {
+            if (pdResult.status === "fulfilled") {
+                setPdList(pdResult.value as PerangkatDaerahJson[]);
+            } else {
+                console.error("[useVerifiedUsulan] Gagal load perangkatDaerah.json:", pdResult.reason);
+            }
+            if (progResult.status === "fulfilled") {
+                setProgramList(progResult.value as ProgramKegiatanJson[]);
+            } else {
+                console.error("[useVerifiedUsulan] Gagal load program.json:", progResult.reason);
+            }
+        });
     }, []);
 
     // ── 3. Autosave ke localStorage setiap kali data berubah ──────────────
@@ -72,8 +86,8 @@ export function useVerifiedUsulan<T extends Renja>(
 
     // ── 4. Derived state ───────────────────────────────────────────────────
     const verifiedData = useMemo(
-        () => buildVerifiedList(data, pdList),
-        [data, pdList]
+        () => buildVerifiedList(data, pdList, programList),
+        [data, pdList, programList]
     );
 
     const notVerifiedCount = useMemo(

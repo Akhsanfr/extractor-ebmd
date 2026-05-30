@@ -8,22 +8,16 @@ export type Renja = {
     output: string;
 }
 export type FormPengadaan = Renja & {
-    // BMD yang dibutuhkan
     usulan: Barang | null;
-    // BMD yang masih bisa dioptimalkan
     bmdBisaDioptimalkan: Barang | null;
-    // BMD yang dibutuhkan - BMD yang bisa dioptimalkan
     kebutuhanRiil: {
         jumlah: number;
         satuan: string;
     } | null;
 }
 export type ListPengadaan = Renja & {
-    // BMD yang dibutuhkan
     usulan: Barang;
-    // BMD yang masih bisa dioptimalkan
     bmdBisaDioptimalkan: Barang;
-    // BMD yang dibutuhkan - BMD yang bisa dioptimalkan
     kebutuhanRiil: {
         jumlah: number;
         satuan: string;
@@ -52,4 +46,13 @@ export type ListPemeliharaan = Renja & {
 export type VerifiedUsulan<T extends Renja> = T & {
     penggunaBarangVerified: boolean;
     kuasaPenggunaBarangVerified: boolean;
+    programVerified: boolean;
+    kegiatanVerified: boolean;
+    /** true hanya jika semua 4 field di atas true */
+    isFullyVerified: boolean;
+};
+
+export type ProgramKegiatanJson = {
+    PROGRAM: string;
+    KEGIATAN: string;
 };

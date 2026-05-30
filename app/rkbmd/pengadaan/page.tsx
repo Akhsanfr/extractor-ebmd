@@ -29,14 +29,12 @@ export default function RekapPengadaanPage() {
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [initialData, setInitialData] = useState<FormPengadaan>(initialPengadaan);
 
-
-    // ── Verified Usulan  ──────────────────────────────────────────
+    // ── Verified Usulan ──────────────────────────────────────────
     const {
         verifiedData,
         notVerifiedCount,
         setData: setListPengadaan,
     } = useVerifiedUsulan<ListPengadaan>(PENGADAAN_STORAGE_KEY);
-
     // ── Selection State ──────────────────────────────────────────────────────
     const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
 
@@ -44,6 +42,8 @@ export default function RekapPengadaanPage() {
         selectedKeys === "all"
             ? verifiedData.length
             : (selectedKeys as Set<string>).size;
+
+
     // ── Effects ──────────────────────────────────────────────────────────────
 
     // Load perangkat daerah profile dari localStorage (tidak termasuk ke hook
@@ -170,9 +170,25 @@ export default function RekapPengadaanPage() {
                 <Alert status="danger">
                     <Alert.Indicator />
                     <Alert.Content>
-                        <Alert.Title>Data tidak terverifikasi</Alert.Title>
+                        <Alert.Title>
+                            {notVerifiedCount} item tidak terverifikasi
+                        </Alert.Title>
                         <Alert.Description>
-                            Terdapat <b>{notVerifiedCount} item</b> tidak sesuai daftar. Perbaiki item usulan yang dicoret.
+                            <span className="block mt-1 text-xs space-y-0.5">
+                                {verifiedData.some((i) => !i.penggunaBarangVerified) && (
+                                    <span className="block">• <b>Pengguna Barang</b> tidak terdaftar</span>
+                                )}
+                                {verifiedData.some((i) => !i.kuasaPenggunaBarangVerified) && (
+                                    <span className="block">• <b>Kuasa Pengguna Barang</b> tidak terdaftar</span>
+                                )}
+                                {verifiedData.some((i) => !i.programVerified) && (
+                                    <span className="block">• <b>Program</b> tidak sesuai daftar resmi</span>
+                                )}
+                                {verifiedData.some((i) => !i.kegiatanVerified) && (
+                                    <span className="block">• <b>Kegiatan</b> tidak sesuai program yang dipilih</span>
+                                )}
+                            </span>
+                            <span className="block mt-1.5 text-xs">Perbaiki baris yang dicoret pada tabel.</span>
                         </Alert.Description>
                     </Alert.Content>
                     <Button size="sm" variant="danger-soft">
@@ -260,9 +276,29 @@ export default function RekapPengadaanPage() {
 
                                     <TableCell className="align-top">
                                         <div className="flex flex-col">
-                                            <span className="font-medium text-sm">{item.program}</span>
-                                            <span className="text-xs">- {item.kegiatan}</span>
-                                            <span className="text-xs">- {item.output}</span>
+                                            <span
+                                                className={cn(
+                                                    "font-medium text-sm",
+                                                    item.programVerified
+                                                        ? "text-foreground"
+                                                        : "text-danger line-through"
+                                                )}
+                                            >
+                                                {item.program}
+                                            </span>
+                                            <span
+                                                className={cn(
+                                                    "text-xs",
+                                                    item.kegiatanVerified
+                                                        ? "text-foreground/70"
+                                                        : "text-danger line-through"
+                                                )}
+                                            >
+                                                - {item.kegiatan}
+                                            </span>
+                                            <span className="text-xs text-foreground/50">
+                                                - {item.output}
+                                            </span>
                                         </div>
                                     </TableCell>
 

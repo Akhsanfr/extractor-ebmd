@@ -1,14 +1,15 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Alert, Button, Checkbox, cn, EmptyState, Table, TableBody, TableCell, TableRow } from "@heroui/react";
 import type { Selection } from "@heroui/react";
 import FormPengadaanModal from "@/app/rkbmd/pengadaan/addData";
 import { FormPengadaan, ListPengadaan } from "@/types/rkbmd";
 import { loadStorage, PENGADAAN_STORAGE_KEY, PERANGKAT_DAERAH_KEY } from "@/lib/bmd-storage";
 import { Copy, Pen, Plus, ShoppingBasket, Trash } from "lucide-react";
-import { JenisPerangkatDaerah, PerangkatDaerah, PerangkatDaerahJson } from "@/types/perangkatDaerah";
-import { buildVerifiedList, sortUsulan } from "../util";
+import { JenisPerangkatDaerah, PerangkatDaerah } from "@/types/perangkatDaerah";
+import { sortUsulan } from "../verificationUtil";
+import { useVerifiedUsulan } from "../useVerifiedUsulan";
 
 const initialPengadaan: FormPengadaan = {
     penggunaBarang: "",
@@ -24,70 +25,38 @@ const initialPengadaan: FormPengadaan = {
 export default function RekapPengadaanPage() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [listPengadaan, setListPengadaan] = useState<ListPengadaan[]>([]);
     const [perangkatDaerah, setPerangkatDaerah] = useState<PerangkatDaerah | null>(null);
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [initialData, setInitialData] = useState<FormPengadaan>(initialPengadaan);
 
-    // State baru untuk menggantikan useRef demi kemudahan render/sinkronisasi
-    const [availablePerangkatDaerah, setAvailablePerangkatDaerah] = useState<PerangkatDaerahJson[]>([]);
+
+    // ── Verified Usulan  ──────────────────────────────────────────
+    const {
+        verifiedData,
+        notVerifiedCount,
+        setData: setListPengadaan,
+    } = useVerifiedUsulan<ListPengadaan>(PENGADAAN_STORAGE_KEY);
 
     // ── Selection State ──────────────────────────────────────────────────────
     const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
 
     const selectedCount =
         selectedKeys === "all"
-            ? listPengadaan.length
+            ? verifiedData.length
             : (selectedKeys as Set<string>).size;
-
-
-    // ── Computed State (Verifikasi Usulan) ───────────────────────────────────
-    const verifiedUsulan: (ListPengadaan & {
-        penggunaBarangVerified: boolean,
-        kuasaPenggunaBarangVerified: boolean,
-    })[] = useMemo(() => {
-        // Abaikan false-negative saat JSON belum selesai di-fetch
-        if (availablePerangkatDaerah.length === 0) {
-            return listPengadaan.map((item) => ({ ...item, penggunaBarangVerified: true, kuasaPenggunaBarangVerified: true }));
-        }
-        return buildVerifiedList(listPengadaan, availablePerangkatDaerah);
-    }, [listPengadaan, availablePerangkatDaerah]);
-
-    const hasNotverified = useMemo(
-        () => verifiedUsulan.some((item) => !item.penggunaBarangVerified),
-        [verifiedUsulan]
-    );
-
     // ── Effects ──────────────────────────────────────────────────────────────
 
-    // 1. Initial Load Storage + JSON Fetch
+    // Load perangkat daerah profile dari localStorage (tidak termasuk ke hook
+    // karena ini config profile, bukan daftar usulan)
     useEffect(() => {
         try {
-            const stored = loadStorage<ListPengadaan[]>(PENGADAAN_STORAGE_KEY);
-            setListPengadaan(stored ?? []);
             setPerangkatDaerah(loadStorage<PerangkatDaerah>(PERANGKAT_DAERAH_KEY));
-            fetch("/data/perangkatDaerah.json")
-                .then((res) => res.json())
-                .then((data: PerangkatDaerahJson[]) => {
-                    setAvailablePerangkatDaerah(data);
-                })
-                .catch((error) => console.error("Gagal load perangkatDaerah.json:", error));
         } catch (error) {
             console.error("Gagal membaca dari localStorage:", error);
         } finally {
             setIsLoaded(true);
         }
     }, []);
-
-    // 2. Autosave ke localStorage setiap kali data listPengadaan berubah
-    useEffect(() => {
-        if (!isLoaded) return;
-        try {
-            localStorage.setItem(PENGADAAN_STORAGE_KEY, JSON.stringify(listPengadaan));
-        } catch (error) {
-            console.error("Gagal menyimpan ke localStorage:", error);
-        }
-    }, [listPengadaan, isLoaded]);
 
     // ── Handlers ─────────────────────────────────────────────────────────────
     const handleOpen = (initial: FormPengadaan | null, index: number | null = null) => {
@@ -103,7 +72,7 @@ export default function RekapPengadaanPage() {
                 usulan: null, bmdBisaDioptimalkan: null, kebutuhanRiil: null,
             }
         );
-        setEditIndex(index); // Set index di sini agar form tau mana yang diedit
+        setEditIndex(index);
         setIsModalOpen(true);
     };
 
@@ -135,7 +104,7 @@ export default function RekapPengadaanPage() {
 
     const handleCloseModal = () => {
         setInitialData(initialPengadaan);
-        setEditIndex(null); // Reset index edit saat modal ditutup
+        setEditIndex(null);
         setIsModalOpen(false);
     };
 
@@ -151,7 +120,7 @@ export default function RekapPengadaanPage() {
             return sortUsulan(nextState);
         });
         setSelectedKeys(new Set());
-        setEditIndex(null); // Bersihkan sisa state edit
+        setEditIndex(null);
         setIsModalOpen(false);
     };
 
@@ -166,7 +135,7 @@ export default function RekapPengadaanPage() {
             usulan: null,
             kebutuhanRiil: null,
         });
-        setEditIndex(null); // Duplikat adalah data baru, jadi pastikan index edit null
+        setEditIndex(null);
         setIsModalOpen(true);
     };
 
@@ -196,21 +165,22 @@ export default function RekapPengadaanPage() {
                     </Button>
                 </div>
             </div>
-            {hasNotverified &&
+
+            {notVerifiedCount > 0 && (
                 <Alert status="danger">
                     <Alert.Indicator />
                     <Alert.Content>
                         <Alert.Title>Data tidak terverifikasi</Alert.Title>
                         <Alert.Description>
-                            Masih terdapat data <b>Pengguna Barang</b> yang tidak sesuai daftar. Perbaiki item usulan yang dicoret.
+                            Terdapat <b>{notVerifiedCount} item</b> tidak sesuai daftar. Perbaiki item usulan yang dicoret.
                         </Alert.Description>
                     </Alert.Content>
                     <Button size="sm" variant="danger-soft">
                         Filter Data
                     </Button>
                 </Alert>
+            )}
 
-            }
             {/* ── Tabel ── */}
             <Table>
                 <Table.ScrollContainer>
@@ -249,7 +219,7 @@ export default function RekapPengadaanPage() {
                                 </EmptyState>
                             )}
                         >
-                            {verifiedUsulan.map((item, index) => (
+                            {verifiedData.map((item, index) => (
                                 <Table.Row key={index} id={String(index)}>
                                     <Table.Cell className="pr-0">
                                         <Checkbox
@@ -275,7 +245,6 @@ export default function RekapPengadaanPage() {
                                             >
                                                 {item.penggunaBarang}
                                             </span>
-
                                             <span
                                                 className={cn(
                                                     "text-xs",
@@ -291,15 +260,9 @@ export default function RekapPengadaanPage() {
 
                                     <TableCell className="align-top">
                                         <div className="flex flex-col">
-                                            <span className="font-medium text-sm">
-                                                {item.program}
-                                            </span>
-                                            <span className="text-xs">
-                                                - {item.kegiatan}
-                                            </span>
-                                            <span className="text-xs">
-                                                - {item.output}
-                                            </span>
+                                            <span className="font-medium text-sm">{item.program}</span>
+                                            <span className="text-xs">- {item.kegiatan}</span>
+                                            <span className="text-xs">- {item.output}</span>
                                         </div>
                                     </TableCell>
 

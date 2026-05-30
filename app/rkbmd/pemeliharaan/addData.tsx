@@ -1,7 +1,7 @@
 "use client";
 
 import { Autocomplete, ListBox, SearchField, useFilter } from "@heroui/react";
-import programData from "../program.json";
+// import programData from "../program.json";
 import { useForm, Controller } from "react-hook-form";
 import {
     Button,
@@ -93,7 +93,7 @@ function ModalInner({
     const { control, handleSubmit, watch, setValue, getValues } = useForm<FormPemeliharan>({
         defaultValues: initialData
     })
-      const {contains} = useFilter({sensitivity: "base"});
+    const { contains } = useFilter({ sensitivity: "base" });
 
     // 1. Pantau nilai program yang dipilih pengguna
     const selectedProgram = watch("program");
@@ -169,171 +169,171 @@ function ModalInner({
 
                     <SectionLabel>Data Anggaran</SectionLabel>
 
-                     {([
-                       {
-                           name: "penggunaBarang" as const,
-                           isReadOnly: true,
-                           isRequired: true,
-                           label: "Pengguna Barang",
-                           placeholder: "Dinas/Badan/Kecamatan",
-                       },
-                       {
-                           name: "kuasaPenggunaBarang" as const,
-                           isRequired: false,
-                           isReadOnly: !isPenggunaBarang,
-                           label: "Kuasa Pengguna Barang",
-                           placeholder: "UPT/Puskesmas/Sekolah/Bagian ...",
-                       },
-                       {
-                           name: "program" as const,
-                           isRequired: true,
-                           isReadOnly: false,
-                           label: "Program",
-                           placeholder: "Pilih Program ...", 
-                       },
-                       {
-                           name: "kegiatan" as const,
-                           isRequired: true,
-                           isReadOnly: false,
-                           label: "Kegiatan",
-                           placeholder: "Pilih Kegiatan ...", 
-                       },
-                       {
-                           name: "output" as const,
-                           isRequired: true,
-                           isReadOnly: false,
-                           label: "Output",
-                           placeholder: "Terlaksananya ...",
-                       },
-                   ]).map((fieldInfo) => (
-                       <Controller
-                           key={fieldInfo.name}
-                           control={control}
-                           name={fieldInfo.name}
-                           rules={{ required: fieldInfo.isRequired ? `${fieldInfo.label} wajib diisi.` : false }}
-                           render={({ field: { ref, value, onChange, ...fieldProps }, fieldState: { error } }) => {
-                               
-                               // 1. Render khusus untuk field "program" dengan Anatomi HeroUI
-                               if (fieldInfo.name === "program") {
-                                   return (
-                                       <Autocomplete
-                                           {...fieldProps}
-                                           placeholder={fieldInfo.placeholder}
-                                           defaultValue={value || null} // Mencegah undefined
-                                           onChange={(key) => {
-                                               onChange(key);
-                                               setValue("kegiatan", ""); // Reset kegiatan saat program diganti
-                                           }}
-                                           className="flex flex-col gap-1.5"
-                                       >
-                                           <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                                               {fieldInfo.label}
-                                               {fieldInfo.isRequired && <span className="text-danger ml-0.5">*</span>}
-                                           </Label>
-                   
-                                           <Autocomplete.Trigger>
-                                               {/* Menempatkan placeholder di Value agar tampil saat kosong */}
-                                               <Autocomplete.Value  />
-                                               <Autocomplete.ClearButton />
-                                               <Autocomplete.Indicator />
-                                           </Autocomplete.Trigger>
-                   
-                                           {/* Menampilkan Error jika validasi RHF gagal */}
-                                           {error && <Description className="text-[11px] text-danger font-medium mt-0.5">{error.message}</Description>}
-                   
-                                           <Autocomplete.Popover>
-                                               <Autocomplete.Filter filter={contains}>
-                                                   <SearchField>
-                                                       <SearchField.Group>
-                                                           <SearchField.SearchIcon />
-                                                           <SearchField.Input placeholder="Ketik untuk mencari program..." />
-                                                       </SearchField.Group>
-                                                   </SearchField>
-                                                   <ListBox>
-                                                       {uniquePrograms.map((prog) => (
-                                                           // Property id wajib untuk Autocomplete/ListBox mengenali value (standar React Aria)
-                                                           <ListBox.Item key={prog} id={prog} textValue={prog}>
-                                                               <Label>{prog}</Label>
-                                                               <ListBox.ItemIndicator />
-                                                           </ListBox.Item>
-                                                       ))}
-                                                   </ListBox>
-                                               </Autocomplete.Filter>
-                                           </Autocomplete.Popover>
-                                       </Autocomplete>
-                                   );
-                               }
-                   
-                               // 2. Render khusus untuk field "kegiatan" dengan Anatomi HeroUI
-                               if (fieldInfo.name === "kegiatan") {
-                                   return (
-                                       <Autocomplete
-                                           {...fieldProps}
-                                           placeholder={fieldInfo.placeholder}
-                                           defaultValue={value || null}
-                                           onChange={onChange}
-                                           isDisabled={!selectedProgram} // Mengunci input jika program belum dipilih
-                                           className="flex flex-col gap-1.5"
-                                       >
-                                           <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                                               {fieldInfo.label}
-                                               {fieldInfo.isRequired && <span className="text-danger ml-0.5">*</span>}
-                                           </Label>
-                   
-                                           <Autocomplete.Trigger>
-                                               <Autocomplete.Value  />
-                                               <Autocomplete.ClearButton />
-                                               <Autocomplete.Indicator />
-                                           </Autocomplete.Trigger>
-                   
-                                           {error && <Description className="text-[11px] text-danger font-medium mt-0.5">{error.message}</Description>}
-                   
-                                           <Autocomplete.Popover>
-                                               <Autocomplete.Filter filter={contains}>
-                                                   <SearchField>
-                                                       <SearchField.Group>
-                                                           <SearchField.SearchIcon />
-                                                           <SearchField.Input placeholder="Ketik untuk mencari kegiatan..." />
-                                                       </SearchField.Group>
-                                                   </SearchField>
-                                                   <ListBox>
-                                                       {filteredKegiatan.map((keg) => (
-                                                           <ListBox.Item key={keg} id={keg} textValue={keg}>
-                                                               <Label>{keg}</Label>
-                                                               <ListBox.ItemIndicator />
-                                                           </ListBox.Item>
-                                                       ))}
-                                                   </ListBox>
-                                               </Autocomplete.Filter>
-                                           </Autocomplete.Popover>
-                                       </Autocomplete>
-                                   );
-                               }
-                   
-                               // 3. Render default untuk TextField (penggunaBarang, kuasaPenggunaBarang, output)
-                               return (
-                                   <TextField
-                                       {...fieldProps}
-                                       value={value || ""}
-                                       onChange={onChange} // <--- TAMBAHKAN BARIS INI
-                                       isReadOnly={fieldInfo.isReadOnly}
-                                       isRequired={fieldInfo.isRequired}
-                                       isInvalid={!!error}
-                                       className="flex flex-col gap-1.5"
-                                   >
-                                       <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
-                                           {fieldInfo.label}
-                                           {fieldInfo.isRequired && <span className="text-danger ml-0.5">*</span>}
-                                       </Label>
-                   
-                                       <Input ref={ref} placeholder={fieldInfo.placeholder} />
-                   
-                                       {error && <p className="text-[11px] text-danger font-medium mt-0.5">{error.message}</p>}
-                                   </TextField>
-                               );
-                           }}
-                       />
-                   ))}
+                    {([
+                        {
+                            name: "penggunaBarang" as const,
+                            isReadOnly: true,
+                            isRequired: true,
+                            label: "Pengguna Barang",
+                            placeholder: "Dinas/Badan/Kecamatan",
+                        },
+                        {
+                            name: "kuasaPenggunaBarang" as const,
+                            isRequired: false,
+                            isReadOnly: !isPenggunaBarang,
+                            label: "Kuasa Pengguna Barang",
+                            placeholder: "UPT/Puskesmas/Sekolah/Bagian ...",
+                        },
+                        {
+                            name: "program" as const,
+                            isRequired: true,
+                            isReadOnly: false,
+                            label: "Program",
+                            placeholder: "Pilih Program ...",
+                        },
+                        {
+                            name: "kegiatan" as const,
+                            isRequired: true,
+                            isReadOnly: false,
+                            label: "Kegiatan",
+                            placeholder: "Pilih Kegiatan ...",
+                        },
+                        {
+                            name: "output" as const,
+                            isRequired: true,
+                            isReadOnly: false,
+                            label: "Output",
+                            placeholder: "Terlaksananya ...",
+                        },
+                    ]).map((fieldInfo) => (
+                        <Controller
+                            key={fieldInfo.name}
+                            control={control}
+                            name={fieldInfo.name}
+                            rules={{ required: fieldInfo.isRequired ? `${fieldInfo.label} wajib diisi.` : false }}
+                            render={({ field: { ref, value, onChange, ...fieldProps }, fieldState: { error } }) => {
+
+                                // 1. Render khusus untuk field "program" dengan Anatomi HeroUI
+                                if (fieldInfo.name === "program") {
+                                    return (
+                                        <Autocomplete
+                                            {...fieldProps}
+                                            placeholder={fieldInfo.placeholder}
+                                            defaultValue={value || null} // Mencegah undefined
+                                            onChange={(key) => {
+                                                onChange(key);
+                                                setValue("kegiatan", ""); // Reset kegiatan saat program diganti
+                                            }}
+                                            className="flex flex-col gap-1.5"
+                                        >
+                                            <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
+                                                {fieldInfo.label}
+                                                {fieldInfo.isRequired && <span className="text-danger ml-0.5">*</span>}
+                                            </Label>
+
+                                            <Autocomplete.Trigger>
+                                                {/* Menempatkan placeholder di Value agar tampil saat kosong */}
+                                                <Autocomplete.Value />
+                                                <Autocomplete.ClearButton />
+                                                <Autocomplete.Indicator />
+                                            </Autocomplete.Trigger>
+
+                                            {/* Menampilkan Error jika validasi RHF gagal */}
+                                            {error && <Description className="text-[11px] text-danger font-medium mt-0.5">{error.message}</Description>}
+
+                                            <Autocomplete.Popover>
+                                                <Autocomplete.Filter filter={contains}>
+                                                    <SearchField>
+                                                        <SearchField.Group>
+                                                            <SearchField.SearchIcon />
+                                                            <SearchField.Input placeholder="Ketik untuk mencari program..." />
+                                                        </SearchField.Group>
+                                                    </SearchField>
+                                                    <ListBox>
+                                                        {uniquePrograms.map((prog) => (
+                                                            // Property id wajib untuk Autocomplete/ListBox mengenali value (standar React Aria)
+                                                            <ListBox.Item key={prog} id={prog} textValue={prog}>
+                                                                <Label>{prog}</Label>
+                                                                <ListBox.ItemIndicator />
+                                                            </ListBox.Item>
+                                                        ))}
+                                                    </ListBox>
+                                                </Autocomplete.Filter>
+                                            </Autocomplete.Popover>
+                                        </Autocomplete>
+                                    );
+                                }
+
+                                // 2. Render khusus untuk field "kegiatan" dengan Anatomi HeroUI
+                                if (fieldInfo.name === "kegiatan") {
+                                    return (
+                                        <Autocomplete
+                                            {...fieldProps}
+                                            placeholder={fieldInfo.placeholder}
+                                            defaultValue={value || null}
+                                            onChange={onChange}
+                                            isDisabled={!selectedProgram} // Mengunci input jika program belum dipilih
+                                            className="flex flex-col gap-1.5"
+                                        >
+                                            <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
+                                                {fieldInfo.label}
+                                                {fieldInfo.isRequired && <span className="text-danger ml-0.5">*</span>}
+                                            </Label>
+
+                                            <Autocomplete.Trigger>
+                                                <Autocomplete.Value />
+                                                <Autocomplete.ClearButton />
+                                                <Autocomplete.Indicator />
+                                            </Autocomplete.Trigger>
+
+                                            {error && <Description className="text-[11px] text-danger font-medium mt-0.5">{error.message}</Description>}
+
+                                            <Autocomplete.Popover>
+                                                <Autocomplete.Filter filter={contains}>
+                                                    <SearchField>
+                                                        <SearchField.Group>
+                                                            <SearchField.SearchIcon />
+                                                            <SearchField.Input placeholder="Ketik untuk mencari kegiatan..." />
+                                                        </SearchField.Group>
+                                                    </SearchField>
+                                                    <ListBox>
+                                                        {filteredKegiatan.map((keg) => (
+                                                            <ListBox.Item key={keg} id={keg} textValue={keg}>
+                                                                <Label>{keg}</Label>
+                                                                <ListBox.ItemIndicator />
+                                                            </ListBox.Item>
+                                                        ))}
+                                                    </ListBox>
+                                                </Autocomplete.Filter>
+                                            </Autocomplete.Popover>
+                                        </Autocomplete>
+                                    );
+                                }
+
+                                // 3. Render default untuk TextField (penggunaBarang, kuasaPenggunaBarang, output)
+                                return (
+                                    <TextField
+                                        {...fieldProps}
+                                        value={value || ""}
+                                        onChange={onChange} // <--- TAMBAHKAN BARIS INI
+                                        isReadOnly={fieldInfo.isReadOnly}
+                                        isRequired={fieldInfo.isRequired}
+                                        isInvalid={!!error}
+                                        className="flex flex-col gap-1.5"
+                                    >
+                                        <Label className="text-xs font-semibold text-foreground/60 uppercase tracking-wide">
+                                            {fieldInfo.label}
+                                            {fieldInfo.isRequired && <span className="text-danger ml-0.5">*</span>}
+                                        </Label>
+
+                                        <Input ref={ref} placeholder={fieldInfo.placeholder} />
+
+                                        {error && <p className="text-[11px] text-danger font-medium mt-0.5">{error.message}</p>}
+                                    </TextField>
+                                );
+                            }}
+                        />
+                    ))}
                     <SectionLabel>Detail Pemeliharaan</SectionLabel>
 
                     <Controller

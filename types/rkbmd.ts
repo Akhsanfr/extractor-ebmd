@@ -1,6 +1,6 @@
 import { Barang } from "./bmd";
 
-type Renja = {
+export type Renja = {
     penggunaBarang: string;
     kuasaPenggunaBarang: string;
     program: string;
@@ -48,3 +48,8 @@ export type ListPemeliharaan = Renja & {
     }
     keterangan: string;
 }
+
+export type VerifiedUsulan<T extends Renja> = T & {
+    penggunaBarangVerified: boolean;
+    kuasaPenggunaBarangVerified: boolean;
+};

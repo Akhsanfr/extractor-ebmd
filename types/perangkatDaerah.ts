@@ -9,3 +9,9 @@ export type PerangkatDaerah = {
     namaPimpinan: string;
     nipPimpinan: string;
 }
+export type PerangkatDaerahJson = {
+    ID: string;
+    LOKASI: string;
+    STATUS: JenisPerangkatDaerah;
+    "PARENT ID": string;
+};

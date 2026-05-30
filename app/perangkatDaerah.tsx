@@ -8,19 +8,14 @@ import {
     ModalContainer, ModalDialog, Label, ListBox, Autocomplete,
     SearchField, Description, Select, useFilter,
 } from "@heroui/react";
-import { JenisPerangkatDaerah, PerangkatDaerah } from "@/types/perangkatDaerah";
+import { JenisPerangkatDaerah, PerangkatDaerah, PerangkatDaerahJson } from "@/types/perangkatDaerah";
 import { loadStorage, PERANGKAT_DAERAH_KEY, saveStorage } from "@/lib/bmd-storage";
 import Image from "next/image";
 
 // --- Constants ---
 const PROFILE_VERIFIED_KEY = "bmd_profile_verified";
 
-type PerangkatDaerahJson = {
-    ID: string;
-    LOKASI: string;
-    STATUS: JenisPerangkatDaerah;
-    "PARENT ID": string;
-};
+
 
 // --- Helpers ---
 function normalize(str: string) {

@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Button, Checkbox, EmptyState, Table, TableBody, TableCell, TableRow } from "@heroui/react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { Alert, Button, Checkbox, cn, EmptyState, Table, TableBody, TableCell, TableRow } from "@heroui/react";
 import type { Selection } from "@heroui/react";
 import FormPengadaanModal from "@/app/rkbmd/pengadaan/addData";
 import { FormPengadaan, ListPengadaan } from "@/types/rkbmd";
 import { loadStorage, PENGADAAN_STORAGE_KEY, PERANGKAT_DAERAH_KEY } from "@/lib/bmd-storage";
 import { Copy, Pen, Plus, ShoppingBasket, Trash } from "lucide-react";
-import { JenisPerangkatDaerah, PerangkatDaerah } from "@/types/perangkatDaerah";
+import { JenisPerangkatDaerah, PerangkatDaerah, PerangkatDaerahJson } from "@/types/perangkatDaerah";
+import { buildVerifiedList, sortUsulan } from "../util";
 
 const initialPengadaan: FormPengadaan = {
     penggunaBarang: "",
@@ -28,6 +29,9 @@ export default function RekapPengadaanPage() {
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [initialData, setInitialData] = useState<FormPengadaan>(initialPengadaan);
 
+    // State baru untuk menggantikan useRef demi kemudahan render/sinkronisasi
+    const [availablePerangkatDaerah, setAvailablePerangkatDaerah] = useState<PerangkatDaerahJson[]>([]);
+
     // ── Selection State ──────────────────────────────────────────────────────
     const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
 
@@ -36,27 +40,38 @@ export default function RekapPengadaanPage() {
             ? listPengadaan.length
             : (selectedKeys as Set<string>).size;
 
-    // ── Helper ───────────────────────────────────────────────────────────────
-    const sortPengadaan = (data: ListPengadaan[]) => {
-        return [...data].sort((a, b) => {
-            const pengguna = a.penggunaBarang.localeCompare(b.kuasaPenggunaBarang);
-            if (pengguna !== 0) return pengguna;
-            const kuasa = a.kuasaPenggunaBarang.localeCompare(b.kuasaPenggunaBarang);
-            if (kuasa !== 0) return kuasa;
-            const prog = a.program.localeCompare(b.program);
-            if (prog !== 0) return prog;
-            const keg = a.kegiatan.localeCompare(b.kegiatan);
-            if (keg !== 0) return keg;
-            return a.output.localeCompare(b.output);
-        });
-    };
+
+    // ── Computed State (Verifikasi Usulan) ───────────────────────────────────
+    const verifiedUsulan: (ListPengadaan & {
+        penggunaBarangVerified: boolean,
+        kuasaPenggunaBarangVerified: boolean,
+    })[] = useMemo(() => {
+        // Abaikan false-negative saat JSON belum selesai di-fetch
+        if (availablePerangkatDaerah.length === 0) {
+            return listPengadaan.map((item) => ({ ...item, penggunaBarangVerified: true, kuasaPenggunaBarangVerified: true }));
+        }
+        return buildVerifiedList(listPengadaan, availablePerangkatDaerah);
+    }, [listPengadaan, availablePerangkatDaerah]);
+
+    const hasNotverified = useMemo(
+        () => verifiedUsulan.some((item) => !item.penggunaBarangVerified),
+        [verifiedUsulan]
+    );
 
     // ── Effects ──────────────────────────────────────────────────────────────
+
+    // 1. Initial Load Storage + JSON Fetch
     useEffect(() => {
         try {
             const stored = loadStorage<ListPengadaan[]>(PENGADAAN_STORAGE_KEY);
             setListPengadaan(stored ?? []);
             setPerangkatDaerah(loadStorage<PerangkatDaerah>(PERANGKAT_DAERAH_KEY));
+            fetch("/data/perangkatDaerah.json")
+                .then((res) => res.json())
+                .then((data: PerangkatDaerahJson[]) => {
+                    setAvailablePerangkatDaerah(data);
+                })
+                .catch((error) => console.error("Gagal load perangkatDaerah.json:", error));
         } catch (error) {
             console.error("Gagal membaca dari localStorage:", error);
         } finally {
@@ -64,6 +79,7 @@ export default function RekapPengadaanPage() {
         }
     }, []);
 
+    // 2. Autosave ke localStorage setiap kali data listPengadaan berubah
     useEffect(() => {
         if (!isLoaded) return;
         try {
@@ -74,9 +90,9 @@ export default function RekapPengadaanPage() {
     }, [listPengadaan, isLoaded]);
 
     // ── Handlers ─────────────────────────────────────────────────────────────
-    const handleOpen = (initial: FormPengadaan | null) => {
+    const handleOpen = (initial: FormPengadaan | null, index: number | null = null) => {
         if (!perangkatDaerah) {
-            alert("Lengkapi profile perankat daerah terlebih dahulu");
+            alert("Lengkapi profile perangkat daerah terlebih dahulu");
             return;
         }
         setInitialData(
@@ -87,6 +103,7 @@ export default function RekapPengadaanPage() {
                 usulan: null, bmdBisaDioptimalkan: null, kebutuhanRiil: null,
             }
         );
+        setEditIndex(index); // Set index di sini agar form tau mana yang diedit
         setIsModalOpen(true);
     };
 
@@ -118,6 +135,7 @@ export default function RekapPengadaanPage() {
 
     const handleCloseModal = () => {
         setInitialData(initialPengadaan);
+        setEditIndex(null); // Reset index edit saat modal ditutup
         setIsModalOpen(false);
     };
 
@@ -130,9 +148,10 @@ export default function RekapPengadaanPage() {
             } else {
                 nextState = [...prev, newData];
             }
-            return sortPengadaan(nextState);
+            return sortUsulan(nextState);
         });
         setSelectedKeys(new Set());
+        setEditIndex(null); // Bersihkan sisa state edit
         setIsModalOpen(false);
     };
 
@@ -147,6 +166,7 @@ export default function RekapPengadaanPage() {
             usulan: null,
             kebutuhanRiil: null,
         });
+        setEditIndex(null); // Duplikat adalah data baru, jadi pastikan index edit null
         setIsModalOpen(true);
     };
 
@@ -176,7 +196,21 @@ export default function RekapPengadaanPage() {
                     </Button>
                 </div>
             </div>
+            {hasNotverified &&
+                <Alert status="danger">
+                    <Alert.Indicator />
+                    <Alert.Content>
+                        <Alert.Title>Data tidak terverifikasi</Alert.Title>
+                        <Alert.Description>
+                            Masih terdapat data <b>Pengguna Barang</b> yang tidak sesuai daftar. Perbaiki item usulan yang dicoret.
+                        </Alert.Description>
+                    </Alert.Content>
+                    <Button size="sm" variant="danger-soft">
+                        Filter Data
+                    </Button>
+                </Alert>
 
+            }
             {/* ── Tabel ── */}
             <Table>
                 <Table.ScrollContainer>
@@ -215,7 +249,7 @@ export default function RekapPengadaanPage() {
                                 </EmptyState>
                             )}
                         >
-                            {listPengadaan.map((item, index) => (
+                            {verifiedUsulan.map((item, index) => (
                                 <Table.Row key={index} id={String(index)}>
                                     <Table.Cell className="pr-0">
                                         <Checkbox
@@ -229,15 +263,44 @@ export default function RekapPengadaanPage() {
                                         </Checkbox>
                                     </Table.Cell>
 
-                                    <TableCell className="align-top font-medium">
-                                        <span>{item.penggunaBarang}</span>
-                                        <span>{item.kuasaPenggunaBarang}</span>
+                                    <TableCell className="align-top">
+                                        <div className="flex flex-col">
+                                            <span
+                                                className={cn(
+                                                    "font-medium text-sm",
+                                                    item.penggunaBarangVerified
+                                                        ? "text-foreground"
+                                                        : "text-danger line-through"
+                                                )}
+                                            >
+                                                {item.penggunaBarang}
+                                            </span>
+
+                                            <span
+                                                className={cn(
+                                                    "text-xs",
+                                                    item.kuasaPenggunaBarangVerified
+                                                        ? "text-muted"
+                                                        : "text-danger line-through"
+                                                )}
+                                            >
+                                                {item.kuasaPenggunaBarang}
+                                            </span>
+                                        </div>
                                     </TableCell>
 
                                     <TableCell className="align-top">
-                                        <div className="font-semibold text-foreground text-xs">{item.program}</div>
-                                        <div className="text-[11px] text-foreground/70 mt-1">- {item.kegiatan}</div>
-                                        <div className="text-[10px] text-foreground/50 mt-0.5">- {item.output}</div>
+                                        <div className="flex flex-col">
+                                            <span className="font-medium text-sm">
+                                                {item.program}
+                                            </span>
+                                            <span className="text-xs">
+                                                - {item.kegiatan}
+                                            </span>
+                                            <span className="text-xs">
+                                                - {item.output}
+                                            </span>
+                                        </div>
                                     </TableCell>
 
                                     <TableCell className="align-top">
@@ -281,7 +344,7 @@ export default function RekapPengadaanPage() {
                                             <Button variant="secondary" isIconOnly onPress={() => handleDuplicate(item)} aria-label="Duplikat">
                                                 <Copy />
                                             </Button>
-                                            <Button isIconOnly variant="secondary" onPress={() => handleOpen(item)} aria-label="Edit">
+                                            <Button isIconOnly variant="secondary" onPress={() => handleOpen(item, index)} aria-label="Edit">
                                                 <Pen />
                                             </Button>
                                             <Button isIconOnly variant="danger-soft" onPress={() => handleDelete(index)} aria-label="Hapus">

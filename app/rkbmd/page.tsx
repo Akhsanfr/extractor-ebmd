@@ -71,6 +71,7 @@ export default function RkbmdDashboardPage() {
         try {
             // Load Pengadaan
             const pengadaanV2 = loadStorage<ListPengadaan[]>(PENGADAAN_STORAGE_KEY);
+            console.log(pengadaanV2);
             if (pengadaanV2 === null) {
                 setListPengadaan(convertPengadaanV1toV2());
             } else {

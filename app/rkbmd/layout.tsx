@@ -60,6 +60,6 @@ export default function RkbmdLayout({ children }: { children: React.ReactNode })
                     </nav>
                 </Card.Content >
             </Card>
-            <main className="flex-1">{children}</main>
+            {children}
         </>)
 }

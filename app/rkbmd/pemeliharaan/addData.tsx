@@ -48,6 +48,7 @@ function ModalInner({
     onSubmit,
 }: FormPemeliharaanModal) {
     const { control, handleSubmit, watch, setValue } = useForm<FormPemeliharan>({
+        mode: "onChange",
         defaultValues: initialData,
     });
 
@@ -56,6 +57,7 @@ function ModalInner({
     const bmd = watch("bmd");
 
     const onValidSubmit = (data: FormPemeliharan) => {
+        console.log(data)
         if (!data.bmd || !data.usulanPemeliharaan) return;
 
         onSubmit({
@@ -109,7 +111,6 @@ function ModalInner({
                     </div>
 
                     <SectionLabel>Data Anggaran</SectionLabel>
-
                     <Controller
                         control={control}
                         name="penggunaBarang"
@@ -122,20 +123,21 @@ function ModalInner({
                                     setValue("penggunaBarang", val);
                                     setValue("kuasaPenggunaBarang", "");
                                 }}
+                                error={error?.message}
+
                             />
                         )}
                     />
-
                     <Controller
                         control={control}
                         name="kuasaPenggunaBarang"
-                        rules={{ required: "Kuasa Pengguna Barang wajib diisi." }}
-                        render={({ field: { ref, value, onChange } }) => (
+                        render={({ field: { ref, value, onChange }, fieldState: { error } }) => (
                             <AvailablePerangkatDaerah
                                 jenis={JenisPerangkatDaerah.kuasaPenggunaBarang}
                                 value={value}
                                 parentPenggunaBarang={selectedPenggunaBarang}
                                 onChange={onChange}
+                                error={error?.message}
                             />
                         )}
                     />

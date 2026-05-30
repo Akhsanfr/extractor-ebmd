@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { Alert, Button, Checkbox, cn, EmptyState, Table, TableBody, TableCell, TableRow } from "@heroui/react";
+import { UsulanFilterBar } from "../filterBar";
 import type { Selection } from "@heroui/react";
 import FormPengadaanModal from "@/app/rkbmd/pengadaan/addData";
 import { FormPengadaan, ListPengadaan } from "@/types/rkbmd";
 import { loadStorage, PENGADAAN_STORAGE_KEY, PERANGKAT_DAERAH_KEY } from "@/lib/bmd-storage";
-import { Copy, Pen, Plus, ShoppingBasket, Trash } from "lucide-react";
+import { Copy, Pen, Plus, ShoppingBasket, Trash, TriangleAlert } from "lucide-react";
 import { JenisPerangkatDaerah, PerangkatDaerah } from "@/types/perangkatDaerah";
 import { sortUsulan } from "../verificationUtil";
 import { useVerifiedUsulan } from "../useVerifiedUsulan";
@@ -28,26 +29,27 @@ export default function RekapPengadaanPage() {
     const [perangkatDaerah, setPerangkatDaerah] = useState<PerangkatDaerah | null>(null);
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [initialData, setInitialData] = useState<FormPengadaan>(initialPengadaan);
+    const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
 
-    // ── Verified Usulan ──────────────────────────────────────────
+    // ── Hook ─────────────────────────────────────────────────────────────────
     const {
         verifiedData,
+        filteredData,
         notVerifiedCount,
+        filter,
+        filterOptions,
+        isFilterActive,
+        setFilterField,
+        resetFilter,
         setData: setListPengadaan,
     } = useVerifiedUsulan<ListPengadaan>(PENGADAAN_STORAGE_KEY);
-    // ── Selection State ──────────────────────────────────────────────────────
-    const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
 
     const selectedCount =
         selectedKeys === "all"
-            ? verifiedData.length
+            ? filteredData.length
             : (selectedKeys as Set<string>).size;
 
-
-    // ── Effects ──────────────────────────────────────────────────────────────
-
-    // Load perangkat daerah profile dari localStorage (tidak termasuk ke hook
-    // karena ini config profile, bukan daftar usulan)
+    // ── Effects ───────────────────────────────────────────────────────────────
     useEffect(() => {
         try {
             setPerangkatDaerah(loadStorage<PerangkatDaerah>(PERANGKAT_DAERAH_KEY));
@@ -58,7 +60,7 @@ export default function RekapPengadaanPage() {
         }
     }, []);
 
-    // ── Handlers ─────────────────────────────────────────────────────────────
+    // ── Handlers ──────────────────────────────────────────────────────────────
     const handleOpen = (initial: FormPengadaan | null, index: number | null = null) => {
         if (!perangkatDaerah) {
             alert("Lengkapi profile perangkat daerah terlebih dahulu");
@@ -91,12 +93,12 @@ export default function RekapPengadaanPage() {
     const handleDeleteSelected = () => {
         if (confirm(`Hapus ${selectedCount} data yang dipilih?`)) {
             if (selectedKeys === "all") {
-                setListPengadaan([]);
-            } else {
-                const indexes = new Set(
-                    Array.from(selectedKeys as Set<string>).map(Number)
+                setListPengadaan((prev) =>
+                    prev.filter((item) => !filteredData.some((f) => f === item))
                 );
-                setListPengadaan((prev) => prev.filter((_, i) => !indexes.has(i)));
+            } else {
+                const ids = new Set(selectedKeys as Set<string>);
+                setListPengadaan((prev) => prev.filter((_, i) => !ids.has(String(i))));
             }
             setSelectedKeys(new Set());
         }
@@ -144,7 +146,7 @@ export default function RekapPengadaanPage() {
     return (
         <>
             {/* ── Header ── */}
-            <div className="flex items-center justify-between border-b pb-4">
+            <div className="flex items-center justify-between w-full">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight text-foreground">
                         Data Usulan Pengadaan Barang
@@ -166,13 +168,12 @@ export default function RekapPengadaanPage() {
                 </div>
             </div>
 
+            {/* ── Alert Verifikasi ── */}
             {notVerifiedCount > 0 && (
                 <Alert status="danger">
                     <Alert.Indicator />
                     <Alert.Content>
-                        <Alert.Title>
-                            {notVerifiedCount} item tidak terverifikasi
-                        </Alert.Title>
+                        <Alert.Title>{notVerifiedCount} item tidak terverifikasi</Alert.Title>
                         <Alert.Description>
                             <span className="block mt-1 text-xs space-y-0.5">
                                 {verifiedData.some((i) => !i.penggunaBarangVerified) && (
@@ -191,11 +192,28 @@ export default function RekapPengadaanPage() {
                             <span className="block mt-1.5 text-xs">Perbaiki baris yang dicoret pada tabel.</span>
                         </Alert.Description>
                     </Alert.Content>
-                    <Button size="sm" variant="danger-soft">
-                        Filter Data
+                    <Button
+                        size="sm"
+                        variant={filter.onlyInvalid ? "danger" : "danger-soft"}
+                        onPress={() => setFilterField("onlyInvalid", !filter.onlyInvalid)}
+                    >
+                        <TriangleAlert />
+                        {filter.onlyInvalid ? "Tampilkan Semua" : "Filter Invalid"}
                     </Button>
                 </Alert>
             )}
+
+            {/* ── Filter Bar ── */}
+            <UsulanFilterBar
+                filter={filter}
+                filterOptions={filterOptions}
+                isFilterActive={isFilterActive}
+                totalCount={verifiedData.length}
+                filteredCount={filteredData.length}
+                setFilterField={setFilterField}
+                resetFilter={resetFilter}
+                onReset={() => setSelectedKeys(new Set())}
+            />
 
             {/* ── Tabel ── */}
             <Table>
@@ -210,9 +228,7 @@ export default function RekapPengadaanPage() {
                         <Table.Header>
                             <Table.Column className="pr-0 w-10">
                                 <Checkbox aria-label="Pilih semua" slot="selection">
-                                    <Checkbox.Control>
-                                        <Checkbox.Indicator />
-                                    </Checkbox.Control>
+                                    <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
                                 </Checkbox>
                             </Table.Column>
                             <Table.Column isRowHeader>
@@ -230,45 +246,27 @@ export default function RekapPengadaanPage() {
                                 <EmptyState className="flex h-full w-full flex-col items-center justify-center gap-4 text-center">
                                     <ShoppingBasket />
                                     <span className="text-sm text-muted">
-                                        Belum ada data usulan pengadaan. Klik tombol di atas untuk menambah data.
+                                        {isFilterActive
+                                            ? "Tidak ada data yang sesuai filter."
+                                            : "Belum ada data usulan pengadaan. Klik tombol di atas untuk menambah data."}
                                     </span>
                                 </EmptyState>
                             )}
                         >
-                            {verifiedData.map((item, index) => (
+                            {filteredData.map((item, index) => (
                                 <Table.Row key={index} id={String(index)}>
                                     <Table.Cell className="pr-0">
-                                        <Checkbox
-                                            aria-label={`Pilih baris ${index + 1}`}
-                                            slot="selection"
-                                            variant="secondary"
-                                        >
-                                            <Checkbox.Control>
-                                                <Checkbox.Indicator />
-                                            </Checkbox.Control>
+                                        <Checkbox aria-label={`Pilih baris ${index + 1}`} slot="selection" variant="secondary">
+                                            <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
                                         </Checkbox>
                                     </Table.Cell>
 
                                     <TableCell className="align-top">
                                         <div className="flex flex-col">
-                                            <span
-                                                className={cn(
-                                                    "font-medium text-sm",
-                                                    item.penggunaBarangVerified
-                                                        ? "text-foreground"
-                                                        : "text-danger line-through"
-                                                )}
-                                            >
+                                            <span className={cn("font-medium text-sm", item.penggunaBarangVerified ? "text-foreground" : "text-danger line-through")}>
                                                 {item.penggunaBarang}
                                             </span>
-                                            <span
-                                                className={cn(
-                                                    "text-xs",
-                                                    item.kuasaPenggunaBarangVerified
-                                                        ? "text-muted"
-                                                        : "text-danger line-through"
-                                                )}
-                                            >
+                                            <span className={cn("text-xs", item.kuasaPenggunaBarangVerified ? "text-muted" : "text-danger line-through")}>
                                                 {item.kuasaPenggunaBarang}
                                             </span>
                                         </div>
@@ -276,29 +274,13 @@ export default function RekapPengadaanPage() {
 
                                     <TableCell className="align-top">
                                         <div className="flex flex-col">
-                                            <span
-                                                className={cn(
-                                                    "font-medium text-sm",
-                                                    item.programVerified
-                                                        ? "text-foreground"
-                                                        : "text-danger line-through"
-                                                )}
-                                            >
+                                            <span className={cn("font-medium text-sm", item.programVerified ? "text-foreground" : "text-danger line-through")}>
                                                 {item.program}
                                             </span>
-                                            <span
-                                                className={cn(
-                                                    "text-xs",
-                                                    item.kegiatanVerified
-                                                        ? "text-foreground/70"
-                                                        : "text-danger line-through"
-                                                )}
-                                            >
+                                            <span className={cn("text-xs", item.kegiatanVerified ? "text-foreground/70" : "text-danger line-through")}>
                                                 - {item.kegiatan}
                                             </span>
-                                            <span className="text-xs text-foreground/50">
-                                                - {item.output}
-                                            </span>
+                                            <span className="text-xs text-foreground/50">- {item.output}</span>
                                         </div>
                                     </TableCell>
 
@@ -340,15 +322,9 @@ export default function RekapPengadaanPage() {
 
                                     <TableCell className="align-top">
                                         <div className="flex items-center justify-center gap-1.5">
-                                            <Button variant="secondary" isIconOnly onPress={() => handleDuplicate(item)} aria-label="Duplikat">
-                                                <Copy />
-                                            </Button>
-                                            <Button isIconOnly variant="secondary" onPress={() => handleOpen(item, index)} aria-label="Edit">
-                                                <Pen />
-                                            </Button>
-                                            <Button isIconOnly variant="danger-soft" onPress={() => handleDelete(index)} aria-label="Hapus">
-                                                <Trash />
-                                            </Button>
+                                            <Button variant="secondary" isIconOnly onPress={() => handleDuplicate(item)} aria-label="Duplikat"><Copy /></Button>
+                                            <Button isIconOnly variant="secondary" onPress={() => handleOpen(item, index)} aria-label="Edit"><Pen /></Button>
+                                            <Button isIconOnly variant="danger-soft" onPress={() => handleDelete(index)} aria-label="Hapus"><Trash /></Button>
                                         </div>
                                     </TableCell>
                                 </Table.Row>

@@ -143,6 +143,7 @@ function ModalInner({
                         rules={{ required: "Pengguna Barang wajib diisi." }}
                         render={({ field: { ref, value, onChange, ...fieldProps }, fieldState: { error } }) => <AvailablePerangkatDaerah
                             jenis={JenisPerangkatDaerah.penggunaBarang}
+                            error={error?.message}
                             value={value}
                             onChange={(val) => {
                                 setValue("penggunaBarang", val);
@@ -153,10 +154,10 @@ function ModalInner({
                     <Controller
                         control={control}
                         name="kuasaPenggunaBarang"
-                        rules={{ required: "Pengguna Barang wajib diisi." }}
                         render={({ field: { ref, value, onChange, ...fieldProps }, fieldState: { error } }) => <AvailablePerangkatDaerah
                             jenis={JenisPerangkatDaerah.kuasaPenggunaBarang}
                             value={value}
+                            error={error?.message}
                             parentPenggunaBarang={selectedPenggunaBarang}
                             onChange={onChange}
                         />}

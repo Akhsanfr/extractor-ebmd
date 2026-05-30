@@ -13,6 +13,7 @@ import {
     Spinner,
     cn,
     EmptyState,
+    FieldError,
 } from "@heroui/react";
 
 import {
@@ -28,6 +29,7 @@ type PenggunaBarangProps = {
     jenis: typeof JenisPerangkatDaerah.penggunaBarang;
     value: string;
     onChange: (val: string) => void;
+    error: string | undefined;
 };
 
 type KuasaPenggunaBarangProps = {
@@ -35,6 +37,7 @@ type KuasaPenggunaBarangProps = {
     value: string;
     onChange: (val: string) => void;
     parentPenggunaBarang: string;
+    error: string | undefined;
 };
 
 type PerangkatDaerahAutocompleteProps =
@@ -73,6 +76,7 @@ function usePerangkatDaerahData() {
 export function AvailablePerangkatDaerah(
     props: PerangkatDaerahAutocompleteProps
 ) {
+    console.log(props.error)
     const { contains } = useFilter({ sensitivity: "base" });
 
     const { data = [], error, isLoading } =
@@ -130,7 +134,7 @@ export function AvailablePerangkatDaerah(
                     ? "Pengguna Barang"
                     : "Kuasa Pengguna Barang"}
             </Label>
-
+            {props.error}
             <Autocomplete.Trigger>
                 <Autocomplete.Value />
 
@@ -194,6 +198,7 @@ export function AvailablePerangkatDaerah(
                     </ListBox>
                 </Autocomplete.Filter>
             </Autocomplete.Popover>
+            {props.error && <span className="text-danger text-xs">{props.error}</span>}
         </Autocomplete>
     );
 }

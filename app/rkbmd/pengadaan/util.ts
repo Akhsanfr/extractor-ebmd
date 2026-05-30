@@ -35,11 +35,14 @@ export const convertPengadaanV1toV2 = (): ListPengadaan[] => {
     try {
         // 1. Load data pengadaan V1
         const data = loadStorage<ItemRencanaKebutuhan[]>(PENGADAAN_STORAGE_KEY_V1);
+        console.log("data old")
+        console.log(data)
 
         // 2. Load data profil perangkat daerah untuk mengambil Pengguna/Kuasa Pengguna Barang
         const profile = loadStorage<PerangkatDaerah>(PERANGKAT_DAERAH_KEY);
 
         if (data && data.length > 0) {
+            console.log("proses peralihan")
             const res = data.map((d: ItemRencanaKebutuhan): ListPengadaan => {
                 return {
                     // Renja mapping

@@ -118,8 +118,6 @@ export default function RkbmdDashboardPage() {
         try {
             const { pengadaanData: importedPengadaan, pemeliharaanData: importedPemeliharaan } = await importRkbmdFromExcel(selectedFile);
 
-            console.table(importedPemeliharaan)
-
             // 1. Helper untuk membuat "Unique Key" untuk setiap item
             //    - Pengadaan : path + kodeBarang usulan
             //    - Pemeliharaan : path + kodeBarang BMD + namaPemeliharaan

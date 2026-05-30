@@ -1,19 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button, Checkbox, Table, TableBody, TableCell, TableRow, EmptyState } from "@heroui/react";
+import { Alert, Button, Checkbox, cn, Table, TableBody, TableCell, TableRow, EmptyState } from "@heroui/react";
 import type { Selection } from "@heroui/react";
 import { Plus, Copy, Pen, Trash, Wrench } from "lucide-react";
 import FormPemeliharaanModal from "./addData";
 import { ListPemeliharaan, FormPemeliharan } from "@/types/rkbmd";
-import { loadStorage, saveStorage, PEMELIHARAAN_STORAGE_KEY, PERANGKAT_DAERAH_KEY } from "@/lib/bmd-storage";
-import { convertPemeliharaanV1toV2 } from "./util";
+import { loadStorage, PEMELIHARAAN_STORAGE_KEY, PERANGKAT_DAERAH_KEY } from "@/lib/bmd-storage";
 import { JenisPerangkatDaerah, PerangkatDaerah } from "@/types/perangkatDaerah";
+import { useVerifiedUsulan } from "../useVerifiedUsulan";
+import { sortUsulan } from "../verificationUtil";
 
 export default function PemeliharaanPage() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [listPemeliharaan, setListPemeliharaan] = useState<ListPemeliharaan[]>([]);
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [duplicateData, setDuplicateData] = useState<FormPemeliharan | null>(null);
     const [isPenggunaBarang, setIsPenggunaBarang] = useState(true);
@@ -22,9 +22,16 @@ export default function PemeliharaanPage() {
     // ── Selection State ──────────────────────────────────────────────────────
     const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
 
+    // ── Verified Usulan ──────────────────────────────────────────────────────
+    const {
+        verifiedData,
+        notVerifiedCount,
+        setData: setListPemeliharaan,
+    } = useVerifiedUsulan<ListPemeliharaan>(PEMELIHARAAN_STORAGE_KEY);
+
     const selectedCount =
         selectedKeys === "all"
-            ? listPemeliharaan.length
+            ? verifiedData.length
             : (selectedKeys as Set<string>).size;
 
     // ── Effects ──────────────────────────────────────────────────────────────
@@ -35,23 +42,12 @@ export default function PemeliharaanPage() {
                 setProfile(currentProfile);
                 setIsPenggunaBarang(currentProfile.jenis === JenisPerangkatDaerah.penggunaBarang);
             }
-
-            let savedData = loadStorage<ListPemeliharaan[]>(PEMELIHARAAN_STORAGE_KEY);
-            if (!savedData || savedData.length === 0) {
-                savedData = convertPemeliharaanV1toV2();
-            }
-            if (savedData) setListPemeliharaan(savedData);
         } catch (error) {
             console.error("Gagal membaca dari localStorage:", error);
         } finally {
             setIsLoaded(true);
         }
     }, []);
-
-    useEffect(() => {
-        if (!isLoaded) return;
-        saveStorage(PEMELIHARAAN_STORAGE_KEY, listPemeliharaan);
-    }, [listPemeliharaan, isLoaded]);
 
     // ── Handlers ─────────────────────────────────────────────────────────────
     const handleOpen = (item: ListPemeliharaan | null, index?: number) => {
@@ -113,14 +109,17 @@ export default function PemeliharaanPage() {
 
     const handleSubmitPemeliharaan = (newData: ListPemeliharaan) => {
         setListPemeliharaan((prev) => {
+            let nextState;
             if (editIndex !== null) {
-                const next = [...prev];
-                next[editIndex] = newData;
-                return next;
+                nextState = [...prev];
+                nextState[editIndex] = newData;
+            } else {
+                nextState = [...prev, newData];
             }
-            return [...prev, newData];
+            return sortUsulan(nextState);
         });
         setSelectedKeys(new Set());
+        setEditIndex(null);
         setIsModalOpen(false);
     };
 
@@ -128,6 +127,7 @@ export default function PemeliharaanPage() {
 
     return (
         <div className="p-6 max-w-7xl mx-auto space-y-6">
+            {/* ── Header ── */}
             <div className="flex items-center justify-between border-b pb-4">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight text-foreground">
@@ -150,6 +150,39 @@ export default function PemeliharaanPage() {
                 </div>
             </div>
 
+            {/* ── Alert Verifikasi ── */}
+            {notVerifiedCount > 0 && (
+                <Alert status="danger">
+                    <Alert.Indicator />
+                    <Alert.Content>
+                        <Alert.Title>
+                            {notVerifiedCount} item tidak terverifikasi
+                        </Alert.Title>
+                        <Alert.Description>
+                            <span className="block mt-1 text-xs space-y-0.5">
+                                {verifiedData.some((i) => !i.penggunaBarangVerified) && (
+                                    <span className="block">• <b>Pengguna Barang</b> tidak terdaftar</span>
+                                )}
+                                {verifiedData.some((i) => !i.kuasaPenggunaBarangVerified) && (
+                                    <span className="block">• <b>Kuasa Pengguna Barang</b> tidak terdaftar</span>
+                                )}
+                                {verifiedData.some((i) => !i.programVerified) && (
+                                    <span className="block">• <b>Program</b> tidak sesuai daftar resmi</span>
+                                )}
+                                {verifiedData.some((i) => !i.kegiatanVerified) && (
+                                    <span className="block">• <b>Kegiatan</b> tidak sesuai program yang dipilih</span>
+                                )}
+                            </span>
+                            <span className="block mt-1.5 text-xs">Perbaiki baris yang dicoret pada tabel.</span>
+                        </Alert.Description>
+                    </Alert.Content>
+                    <Button size="sm" variant="danger-soft">
+                        Filter Data
+                    </Button>
+                </Alert>
+            )}
+
+            {/* ── Tabel ── */}
             <Table>
                 <Table.ScrollContainer>
                     <Table.Content
@@ -186,7 +219,7 @@ export default function PemeliharaanPage() {
                                 </EmptyState>
                             )}
                         >
-                            {listPemeliharaan.map((item, index) => (
+                            {verifiedData.map((item, index) => (
                                 <Table.Row key={index} id={String(index)}>
                                     <Table.Cell className="pr-0">
                                         <Checkbox
@@ -200,19 +233,62 @@ export default function PemeliharaanPage() {
                                         </Checkbox>
                                     </Table.Cell>
 
+                                    {/* Pengguna Barang */}
                                     <TableCell className="align-top font-medium">
                                         <div className="flex flex-col">
-                                            <span>{item.penggunaBarang}</span>
-                                            <span className="text-foreground/70">{item.kuasaPenggunaBarang}</span>
+                                            <span
+                                                className={cn(
+                                                    "text-sm",
+                                                    item.penggunaBarangVerified
+                                                        ? "text-foreground"
+                                                        : "text-danger line-through"
+                                                )}
+                                            >
+                                                {item.penggunaBarang}
+                                            </span>
+                                            <span
+                                                className={cn(
+                                                    "text-xs",
+                                                    item.kuasaPenggunaBarangVerified
+                                                        ? "text-foreground/70"
+                                                        : "text-danger line-through"
+                                                )}
+                                            >
+                                                {item.kuasaPenggunaBarang}
+                                            </span>
                                         </div>
                                     </TableCell>
 
+                                    {/* Program / Kegiatan / Output */}
                                     <TableCell className="align-top">
-                                        <div className="font-semibold text-foreground text-xs">{item.program}</div>
-                                        <div className="text-[11px] text-foreground/70 mt-1">- {item.kegiatan}</div>
-                                        <div className="text-[10px] text-foreground/50 mt-0.5">- {item.output}</div>
+                                        <div className="flex flex-col">
+                                            <span
+                                                className={cn(
+                                                    "font-semibold text-xs",
+                                                    item.programVerified
+                                                        ? "text-foreground"
+                                                        : "text-danger line-through"
+                                                )}
+                                            >
+                                                {item.program}
+                                            </span>
+                                            <span
+                                                className={cn(
+                                                    "text-[11px] mt-1",
+                                                    item.kegiatanVerified
+                                                        ? "text-foreground/70"
+                                                        : "text-danger line-through"
+                                                )}
+                                            >
+                                                - {item.kegiatan}
+                                            </span>
+                                            <span className="text-[10px] text-foreground/50 mt-0.5">
+                                                - {item.output}
+                                            </span>
+                                        </div>
                                     </TableCell>
 
+                                    {/* Barang */}
                                     <TableCell className="align-top">
                                         <div className="flex items-center gap-2 mb-1">
                                             <div className="font-semibold text-foreground text-xs">{item.bmd.namaBarang}</div>
@@ -227,6 +303,7 @@ export default function PemeliharaanPage() {
                                         </div>
                                     </TableCell>
 
+                                    {/* Rencana Pemeliharaan */}
                                     <TableCell className="align-top">
                                         <div className="font-semibold text-foreground text-xs">{item.usulanPemeliharaan.namaPemeliharaan}</div>
                                         <div className="text-xs font-semibold text-warning-600 mt-1.5">
@@ -240,6 +317,7 @@ export default function PemeliharaanPage() {
                                         )}
                                     </TableCell>
 
+                                    {/* Aksi */}
                                     <TableCell className="align-top">
                                         <div className="flex items-center justify-center gap-1.5">
                                             <Button

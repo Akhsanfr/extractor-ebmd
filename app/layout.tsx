@@ -30,7 +30,6 @@ export default function RootLayout({
       <body className="text-foreground max-w-6xl mx-auto bg-background">
         <div className="min-h-screen flex flex-col gap-4 items-center p-6 bg-background-secondary">
           {children}
-
         </div>
       </body>
 

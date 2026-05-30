@@ -372,7 +372,7 @@ export default function ProfilePerangkatDaerah() {
 export function ProfileCard({ profile, handleEdit }: { profile: PerangkatDaerah; handleEdit: () => void }) {
     return (
         <Card>
-            <CardContent className="flex flex-row items-center gap-2">
+            <CardContent className=" flex flex-row items-center gap-2">
                 <div className="flex flex-col items-center gap-3 shrink-0">
                     <Image src="/logo.png" width={88} height={88} alt="Logo instansi" className="object-cover" />
                     <p className="text-xs font-medium text-default-500 text-center leading-snug">

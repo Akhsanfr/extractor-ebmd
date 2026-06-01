@@ -246,9 +246,9 @@ function ModalInner({
                                 name={field.name}
                                 isRequired
                                 isDisabled={!bmd}
-                                minValue={1}
+                                minValue={0}
                                 isInvalid={!!error}
-                                value={field.value ?? undefined}
+                                value={field.value ?? 0}
                                 onChange={(v) => field.onChange(isNaN(v) ? null : v)}
                                 className="flex flex-col gap-1.5"
                             >

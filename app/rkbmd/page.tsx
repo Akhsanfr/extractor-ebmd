@@ -11,13 +11,16 @@ import {
     useOverlayState,
     Card,
 } from "@heroui/react"; // Sesuaikan jika menggunakan NextUI
-import { loadStorage, PENGADAAN_STORAGE_KEY, PEMELIHARAAN_STORAGE_KEY } from "@/lib/bmd-storage";
+import { loadStorage, PENGADAAN_STORAGE_KEY, PEMELIHARAAN_STORAGE_KEY, PERANGKAT_DAERAH_KEY } from "@/lib/bmd-storage";
 import { exportRkbmdToExcel } from "@/lib/exportExcel";
 import { importRkbmdFromExcel } from "@/lib/importExcel"; // Pastikan path benar
 import type { BarangAll } from "@/types/bmd";
 import { ListPengadaan, ListPemeliharaan } from "@/types/rkbmd";
 import { convertPengadaanV1toV2 } from "./pengadaan/util";
 import { convertPemeliharaanV1toV2 } from "./pemeliharaan/util";
+import { Download, File, Upload } from "lucide-react";
+import { PerangkatDaerah } from "@/types/perangkatDaerah";
+import { generateSuratPengantar } from "@/lib/rkbmd/generateSuratPengantar";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function loadData<T>(key: string): T[] {
@@ -62,6 +65,7 @@ export default function RkbmdDashboardPage() {
     const [isExporting, setIsExporting] = useState(false);
     const [isImporting, setIsImporting] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [perangkatDaerah, setPerangkatDaerah] = useState<PerangkatDaerah | null>(null)
 
     // Modal state untuk Import
     const state = useOverlayState();
@@ -71,7 +75,6 @@ export default function RkbmdDashboardPage() {
         try {
             // Load Pengadaan
             const pengadaanV2 = loadStorage<ListPengadaan[]>(PENGADAAN_STORAGE_KEY);
-            console.log(pengadaanV2);
             if (pengadaanV2 === null) {
                 setListPengadaan(convertPengadaanV1toV2());
             } else {
@@ -85,6 +88,10 @@ export default function RkbmdDashboardPage() {
             } else {
                 setPemeliharaan(pemeliharaanV2);
             }
+
+            // Load Perangkat Daerah
+            const perangkatDaerah = loadStorage<PerangkatDaerah>(PERANGKAT_DAERAH_KEY);
+            setPerangkatDaerah(perangkatDaerah)
         } catch (error) {
             console.error("Gagal membaca dari localStorage:", error);
         } finally {
@@ -177,6 +184,14 @@ export default function RkbmdDashboardPage() {
             setIsImporting(false);
         }
     };
+    const handleGenerateSuratPengantar = async () => {
+        if (!perangkatDaerah) return
+        await generateSuratPengantar({
+            penggunaBarang: perangkatDaerah.penggunaBarang,
+            namaPimpinan: perangkatDaerah.namaPimpinan,
+            nipPimpinan: perangkatDaerah.nipPimpinan,
+        });
+    }
     return (
         <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
             {/* Header */}
@@ -187,8 +202,15 @@ export default function RkbmdDashboardPage() {
                 </div>
                 <div className="flex gap-3">
                     <Button
+                        onPress={handleGenerateSuratPengantar}
+                    >
+                        <File />
+                        Surat Pengantar
+                    </Button>
+                    <Button
                         onPress={state.open}
                     >
+                        <Upload />
                         Import RKBMD (.xlsx)
                     </Button>
                     <Button
@@ -196,6 +218,7 @@ export default function RkbmdDashboardPage() {
                         isDisabled={totalAnggaran === 0 || isExporting}
                         isPending={isExporting}
                     >
+                        <Download />
                         Export RKBMD (.xlsx)
                     </Button>
                 </div>

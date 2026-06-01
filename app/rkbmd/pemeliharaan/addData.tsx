@@ -57,7 +57,6 @@ function ModalInner({
     const bmd = watch("bmd");
 
     const onValidSubmit = (data: FormPemeliharan) => {
-        console.log(data)
         if (!data.bmd || !data.usulanPemeliharaan) return;
 
         onSubmit({

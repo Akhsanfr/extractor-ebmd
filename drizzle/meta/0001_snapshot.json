@@ -1,0 +1,131 @@
+{
+  "id": "12ac7a52-7511-4f1c-b776-41c784c2dc34",
+  "prevId": "15c50ede-57a7-44da-83ea-f2f42e126eb7",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.lokasi": {
+      "name": "lokasi",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "kode_lokasi": {
+          "name": "kode_lokasi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nama_lokasi": {
+          "name": "nama_lokasi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jabatan": {
+          "name": "jabatan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "lokasi_kode_lokasi_unique": {
+          "name": "lokasi_kode_lokasi_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "kode_lokasi"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sebaran_bmd": {
+      "name": "sebaran_bmd",
+      "schema": "",
+      "columns": {
+        "nibar": {
+          "name": "nibar",
+          "type": "varchar(50)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nibel": {
+          "name": "nibel",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "polygon": {
+          "name": "polygon",
+          "type": "geometry(MultiPolygon,4326)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hak": {
+          "name": "hak",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nomor": {
+          "name": "nomor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "desa": {
+          "name": "desa",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_by": {
+          "name": "updated_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pic": {
+          "name": "pic",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -46,7 +46,6 @@ export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props)
     const [error, setError] = useState<string | null>(null);
     const [pasting, setPasting] = useState(false);
 
-    // Trigger file picker → otomatis proses setelah pilih
     function handleClickUpload() {
         fileRef.current?.click();
     }
@@ -74,7 +73,6 @@ export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props)
         setError(null);
         setGeoJsonText(text);
         setSourceLabel(file.name);
-        // reset input so same file can be re-selected
         e.target.value = "";
     }
 
@@ -85,15 +83,9 @@ export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props)
         setSourceLabel(null);
         try {
             const text = await navigator.clipboard.readText();
-            if (!text.trim()) {
-                setError("Clipboard kosong.");
-                return;
-            }
+            if (!text.trim()) { setError("Clipboard kosong."); return; }
             const { valid, message } = validateGeoJSON(text);
-            if (!valid) {
-                setError(message ?? "GeoJSON tidak valid.");
-                return;
-            }
+            if (!valid) { setError(message ?? "GeoJSON tidak valid."); return; }
             setGeoJsonText(text);
             setSourceLabel("Clipboard");
         } catch {
@@ -105,7 +97,6 @@ export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props)
 
     async function handleUpload() {
         if (!geoJsonText) return;
-
         setLoading(true);
         try {
             const result = await uploadPolygonAction(nibar, geoJsonText);
@@ -184,7 +175,7 @@ export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props)
                                 <p className="text-sm text-danger">{error}</p>
                             )}
 
-                            {/* Preview jika sudah ada GeoJSON */}
+                            {/* Preview */}
                             {geoJsonText && (
                                 <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-success-50 border border-success-200">
                                     <div className="flex items-center gap-2">

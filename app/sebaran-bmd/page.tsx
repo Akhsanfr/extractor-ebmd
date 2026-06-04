@@ -38,6 +38,7 @@ import type {
     StatusPolygonFilter,
 } from "@/action/sebaranBmd/sebaranBmd.contract";
 import { UploadPolygonModal } from "./modal";
+import { UploadExcelModal } from "./modalExcel";
 
 const PAGE_SIZE = 20;
 
@@ -79,6 +80,7 @@ export default function BmdTanahPage() {
     const searchRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const [modalNibar, setModalNibar] = useState<string | null>(null);
+    const [excelModalOpen, setExcelModalOpen] = useState(false);
     const [kmlLoading, setKmlLoading] = useState(false);
 
     // ── Fetch helpers ─────────────────────────────────────────────────────────
@@ -224,12 +226,21 @@ export default function BmdTanahPage() {
                     <h1 className="text-2xl font-bold">Digitasi Tanah BMD</h1>
                     <p className="text-sm text-default-500">Manajemen polygon bidang tanah Barang Milik Daerah</p>
                 </div>
-                <Button
-                    onPress={handleExportKml}
-                    isPending={kmlLoading}
-                ><Download size={16} />
-                    Export KML
-                </Button>
+                <div className="flex gap-2">
+                    <Button
+                        variant="outline"
+                        onPress={() => setExcelModalOpen(true)}
+                    >
+                        <Upload size={16} />
+                        Import Excel
+                    </Button>
+                    <Button
+                        onPress={handleExportKml}
+                        isPending={kmlLoading}
+                    ><Download size={16} />
+                        Export KML
+                    </Button>
+                </div>
             </div>
 
             {/* ── Statistik ── */}
@@ -500,6 +511,12 @@ export default function BmdTanahPage() {
                     />
                 )
             }
+
+            <UploadExcelModal
+                isOpen={excelModalOpen}
+                onClose={() => setExcelModalOpen(false)}
+                onSuccess={handleUploadSuccess}
+            />
         </div >
     );
 }

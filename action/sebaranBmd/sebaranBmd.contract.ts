@@ -2,6 +2,7 @@
 
 export interface BmdTanahDTO {
     nibar: string;
+    nibel: string | null;           // ← baru
     hak: string | null;
     nomor: string | null;
     desa: string | null;
@@ -12,7 +13,7 @@ export interface BmdTanahDTO {
 }
 
 export interface BmdTanahWithGeomDTO extends BmdTanahDTO {
-    polygonGeoJson: string | null; // GeoJSON string dari ST_AsGeoJSON
+    polygonGeoJson: string | null;
 }
 
 // ─── Statistik ───────────────────────────────────────────────────────────────
@@ -38,7 +39,7 @@ export type StatusPolygonFilter = "semua" | "sudah" | "belum";
 export interface BmdTanahFilterParams {
     pic?: string;
     status?: StatusPolygonFilter;
-    search?: string; // nibar | nomor | desa
+    search?: string; // nibar | nomor | desa | nibel
     page?: number;
     pageSize?: number;
 }
@@ -65,13 +66,34 @@ export interface UploadPolygonResult {
     message: string;
 }
 
+// ─── Upsert Excel ────────────────────────────────────────────────────────────
+
+/** Satu baris dari file Excel setelah parsing & validasi */
+export interface ExcelRowInput {
+    nibar: string;          // wajib, tidak boleh kosong
+    pic: string;            // wajib, tidak boleh kosong
+    hak?: string | null;
+    nomor?: string | null;
+    desa?: string | null;
+    nibel?: string | null;
+}
+
+export interface UpsertExcelResult {
+    success: boolean;
+    inserted: number;
+    updated: number;
+    skipped: number;        // baris yang dilewati karena invalid
+    errors: string[];       // pesan error per-baris (maks 20 ditampilkan)
+}
+
 // ─── Export KML ──────────────────────────────────────────────────────────────
 
 export interface KmlExportItem {
     nibar: string;
+    nibel: string | null;
     hak: string | null;
     nomor: string | null;
     desa: string | null;
     pic: string | null;
-    polygonKml: string; // output dari ST_AsKML
+    polygonKml: string;
 }

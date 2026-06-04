@@ -9,6 +9,7 @@ const geometry = customType<{ data: string; driverData: string }>({
 
 export const sebaranBmd = pgTable("sebaran_bmd", {
     nibar: varchar("nibar", { length: 50 }).primaryKey(),
+    nibel: varchar("nibel", { length: 50 }),          // ← kolom baru
     polygon: geometry("polygon"),
     hak: text("hak"),
     nomor: text("nomor"),
@@ -18,5 +19,5 @@ export const sebaranBmd = pgTable("sebaran_bmd", {
     updatedAt: timestamp("updated_at", { withTimezone: true }),
 });
 
-export type BmdTanah = typeof sebaranBmd.$inferSelect;
-export type BmdTanahInsert = typeof sebaranBmd.$inferInsert;
+export type SebaranBmd = typeof sebaranBmd.$inferSelect;
+export type SebaranBmdInsert = typeof sebaranBmd.$inferInsert;

@@ -26,14 +26,14 @@ function buildSearchCondition(search?: string) {
         ilike(sebaranBmd.nibar, q),
         ilike(sebaranBmd.nomor, q),
         ilike(sebaranBmd.desa, q),
-        ilike(sebaranBmd.nibel, q),     // ← nibel ikut dicari
+        ilike(sebaranBmd.nibel, q),
     );
 }
 
-/** Kolom yang dipilih di semua query list/single — satu sumber kebenaran */
+/** Kolom yang dipilih di semua query list/single */
 const selectCols = {
     nibar: sebaranBmd.nibar,
-    nibel: sebaranBmd.nibel,            // ← baru
+    nibel: sebaranBmd.nibel,
     hak: sebaranBmd.hak,
     nomor: sebaranBmd.nomor,
     desa: sebaranBmd.desa,
@@ -41,6 +41,7 @@ const selectCols = {
     updatedBy: sebaranBmd.updatedBy,
     updatedAt: sebaranBmd.updatedAt,
     hasPolygon: sql<boolean>`(${sebaranBmd.polygon} IS NOT NULL)`,
+    statusPlotting: sebaranBmd.statusPlotting,   // ← baru
 };
 
 // ─── Repository ──────────────────────────────────────────────────────────────
@@ -150,6 +151,24 @@ export async function updatePolygon(
     `);
 }
 
+// ─── Status Plotting ─────────────────────────────────────────────────────────
+
+export async function setStatusPlottingFalse(
+    nibar: string,
+    updatedBy: string
+): Promise<void> {
+    await db
+        .update(sebaranBmd)
+        .set({
+            statusPlotting: false,
+            updatedBy,
+            updatedAt: new Date(),
+        })
+        .where(eq(sebaranBmd.nibar, nibar));
+}
+
+// ─── KML Export ──────────────────────────────────────────────────────────────
+
 export async function findAllForKmlExport(): Promise<KmlExportItem[]> {
     const rows = await db.execute<{
         nibar: string;
@@ -172,7 +191,7 @@ export async function findAllForKmlExport(): Promise<KmlExportItem[]> {
         WHERE polygon IS NOT NULL
         ORDER BY nibar
     `);
-    console.log("rows", rows)
+
     return rows.rows.map((r: any) => ({
         nibar: r.nibar,
         nibel: r.nibel,
@@ -186,64 +205,28 @@ export async function findAllForKmlExport(): Promise<KmlExportItem[]> {
 
 // ─── Upsert dari Excel ────────────────────────────────────────────────────────
 
-/**
- * Upsert batch dari baris Excel yang sudah divalidasi.
- * Menggunakan ON CONFLICT (nibar) DO UPDATE — nibar sebagai unique key.
- * Polygon & updated_by TIDAK disentuh saat update (hanya kolom metadata).
- *
- * @returns { inserted, updated } — dihitung dari xmax PostgreSQL trick
- */
 export async function upsertFromExcel(
     rows: ExcelRowInput[],
     updatedBy: string
 ): Promise<{ inserted: number; updated: number }> {
     if (rows.length === 0) return { inserted: 0, updated: 0 };
 
-    // Bangun VALUES list dengan parameterised query
-    // Drizzle tidak punya onConflictDoUpdate untuk customType geometry,
-    // jadi kita pakai raw SQL agar aman — polygon kolom tidak disentuh.
-    const valuePlaceholders = rows
-        .map(
-            (_, i) =>
-                `($${i * 6 + 1}, $${i * 6 + 2}, $${i * 6 + 3}, $${i * 6 + 4}, $${i * 6 + 5}, $${i * 6 + 6})`
-        )
-        .join(", ");
-
-    const flatValues = rows.flatMap((r) => [
-        r.nibar,
-        r.pic,
-        r.hak ?? null,
-        r.nomor ?? null,
-        r.desa ?? null,
-        r.nibel ?? null,
-    ]);
-
     const values = rows.map((r) => sql`
         (
-        ${r.nibar},
-        ${r.pic},
-        ${r.hak ?? null},
-        ${r.nomor ?? null},
-        ${r.desa ?? null},
-        ${r.nibel ?? null},
-        ${updatedBy},
-        NOW()
+            ${r.nibar},
+            ${r.pic},
+            ${r.hak ?? null},
+            ${r.nomor ?? null},
+            ${r.desa ?? null},
+            ${r.nibel ?? null},
+            ${updatedBy},
+            NOW()
         )`);
 
-        const result = await db.execute(sql`
+    const result = await db.execute(sql`
         INSERT INTO sebaran_bmd
-        (
-            nibar,
-            pic,
-            hak,
-            nomor,
-            desa,
-            nibel,
-            updated_by,
-            updated_at
-        )
+        (nibar, pic, hak, nomor, desa, nibel, updated_by, updated_at)
         VALUES ${sql.join(values, sql`,`)}
-
         ON CONFLICT (nibar) DO UPDATE SET
             pic        = EXCLUDED.pic,
             hak        = EXCLUDED.hak,
@@ -252,15 +235,13 @@ export async function upsertFromExcel(
             nibel      = EXCLUDED.nibel,
             updated_by = ${updatedBy},
             updated_at = NOW()
-
         RETURNING xmax
-        `);
+    `);
 
-    // xmax = 0 → INSERT baru; xmax != '0' → UPDATE existing
     let inserted = 0;
     let updated = 0;
     for (const row of result.rows) {
-        if (row.xmax === "0") inserted++;
+        if ((row as any).xmax === "0") inserted++;
         else updated++;
     }
 

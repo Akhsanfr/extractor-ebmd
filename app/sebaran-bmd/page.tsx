@@ -406,7 +406,8 @@ export default function BmdTanahPage() {
                                 <Table.Column>Nomor</Table.Column>
                                 <Table.Column>Desa</Table.Column>
                                 <Table.Column>PIC</Table.Column>
-                                <Table.Column>Status</Table.Column>
+                                <Table.Column>Status Polygon</Table.Column>
+                                <Table.Column>Status Plotting</Table.Column>
                                 <Table.Column>Aksi</Table.Column>
                             </Table.Header>
 
@@ -435,12 +436,31 @@ export default function BmdTanahPage() {
                                         </Table.Cell>
 
                                         <Table.Cell>
-                                            <Button
-                                                size="sm"
-                                                onPress={() => setModalNibar(row.nibar)}
-                                            >
-                                                Upload Polygon
-                                            </Button>
+                                            {row.statusPlotting === null ? (
+                                                <Chip size="sm" color="default">
+                                                    Belum Diset
+                                                </Chip>
+                                            ) : row.statusPlotting ? (
+                                                <Chip size="sm" color="success">
+                                                    Siap Plotting
+                                                </Chip>
+                                            ) : (
+                                                <Chip size="sm" color="danger">
+                                                    Belum Terplotting
+                                                </Chip>
+                                            )}
+                                        </Table.Cell>
+
+                                        <Table.Cell>
+                                            <div className="flex gap-1">
+                                                <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    onPress={() => setModalNibar(row.nibar)}
+                                                >
+                                                    Update Data
+                                                </Button>
+                                            </div>
                                         </Table.Cell>
                                     </Table.Row>
                                 ))}

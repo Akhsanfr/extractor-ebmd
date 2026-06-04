@@ -2,7 +2,7 @@
 
 export interface BmdTanahDTO {
     nibar: string;
-    nibel: string | null;           // ← baru
+    nibel: string | null;
     hak: string | null;
     nomor: string | null;
     desa: string | null;
@@ -10,6 +10,7 @@ export interface BmdTanahDTO {
     updatedBy: string | null;
     updatedAt: Date | null;
     hasPolygon: boolean;
+    statusPlotting: boolean | null;     // ← baru
 }
 
 export interface BmdTanahWithGeomDTO extends BmdTanahDTO {
@@ -66,6 +67,13 @@ export interface UploadPolygonResult {
     message: string;
 }
 
+// ─── Status Plotting ─────────────────────────────────────────────────────────
+
+export interface UpdateStatusPlottingResult {
+    success: boolean;
+    message: string;
+}
+
 // ─── Upsert Excel ────────────────────────────────────────────────────────────
 
 /** Satu baris dari file Excel setelah parsing & validasi */
@@ -82,8 +90,8 @@ export interface UpsertExcelResult {
     success: boolean;
     inserted: number;
     updated: number;
-    skipped: number;        // baris yang dilewati karena invalid
-    errors: string[];       // pesan error per-baris (maks 20 ditampilkan)
+    skipped: number;
+    errors: string[];
 }
 
 // ─── Export KML ──────────────────────────────────────────────────────────────

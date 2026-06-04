@@ -15,6 +15,13 @@
       "when": 1780535305101,
       "tag": "0001_yellow_sphinx",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780550417764,
+      "tag": "0002_striped_omega_flight",
+      "breakpoints": true
     }
   ]
 }

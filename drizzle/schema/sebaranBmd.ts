@@ -1,4 +1,4 @@
-import { pgTable, varchar, text, timestamp, customType } from "drizzle-orm/pg-core";
+import { pgTable, varchar, text, timestamp, boolean, customType } from "drizzle-orm/pg-core";
 
 // PostGIS geometry type
 const geometry = customType<{ data: string; driverData: string }>({
@@ -9,7 +9,7 @@ const geometry = customType<{ data: string; driverData: string }>({
 
 export const sebaranBmd = pgTable("sebaran_bmd", {
     nibar: varchar("nibar", { length: 50 }).primaryKey(),
-    nibel: varchar("nibel", { length: 50 }),          // ← kolom baru
+    nibel: varchar("nibel", { length: 50 }),
     polygon: geometry("polygon"),
     hak: text("hak"),
     nomor: text("nomor"),
@@ -17,6 +17,7 @@ export const sebaranBmd = pgTable("sebaran_bmd", {
     updatedBy: text("updated_by"),
     pic: text("pic"),
     updatedAt: timestamp("updated_at", { withTimezone: true }),
+    statusPlotting: boolean("status_plotting").default(null),  // ← baru
 });
 
 export type SebaranBmd = typeof sebaranBmd.$inferSelect;

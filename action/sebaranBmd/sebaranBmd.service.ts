@@ -7,6 +7,7 @@ import type {
     ExcelRowInput,
     KmlExportItem,
     PaginatedResult,
+    UpdateStatusPlottingResult,
     UploadPolygonInput,
     UploadPolygonResult,
     UpsertExcelResult,
@@ -17,9 +18,8 @@ import type {
 const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10 MB
 
 function validateGeoJson(raw: string): { geometry: object } | { error: string } {
-    if (Buffer.byteLength(raw, "utf8") > MAX_FILE_BYTES) {
+    if (Buffer.byteLength(raw, "utf8") > MAX_FILE_BYTES)
         return { error: "Ukuran file melebihi batas 10 MB." };
-    }
 
     let parsed: any;
     try {
@@ -49,9 +49,8 @@ function validateGeoJson(raw: string): { geometry: object } | { error: string } 
     return { geometry };
 }
 
-// ─── Validasi & parsing Excel rows ───────────────────────────────────────────
+// ─── Header map Excel ─────────────────────────────────────────────────────────
 
-/** Header yang dikenali (case-insensitive, boleh ada spasi) */
 const HEADER_MAP: Record<string, keyof ExcelRowInput> = {
     nibar: "nibar",
     nibel: "nibel",
@@ -61,10 +60,6 @@ const HEADER_MAP: Record<string, keyof ExcelRowInput> = {
     desa: "desa",
 };
 
-/**
- * Menerima array-of-objects dari SheetJS (header baris pertama → key).
- * Mengembalikan baris valid + array pesan error per-baris yang invalid.
- */
 export function parseExcelRows(
     rawRows: Record<string, unknown>[]
 ): { valid: ExcelRowInput[]; errors: string[] } {
@@ -72,9 +67,8 @@ export function parseExcelRows(
     const errors: string[] = [];
 
     rawRows.forEach((raw, idx) => {
-        const lineNo = idx + 2; // +2 karena baris 1 = header
+        const lineNo = idx + 2;
 
-        // Normalise key: lowercase + trim
         const normalised: Record<string, string> = {};
         for (const [k, v] of Object.entries(raw)) {
             const mapped = HEADER_MAP[k.toLowerCase().trim()];
@@ -84,14 +78,8 @@ export function parseExcelRows(
         const nibar = normalised.nibar ?? "";
         const pic = normalised.pic ?? "";
 
-        if (!nibar) {
-            errors.push(`Baris ${lineNo}: NIBAR kosong, dilewati.`);
-            return;
-        }
-        if (!pic) {
-            errors.push(`Baris ${lineNo}: PIC kosong (NIBAR=${nibar}), dilewati.`);
-            return;
-        }
+        if (!nibar) { errors.push(`Baris ${lineNo}: NIBAR kosong, dilewati.`); return; }
+        if (!pic) { errors.push(`Baris ${lineNo}: PIC kosong (NIBAR=${nibar}), dilewati.`); return; }
 
         valid.push({
             nibar,
@@ -108,17 +96,9 @@ export function parseExcelRows(
 
 // ─── Service ──────────────────────────────────────────────────────────────────
 
-export async function getStatistik(): Promise<BmdTanahStatDTO> {
-    return repo.getStat();
-}
-
-export async function getStatistikPerPic(): Promise<BmdTanahStatPerPicDTO[]> {
-    return repo.getStatPerPic();
-}
-
-export async function getDistinctPic(): Promise<string[]> {
-    return repo.getDistinctPic();
-}
+export async function getStatistik(): Promise<BmdTanahStatDTO> { return repo.getStat(); }
+export async function getStatistikPerPic(): Promise<BmdTanahStatPerPicDTO[]> { return repo.getStatPerPic(); }
+export async function getDistinctPic(): Promise<string[]> { return repo.getDistinctPic(); }
 
 export async function getListBmd(
     params: BmdTanahFilterParams
@@ -137,9 +117,8 @@ export async function uploadPolygon(
     const validation = validateGeoJson(geoJsonString);
     if ("error" in validation) return { success: false, message: validation.error };
 
-    const geometryJson = JSON.stringify(validation.geometry);
     try {
-        await repo.updatePolygon(nibar, geometryJson, updatedBy);
+        await repo.updatePolygon(nibar, JSON.stringify(validation.geometry), updatedBy);
         return { success: true, message: `Berhasil memperbarui polygon untuk NIBAR ${nibar}` };
     } catch (err) {
         console.error("[uploadPolygon] DB error:", err);
@@ -147,39 +126,45 @@ export async function uploadPolygon(
     }
 }
 
+// ─── Status Plotting ─────────────────────────────────────────────────────────
+
+export async function setStatusPlottingFalse(
+    nibar: string,
+    updatedBy: string
+): Promise<UpdateStatusPlottingResult> {
+    const existing = await repo.findByNibar(nibar);
+    if (!existing) return { success: false, message: `NIBAR ${nibar} tidak ditemukan.` };
+
+    try {
+        await repo.setStatusPlottingFalse(nibar, updatedBy);
+        return { success: true, message: `Status plotting NIBAR ${nibar} berhasil diperbarui.` };
+    } catch (err) {
+        console.error("[setStatusPlottingFalse] DB error:", err);
+        return { success: false, message: "Gagal memperbarui status plotting." };
+    }
+}
+
+// ─── Upsert Excel ─────────────────────────────────────────────────────────────
+
 export async function upsertFromExcel(
     rawRows: Record<string, unknown>[],
     updatedBy: string
 ): Promise<UpsertExcelResult> {
-    if (rawRows.length === 0) {
+    if (rawRows.length === 0)
         return { success: false, inserted: 0, updated: 0, skipped: 0, errors: ["File Excel tidak memiliki baris data."] };
-    }
 
     const { valid, errors } = parseExcelRows(rawRows);
     const skipped = rawRows.length - valid.length;
 
-    if (valid.length === 0) {
+    if (valid.length === 0)
         return { success: false, inserted: 0, updated: 0, skipped, errors };
-    }
 
     try {
         const { inserted, updated } = await repo.upsertFromExcel(valid, updatedBy);
-        return {
-            success: true,
-            inserted,
-            updated,
-            skipped,
-            errors, // tetap kirim pesan baris yang di-skip
-        };
+        return { success: true, inserted, updated, skipped, errors };
     } catch (err) {
         console.error("[upsertFromExcel] DB error:", err);
-        return {
-            success: false,
-            inserted: 0,
-            updated: 0,
-            skipped,
-            errors: [...errors, "Terjadi kesalahan saat menyimpan ke database."],
-        };
+        return { success: false, inserted: 0, updated: 0, skipped, errors: [...errors, "Terjadi kesalahan saat menyimpan ke database."] };
     }
 }
 
@@ -194,31 +179,25 @@ function escapeXml(str: string | null | undefined): string {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&apos;");
 }
+
 function randomId(length = 20) {
     const chars = "0123456789ABCDEF";
-    return Array.from(
-        { length },
-        () => chars[Math.floor(Math.random() * chars.length)]
-    ).join("");
+    return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
 }
 
 function buildKml(items: KmlExportItem[]): string {
     const documentId = randomId();
     const folderId = randomId();
 
-    const placemarks = items
-        .map((item) => {
-            const placemarkId = randomId();
+    const placemarks = items.map((item) => {
+        const placemarkId = randomId();
+        const polygon = item.polygonKml
+            .replace(/^<MultiGeometry>/, "")
+            .replace(/<\/MultiGeometry>$/, "");
 
-            // Ambil Polygon dari MultiGeometry
-            const polygon = item.polygonKml
-                .replace(/^<MultiGeometry>/, "")
-                .replace(/<\/MultiGeometry>$/, "");
-
-            return `
+        return `
         <Placemark id="${placemarkId}">
             <name>${escapeXml(item.nibar)} (SUDAH NIBAR)</name>
-
             <description><![CDATA[
 <div>
 <span style="font-style: normal;">
@@ -230,7 +209,6 @@ ${escapeXml(item.nibar)}
 </span><br>
 </div>
             ]]></description>
-
             <LookAt>
                 <longitude>112.89865</longitude>
                 <latitude>-7.65222</latitude>
@@ -241,13 +219,10 @@ ${escapeXml(item.nibar)}
                 <range>100</range>
                 <altitudeMode>absolute</altitudeMode>
             </LookAt>
-
             <styleUrl>#__managed_style_0719EC65FA3FC6428D74</styleUrl>
-
             ${polygon}
         </Placemark>`;
-        })
-        .join("\n");
+    }).join("\n");
 
     return `<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2"
@@ -266,7 +241,6 @@ ${placemarks}
 
 export async function exportKml(): Promise<{ kmlString: string; filename: string }> {
     const items = await repo.findAllForKmlExport();
-        console.log("item service", items)
     const kmlString = buildKml(items);
     const date = new Date().toISOString().slice(0, 10).replace(/-/g, "");
     const filename = `bmd-tanah-${date}.kml`;

@@ -6,7 +6,7 @@ import {
     Button,
     toast,
 } from "@heroui/react";
-import { uploadPolygonAction } from "@/action/sebaranBmd/sebaranBmd.action";
+import { uploadPolygonAction, setStatusPlottingFalseAction } from "@/action/sebaranBmd/sebaranBmd.action";
 
 interface Props {
     nibar: string;
@@ -41,14 +41,13 @@ function getPreviewInfo(text: string): string {
 export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props) {
     const fileRef = useRef<HTMLInputElement>(null);
     const [loading, setLoading] = useState(false);
+    const [loadingPlotting, setLoadingPlotting] = useState(false);
     const [geoJsonText, setGeoJsonText] = useState<string | null>(null);
     const [sourceLabel, setSourceLabel] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [pasting, setPasting] = useState(false);
 
-    function handleClickUpload() {
-        fileRef.current?.click();
-    }
+    function handleClickUpload() { fileRef.current?.click(); }
 
     async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0];
@@ -114,6 +113,26 @@ export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props)
         }
     }
 
+    // ── Status Plotting ───────────────────────────────────────────────────────
+
+    async function handleSetStatusPlottingFalse() {
+        setLoadingPlotting(true);
+        try {
+            const result = await setStatusPlottingFalseAction(nibar);
+            if (result.success) {
+                toast.success(result.message);
+                onSuccess();
+                handleClose();
+            } else {
+                toast.danger(result.message);
+            }
+        } catch {
+            toast.danger("Terjadi kesalahan tak terduga.");
+        } finally {
+            setLoadingPlotting(false);
+        }
+    }
+
     function handleClose() {
         setGeoJsonText(null);
         setSourceLabel(null);
@@ -121,6 +140,8 @@ export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props)
         if (fileRef.current) fileRef.current.value = "";
         onClose();
     }
+
+    const isAnyLoading = loading || loadingPlotting;
 
     return (
         <Modal isOpen={isOpen}>
@@ -140,13 +161,13 @@ export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props)
                                 <span className="font-mono font-semibold">{nibar}</span>
                             </div>
 
-                            {/* 2 tombol aksi */}
+                            {/* Tombol upload */}
                             <div className="flex gap-2">
                                 <Button
                                     variant="outline"
                                     className="flex-1"
                                     onPress={handleClickUpload}
-                                    isDisabled={loading}
+                                    isDisabled={isAnyLoading}
                                 >
                                     Upload GeoJSON
                                 </Button>
@@ -155,13 +176,12 @@ export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props)
                                     className="flex-1"
                                     onPress={handlePaste}
                                     isPending={pasting}
-                                    isDisabled={loading}
+                                    isDisabled={isAnyLoading}
                                 >
                                     Paste dari Clipboard
                                 </Button>
                             </div>
 
-                            {/* Hidden file input */}
                             <input
                                 type="file"
                                 accept=".geojson,application/geo+json"
@@ -170,12 +190,8 @@ export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props)
                                 className="hidden"
                             />
 
-                            {/* Error */}
-                            {error && (
-                                <p className="text-sm text-danger">{error}</p>
-                            )}
+                            {error && <p className="text-sm text-danger">{error}</p>}
 
-                            {/* Preview */}
                             {geoJsonText && (
                                 <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-success-50 border border-success-200">
                                     <div className="flex items-center gap-2">
@@ -189,22 +205,39 @@ export function UploadPolygonModal({ nibar, isOpen, onClose, onSuccess }: Props)
                                         size="sm"
                                         variant="danger-soft"
                                         onPress={() => { setGeoJsonText(null); setSourceLabel(null); }}
-                                        isDisabled={loading}
+                                        isDisabled={isAnyLoading}
                                     >
                                         Hapus
                                     </Button>
                                 </div>
                             )}
+
+                            {/* ── Divider + tombol status plotting ── */}
+                            <div className="border-t border-default-200 pt-3 flex flex-col gap-1">
+                                <p className="text-xs text-default-400">
+                                    Tandai barang ini belum siap diplotting
+                                </p>
+                                <Button
+                                    variant="outline"
+                                    color="warning"
+                                    className="w-full"
+                                    onPress={handleSetStatusPlottingFalse}
+                                    isPending={loadingPlotting}
+                                    isDisabled={isAnyLoading}
+                                >
+                                    Tandai: Belum Siap Plotting
+                                </Button>
+                            </div>
                         </Modal.Body>
 
                         <Modal.Footer>
-                            <Button variant="outline" onPress={handleClose} isDisabled={loading}>
+                            <Button variant="outline" onPress={handleClose} isDisabled={isAnyLoading}>
                                 Batal
                             </Button>
                             <Button
                                 onPress={handleUpload}
                                 isPending={loading}
-                                isDisabled={!geoJsonText}
+                                isDisabled={!geoJsonText || isAnyLoading}
                             >
                                 Upload
                             </Button>

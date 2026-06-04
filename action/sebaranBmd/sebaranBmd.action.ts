@@ -2,21 +2,18 @@
 
 import { revalidatePath } from "next/cache";
 import * as service from "./sebaranBmd.service";
-import type { BmdTanahFilterParams, UploadPolygonResult, UpsertExcelResult } from "./sebaranBmd.contract";
+import type {
+    BmdTanahFilterParams,
+    UpdateStatusPlottingResult,
+    UploadPolygonResult,
+    UpsertExcelResult,
+} from "./sebaranBmd.contract";
 
 // ─── Statistik ───────────────────────────────────────────────────────────────
 
-export async function getStatistikAction() {
-    return service.getStatistik();
-}
-
-export async function getStatistikPerPicAction() {
-    return service.getStatistikPerPic();
-}
-
-export async function getDistinctPicAction() {
-    return service.getDistinctPic();
-}
+export async function getStatistikAction() { return service.getStatistik(); }
+export async function getStatistikPerPicAction() { return service.getStatistikPerPic(); }
+export async function getDistinctPicAction() { return service.getDistinctPic(); }
 
 // ─── Data Table ──────────────────────────────────────────────────────────────
 
@@ -30,45 +27,36 @@ export async function uploadPolygonAction(
     nibar: string,
     geoJsonString: string
 ): Promise<UploadPolygonResult> {
-    // TODO: ganti dengan session user aktual
-    const updatedBy = "system";
-
+    const updatedBy = "system"; // TODO: session user
     const result = await service.uploadPolygon({ nibar, geoJsonString, updatedBy });
+    if (result.success) revalidatePath("/sebaran-bmd");
+    return result;
+}
 
-    if (result.success) {
-        revalidatePath("/bmd-tanah");
-    }
+// ─── Status Plotting ─────────────────────────────────────────────────────────
 
+export async function setStatusPlottingFalseAction(
+    nibar: string
+): Promise<UpdateStatusPlottingResult> {
+    const updatedBy = "system"; // TODO: session user
+    const result = await service.setStatusPlottingFalse(nibar, updatedBy);
+    if (result.success) revalidatePath("/sebaran-bmd");
     return result;
 }
 
 // ─── Upsert Excel ────────────────────────────────────────────────────────────
 
-/**
- * Menerima array-of-objects yang sudah di-parse client-side oleh SheetJS.
- * Server Action tidak bisa menerima File/Blob, jadi parsing dilakukan
- * di modal (client) lalu hasilnya dikirim sebagai JSON.
- */
 export async function upsertFromExcelAction(
     rawRows: Record<string, unknown>[]
 ): Promise<UpsertExcelResult> {
-    // TODO: ganti dengan session user aktual
-    const updatedBy = "system";
-
+    const updatedBy = "system"; // TODO: session user
     const result = await service.upsertFromExcel(rawRows, updatedBy);
-
-    if (result.success) {
-        revalidatePath("/bmd-tanah");
-    }
-
+    if (result.success) revalidatePath("/sebaran-bmd");
     return result;
 }
 
 // ─── Export KML ──────────────────────────────────────────────────────────────
 
-export async function exportKmlAction(): Promise<{
-    kmlString: string;
-    filename: string;
-}> {
+export async function exportKmlAction(): Promise<{ kmlString: string; filename: string }> {
     return service.exportKml();
 }

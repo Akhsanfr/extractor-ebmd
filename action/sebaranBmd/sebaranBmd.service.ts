@@ -194,35 +194,79 @@ function escapeXml(str: string | null | undefined): string {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&apos;");
 }
+function randomId(length = 20) {
+    const chars = "0123456789ABCDEF";
+    return Array.from(
+        { length },
+        () => chars[Math.floor(Math.random() * chars.length)]
+    ).join("");
+}
 
 function buildKml(items: KmlExportItem[]): string {
+    const documentId = randomId();
+    const folderId = randomId();
+
     const placemarks = items
-        .map(
-            (item) => `  <Placemark>
-    <name>${escapeXml(item.nibar)}</name>
-    <ExtendedData>
-      <Data name="nibel"><value>${escapeXml(item.nibel)}</value></Data>
-      <Data name="hak"><value>${escapeXml(item.hak)}</value></Data>
-      <Data name="nomor"><value>${escapeXml(item.nomor)}</value></Data>
-      <Data name="desa"><value>${escapeXml(item.desa)}</value></Data>
-      <Data name="pic"><value>${escapeXml(item.pic)}</value></Data>
-    </ExtendedData>
-    ${item.polygonKml}
-  </Placemark>`
-        )
+        .map((item) => {
+            const placemarkId = randomId();
+
+            // Ambil Polygon dari MultiGeometry
+            const polygon = item.polygonKml
+                .replace(/^<MultiGeometry>/, "")
+                .replace(/<\/MultiGeometry>$/, "");
+
+            return `
+        <Placemark id="${placemarkId}">
+            <name>${escapeXml(item.nibar)} (SUDAH NIBAR)</name>
+
+            <description><![CDATA[
+<div>
+<span style="font-style: normal;">
+<span class="font" style="font-family:Calibri, Arial">
+<span class="size" style="font-size:9pt">
+${escapeXml(item.nibar)}
+</span>
+</span>
+</span><br>
+</div>
+            ]]></description>
+
+            <LookAt>
+                <longitude>112.89865</longitude>
+                <latitude>-7.65222</latitude>
+                <altitude>0</altitude>
+                <heading>0</heading>
+                <tilt>0</tilt>
+                <gx:fovy>35</gx:fovy>
+                <range>100</range>
+                <altitudeMode>absolute</altitudeMode>
+            </LookAt>
+
+            <styleUrl>#__managed_style_0719EC65FA3FC6428D74</styleUrl>
+
+            ${polygon}
+        </Placemark>`;
+        })
         .join("\n");
 
     return `<?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://www.opengis.net/kml/2.2">
-  <Document>
-    <name>BMD Tanah</name>
+<kml xmlns="http://www.opengis.net/kml/2.2"
+     xmlns:gx="http://www.google.com/kml/ext/2.2">
+
+<Document id="${documentId}">
+    <Folder id="${folderId}">
+
 ${placemarks}
-  </Document>
+
+    </Folder>
+</Document>
+
 </kml>`;
 }
 
 export async function exportKml(): Promise<{ kmlString: string; filename: string }> {
     const items = await repo.findAllForKmlExport();
+        console.log("item service", items)
     const kmlString = buildKml(items);
     const date = new Date().toISOString().slice(0, 10).replace(/-/g, "");
     const filename = `bmd-tanah-${date}.kml`;

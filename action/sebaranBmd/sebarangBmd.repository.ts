@@ -172,7 +172,7 @@ export async function findAllForKmlExport(): Promise<KmlExportItem[]> {
         WHERE polygon IS NOT NULL
         ORDER BY nibar
     `);
-
+    console.log("rows", rows)
     return rows.rows.map((r: any) => ({
         nibar: r.nibar,
         nibel: r.nibel,

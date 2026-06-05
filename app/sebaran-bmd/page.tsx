@@ -16,11 +16,6 @@ import {
     Separator,
     Spinner,
     Table,
-    TableBody,
-    TableCell,
-    TableColumn,
-    TableHeader,
-    TableRow,
     TextField,
     toast,
 } from "@heroui/react";
@@ -501,7 +496,7 @@ export default function BmdTanahPage() {
                                                     </Chip>
                                                 ) : row.statusPlotting ? (
                                                     <Chip size="sm" color="success">
-                                                        Siap Plotting
+                                                        Sudah Plotting
                                                     </Chip>
                                                 ) : (
                                                     <Chip size="sm" color="danger">

@@ -7,6 +7,7 @@ import {
     Chip,
     EmptyState,
     Input,
+    Key,
     Label,
     ListBox,
     Pagination,
@@ -98,6 +99,7 @@ export default function BmdTanahPage() {
 
     const fetchList = useCallback(
         async (pg: number) => {
+            console.log("f", filterPic)
             setLoading(true);
             try {
                 const result = await getListBmdAction({
@@ -330,11 +332,12 @@ export default function BmdTanahPage() {
             <div className="flex flex-wrap gap-3">
                 {/* Filter PIC Select */}
                 <Select
-                    className="w-44"
-                    value={filterPic ? [filterPic] : [""]}
-                    onChange={(keys) => setFilterPic([...keys][0] as string ?? "")}
-                    selectionMode="multiple"
-
+                    className="w-56"
+                    selectionMode="single"
+                    value={filterPic}
+                    onChange={(value) => {
+                        setFilterPic(value === "all" || value === null ? "" : String(value))
+                    }}
                 >
                     <Label>Filter PIC</Label>
                     <Select.Trigger>
@@ -342,11 +345,11 @@ export default function BmdTanahPage() {
                     </Select.Trigger>
                     <Select.Popover>
                         <ListBox>
-                            <ListBox.Item key="" textValue="Semua PIC">
+                            <ListBox.Item id="all" textValue="Semua PIC">
                                 <Label>Semua PIC</Label>
                             </ListBox.Item>
                             {picOptions.map((p) => (
-                                <ListBox.Item key={p} textValue={p}>
+                                <ListBox.Item id={p} key={p} textValue={p}>
                                     <Label>{p}</Label>
                                 </ListBox.Item>
                             ))}
@@ -356,12 +359,17 @@ export default function BmdTanahPage() {
 
                 {/* Status Polygon Select */}
                 <Select
-                    selectionMode="multiple"
-                    className="w-48"
-                    value={[filterStatus]}
-                    onChange={(keys) =>
-                        setFilterStatus(([...keys][0] as StatusPolygonFilter) ?? "semua")
-                    }
+                    // selectionMode="multiple"
+                    // className="w-48"
+                    // value={[filterStatus]}
+                    // onChange={(keys) =>
+                    //     setFilterStatus(([...keys][0] as StatusPolygonFilter) ?? "semua")
+                    // }
+                    selectionMode="single"
+                    value={filterStatus}
+                    onChange={(value) => {
+                        setFilterStatus(value as StatusPolygonFilter)
+                    }}
                 >
                     <Label>Status Polygon</Label>
                     <Select.Trigger>
@@ -369,13 +377,13 @@ export default function BmdTanahPage() {
                     </Select.Trigger>
                     <Select.Popover>
                         <ListBox>
-                            <ListBox.Item key="semua" textValue="Semua">
+                            <ListBox.Item id="semua" key="semua" textValue="Semua">
                                 <Label>Semua</Label>
                             </ListBox.Item>
-                            <ListBox.Item key="sudah" textValue="Sudah Digitasi">
+                            <ListBox.Item id="sudah" key="sudah" textValue="Sudah Digitasi">
                                 <Label>Sudah Digitasi</Label>
                             </ListBox.Item>
-                            <ListBox.Item key="belum" textValue="Belum Digitasi">
+                            <ListBox.Item id="belum" key="belum" textValue="Belum Digitasi">
                                 <Label>Belum Digitasi</Label>
                             </ListBox.Item>
                         </ListBox>

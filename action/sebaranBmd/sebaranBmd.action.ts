@@ -60,3 +60,7 @@ export async function upsertFromExcelAction(
 export async function exportKmlAction(): Promise<{ kmlString: string; filename: string }> {
     return service.exportKml();
 }
+
+export async function getPolygonGeoJsonAction(nibar: string): Promise<string | null> {
+    return service.getPolygonGeoJson(nibar);
+}

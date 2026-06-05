@@ -244,3 +244,13 @@ export async function upsertFromExcel(
 
     return { inserted, updated };
 }
+
+export async function getPolygonGeoJson(nibar: string): Promise<string | null> {
+    const rows = await db.execute<{ geojson: string | null }>(sql`
+        SELECT ST_AsGeoJSON(polygon) AS geojson
+        FROM sebaran_bmd
+        WHERE nibar = ${nibar}
+        LIMIT 1
+    `);
+    return rows.rows[0]?.geojson ?? null;
+}

@@ -24,7 +24,7 @@ import {
     TextField,
     toast,
 } from "@heroui/react";
-import { Download, MapPin, Search, Upload } from "lucide-react";
+import { Download, Eye, MapPin, Search, Upload } from "lucide-react";
 import {
     exportKmlAction,
     getDistinctPicAction,
@@ -517,7 +517,7 @@ export default function BmdTanahPage() {
                                                         variant="outline"
                                                         onPress={() => setActiveBmd(row)}
                                                     >
-                                                        Update Data
+                                                        <Eye /> Aksi
                                                     </Button>
                                                 </div>
                                             </Table.Cell>

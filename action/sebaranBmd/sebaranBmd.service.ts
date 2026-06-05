@@ -246,3 +246,7 @@ export async function exportKml(): Promise<{ kmlString: string; filename: string
     const filename = `bmd-tanah-${date}.kml`;
     return { kmlString, filename };
 }
+
+export async function getPolygonGeoJson(nibar: string): Promise<string | null> {
+    return repo.getPolygonGeoJson(nibar);
+}

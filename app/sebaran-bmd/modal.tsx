@@ -1,13 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { Modal, Button, toast, Spinner } from "@heroui/react";
 import {
-    Modal,
-    Button,
-    toast,
-} from "@heroui/react";
-import { uploadPolygonAction, updateStatusPlottingAction } from "@/action/sebaranBmd/sebaranBmd.action";
+    uploadPolygonAction,
+    updateStatusPlottingAction,
+    getPolygonGeoJsonAction,
+} from "@/action/sebaranBmd/sebaranBmd.action";
 import { BmdTanahDTO } from "@/action/sebaranBmd/sebaranBmd.contract";
 import { Clipboard, Pin } from "lucide-react";
 
@@ -52,16 +52,18 @@ function getPreviewInfo(text: string): string {
 }
 
 export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }: Props) {
-    console.log("bmd", bmd)
     const fileRef = useRef<HTMLInputElement>(null);
     const [loading, setLoading] = useState(false);
     const [loadingPlotting, setLoadingPlotting] = useState(false);
+    const [loadingExisting, setLoadingExisting] = useState(false);
+
+    // "existing" = polygon tersimpan di DB, "new" = baru dipaste/upload user
+    const [existingGeoJson, setExistingGeoJson] = useState<string | null>(null);
     const [geoJsonText, setGeoJsonText] = useState<string | null>(null);
     const [sourceLabel, setSourceLabel] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [pasting, setPasting] = useState(false);
 
-    function handleClickUpload() { fileRef.current?.click(); }
 
     async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0];
@@ -89,6 +91,41 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
         e.target.value = "";
     }
 
+
+    // ── Fetch polygon existing saat modal dibuka ──────────────────────────────
+    useEffect(() => {
+        if (!isOpen) return;
+
+        if (!bmd.hasPolygon) {
+            setExistingGeoJson(null);
+            return;
+        }
+
+        setLoadingExisting(true);
+        getPolygonGeoJsonAction(bmd.nibar)
+            .then((raw) => {
+                if (!raw) { setExistingGeoJson(null); return; }
+                // DB mengembalikan geometry murni (Polygon/MultiPolygon),
+                // wrap ke Feature supaya LeafletMap bisa langsung render
+                const parsed = JSON.parse(raw);
+                const asFeature = JSON.stringify({
+                    type: "Feature",
+                    geometry: parsed,
+                    properties: {},
+                });
+                setExistingGeoJson(asFeature);
+            })
+            .catch(() => setExistingGeoJson(null))
+            .finally(() => setLoadingExisting(false));
+    }, [isOpen, bmd.nibar, bmd.hasPolygon]);
+
+    // ── Preview yang ditampilkan di peta ──────────────────────────────────────
+    // Prioritas: GeoJSON baru (paste) > existing dari DB
+    const previewGeoJson = geoJsonText ?? existingGeoJson;
+    const isShowingExisting = !geoJsonText && !!existingGeoJson;
+
+    function handleClickUpload() { fileRef.current?.click(); }
+
     async function handlePaste() {
         setPasting(true);
         setError(null);
@@ -112,7 +149,6 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
         if (!geoJsonText) return;
         setLoading(true);
         try {
-            // Meneruskan namaPic sebagai parameter ke-3
             const result = await uploadPolygonAction(bmd.nibar, geoJsonText, namaPic);
             if (result.success) {
                 toast.success(result.message);
@@ -127,6 +163,7 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
             setLoading(false);
         }
     }
+
     async function updateStatusPlotting() {
         setLoadingPlotting(true);
         try {
@@ -154,6 +191,7 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
         setGeoJsonText(null);
         setSourceLabel(null);
         setError(null);
+        setExistingGeoJson(null);
         if (fileRef.current) fileRef.current.value = "";
         onClose();
     }
@@ -177,16 +215,9 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
                                 <span className="text-sm text-default-500">NIBAR</span>
                                 <span className="font-mono font-semibold">{bmd.nibar}</span>
                             </div>
-                            {/* Tombol upload */}
+
+                            {/* Tombol aksi */}
                             <div className="flex gap-2 mt-4">
-                                {/* <Button
-                                    variant="outline"
-                                    className="flex-1"
-                                    onPress={handleClickUpload}
-                                    isDisabled={isAnyLoading}
-                                >
-                                    Upload GeoJSON
-                                </Button> */}
                                 <Button
                                     className="flex-1"
                                     onPress={handlePaste}
@@ -216,7 +247,14 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
 
                             {error && <p className="text-sm text-danger">{error}</p>}
 
-                            {/* Preview card + map inline */}
+                            {/* ── Loading existing polygon ── */}
+                            {loadingExisting && (
+                                <div className="flex items-center gap-2 text-sm text-default-500">
+                                    <Spinner size="sm" /> Memuat polygon tersimpan…
+                                </div>
+                            )}
+
+                            {/* ── Preview: baru (paste) ── */}
                             {geoJsonText && (
                                 <div className="flex flex-col rounded-lg border border-success-200 overflow-hidden">
                                     <div className="flex items-center justify-between px-3 py-2 bg-success-50">
@@ -236,20 +274,29 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
                                             Hapus
                                         </Button>
                                     </div>
-
                                     <div className="h-56 w-full">
                                         <LeafletMap geoJson={geoJsonText} />
                                     </div>
                                 </div>
                             )}
 
-                            {/* Divider + status plotting */}
-                            {/* <div className="border-t border-default-200 pt-3 flex flex-col gap-1">
-                                <p className="text-xs text-default-400">
-                                    Tandai barang ini belum siap diplotting
-                                </p>
-
-                            </div> */}
+                            {/* ── Preview: existing dari DB (hanya muncul kalau belum paste baru) ── */}
+                            {isShowingExisting && !loadingExisting && (
+                                <div className="flex flex-col rounded-lg border border-primary-200 overflow-hidden">
+                                    <div className="flex items-center gap-2 px-3 py-2 bg-primary-50">
+                                        <span className="text-primary-600">◉</span>
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-medium text-primary-700">Polygon Tersimpan</span>
+                                            <span className="text-xs text-primary-500">
+                                                Terakhir diperbarui oleh {bmd.updatedBy ?? "-"}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="h-56 w-full">
+                                        <LeafletMap geoJson={existingGeoJson!} />
+                                    </div>
+                                </div>
+                            )}
                         </Modal.Body>
 
                         <Modal.Footer>
@@ -257,7 +304,6 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
                                 Batal
                             </Button>
                             <Button
-
                                 onPress={handleUpload}
                                 isPending={loading}
                                 isDisabled={!geoJsonText || isAnyLoading}

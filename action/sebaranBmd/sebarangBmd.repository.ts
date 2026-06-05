@@ -153,14 +153,15 @@ export async function updatePolygon(
 
 // ─── Status Plotting ─────────────────────────────────────────────────────────
 
-export async function setStatusPlottingFalse(
+export async function updateStatusPlotting(
     nibar: string,
-    updatedBy: string
+    status: boolean,
+    updatedBy: string,
 ): Promise<void> {
     await db
         .update(sebaranBmd)
         .set({
-            statusPlotting: false,
+            statusPlotting: status,
             updatedBy,
             updatedAt: new Date(),
         })

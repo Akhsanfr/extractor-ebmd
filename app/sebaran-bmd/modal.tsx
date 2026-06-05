@@ -7,7 +7,9 @@ import {
     Button,
     toast,
 } from "@heroui/react";
-import { uploadPolygonAction, setStatusPlottingFalseAction } from "@/action/sebaranBmd/sebaranBmd.action";
+import { uploadPolygonAction, updateStatusPlottingAction } from "@/action/sebaranBmd/sebaranBmd.action";
+import { BmdTanahDTO } from "@/action/sebaranBmd/sebaranBmd.contract";
+import { Clipboard, Pin } from "lucide-react";
 
 const LeafletMap = dynamic(() => import("./leafletMap"), {
     ssr: false,
@@ -19,9 +21,9 @@ const LeafletMap = dynamic(() => import("./leafletMap"), {
 });
 
 interface Props {
-    nibar: string;
+    bmd: BmdTanahDTO;
+    namaPic: string;
     isOpen: boolean;
-    namaPic: string; // Ditambahkan prop namaPic
     onClose: () => void;
     onSuccess: () => void;
 }
@@ -49,7 +51,8 @@ function getPreviewInfo(text: string): string {
     }
 }
 
-export function UploadPolygonModal({ nibar, isOpen, namaPic, onClose, onSuccess }: Props) {
+export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }: Props) {
+    console.log("bmd", bmd)
     const fileRef = useRef<HTMLInputElement>(null);
     const [loading, setLoading] = useState(false);
     const [loadingPlotting, setLoadingPlotting] = useState(false);
@@ -110,7 +113,7 @@ export function UploadPolygonModal({ nibar, isOpen, namaPic, onClose, onSuccess 
         setLoading(true);
         try {
             // Meneruskan namaPic sebagai parameter ke-3
-            const result = await uploadPolygonAction(nibar, geoJsonText, namaPic);
+            const result = await uploadPolygonAction(bmd.nibar, geoJsonText, namaPic);
             if (result.success) {
                 toast.success(result.message);
                 onSuccess();
@@ -124,12 +127,15 @@ export function UploadPolygonModal({ nibar, isOpen, namaPic, onClose, onSuccess 
             setLoading(false);
         }
     }
-
-    async function handleSetStatusPlottingFalse() {
+    async function updateStatusPlotting() {
         setLoadingPlotting(true);
         try {
-            // Meneruskan namaPic sebagai parameter ke-2
-            const result = await setStatusPlottingFalseAction(nibar, namaPic);
+            let result;
+            if (bmd.statusPlotting == null) {
+                result = await updateStatusPlottingAction(bmd.nibar, false, namaPic);
+            } else {
+                result = await updateStatusPlottingAction(bmd.nibar, !bmd.statusPlotting, namaPic);
+            }
             if (result.success) {
                 toast.success(result.message);
                 onSuccess();
@@ -169,26 +175,34 @@ export function UploadPolygonModal({ nibar, isOpen, namaPic, onClose, onSuccess 
                             {/* NIBAR */}
                             <div className="flex flex-col gap-1">
                                 <span className="text-sm text-default-500">NIBAR</span>
-                                <span className="font-mono font-semibold">{nibar}</span>
+                                <span className="font-mono font-semibold">{bmd.nibar}</span>
                             </div>
                             {/* Tombol upload */}
-                            <div className="flex gap-2">
-                                <Button
+                            <div className="flex gap-2 mt-4">
+                                {/* <Button
                                     variant="outline"
                                     className="flex-1"
                                     onPress={handleClickUpload}
                                     isDisabled={isAnyLoading}
                                 >
                                     Upload GeoJSON
-                                </Button>
+                                </Button> */}
                                 <Button
-                                    variant="outline"
                                     className="flex-1"
                                     onPress={handlePaste}
                                     isPending={pasting}
                                     isDisabled={isAnyLoading}
                                 >
-                                    Paste dari Clipboard
+                                    <Clipboard /> Paste dari Clipboard
+                                </Button>
+                                <Button
+                                    className="w-full"
+                                    onPress={updateStatusPlotting}
+                                    isPending={loadingPlotting}
+                                    isDisabled={isAnyLoading}
+                                    variant={bmd.statusPlotting == null || bmd.statusPlotting == true ? "danger-soft" : "outline"}
+                                >
+                                    <Pin /> {bmd.statusPlotting == null || bmd.statusPlotting == true ? "Set Belum Plotting" : "Set Sudah Plotting"}
                                 </Button>
                             </div>
 
@@ -230,20 +244,12 @@ export function UploadPolygonModal({ nibar, isOpen, namaPic, onClose, onSuccess 
                             )}
 
                             {/* Divider + status plotting */}
-                            <div className="border-t border-default-200 pt-3 flex flex-col gap-1">
+                            {/* <div className="border-t border-default-200 pt-3 flex flex-col gap-1">
                                 <p className="text-xs text-default-400">
                                     Tandai barang ini belum siap diplotting
                                 </p>
-                                <Button
-                                    variant="outline"
-                                    className="w-full"
-                                    onPress={handleSetStatusPlottingFalse}
-                                    isPending={loadingPlotting}
-                                    isDisabled={isAnyLoading}
-                                >
-                                    Tandai: Belum Siap Plotting
-                                </Button>
-                            </div>
+
+                            </div> */}
                         </Modal.Body>
 
                         <Modal.Footer>
@@ -251,6 +257,7 @@ export function UploadPolygonModal({ nibar, isOpen, namaPic, onClose, onSuccess 
                                 Batal
                             </Button>
                             <Button
+
                                 onPress={handleUpload}
                                 isPending={loading}
                                 isDisabled={!geoJsonText || isAnyLoading}

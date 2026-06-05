@@ -35,11 +35,12 @@ export async function uploadPolygonAction(
 
 // ─── Status Plotting ─────────────────────────────────────────────────────────
 
-export async function setStatusPlottingFalseAction(
+export async function updateStatusPlottingAction(
     nibar: string,
+    value: boolean,
     updatedBy: string
 ): Promise<UpdateStatusPlottingResult> {
-    const result = await service.setStatusPlottingFalse(nibar, updatedBy);
+    const result = await service.updateStatusPlotting(nibar, value, updatedBy);
     if (result.success) revalidatePath("/sebaran-bmd");
     return result;
 }

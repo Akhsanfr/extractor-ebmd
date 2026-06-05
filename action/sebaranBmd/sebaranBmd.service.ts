@@ -128,15 +128,16 @@ export async function uploadPolygon(
 
 // ─── Status Plotting ─────────────────────────────────────────────────────────
 
-export async function setStatusPlottingFalse(
+export async function updateStatusPlotting(
     nibar: string,
+    value: boolean,
     updatedBy: string
 ): Promise<UpdateStatusPlottingResult> {
     const existing = await repo.findByNibar(nibar);
     if (!existing) return { success: false, message: `NIBAR ${nibar} tidak ditemukan.` };
 
     try {
-        await repo.setStatusPlottingFalse(nibar, updatedBy);
+        await repo.updateStatusPlotting(nibar, value, updatedBy);
         return { success: true, message: `Status plotting NIBAR ${nibar} berhasil diperbarui.` };
     } catch (err) {
         console.error("[setStatusPlottingFalse] DB error:", err);

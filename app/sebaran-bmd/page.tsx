@@ -85,7 +85,7 @@ export default function BmdTanahPage() {
     const [search, setSearch] = useState("");
     const searchRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const [modalNibar, setModalNibar] = useState<string | null>(null);
+    const [activeBmd, setActiveBmd] = useState<BmdTanahDTO | null>(null);
     const [excelModalOpen, setExcelModalOpen] = useState(false);
     const [kmlLoading, setKmlLoading] = useState(false);
 
@@ -515,7 +515,7 @@ export default function BmdTanahPage() {
                                                     <Button
                                                         size="sm"
                                                         variant="outline"
-                                                        onPress={() => setModalNibar(row.nibar)}
+                                                        onPress={() => setActiveBmd(row)}
                                                     >
                                                         Update Data
                                                     </Button>
@@ -574,12 +574,12 @@ export default function BmdTanahPage() {
 
                 {/* ── Modal Update Data ── */}
                 {
-                    modalNibar && (
+                    activeBmd && (
                         <UploadPolygonModal
-                            nibar={modalNibar}
-                            isOpen={!!modalNibar}
+                            bmd={activeBmd}
+                            isOpen={!!activeBmd}
                             namaPic={namaPic} // PENTING: namaPic diteruskan sebagai parameter ke-3 (prop)
-                            onClose={() => setModalNibar(null)}
+                            onClose={() => setActiveBmd(null)}
                             onSuccess={handleUploadSuccess}
                         />
                     )

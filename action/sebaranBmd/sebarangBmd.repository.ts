@@ -207,7 +207,6 @@ export async function findAllForKmlExport(): Promise<KmlExportItem[]> {
 
 export async function upsertFromExcel(
     rows: ExcelRowInput[],
-    updatedBy: string
 ): Promise<{ inserted: number; updated: number }> {
     if (rows.length === 0) return { inserted: 0, updated: 0 };
 
@@ -219,22 +218,19 @@ export async function upsertFromExcel(
             ${r.nomor ?? null},
             ${r.desa ?? null},
             ${r.nibel ?? null},
-            ${updatedBy},
             NOW()
         )`);
 
     const result = await db.execute(sql`
         INSERT INTO sebaran_bmd
-        (nibar, pic, hak, nomor, desa, nibel, updated_by, updated_at)
+        (nibar, pic, hak, nomor, desa, nibel)
         VALUES ${sql.join(values, sql`,`)}
         ON CONFLICT (nibar) DO UPDATE SET
             pic        = EXCLUDED.pic,
             hak        = EXCLUDED.hak,
             nomor      = EXCLUDED.nomor,
             desa       = EXCLUDED.desa,
-            nibel      = EXCLUDED.nibel,
-            updated_by = ${updatedBy},
-            updated_at = NOW()
+            nibel      = EXCLUDED.nibel
         RETURNING xmax
     `);
 

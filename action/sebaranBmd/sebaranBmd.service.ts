@@ -148,7 +148,6 @@ export async function setStatusPlottingFalse(
 
 export async function upsertFromExcel(
     rawRows: Record<string, unknown>[],
-    updatedBy: string
 ): Promise<UpsertExcelResult> {
     if (rawRows.length === 0)
         return { success: false, inserted: 0, updated: 0, skipped: 0, errors: ["File Excel tidak memiliki baris data."] };
@@ -160,7 +159,7 @@ export async function upsertFromExcel(
         return { success: false, inserted: 0, updated: 0, skipped, errors };
 
     try {
-        const { inserted, updated } = await repo.upsertFromExcel(valid, updatedBy);
+        const { inserted, updated } = await repo.upsertFromExcel(valid);
         return { success: true, inserted, updated, skipped, errors };
     } catch (err) {
         console.error("[upsertFromExcel] DB error:", err);

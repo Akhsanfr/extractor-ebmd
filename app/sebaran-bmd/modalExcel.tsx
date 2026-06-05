@@ -58,14 +58,12 @@ export function UploadExcelModal({ isOpen, onClose, onSuccess }: Props) {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        // Reset state
         setError(null);
         setResultErrors([]);
         setParsedRows(null);
         setFileName(null);
         setRowCount(null);
 
-        // Validasi ekstensi
         const isExcel = file.name.endsWith(".xlsx") || file.name.endsWith(".xls");
         if (!isExcel) {
             setError("Hanya file .xlsx atau .xls yang diterima.");
@@ -73,7 +71,6 @@ export function UploadExcelModal({ isOpen, onClose, onSuccess }: Props) {
             return;
         }
 
-        // Validasi ukuran
         if (file.size > MAX_FILE_MB * 1024 * 1024) {
             setError(`Ukuran file melebihi ${MAX_FILE_MB} MB.`);
             e.target.value = "";
@@ -85,12 +82,10 @@ export function UploadExcelModal({ isOpen, onClose, onSuccess }: Props) {
             const wb = XLSX.read(buffer, { type: "array" });
             const ws = wb.Sheets[wb.SheetNames[0]];
             const rawParsed = XLSX.utils.sheet_to_json<Record<string, unknown>>(ws, {
-                defval: null,   // kolom kosong → null bukan undefined
-                raw: false,     // semua nilai jadi string
+                defval: null,
+                raw: false,
             });
 
-            // SheetJS menghasilkan object dengan prototype non-plain.
-            // Next.js Server Actions hanya menerima plain object — sanitize dulu.
             const rows = rawParsed.map((r) => Object.assign({}, r));
 
             if (rows.length === 0) {
@@ -99,7 +94,6 @@ export function UploadExcelModal({ isOpen, onClose, onSuccess }: Props) {
                 return;
             }
 
-            // Validasi header
             const firstRowKeys = Object.keys(rows[0]);
             const { valid, missing } = validateHeaders(firstRowKeys);
             if (!valid) {
@@ -125,12 +119,12 @@ export function UploadExcelModal({ isOpen, onClose, onSuccess }: Props) {
         setLoading(true);
         setResultErrors([]);
         try {
+            // Meneruskan namaPic sebagai parameter ke-2
             const result = await upsertFromExcelAction(parsedRows);
             if (result.success) {
                 toast.success(`Berhasil: ${formatResult(result)}`);
                 if (result.errors.length > 0) {
                     setResultErrors(result.errors);
-                    // Biarkan modal tetap terbuka agar user bisa lihat error baris
                 } else {
                     onSuccess();
                     handleClose();
@@ -162,8 +156,6 @@ export function UploadExcelModal({ isOpen, onClose, onSuccess }: Props) {
         onClose();
     }
 
-    // ── Template download ─────────────────────────────────────────────────────
-
     function handleDownloadTemplate() {
         const ws = XLSX.utils.aoa_to_sheet([ALL_HEADERS]);
         const wb = XLSX.utils.book_new();
@@ -185,7 +177,6 @@ export function UploadExcelModal({ isOpen, onClose, onSuccess }: Props) {
                         </Modal.Header>
 
                         <Modal.Body className="gap-4">
-                            {/* Info kolom */}
                             <div className="rounded-lg bg-default-50 border border-default-200 px-3 py-2 flex flex-col gap-1">
                                 <p className="text-xs font-semibold text-default-600">Kolom yang dikenali</p>
                                 <div className="flex flex-wrap gap-1 mt-0.5">
@@ -209,7 +200,6 @@ export function UploadExcelModal({ isOpen, onClose, onSuccess }: Props) {
                                 <p className="text-xs text-default-400 mt-0.5">* wajib diisi</p>
                             </div>
 
-                            {/* Tombol aksi */}
                             <div className="flex gap-2">
                                 <Button
                                     variant="outline"
@@ -228,7 +218,6 @@ export function UploadExcelModal({ isOpen, onClose, onSuccess }: Props) {
                                 </Button>
                             </div>
 
-                            {/* Hidden file input */}
                             <input
                                 type="file"
                                 accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
@@ -237,12 +226,10 @@ export function UploadExcelModal({ isOpen, onClose, onSuccess }: Props) {
                                 className="hidden"
                             />
 
-                            {/* Error validasi file */}
                             {error && (
                                 <p className="text-sm text-danger">{error}</p>
                             )}
 
-                            {/* Preview file siap upload */}
                             {parsedRows && fileName && (
                                 <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-success-50 border border-success-200">
                                     <div className="flex items-center gap-2">
@@ -265,7 +252,6 @@ export function UploadExcelModal({ isOpen, onClose, onSuccess }: Props) {
                                 </div>
                             )}
 
-                            {/* Error per-baris setelah upload */}
                             {resultErrors.length > 0 && (
                                 <div className="rounded-lg border border-warning-200 bg-warning-50 px-3 py-2 flex flex-col gap-1 max-h-40 overflow-y-auto">
                                     <p className="text-xs font-semibold text-warning-700">

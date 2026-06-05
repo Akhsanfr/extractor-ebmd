@@ -65,6 +65,11 @@ function StatCard({ label, value }: { label: string; value: string | number }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function BmdTanahPage() {
+    // ── State Tambahan: Autentikasi PIC ───────────────────────────────────────
+    const [namaPic, setNamaPic] = useState<string>("");
+    const [inputLoginPic, setInputLoginPic] = useState<string>("");
+    const [inputPassword, setInputPassword] = useState<string>("");
+
     // ── State ─────────────────────────────────────────────────────────────────
     const [stat, setStat] = useState<BmdTanahStatDTO | null>(null);
     const [statPerPic, setStatPerPic] = useState<BmdTanahStatPerPicDTO[]>([]);
@@ -99,7 +104,6 @@ export default function BmdTanahPage() {
 
     const fetchList = useCallback(
         async (pg: number) => {
-            console.log("f", filterPic)
             setLoading(true);
             try {
                 const result = await getListBmdAction({
@@ -136,6 +140,19 @@ export default function BmdTanahPage() {
 
     // ── Handlers ──────────────────────────────────────────────────────────────
 
+    function handleLoginPic() {
+        if (!inputLoginPic) {
+            toast.danger("Silakan pilih nama PIC terlebih dahulu.");
+            return;
+        }
+        if (inputPassword !== "pbmd") {
+            toast.danger("Password salah!");
+            return;
+        }
+        setNamaPic(inputLoginPic);
+        toast.success(`Berhasil masuk sebagai ${inputLoginPic}`);
+    }
+
     function handleSearchChange(val: string) {
         if (searchRef.current) clearTimeout(searchRef.current);
         searchRef.current = setTimeout(() => setSearch(val), 400);
@@ -168,16 +185,13 @@ export default function BmdTanahPage() {
     const totalPages = Math.ceil(total / PAGE_SIZE);
     const from = total === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
     const to = Math.min(page * PAGE_SIZE, total);
+
     // ── Pagination Helper ─────────────────────────────────────────────────────
 
     const getPageNumbers = (): (number | "ellipsis")[] => {
-        // Jumlah angka tetangga (kiri & kanan) dari halaman aktif yang ingin ditampilkan
         const siblingCount = 1;
-
-        // Total item minimum yang akan selalu dirender (1 + prev + next + 2 ellipsis) = 7
         const totalPageNumbers = siblingCount + 5;
 
-        // Jika total halaman sedikit, tampilkan semuanya tanpa ellipsis
         if (totalPages <= totalPageNumbers) {
             return Array.from({ length: totalPages }, (_, i) => i + 1);
         }
@@ -191,14 +205,12 @@ export default function BmdTanahPage() {
         const firstPageIndex = 1;
         const lastPageIndex = totalPages;
 
-        // Kondisi 1: Hanya titik-titik di kanan (Halaman aktif berada di awal)
         if (!shouldShowLeftDots && shouldShowRightDots) {
             const leftItemCount = 3 + 2 * siblingCount;
             const leftRange = Array.from({ length: leftItemCount }, (_, i) => i + 1);
             return [...leftRange, "ellipsis", totalPages];
         }
 
-        // Kondisi 2: Hanya titik-titik di kiri (Halaman aktif berada di akhir)
         if (shouldShowLeftDots && !shouldShowRightDots) {
             const rightItemCount = 3 + 2 * siblingCount;
             const rightRange = Array.from(
@@ -208,7 +220,6 @@ export default function BmdTanahPage() {
             return [firstPageIndex, "ellipsis", ...rightRange];
         }
 
-        // Kondisi 3: Titik-titik di kedua sisi (Halaman aktif berada di tengah)
         if (shouldShowLeftDots && shouldShowRightDots) {
             const middleRange = Array.from(
                 { length: rightSiblingIndex - leftSiblingIndex + 1 },
@@ -219,332 +230,367 @@ export default function BmdTanahPage() {
 
         return [];
     };
+
     // ── Render ────────────────────────────────────────────────────────────────
     return (
-        <div className="flex flex-col gap-6 p-6">
-            {/* ── Header ── */}
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold">Digitasi Tanah BMD</h1>
-                    <p className="text-sm text-default-500">Manajemen polygon bidang tanah Barang Milik Daerah</p>
-                </div>
-                <div className="flex gap-2">
-                    <Button
-                        variant="outline"
-                        onPress={() => setExcelModalOpen(true)}
-                    >
-                        <Upload size={16} />
-                        Import Excel
-                    </Button>
-                    <Button
-                        onPress={handleExportKml}
-                        isPending={kmlLoading}
-                    ><Download size={16} />
-                        Export KML
-                    </Button>
-                </div>
-            </div>
+        <>
+            {/* ── Modal Verifikasi PIC (Ditampilkan jika namaPic kosong) ── */}
+            {!namaPic && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+                    <Card className="w-full max-w-sm">
+                        <Card.Header className="pb-2 flex flex-col items-start">
+                            <h2 className="text-xl font-bold">Verifikasi PIC</h2>
+                            <p className="text-sm text-default-500">Silakan pilih nama Anda dan masukkan password untuk mengakses data.</p>
+                        </Card.Header>
+                        <Card.Content className="flex flex-col gap-4">
+                            <Select
+                                selectionMode="single"
+                                value={inputLoginPic}
+                                onChange={(value) => setInputLoginPic(String(value))}
+                            >
+                                <Label>Nama PIC</Label>
+                                <Select.Trigger>
+                                    <Select.Value />
+                                </Select.Trigger>
+                                <Select.Popover>
+                                    <ListBox>
+                                        {picOptions.map((p) => (
+                                            <ListBox.Item id={p} key={p} textValue={p}>
+                                                <Label>{p}</Label>
+                                            </ListBox.Item>
+                                        ))}
+                                    </ListBox>
+                                </Select.Popover>
+                            </Select>
 
-            {/* ── Statistik ── */}
-            {stat ? (
-                <>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <StatCard label="Total Barang" value={stat.total} />
-                        <StatCard label="Sudah Digitasi" value={stat.sudahDigitasi} />
-                        <StatCard label="Belum Digitasi" value={stat.belumDigitasi} />
-                        <StatCard label="Progress" value={`${stat.progressPct}%`} />
-                    </div>
+                            <TextField
+                                onChange={(val) => setInputPassword(val)}
+                            >
+                                <Label>Password</Label>
+                                <Input type="password" placeholder="Masukkan password" />
+                            </TextField>
 
-                    <ProgressBar
-                        value={stat.progressPct}
-                        color="success"
-                        className="max-w-full"
-                    >
-                        <div className="flex justify-between mb-1">
-                            <Label>Progress Digitasi</Label>
-                            {/* Menggantikan fungsi showValueLabel */}
-                            <ProgressBar.Output />
-                        </div>
-                        <ProgressBar.Track>
-                            <ProgressBar.Fill />
-                        </ProgressBar.Track>
-                    </ProgressBar>
-
-                    {/* Stat per PIC */}
-                    {statPerPic.length > 0 && (
-                        <Card>
-                            <Card.Header>
-                                <Card.Title className="text-sm font-semibold">Statistik per PIC</Card.Title>
-                            </Card.Header>
-                            <Card.Content>
-                                <Table>
-                                    <Table.ScrollContainer>
-                                        <Table.Content aria-label="Statistik per PIC">
-                                            <Table.Header>
-                                                <Table.Column isRowHeader>PIC</Table.Column>
-                                                <Table.Column>Total</Table.Column>
-                                                <Table.Column>Sudah</Table.Column>
-                                                <Table.Column>Belum</Table.Column>
-                                            </Table.Header>
-
-                                            <Table.Body>
-                                                {statPerPic.map((r) => (
-                                                    <Table.Row
-                                                        key={r.pic}
-                                                        id={r.pic}
-                                                    >
-                                                        <Table.Cell>{r.pic}</Table.Cell>
-
-                                                        <Table.Cell>
-                                                            {r.total.toLocaleString("id-ID")}
-                                                        </Table.Cell>
-
-                                                        <Table.Cell>
-                                                            <Chip color="success" size="sm">
-                                                                {r.sudah}
-                                                            </Chip>
-                                                        </Table.Cell>
-
-                                                        <Table.Cell>
-                                                            <Chip color="warning" size="sm">
-                                                                {r.belum}
-                                                            </Chip>
-                                                        </Table.Cell>
-                                                    </Table.Row>
-                                                ))}
-                                            </Table.Body>
-                                        </Table.Content>
-                                    </Table.ScrollContainer>
-                                </Table>
-                            </Card.Content>
-                        </Card>
-                    )}
-                </>
-            ) : (
-                <div className="flex justify-center py-8">
-                    <Spinner />
+                            <Button onPress={handleLoginPic} className="mt-2">
+                                Masuk
+                            </Button>
+                        </Card.Content>
+                    </Card>
                 </div>
             )}
 
-            <Separator />
+            <div className={`flex flex-col gap-6 p-6 ${!namaPic ? 'pointer-events-none blur-sm' : ''}`}>
+                {/* ── Header ── */}
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-2xl font-bold">Digitasi Tanah BMD</h1>
+                        <p className="text-sm text-default-500">
+                            Manajemen polygon bidang tanah Barang Milik Daerah
+                            {namaPic && <span className="font-semibold text-primary ml-1">(Login sebagai: {namaPic})</span>}
+                        </p>
+                    </div>
+                    <div className="flex gap-2">
+                        <Button
+                            variant="outline"
+                            onPress={() => setExcelModalOpen(true)}
+                        >
+                            <Upload size={16} />
+                            Import Excel
+                        </Button>
+                        <Button
+                            onPress={handleExportKml}
+                            isPending={kmlLoading}
+                        ><Download size={16} />
+                            Export KML
+                        </Button>
+                    </div>
+                </div>
 
-            {/* ── Filter ── */}
-            <div className="flex flex-wrap gap-3">
-                {/* Filter PIC Select */}
-                <Select
-                    className="w-56"
-                    selectionMode="single"
-                    value={filterPic}
-                    onChange={(value) => {
-                        setFilterPic(value === "all" || value === null ? "" : String(value))
-                    }}
-                >
-                    <Label>Filter PIC</Label>
-                    <Select.Trigger>
-                        <Select.Value />
-                    </Select.Trigger>
-                    <Select.Popover>
-                        <ListBox>
-                            <ListBox.Item id="all" textValue="Semua PIC">
-                                <Label>Semua PIC</Label>
-                            </ListBox.Item>
-                            {picOptions.map((p) => (
-                                <ListBox.Item id={p} key={p} textValue={p}>
-                                    <Label>{p}</Label>
-                                </ListBox.Item>
-                            ))}
-                        </ListBox>
-                    </Select.Popover>
-                </Select>
+                {/* ── Statistik ── */}
+                {stat ? (
+                    <>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <StatCard label="Total Barang" value={stat.total} />
+                            <StatCard label="Sudah Digitasi" value={stat.sudahDigitasi} />
+                            <StatCard label="Belum Digitasi" value={stat.belumDigitasi} />
+                            <StatCard label="Progress" value={`${stat.progressPct}%`} />
+                        </div>
 
-                {/* Status Polygon Select */}
-                <Select
-                    // selectionMode="multiple"
-                    // className="w-48"
-                    // value={[filterStatus]}
-                    // onChange={(keys) =>
-                    //     setFilterStatus(([...keys][0] as StatusPolygonFilter) ?? "semua")
-                    // }
-                    selectionMode="single"
-                    value={filterStatus}
-                    onChange={(value) => {
-                        setFilterStatus(value as StatusPolygonFilter)
-                    }}
-                >
-                    <Label>Status Polygon</Label>
-                    <Select.Trigger>
-                        <Select.Value />
-                    </Select.Trigger>
-                    <Select.Popover>
-                        <ListBox>
-                            <ListBox.Item id="semua" key="semua" textValue="Semua">
-                                <Label>Semua</Label>
-                            </ListBox.Item>
-                            <ListBox.Item id="sudah" key="sudah" textValue="Sudah Digitasi">
-                                <Label>Sudah Digitasi</Label>
-                            </ListBox.Item>
-                            <ListBox.Item id="belum" key="belum" textValue="Belum Digitasi">
-                                <Label>Belum Digitasi</Label>
-                            </ListBox.Item>
-                        </ListBox>
-                    </Select.Popover>
-                </Select>
+                        <ProgressBar
+                            value={stat.progressPct}
+                            color="success"
+                            className="max-w-full"
+                        >
+                            <div className="flex justify-between mb-1">
+                                <Label>Progress Digitasi</Label>
+                                <ProgressBar.Output />
+                            </div>
+                            <ProgressBar.Track>
+                                <ProgressBar.Fill />
+                            </ProgressBar.Track>
+                        </ProgressBar>
 
-                <TextField
-                    className="w-72"
-                    onChange={handleSearchChange}
-                >
-                    <Label>Cari NIBAR / Nomor / Desa</Label>
-                    <Input />
-                </TextField>
-            </div>
+                        {/* Stat per PIC */}
+                        {statPerPic.length > 0 && (
+                            <Card>
+                                <Card.Header>
+                                    <Card.Title className="text-sm font-semibold">Statistik per PIC</Card.Title>
+                                </Card.Header>
+                                <Card.Content>
+                                    <Table>
+                                        <Table.ScrollContainer>
+                                            <Table.Content aria-label="Statistik per PIC">
+                                                <Table.Header>
+                                                    <Table.Column isRowHeader>PIC</Table.Column>
+                                                    <Table.Column>Total</Table.Column>
+                                                    <Table.Column>Sudah</Table.Column>
+                                                    <Table.Column>Belum</Table.Column>
+                                                </Table.Header>
 
-            {/* ── Table ── */}
-            <div className="flex flex-col gap-2">
-                <p className="text-xs text-default-500">
-                    {loading ? "Memuat..." : `Menampilkan ${from}–${to} dari ${total.toLocaleString("id-ID")} data`}
-                </p>
+                                                <Table.Body>
+                                                    {statPerPic.map((r) => (
+                                                        <Table.Row
+                                                            key={r.pic}
+                                                            id={r.pic}
+                                                        >
+                                                            <Table.Cell>{r.pic}</Table.Cell>
 
-                <Table>
-                    <Table.ScrollContainer>
-                        <Table.Content aria-label="Daftar BMD Tanah">
-                            <Table.Header>
-                                <Table.Column isRowHeader>NIBAR</Table.Column>
-                                <Table.Column>Hak</Table.Column>
-                                <Table.Column>Nomor</Table.Column>
-                                <Table.Column>Desa</Table.Column>
-                                <Table.Column>PIC</Table.Column>
-                                <Table.Column>Status Polygon</Table.Column>
-                                <Table.Column>Status Plotting</Table.Column>
-                                <Table.Column>Aksi</Table.Column>
-                            </Table.Header>
+                                                            <Table.Cell>
+                                                                {r.total.toLocaleString("id-ID")}
+                                                            </Table.Cell>
 
-                            <Table.Body>
-                                {rows.map((row) => (
-                                    <Table.Row
-                                        key={row.nibar}
-                                        id={row.nibar}
-                                    >
-                                        <Table.Cell>{row.nibar}</Table.Cell>
-                                        <Table.Cell>{row.hak ?? "-"}</Table.Cell>
-                                        <Table.Cell>{row.nomor ?? "-"}</Table.Cell>
-                                        <Table.Cell>{row.desa ?? "-"}</Table.Cell>
-                                        <Table.Cell>{row.pic ?? "-"}</Table.Cell>
+                                                            <Table.Cell>
+                                                                <Chip color="success" size="sm">
+                                                                    {r.sudah}
+                                                                </Chip>
+                                                            </Table.Cell>
 
-                                        <Table.Cell>
-                                            {row.hasPolygon ? (
-                                                <Chip color="success" size="sm">
-                                                    Sudah Digitasi
-                                                </Chip>
-                                            ) : (
-                                                <Chip size="sm">
-                                                    Belum Digitasi
-                                                </Chip>
-                                            )}
-                                        </Table.Cell>
-
-                                        <Table.Cell>
-                                            {row.statusPlotting === null ? (
-                                                <Chip size="sm" color="default">
-                                                    Belum Diset
-                                                </Chip>
-                                            ) : row.statusPlotting ? (
-                                                <Chip size="sm" color="success">
-                                                    Siap Plotting
-                                                </Chip>
-                                            ) : (
-                                                <Chip size="sm" color="danger">
-                                                    Belum Terplotting
-                                                </Chip>
-                                            )}
-                                        </Table.Cell>
-
-                                        <Table.Cell>
-                                            <div className="flex gap-1">
-                                                <Button
-                                                    size="sm"
-                                                    variant="outline"
-                                                    onPress={() => setModalNibar(row.nibar)}
-                                                >
-                                                    Update Data
-                                                </Button>
-                                            </div>
-                                        </Table.Cell>
-                                    </Table.Row>
-                                ))}
-                            </Table.Body>
-                        </Table.Content>
-                    </Table.ScrollContainer>
-                </Table>
-
-                {totalPages > 1 && (
-                    <div className="flex justify-center mt-2">
-                        {/* Properti root umumnya hanya untuk styling global seperti color */}
-                        <Pagination color="primary">
-
-                            <Pagination.Content>
-                                {/* 1. TOMBOL PREVIOUS */}
-                                <Pagination.Item>
-                                    <Pagination.Previous
-                                        isDisabled={page === 1}
-                                        onPress={() => setPage((prev) => Math.max(1, prev - 1))}
-                                    >
-                                        <Pagination.PreviousIcon />
-                                    </Pagination.Previous>
-                                </Pagination.Item>
-
-                                {/* 2. RENDER ANGKA HALAMAN & ELLIPSIS */}
-                                {/* Anda memerlukan fungsi helper seperti getPageNumbers() yang me-return array angka dan string "ellipsis" */}
-                                {getPageNumbers().map((p, i) =>
-                                    p === "ellipsis" ? (
-                                        <Pagination.Item key={`ellipsis-${i}`}>
-                                            <Pagination.Ellipsis />
-                                        </Pagination.Item>
-                                    ) : (
-                                        <Pagination.Item key={p}>
-                                            <Pagination.Link
-                                                isActive={p === page}
-                                                onPress={() => setPage(p)}
-                                            >
-                                                {p}
-                                            </Pagination.Link>
-                                        </Pagination.Item>
-                                    )
-                                )}
-
-                                {/* 3. TOMBOL NEXT */}
-                                <Pagination.Item>
-                                    <Pagination.Next
-                                        isDisabled={page === totalPages}
-                                        onPress={() => setPage((prev) => Math.min(totalPages, prev + 1))}
-                                    >
-                                        <Pagination.NextIcon />
-                                    </Pagination.Next>
-                                </Pagination.Item>
-                            </Pagination.Content>
-
-                        </Pagination>
+                                                            <Table.Cell>
+                                                                <Chip color="warning" size="sm">
+                                                                    {r.belum}
+                                                                </Chip>
+                                                            </Table.Cell>
+                                                        </Table.Row>
+                                                    ))}
+                                                </Table.Body>
+                                            </Table.Content>
+                                        </Table.ScrollContainer>
+                                    </Table>
+                                </Card.Content>
+                            </Card>
+                        )}
+                    </>
+                ) : (
+                    <div className="flex justify-center py-8">
+                        <Spinner />
                     </div>
                 )}
+
+                <Separator />
+
+                {/* ── Filter ── */}
+                <div className="flex flex-wrap gap-3">
+                    <Select
+                        className="w-56"
+                        selectionMode="single"
+                        value={filterPic}
+                        onChange={(value) => {
+                            setFilterPic(value === "all" || value === null ? "" : String(value))
+                        }}
+                    >
+                        <Label>Filter PIC</Label>
+                        <Select.Trigger>
+                            <Select.Value />
+                        </Select.Trigger>
+                        <Select.Popover>
+                            <ListBox>
+                                <ListBox.Item id="all" textValue="Semua PIC">
+                                    <Label>Semua PIC</Label>
+                                </ListBox.Item>
+                                {picOptions.map((p) => (
+                                    <ListBox.Item id={p} key={p} textValue={p}>
+                                        <Label>{p}</Label>
+                                    </ListBox.Item>
+                                ))}
+                            </ListBox>
+                        </Select.Popover>
+                    </Select>
+
+                    <Select
+                        selectionMode="single"
+                        value={filterStatus}
+                        onChange={(value) => {
+                            setFilterStatus(value as StatusPolygonFilter)
+                        }}
+                    >
+                        <Label>Status Polygon</Label>
+                        <Select.Trigger>
+                            <Select.Value />
+                        </Select.Trigger>
+                        <Select.Popover>
+                            <ListBox>
+                                <ListBox.Item id="semua" key="semua" textValue="Semua">
+                                    <Label>Semua</Label>
+                                </ListBox.Item>
+                                <ListBox.Item id="sudah" key="sudah" textValue="Sudah Digitasi">
+                                    <Label>Sudah Digitasi</Label>
+                                </ListBox.Item>
+                                <ListBox.Item id="belum" key="belum" textValue="Belum Digitasi">
+                                    <Label>Belum Digitasi</Label>
+                                </ListBox.Item>
+                            </ListBox>
+                        </Select.Popover>
+                    </Select>
+
+                    <TextField
+                        className="w-72"
+                        onChange={handleSearchChange}
+                    >
+                        <Label>Cari NIBAR / Nomor / Desa</Label>
+                        <Input />
+                    </TextField>
+                </div>
+
+                {/* ── Table ── */}
+                <div className="flex flex-col gap-2">
+                    <p className="text-xs text-default-500">
+                        {loading ? "Memuat..." : `Menampilkan ${from}–${to} dari ${total.toLocaleString("id-ID")} data`}
+                    </p>
+
+                    <Table>
+                        <Table.ScrollContainer>
+                            <Table.Content aria-label="Daftar BMD Tanah">
+                                <Table.Header>
+                                    <Table.Column isRowHeader>NIBAR</Table.Column>
+                                    <Table.Column>Hak</Table.Column>
+                                    <Table.Column>Nomor</Table.Column>
+                                    <Table.Column>Desa</Table.Column>
+                                    <Table.Column>PIC</Table.Column>
+                                    <Table.Column>Status Polygon</Table.Column>
+                                    <Table.Column>Status Plotting</Table.Column>
+                                    <Table.Column>Aksi</Table.Column>
+                                </Table.Header>
+
+                                <Table.Body>
+                                    {rows.map((row) => (
+                                        <Table.Row
+                                            key={row.nibar}
+                                            id={row.nibar}
+                                        >
+                                            <Table.Cell>{row.nibar}</Table.Cell>
+                                            <Table.Cell>{row.hak ?? "-"}</Table.Cell>
+                                            <Table.Cell>{row.nomor ?? "-"}</Table.Cell>
+                                            <Table.Cell>{row.desa ?? "-"}</Table.Cell>
+                                            <Table.Cell>{row.pic ?? "-"}</Table.Cell>
+
+                                            <Table.Cell>
+                                                {row.hasPolygon ? (
+                                                    <Chip color="success" size="sm">
+                                                        Sudah Digitasi
+                                                    </Chip>
+                                                ) : (
+                                                    <Chip size="sm">
+                                                        Belum Digitasi
+                                                    </Chip>
+                                                )}
+                                            </Table.Cell>
+
+                                            <Table.Cell>
+                                                {row.statusPlotting === null ? (
+                                                    <Chip size="sm" color="default">
+                                                        Belum Diset
+                                                    </Chip>
+                                                ) : row.statusPlotting ? (
+                                                    <Chip size="sm" color="success">
+                                                        Siap Plotting
+                                                    </Chip>
+                                                ) : (
+                                                    <Chip size="sm" color="danger">
+                                                        Belum Terplotting
+                                                    </Chip>
+                                                )}
+                                            </Table.Cell>
+
+                                            <Table.Cell>
+                                                <div className="flex gap-1">
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        onPress={() => setModalNibar(row.nibar)}
+                                                    >
+                                                        Update Data
+                                                    </Button>
+                                                </div>
+                                            </Table.Cell>
+                                        </Table.Row>
+                                    ))}
+                                </Table.Body>
+                            </Table.Content>
+                        </Table.ScrollContainer>
+                    </Table>
+
+                    {totalPages > 1 && (
+                        <div className="flex justify-center mt-2">
+                            <Pagination color="primary">
+                                <Pagination.Content>
+                                    <Pagination.Item>
+                                        <Pagination.Previous
+                                            isDisabled={page === 1}
+                                            onPress={() => setPage((prev) => Math.max(1, prev - 1))}
+                                        >
+                                            <Pagination.PreviousIcon />
+                                        </Pagination.Previous>
+                                    </Pagination.Item>
+
+                                    {getPageNumbers().map((p, i) =>
+                                        p === "ellipsis" ? (
+                                            <Pagination.Item key={`ellipsis-${i}`}>
+                                                <Pagination.Ellipsis />
+                                            </Pagination.Item>
+                                        ) : (
+                                            <Pagination.Item key={p}>
+                                                <Pagination.Link
+                                                    isActive={p === page}
+                                                    onPress={() => setPage(p)}
+                                                >
+                                                    {p}
+                                                </Pagination.Link>
+                                            </Pagination.Item>
+                                        )
+                                    )}
+
+                                    <Pagination.Item>
+                                        <Pagination.Next
+                                            isDisabled={page === totalPages}
+                                            onPress={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+                                        >
+                                            <Pagination.NextIcon />
+                                        </Pagination.Next>
+                                    </Pagination.Item>
+                                </Pagination.Content>
+                            </Pagination>
+                        </div>
+                    )}
+                </div>
+
+                {/* ── Modal Update Data ── */}
+                {
+                    modalNibar && (
+                        <UploadPolygonModal
+                            nibar={modalNibar}
+                            isOpen={!!modalNibar}
+                            namaPic={namaPic} // PENTING: namaPic diteruskan sebagai parameter ke-3 (prop)
+                            onClose={() => setModalNibar(null)}
+                            onSuccess={handleUploadSuccess}
+                        />
+                    )
+                }
+
+                <UploadExcelModal
+                    isOpen={excelModalOpen}
+                    onClose={() => setExcelModalOpen(false)}
+                    onSuccess={handleUploadSuccess}
+                />
             </div>
-
-            {/* ── Modal ── */}
-            {
-                modalNibar && (
-                    <UploadPolygonModal
-                        nibar={modalNibar}
-                        isOpen={!!modalNibar}
-                        onClose={() => setModalNibar(null)}
-                        onSuccess={handleUploadSuccess}
-                    />
-                )
-            }
-
-            <UploadExcelModal
-                isOpen={excelModalOpen}
-                onClose={() => setExcelModalOpen(false)}
-                onSuccess={handleUploadSuccess}
-            />
-        </div >
+        </>
     );
 }

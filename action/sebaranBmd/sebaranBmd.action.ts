@@ -25,9 +25,9 @@ export async function getListBmdAction(params: BmdTanahFilterParams) {
 
 export async function uploadPolygonAction(
     nibar: string,
-    geoJsonString: string
+    geoJsonString: string,
+    updatedBy: string
 ): Promise<UploadPolygonResult> {
-    const updatedBy = "system"; // TODO: session user
     const result = await service.uploadPolygon({ nibar, geoJsonString, updatedBy });
     if (result.success) revalidatePath("/sebaran-bmd");
     return result;
@@ -36,9 +36,9 @@ export async function uploadPolygonAction(
 // ─── Status Plotting ─────────────────────────────────────────────────────────
 
 export async function setStatusPlottingFalseAction(
-    nibar: string
+    nibar: string,
+    updatedBy: string
 ): Promise<UpdateStatusPlottingResult> {
-    const updatedBy = "system"; // TODO: session user
     const result = await service.setStatusPlottingFalse(nibar, updatedBy);
     if (result.success) revalidatePath("/sebaran-bmd");
     return result;
@@ -47,10 +47,9 @@ export async function setStatusPlottingFalseAction(
 // ─── Upsert Excel ────────────────────────────────────────────────────────────
 
 export async function upsertFromExcelAction(
-    rawRows: Record<string, unknown>[]
+    rawRows: Record<string, unknown>[],
 ): Promise<UpsertExcelResult> {
-    const updatedBy = "system"; // TODO: session user
-    const result = await service.upsertFromExcel(rawRows, updatedBy);
+    const result = await service.upsertFromExcel(rawRows);
     if (result.success) revalidatePath("/sebaran-bmd");
     return result;
 }

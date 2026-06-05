@@ -10,7 +10,7 @@
 
 import { useEffect, useRef } from "react";
 import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
-import type { GeoJsonObject, GeoJSON as GeoJSONType } from "geojson";
+import type { GeoJSON as GeoJSONType } from "geojson";
 import L from "leaflet";
 
 // Fix leaflet default marker icon (webpack asset issue)

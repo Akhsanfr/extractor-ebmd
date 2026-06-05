@@ -17,7 +17,7 @@ export const sebaranBmd = pgTable("sebaran_bmd", {
     updatedBy: text("updated_by"),
     pic: text("pic"),
     updatedAt: timestamp("updated_at", { withTimezone: true }),
-    statusPlotting: boolean("status_plotting").default(null),  // ← baru
+    statusPlotting: boolean("status_plotting"),  // ← baru
 });
 
 export type SebaranBmd = typeof sebaranBmd.$inferSelect;

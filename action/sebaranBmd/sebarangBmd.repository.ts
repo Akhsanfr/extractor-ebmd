@@ -19,6 +19,13 @@ function buildStatusCondition(status?: string) {
     return undefined;
 }
 
+function buildStatusPlottingCondition(statusPlotting?: string) {
+    if (statusPlotting === "sudah") return eq(sebaranBmd.statusPlotting, true);
+    if (statusPlotting === "belum") return eq(sebaranBmd.statusPlotting, false);
+    if (statusPlotting === "belum_diset") return isNull(sebaranBmd.statusPlotting);
+    return undefined;
+}
+
 function buildSearchCondition(search?: string) {
     if (!search?.trim()) return undefined;
     const q = `%${search.trim()}%`;
@@ -30,7 +37,6 @@ function buildSearchCondition(search?: string) {
     );
 }
 
-/** Kolom yang dipilih di semua query list/single */
 const selectCols = {
     nibar: sebaranBmd.nibar,
     nibel: sebaranBmd.nibel,
@@ -41,7 +47,7 @@ const selectCols = {
     updatedBy: sebaranBmd.updatedBy,
     updatedAt: sebaranBmd.updatedAt,
     hasPolygon: sql<boolean>`(${sebaranBmd.polygon} IS NOT NULL)`,
-    statusPlotting: sebaranBmd.statusPlotting,   // ← baru
+    statusPlotting: sebaranBmd.statusPlotting,
 };
 
 // ─── Repository ──────────────────────────────────────────────────────────────
@@ -49,12 +55,13 @@ const selectCols = {
 export async function findAllPaginated(
     params: BmdTanahFilterParams
 ): Promise<PaginatedResult<BmdTanahDTO>> {
-    const { pic, status, search, page = 1, pageSize = 20 } = params;
+    const { pic, status, statusPlotting, search, page = 1, pageSize = 20 } = params;
     const offset = (page - 1) * pageSize;
 
     const conditions = [
         pic && pic !== "" ? eq(sebaranBmd.pic, pic) : undefined,
         buildStatusCondition(status),
+        buildStatusPlottingCondition(statusPlotting),
         buildSearchCondition(search),
     ].filter(Boolean);
 
@@ -91,19 +98,21 @@ export async function getStat(): Promise<BmdTanahStatDTO> {
     const rows = await db
         .select({
             total: sql<number>`count(*)::int`,
-            sudahDigitasi: sql<number>`count(*) filter (where ${sebaranBmd.polygon} is not null)::int`,
+            sudahDiproses: sql<number>`count(*) filter (where ${sebaranBmd.statusPlotting} IS NOT NULL)::int`,
+            sudahDigitasi: sql<number>`count(*) filter (where ${sebaranBmd.polygon} IS NOT NULL)::int`,
         })
         .from(sebaranBmd);
 
-    const { total, sudahDigitasi } = rows[0];
-    const belumDigitasi = total - sudahDigitasi;
-    const progressPct = total > 0 ? (sudahDigitasi / total) * 100 : 0;
+    const { total, sudahDiproses, sudahDigitasi } = rows[0];
 
     return {
         total,
+        sudahDiproses,
+        belumDiproses: total - sudahDiproses,
         sudahDigitasi,
-        belumDigitasi,
-        progressPct: Math.round(progressPct * 100) / 100,
+        belumDigitasi: total - sudahDigitasi,
+        progressProsesPct: total > 0 ? Math.round((sudahDiproses / total) * 10000) / 100 : 0,
+        progressDigitasiPct: total > 0 ? Math.round((sudahDigitasi / total) * 10000) / 100 : 0,
     };
 }
 
@@ -112,17 +121,19 @@ export async function getStatPerPic(): Promise<BmdTanahStatPerPicDTO[]> {
         .select({
             pic: sebaranBmd.pic,
             total: sql<number>`count(*)::int`,
-            sudah: sql<number>`count(*) filter (where ${sebaranBmd.polygon} is not null)::int`,
+            sudahPlotting: sql<number>`count(*) filter (where ${sebaranBmd.statusPlotting} IS NOT NULL)::int`,
+            sudahDigitasi: sql<number>`count(*) filter (where ${sebaranBmd.polygon} IS NOT NULL)::int`,
         })
         .from(sebaranBmd)
-        .groupBy(sebaranBmd.pic)
-        .orderBy(sebaranBmd.pic);
+        .groupBy(sebaranBmd.pic);
 
     return rows.map((r) => ({
         pic: r.pic ?? "(Tanpa PIC)",
         total: r.total,
-        sudah: r.sudah,
-        belum: r.total - r.sudah,
+        sudahPlotting: r.sudahPlotting,
+        belumPlotting: r.total - r.sudahPlotting,
+        sudahDigitasi: r.sudahDigitasi,
+        belumDigitasi: r.total - r.sudahDigitasi,
     }));
 }
 

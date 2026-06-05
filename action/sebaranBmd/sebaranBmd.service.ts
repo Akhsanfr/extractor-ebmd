@@ -119,7 +119,7 @@ export async function uploadPolygon(
 
     try {
         await repo.updatePolygon(nibar, JSON.stringify(validation.geometry), updatedBy);
-        await repo.updateStatusPlotting(nibar, true, updatedBy); // ← otomatis set sudah plotting
+        await repo.updateStatusPlotting(nibar, true, updatedBy);
         return { success: true, message: `Berhasil memperbarui polygon untuk NIBAR ${nibar}` };
     } catch (err) {
         console.error("[uploadPolygon] DB error:", err);

@@ -10,7 +10,7 @@ export interface BmdTanahDTO {
     updatedBy: string | null;
     updatedAt: Date | null;
     hasPolygon: boolean;
-    statusPlotting: boolean | null;     // ← baru
+    statusPlotting: boolean | null;
 }
 
 export interface BmdTanahWithGeomDTO extends BmdTanahDTO {
@@ -21,25 +21,37 @@ export interface BmdTanahWithGeomDTO extends BmdTanahDTO {
 
 export interface BmdTanahStatDTO {
     total: number;
+    /** status_plotting IS NOT NULL (sudah diproses, terlepas dari nilainya) */
+    sudahDiproses: number;
+    belumDiproses: number;
+    /** polygon IS NOT NULL */
     sudahDigitasi: number;
     belumDigitasi: number;
-    progressPct: number;
+    progressProsesPct: number;
+    progressDigitasiPct: number;
 }
 
 export interface BmdTanahStatPerPicDTO {
     pic: string;
     total: number;
-    sudah: number;
-    belum: number;
+    /** status_plotting = true */
+    sudahPlotting: number;
+    /** status_plotting IS NULL OR false */
+    belumPlotting: number;
+    /** polygon IS NOT NULL */
+    sudahDigitasi: number;
+    belumDigitasi: number;
 }
 
 // ─── Filter ──────────────────────────────────────────────────────────────────
 
 export type StatusPolygonFilter = "semua" | "sudah" | "belum";
+export type StatusPlottingFilter = "semua" | "sudah" | "belum" | "belum_diset";
 
 export interface BmdTanahFilterParams {
     pic?: string;
     status?: StatusPolygonFilter;
+    statusPlotting?: StatusPlottingFilter;
     search?: string; // nibar | nomor | desa | nibel
     page?: number;
     pageSize?: number;
@@ -76,10 +88,9 @@ export interface UpdateStatusPlottingResult {
 
 // ─── Upsert Excel ────────────────────────────────────────────────────────────
 
-/** Satu baris dari file Excel setelah parsing & validasi */
 export interface ExcelRowInput {
-    nibar: string;          // wajib, tidak boleh kosong
-    pic: string;            // wajib, tidak boleh kosong
+    nibar: string;
+    pic: string;
     hak?: string | null;
     nomor?: string | null;
     desa?: string | null;

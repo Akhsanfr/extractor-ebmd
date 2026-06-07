@@ -22,6 +22,20 @@
       "when": 1780550417764,
       "tag": "0002_striped_omega_flight",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1780835587321,
+      "tag": "0003_clear_rictor",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1780840721797,
+      "tag": "0004_harsh_lila_cheney",
+      "breakpoints": true
     }
   ]
 }

@@ -1,8 +1,13 @@
-import { pgTable, serial, varchar, text } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
-export const lokasi = pgTable("lokasi", {
-    id: serial("id").primaryKey(),
-    kodeLokasi: text("kode_lokasi").notNull().unique(),
+export const perangkatDaerahTable = pgTable("perangkat_daerah", {
+    kodeLokasi: varchar("kode_lokasi", { length: 30 }).primaryKey(),
     namaLokasi: text("nama_lokasi").notNull(),
-    jabatan: text("jabatan").notNull(),
+    jabatan: varchar("jabatan", { length: 50 }).notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    createdBy: text("created_by"),
+    updatedBy: text("updated_by"),
 });
+
+export type PerangkatDaerahTable = typeof perangkatDaerahTable;

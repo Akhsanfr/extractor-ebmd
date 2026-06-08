@@ -28,7 +28,7 @@ export async function getRkbmdBaByIdAction(
 }
 
 export async function updateRkbmdBaAction(
-  input: unknown
+  input: RkbmdBaContract.InsertDTO
 ): Promise<ActionResponse<RkbmdBaContract.SelectDTO>> {
   try {
     const parsed = RkbmdBaContract.update.parse(input);

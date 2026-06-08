@@ -1,38 +1,37 @@
-import { eq } from "drizzle-orm";
+import { eq, getTableColumns } from "drizzle-orm";
 import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import type { PgTransaction } from "drizzle-orm/pg-core";
-import { rkbmdBaTable } from "@/drizzle/schema"; import { DbOrTx } from "../baseDbOrTx";
+import { perangkatDaerahTable, rkbmdBaTable } from "@/drizzle/schema"; import { DbOrTx } from "../baseDbOrTx";
+import { RkbmdBaContract } from "./rkbmd-ba-contract";
 ;
-
-type SelectRkbmdBa = InferSelectModel<typeof rkbmdBaTable>;
-type InsertRkbmdBa = InferInsertModel<typeof rkbmdBaTable>;
 
 export async function findAllRkbmdBa(
   dbOrTx: DbOrTx
-): Promise<SelectRkbmdBa[]> {
+): Promise<RkbmdBaContract.SelectDTO[]> {
   return dbOrTx
-    .select()
-    .from(rkbmdBaTable)
+    .select({ ...getTableColumns(rkbmdBaTable), perangkatDaerah: getTableColumns(perangkatDaerahTable).namaLokasi })
+    .from(rkbmdBaTable).innerJoin(perangkatDaerahTable, eq(rkbmdBaTable.perangkatDaerahId, perangkatDaerahTable.kodeLokasi))
     .orderBy(rkbmdBaTable.perangkatDaerahId);
 }
 
 export async function findRkbmdBaByPerangkatDaerahId(
   dbOrTx: DbOrTx,
   perangkatDaerahId: string
-): Promise<SelectRkbmdBa | undefined> {
+): Promise<RkbmdBaContract.SelectDTO> {
   const [row] = await dbOrTx
-    .select()
+    .select({ ...getTableColumns(rkbmdBaTable), perangkatDaerah: getTableColumns(perangkatDaerahTable).namaLokasi })
     .from(rkbmdBaTable)
     .where(eq(rkbmdBaTable.perangkatDaerahId, perangkatDaerahId));
+  if (!row) throw new Error("Data tidak ditemukan");
   return row;
 }
 
 export async function upsertRkbmdBa(
   dbOrTx: DbOrTx,
-  data: InsertRkbmdBa
-): Promise<SelectRkbmdBa> {
-  const [row] = await dbOrTx
+  data: RkbmdBaContract.InsertDTO
+): Promise<void> {
+  await dbOrTx
     .insert(rkbmdBaTable)
     .values(data)
     .onConflictDoUpdate({
@@ -47,6 +46,4 @@ export async function upsertRkbmdBa(
         updatedAt: new Date(),
       },
     })
-    .returning();
-  return row;
 }

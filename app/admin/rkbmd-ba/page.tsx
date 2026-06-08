@@ -312,7 +312,7 @@ export default function RkbmdBaPage() {
                                 <Table.Row key={row.perangkatDaerahId}>
                                     <Table.Cell>
                                         <span className="font-mono text-xs text-default-500">
-                                            {row.perangkatDaerahId}
+                                            {row.perangkatDaerah}
                                         </span>
                                     </Table.Cell>
                                     <Table.Cell>

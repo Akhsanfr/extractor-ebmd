@@ -2,7 +2,7 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 import { rkbmdBaTable } from "@/drizzle/schema";
 
-const selectSchema = createSelectSchema(rkbmdBaTable);
+const selectSchema = createSelectSchema(rkbmdBaTable).extend({ perangkatDaerah: z.string() });
 
 const insertSchema = createInsertSchema(rkbmdBaTable, {
   namaPeserta: (s) => s.min(1, "Nama peserta wajib diisi"),

@@ -42,6 +42,7 @@ export async function upsertRkbmdBa(
         pemeliharaan: data.pemeliharaan,
         namaPeserta: data.namaPeserta,
         nipPeserta: data.nipPeserta,
+        jabatanPeserta: data.jabatanPeserta,
         updatedBy: data.updatedBy,
         updatedAt: new Date(),
       },

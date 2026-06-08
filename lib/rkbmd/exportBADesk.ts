@@ -222,8 +222,6 @@ export async function exportBADesk(
 
     pemeliharaanData.forEach((item) => {
         const { penggunaBarang, kuasaPenggunaBarang, program, kegiatan, output } = item;
-
-        // 1. Tambahkan Pengguna Barang ke Root Grouping Pemeliharaan
         if (!groupedPemeliharaan[penggunaBarang]) groupedPemeliharaan[penggunaBarang] = {};
         if (!groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang]) groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang] = {};
         if (!groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang][program]) groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang][program] = {};
@@ -234,76 +232,73 @@ export async function exportBADesk(
 
     const rowsPemeliharaan: any[][] = [];
 
-    // 2. Ambil Header Dinamis
-    const headerPenggunaBarangM = pemeliharaanData.length > 0 ? pemeliharaanData[0].penggunaBarang : "................(2)";
+    // --- HEADER (sama persis dgn pengadaan) ---
+    rowsPemeliharaan.push(["RENCANA KEBUTUHAN BARANG MILIK DAERAH"]);                      // r0
+    rowsPemeliharaan.push(["(RENCANA PEMELIHARAAN)"]);                                      // r1
+    rowsPemeliharaan.push(["PENGGUNA BARANG " + rkbmdBA.perangkatDaerah]);                 // r2  ← pakai rkbmdBA, bukan pemeliharaanData[0]
+    rowsPemeliharaan.push(["TAHUN 2027"]);                                                  // r3
+    rowsPemeliharaan.push([]);                                                              // r4
+    rowsPemeliharaan.push(["PROVINSI", "", ": JAWA TIMUR"]);                               // r5  ← format sama dgn pengadaan (col 2, bukan 1)
+    rowsPemeliharaan.push(["KABUPATEN", "", ": PASURUAN"]);                                // r6
+    rowsPemeliharaan.push([]);                                                              // r7
 
-    rowsPemeliharaan.push(["RENCANA KEBUTUHAN BARANG MILIK DAERAH"]);
-    rowsPemeliharaan.push(["(RENCANA PEMELIHARAAN)"]);
-    rowsPemeliharaan.push(["PENGGUNA BARANG" + headerPenggunaBarangM]);
-    rowsPemeliharaan.push(["TAHUN 2027"]);
-    rowsPemeliharaan.push([]);
-    rowsPemeliharaan.push(["PROVINSI", ":", "JAWA TIMUR"]);
-    rowsPemeliharaan.push(["KABUPATEN", ":", "PASURUAN"]);
-    rowsPemeliharaan.push([]);
-    rowsPemeliharaan.push([
-        "No.", "Kuasa Pengguna Barang/Program/Kegiatan/Output", "Barang Yang Dipelihara", "", "", "", "", "", "", "",
-        "Usulan Kebutuhan Pemeliharaan", "", "", "Rencana Kebutuhan Pemeliharan BMD (Yang Disetujui)", "", "Keterangan"
+    // --- HEADER KOLOM (3 baris) ---
+    rowsPemeliharaan.push([                                                                 // r8
+        "No.", "Program / Kegiatan / Output",
+        "Barang Yang Dipelihara", "", "", "", "", "", "", "",
+        "Usulan Kebutuhan Pemeliharaan", "", "",
+        "Rencana Kebutuhan Pemeliharaan BMD (Yang Disetujui)", "", "Keterangan"
     ]);
-    rowsPemeliharaan.push([
-        "", "", "Kode Barang", "Nama Barang", "Jumlah", "Satuan", "Status Barang", "Kondisi Barang", "", "",
-        "Nama Pemeliharaan", "Jumlah", "Satuan", "Jumlah", "Satuan", ""
+    rowsPemeliharaan.push([                                                                 // r9
+        "", "",
+        "Kode Barang", "Nama Barang", "Jumlah", "Satuan", "Status Barang", "Kondisi Barang", "", "",
+        "Nama Pemeliharaan", "Jumlah", "Satuan",
+        "Jumlah", "Satuan", ""
     ]);
-    rowsPemeliharaan.push(["", "", "", "", "", "", "", "B", "RR", "RB", "", "", "", ""]);
-    rowsPemeliharaan.push(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]);
+    rowsPemeliharaan.push(["", "", "", "", "", "", "", "B", "RR", "RB", "", "", "", "", "", ""]); // r10
+    rowsPemeliharaan.push(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]); // r11
 
-    const startIdxPemeliharaan = rowsPemeliharaan.length;
-
-    // 3. Looping berjenjang dari Pengguna Barang
+    // --- DATA ROWS ---
     let pengIdxM = 0;
     for (const [pengguna, kuasas] of Object.entries(groupedPemeliharaan)) {
-        rowsPemeliharaan.push(["", `${getRoman(pengIdxM)}. ${pengguna}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+        rowsPemeliharaan.push(["", `${getRoman(pengIdxM)}. ${pengguna}`, "", "", "", "", "", "", "", "", "", "", "", "", "", ""]);
 
         let kuasaIdxM = 1;
         for (const [kuasa, programs] of Object.entries(kuasas as Record<string, any>)) {
-
-            // 4. Mekanisme Skip jika Kuasa Pengguna Barang kosong
             const isKuasaEmpty = !kuasa || kuasa.trim() === "" || kuasa === "-" || kuasa === "null";
             if (!isKuasaEmpty) {
-                rowsPemeliharaan.push(["", `     ${kuasaIdxM}. ${kuasa}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+                rowsPemeliharaan.push(["", `     ${kuasaIdxM}. ${kuasa}`, "", "", "", "", "", "", "", "", "", "", "", "", "", ""]);
                 kuasaIdxM++;
             }
 
             let progIdx = 0;
             for (const [program, kegiatans] of Object.entries(programs as Record<string, any>)) {
-                rowsPemeliharaan.push(["", `         ${getAlpha(progIdx)}. ${program}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+                rowsPemeliharaan.push(["", `         ${getAlpha(progIdx)}. ${program}`, "", "", "", "", "", "", "", "", "", "", "", "", "", ""]);
 
                 let kegIdx = 1;
                 for (const [kegiatan, outputs] of Object.entries(kegiatans as Record<string, any>)) {
-                    rowsPemeliharaan.push(["", `             ${kegIdx}). ${kegiatan}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+                    rowsPemeliharaan.push(["", `             ${kegIdx}). ${kegiatan}`, "", "", "", "", "", "", "", "", "", "", "", "", "", ""]);
 
                     let outIdx = 0;
                     for (const [output, items] of Object.entries(outputs as Record<string, any>)) {
-                        rowsPemeliharaan.push(["", `                 ${getLowerAlpha(outIdx)}. ${output}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+                        rowsPemeliharaan.push(["", `                 ${getLowerAlpha(outIdx)}. ${output}`, "", "", "", "", "", "", "", "", "", "", "", "", "", ""]);
 
                         for (const item of items as any[]) {
-                            // Penyesuaian agar kompatibel dengan Type `FormPemeliharan` 
-                            // Fallback (||) digunakan jika properties berada di level flat object atau nested object
                             const kodeBrg = item.bmd?.kodeBarang || item.kodeBarang || "-";
                             const namaBrg = item.bmd?.namaBarang || item.namaBarang || "-";
                             const jmlTersedia = item.bmd?.jumlah || item.jumlahTersedia || "-";
                             const satTersedia = item.bmd?.satuan || item.satuan || "-";
-
                             const nmPemeliharaan = item.usulanPemeliharaan?.namaPemeliharaan || item.namaPemeliharaan || "-";
                             const jmlPemeliharaan = item.usulanPemeliharaan?.jumlah || item.jumlah || "-";
                             const satPemeliharaan = item.usulanPemeliharaan?.satuan || item.satuan || "-";
-
                             const ket = item.keterangan || "";
 
                             rowsPemeliharaan.push([
                                 "", "",
                                 kodeBrg, namaBrg, jmlTersedia, satTersedia,
                                 "Milik Sendiri", "v", "", "",
-                                nmPemeliharaan, jmlPemeliharaan, satPemeliharaan, jmlPemeliharaan, satPemeliharaan, ket
+                                nmPemeliharaan, jmlPemeliharaan, satPemeliharaan,
+                                jmlPemeliharaan, satPemeliharaan, ket
                             ]);
                         }
                         outIdx++;
@@ -317,61 +312,132 @@ export async function exportBADesk(
     }
     const endIdxPemeliharaan = rowsPemeliharaan.length;
 
-    rowsPemeliharaan.push([]);
-    rowsPemeliharaan.push([]);
-    rowsPemeliharaan.push(["", "", "", "", "", "", "", "", "", "", ".................., .................................... (21)"]);
-    rowsPemeliharaan.push(["", "", "", "", "", "", "", "", "", "", "PENGGUNA BARANG………(22)"]);
-    // ... sisa footer petunjuk pengisian diabaikan agar kode tidak terlalu panjang (Anda bisa mempertahankan array aslinya di kode Anda)
-    rowsPemeliharaan.push([]);
-    rowsPemeliharaan.push(["Petunjuk Pengisian"]);
-    rowsPemeliharaan.push(["(1)", "Diisi nomor halaman."]);
+    // --- FOOTER: paraf periksa + tanda tangan (identik dgn pengadaan) ---
+    rowsPemeliharaan.push([]);  // spasi 1
+    rowsPemeliharaan.push([]);  // spasi 2
 
+    const startPemeriksaRowM = rowsPemeliharaan.length;
+    rowsPemeliharaan.push(["", "", "", "", "", "", "", "", "", "", "", "Pasuruan,"]);
+    rowsPemeliharaan.push(["", "", "", "", "", "", "", "", "", "", "", "Disetujui"]);
+    rowsPemeliharaan.push(["", "", "", "", "", "", "", "", "", "", "", "Pengelola Barang"]);
+    rowsPemeliharaan.push(["Telah Diperiksa", "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+    rowsPemeliharaan.push(["No", "Nama", "Jabatan", "", "", "", "Paraf", "Tanggal"]);
+    rowsPemeliharaan.push(["1", "Yuswianto,S.E.,M.M.", "Pejabat Penatausahaan Pengelola Barang", "", "", "", "", "", "", "", "", "YUDHA TRIWIDYA SASONGKO, S.Sos, M.Si"]);
+    rowsPemeliharaan.push(["2", "Dian Prasetyo,S.E.,M.M.", "Pengurus Barang Pengelola", "", "", "", "", "", "", "", "", "NIP. 197405171993111001"]);
+
+    // --- WORKSHEET ---
     const wsPemeliharaan = XLSX.utils.aoa_to_sheet(rowsPemeliharaan);
+
     wsPemeliharaan["!cols"] = [
-        { wch: 5 }, { wch: 45 }, { wch: 18 }, { wch: 30 }, { wch: 8 }, { wch: 10 }, { wch: 15 },
-        { wch: 5 }, { wch: 5 }, { wch: 5 }, { wch: 25 }, { wch: 8 }, { wch: 10 }, { wch: 18 }
-    ];
-    wsPemeliharaan["!merges"] = [
-        { s: { r: 0, c: 0 }, e: { r: 0, c: 13 } }, { s: { r: 1, c: 0 }, e: { r: 1, c: 13 } },
-        { s: { r: 8, c: 0 }, e: { r: 10, c: 0 } }, { s: { r: 8, c: 1 }, e: { r: 10, c: 1 } },
-        { s: { r: 8, c: 2 }, e: { r: 8, c: 9 } }, { s: { r: 9, c: 2 }, e: { r: 10, c: 2 } },
-        { s: { r: 9, c: 3 }, e: { r: 10, c: 3 } }, { s: { r: 9, c: 4 }, e: { r: 10, c: 4 } },
-        { s: { r: 9, c: 5 }, e: { r: 10, c: 5 } }, { s: { r: 9, c: 6 }, e: { r: 10, c: 6 } },
-        { s: { r: 9, c: 7 }, e: { r: 9, c: 9 } },
-        { s: { r: 8, c: 10 }, e: { r: 8, c: 12 } },
-        { s: { r: 8, c: 13 }, e: { r: 8, c: 14 } },
-        { s: { r: 9, c: 10 }, e: { r: 10, c: 10 } },
-        { s: { r: 9, c: 11 }, e: { r: 10, c: 11 } },
-        { s: { r: 9, c: 12 }, e: { r: 10, c: 12 } },
-        { s: { r: 9, c: 13 }, e: { r: 10, c: 13 } },
-        { s: { r: 9, c: 14 }, e: { r: 10, c: 14 } },
-        { s: { r: 8, c: 15 }, e: { r: 10, c: 15 } }
+        { wch: 2 },  // A  No
+        { wch: 35 }, // B  Program/Kegiatan
+        { wch: 7 },  // C  Kode Barang
+        { wch: 15 }, // D  Nama Barang
+        { wch: 5 },  // E  Jumlah
+        { wch: 5 },  // F  Satuan
+        { wch: 12 }, // G  Status Barang
+        { wch: 4 },  // H  B
+        { wch: 4 },  // I  RR
+        { wch: 4 },  // J  RB
+        { wch: 18 }, // K  Nama Pemeliharaan
+        { wch: 5 },  // L  Jumlah Usulan
+        { wch: 5 },  // M  Satuan Usulan
+        { wch: 5 },  // N  Jumlah Disetujui
+        { wch: 5 },  // O  Satuan Disetujui
+        { wch: 10 },  // P  Keterangan
     ];
 
+    wsPemeliharaan["!merges"] = [
+        // Title
+        { s: { r: 0, c: 0 }, e: { r: 0, c: 15 } },
+        { s: { r: 1, c: 0 }, e: { r: 1, c: 15 } },
+        { s: { r: 2, c: 0 }, e: { r: 2, c: 15 } },
+        { s: { r: 3, c: 0 }, e: { r: 3, c: 15 } },
+        // PROVINSI / KABUPATEN  (sama dgn pengadaan: col0-1, col2-3)
+        { s: { r: 5, c: 0 }, e: { r: 5, c: 1 } },
+        { s: { r: 5, c: 2 }, e: { r: 5, c: 3 } },
+        { s: { r: 6, c: 0 }, e: { r: 6, c: 1 } },
+        { s: { r: 6, c: 2 }, e: { r: 6, c: 3 } },
+        // Header kolom r8
+        { s: { r: 8, c: 0 }, e: { r: 10, c: 0 } },   // No.
+        { s: { r: 8, c: 1 }, e: { r: 10, c: 1 } },   // Program/Kegiatan
+        { s: { r: 8, c: 2 }, e: { r: 8, c: 9 } },    // Barang Yang Dipelihara (span)
+        { s: { r: 9, c: 2 }, e: { r: 10, c: 2 } },   // Kode Barang
+        { s: { r: 9, c: 3 }, e: { r: 10, c: 3 } },   // Nama Barang
+        { s: { r: 9, c: 4 }, e: { r: 10, c: 4 } },   // Jumlah
+        { s: { r: 9, c: 5 }, e: { r: 10, c: 5 } },   // Satuan
+        { s: { r: 9, c: 6 }, e: { r: 10, c: 6 } },   // Status Barang
+        { s: { r: 9, c: 7 }, e: { r: 9, c: 9 } },    // Kondisi Barang (B/RR/RB)
+        { s: { r: 8, c: 10 }, e: { r: 8, c: 12 } },  // Usulan Kebutuhan Pemeliharaan
+        { s: { r: 9, c: 10 }, e: { r: 10, c: 10 } }, // Nama Pemeliharaan
+        { s: { r: 9, c: 11 }, e: { r: 10, c: 11 } }, // Jumlah
+        { s: { r: 9, c: 12 }, e: { r: 10, c: 12 } }, // Satuan
+        { s: { r: 8, c: 13 }, e: { r: 8, c: 14 } },  // Rencana Yang Disetujui
+        { s: { r: 9, c: 13 }, e: { r: 10, c: 13 } }, // Jumlah Disetujui
+        { s: { r: 9, c: 14 }, e: { r: 10, c: 14 } }, // Satuan Disetujui
+        { s: { r: 8, c: 15 }, e: { r: 10, c: 15 } }, // Keterangan
+        // Footer periksa (mirror pengadaan, disesuaikan ke 16 kolom)
+        { s: { r: startPemeriksaRowM + 3, c: 0 }, e: { r: startPemeriksaRowM + 3, c: 1 } },
+        { s: { r: startPemeriksaRowM + 4, c: 2 }, e: { r: startPemeriksaRowM + 4, c: 5 } },
+        { s: { r: startPemeriksaRowM + 5, c: 2 }, e: { r: startPemeriksaRowM + 5, c: 5 } },
+        { s: { r: startPemeriksaRowM + 6, c: 2 }, e: { r: startPemeriksaRowM + 6, c: 5 } },
+        { s: { r: startPemeriksaRowM + 4, c: 7 }, e: { r: startPemeriksaRowM + 4, c: 8 } },
+        { s: { r: startPemeriksaRowM + 5, c: 7 }, e: { r: startPemeriksaRowM + 5, c: 8 } },
+        { s: { r: startPemeriksaRowM + 6, c: 7 }, e: { r: startPemeriksaRowM + 6, c: 8 } },
+        { s: { r: startPemeriksaRowM + 0, c: 11 }, e: { r: startPemeriksaRowM + 0, c: 15 } },
+        { s: { r: startPemeriksaRowM + 1, c: 11 }, e: { r: startPemeriksaRowM + 1, c: 15 } },
+        { s: { r: startPemeriksaRowM + 2, c: 11 }, e: { r: startPemeriksaRowM + 2, c: 15 } },
+        { s: { r: startPemeriksaRowM + 3, c: 11 }, e: { r: startPemeriksaRowM + 3, c: 15 } },
+        { s: { r: startPemeriksaRowM + 4, c: 11 }, e: { r: startPemeriksaRowM + 4, c: 15 } },
+        { s: { r: startPemeriksaRowM + 5, c: 11 }, e: { r: startPemeriksaRowM + 5, c: 15 } },
+        { s: { r: startPemeriksaRowM + 6, c: 11 }, e: { r: startPemeriksaRowM + 6, c: 15 } },
+    ];
+
+    wsPemeliharaan["!rows"] = [];
+    wsPemeliharaan["!rows"][8] = { hpt: 50 }; // header utama
+
+    // --- STYLING ---
     for (let R = 0; R < rowsPemeliharaan.length; ++R) {
-        for (let C = 0; C < 14; ++C) {
+        for (let C = 0; C < 16; ++C) {
             const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
             if (!wsPemeliharaan[cellRef]) wsPemeliharaan[cellRef] = { t: "s", v: "" };
 
-            if (R === 0 || R === 1) {
-                wsPemeliharaan[cellRef].s = { font: { bold: true, sz: 12 }, alignment: { horizontal: "center", vertical: "center" } };
-            } else if (R >= 2 && R <= 6) {
-                wsPemeliharaan[cellRef].s = { font: { bold: true, sz: 11 } };
+            if (R <= 4) {
+                wsPemeliharaan[cellRef].s = {
+                    font: { bold: true, sz: 11 },
+                    alignment: { horizontal: "center", vertical: "center" }
+                };
             } else if (R >= 8 && R < endIdxPemeliharaan) {
                 const isHeader = R <= 11;
                 wsPemeliharaan[cellRef].s = {
-                    border: borderThin, font: { bold: isHeader, sz: 8 },
+                    border: borderThin,
+                    font: { bold: isHeader, sz: 7 },
                     alignment: {
                         vertical: "center",
-                        horizontal: isHeader ? "center" : (C === 0 || (C >= 4 && C <= 9) || C === 11 || C === 12) ? "center" : "left",
+                        horizontal: isHeader
+                            ? "center"
+                            : (C === 0 || (C >= 4 && C <= 9) || C === 11 || C === 12 || C === 13 || C === 14)
+                                ? "center"
+                                : "left",
                         wrapText: true
                     }
                 };
             } else if (R >= endIdxPemeliharaan) {
-                wsPemeliharaan[cellRef].s = { font: { sz: 10, bold: R === endIdxPemeliharaan + 7 }, alignment: { vertical: "center" } };
+                wsPemeliharaan[cellRef].s = { font: { sz: 10 } };
+                if (
+                    R >= startPemeriksaRowM + 4 &&
+                    R <= startPemeriksaRowM + 6 &&
+                    C >= 0 && C <= 8
+                ) {
+                    wsPemeliharaan[cellRef].s.border = borderThin;
+                }
+                if (R === startPemeriksaRowM + 4 && C <= 8) {
+                    wsPemeliharaan[cellRef].s.alignment = { horizontal: "center" };
+                }
             }
         }
     }
+
     XLSX.utils.book_append_sheet(wb, wsPemeliharaan, "PEMELIHARAAN");
 
     // ============================================================================

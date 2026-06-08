@@ -247,14 +247,14 @@ export async function exportBADesk(
     rowsPemeliharaan.push([]);
     rowsPemeliharaan.push([
         "No.", "Kuasa Pengguna Barang/Program/Kegiatan/Output", "Barang Yang Dipelihara", "", "", "", "", "", "", "",
-        "Usulan Kebutuhan Pemeliharaan", "", "", "Keterangan"
+        "Usulan Kebutuhan Pemeliharaan", "", "", "Rencana Kebutuhan Pemeliharan BMD (Yang Disetujui)", "", "Keterangan"
     ]);
     rowsPemeliharaan.push([
         "", "", "Kode Barang", "Nama Barang", "Jumlah", "Satuan", "Status Barang", "Kondisi Barang", "", "",
-        "Nama Pemeliharaan", "Jumlah", "Satuan", ""
+        "Nama Pemeliharaan", "Jumlah", "Satuan", "Jumlah", "Satuan", ""
     ]);
     rowsPemeliharaan.push(["", "", "", "", "", "", "", "B", "RR", "RB", "", "", "", ""]);
-    rowsPemeliharaan.push(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"]);
+    rowsPemeliharaan.push(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]);
 
     const startIdxPemeliharaan = rowsPemeliharaan.length;
 
@@ -303,7 +303,7 @@ export async function exportBADesk(
                                 "", "",
                                 kodeBrg, namaBrg, jmlTersedia, satTersedia,
                                 "Milik Sendiri", "v", "", "",
-                                nmPemeliharaan, jmlPemeliharaan, satPemeliharaan, ket
+                                nmPemeliharaan, jmlPemeliharaan, satPemeliharaan, jmlPemeliharaan, satPemeliharaan, ket
                             ]);
                         }
                         outIdx++;
@@ -337,9 +337,15 @@ export async function exportBADesk(
         { s: { r: 8, c: 2 }, e: { r: 8, c: 9 } }, { s: { r: 9, c: 2 }, e: { r: 10, c: 2 } },
         { s: { r: 9, c: 3 }, e: { r: 10, c: 3 } }, { s: { r: 9, c: 4 }, e: { r: 10, c: 4 } },
         { s: { r: 9, c: 5 }, e: { r: 10, c: 5 } }, { s: { r: 9, c: 6 }, e: { r: 10, c: 6 } },
-        { s: { r: 9, c: 7 }, e: { r: 9, c: 9 } }, { s: { r: 8, c: 10 }, e: { r: 8, c: 12 } },
-        { s: { r: 9, c: 10 }, e: { r: 10, c: 10 } }, { s: { r: 9, c: 11 }, e: { r: 10, c: 11 } },
-        { s: { r: 9, c: 12 }, e: { r: 10, c: 12 } }, { s: { r: 8, c: 13 }, e: { r: 10, c: 13 } }
+        { s: { r: 9, c: 7 }, e: { r: 9, c: 9 } },
+        { s: { r: 8, c: 10 }, e: { r: 8, c: 12 } },
+        { s: { r: 8, c: 13 }, e: { r: 8, c: 14 } },
+        { s: { r: 9, c: 10 }, e: { r: 10, c: 10 } },
+        { s: { r: 9, c: 11 }, e: { r: 10, c: 11 } },
+        { s: { r: 9, c: 12 }, e: { r: 10, c: 12 } },
+        { s: { r: 9, c: 13 }, e: { r: 10, c: 13 } },
+        { s: { r: 9, c: 14 }, e: { r: 10, c: 14 } },
+        { s: { r: 8, c: 15 }, e: { r: 10, c: 15 } }
     ];
 
     for (let R = 0; R < rowsPemeliharaan.length; ++R) {

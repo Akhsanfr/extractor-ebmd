@@ -10,7 +10,7 @@ import EditBaModal from "./modal";
 import ModalBA from "./modal";
 import { exportBADesk } from "@/lib/rkbmd/exportBADesk";
 import { ListPemeliharaan, ListPengadaan } from "@/types/rkbmd";
-import { loadStorage, PENGADAAN_STORAGE_KEY } from "@/lib/bmd-storage";
+import { loadStorage, PEMELIHARAAN_STORAGE_KEY, PENGADAAN_STORAGE_KEY } from "@/lib/bmd-storage";
 
 export interface Perekon {
     nama: string;
@@ -149,7 +149,7 @@ export default function RkbmdBaPage() {
 
     useEffect(() => {
         const pengadaan = loadStorage<ListPengadaan[]>(PENGADAAN_STORAGE_KEY);
-        const pemeliharaan = loadStorage<ListPemeliharaan[]>(PENGADAAN_STORAGE_KEY);
+        const pemeliharaan = loadStorage<ListPemeliharaan[]>(PEMELIHARAAN_STORAGE_KEY);
         setPengadaan(pengadaan ?? []);
         setPemeliharaan(pemeliharaan ?? [])
     }, [])

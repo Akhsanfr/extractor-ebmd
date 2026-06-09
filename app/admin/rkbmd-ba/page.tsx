@@ -104,7 +104,7 @@ function PerekonModal({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function RkbmdBaPage() {
-    const [perekon, setPerekon] = useState<Perekon | null>({ nama: "Fernanda", nip: "1999" });
+    const [perekon, setPerekon] = useState<Perekon | null>(null);
     const [pengadaan, setPengadaan] = useState<ListPengadaan[]>([]);
     const [pemeliharaan, setPemeliharaan] = useState<ListPemeliharaan[]>([]);
     const [data, setData] = useState<RkbmdBaContract.SelectDTO[]>([]);

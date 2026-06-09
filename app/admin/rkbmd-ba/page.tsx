@@ -6,7 +6,6 @@ import { getRkbmdBaAction, updateRkbmdBaAction } from "@/action/rkbmdBa/rkbmd-ba
 import { RkbmdBaContract } from "@/action/rkbmdBa/rkbmd-ba-contract";
 import { Check, Minus, Pen, Printer } from "lucide-react";
 import { generateBaDesk } from "@/lib/rkbmd/generateBaDesk";
-import EditBaModal from "./modal ASDAD";
 import ModalBA from "./modal";
 import { exportBADesk } from "@/lib/rkbmd/exportBADesk";
 import { ListPemeliharaan, ListPengadaan } from "@/types/rkbmd";
@@ -218,15 +217,21 @@ export default function RkbmdBaPage() {
                                     </Table.Cell>
                                     <Table.Cell>
                                         {row.namaPeserta ? (
-                                            <div>
-                                                <p className="text-sm">{row.namaPeserta}</p>
+                                            <div className="flex flex-col">
+                                                <p className="text-sm font-bold">{row.namaPeserta}</p>
                                                 <p className="text-xs text-default-400">{row.nipPeserta}</p>
+                                                <p className="text-xs text-default-400">{row.jabatanPeserta}</p>
                                             </div>
                                         ) : (
                                             <span className="text-xs text-default-300">—</span>
                                         )}
                                     </Table.Cell>
-                                    <Table.Cell>{statusChip(row)}</Table.Cell>
+                                    <Table.Cell>
+                                        <div className="flex flex-col gap-2">
+                                            {statusChip(row)}
+                                            {row.tanggalPerbaikan?.toLocaleDateString("id-ID")}
+                                        </div>
+                                    </Table.Cell>
                                     <Table.Cell>
                                         <div className="flex gap-2">
                                             <Button size="sm" onPress={() => handleBaDesk(row)}>

@@ -45,6 +45,7 @@ const bulan = new Intl.DateTimeFormat("id-ID", {
 }).format(now);
 
 export async function generateBaDesk(perekon: Perekon, data: RkbmdBaContract.SelectDTO): Promise<void> {
+    console.log("perekon", perekon)
     // 1. Fetch template dari /public
     const response = await fetch("/rkbmd/template-ba-desk.docx");
     if (!response.ok) {
@@ -69,8 +70,12 @@ export async function generateBaDesk(perekon: Perekon, data: RkbmdBaContract.Sel
         namaPeserta: data.namaPeserta,
         nipPeserta: data.nipPeserta,
         perangkatDaerah: data.perangkatDaerah,
-        nama: perekon.nama,
-        nip: perekon.nip
+        namaPerekon: perekon.nama,
+        nipPerekon: perekon.nip,
+        hasilSuratPengantar: data.pengantar ? "sesuai dengan ketentuan" : "tidak sesuai dengan ketentuan",
+        hasilUsulanRKBMDPengadaan: data.pengadaan ? "sesuai dengan ketentuan" : "tidak sesuai dengan ketentuan",
+        hasilUsulanRKBMDPemeliharaan: data.pemeliharaan ? "sesuai dengan ketentuan" : "tidak sesuai dengan ketentuan",
+        tanggalPerbaikan: "12 Juni 2026"
     });
 
     // 4. Render (throw jika ada placeholder yang tidak ditemukan)

@@ -212,6 +212,16 @@ export async function exportBADesk(
             }
         }
     }
+    const yudhaRowP = startPemeriksaRow + 5;
+    const yudhaColP = 13; // kolom N
+    const yudhaRefP = XLSX.utils.encode_cell({ r: yudhaRowP, c: yudhaColP });
+    if (wsPengadaan[yudhaRefP]) {
+        wsPengadaan[yudhaRefP].s = {
+            ...wsPengadaan[yudhaRefP].s,
+            font: { sz: 10, bold: true, underline: true },
+            alignment: { horizontal: "center" },
+        };
+    }
     XLSX.utils.book_append_sheet(wb, wsPengadaan, "PENGADAAN");
 
 
@@ -436,6 +446,18 @@ export async function exportBADesk(
                 }
             }
         }
+    }
+
+
+    const yudhaRowM = startPemeriksaRowM + 5;
+    const yudhaColM = 11; // kolom L (tanda tangan ada di col 11 di sheet pemeliharaan)
+    const yudhaRefM = XLSX.utils.encode_cell({ r: yudhaRowM, c: yudhaColM });
+    if (wsPemeliharaan[yudhaRefM]) {
+        wsPemeliharaan[yudhaRefM].s = {
+            ...wsPemeliharaan[yudhaRefM].s,
+            font: { sz: 10, bold: true, underline: true },
+            alignment: { horizontal: "center" },
+        };
     }
 
     XLSX.utils.book_append_sheet(wb, wsPemeliharaan, "PEMELIHARAAN");

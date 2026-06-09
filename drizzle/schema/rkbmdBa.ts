@@ -12,6 +12,7 @@ export const rkbmdBaTable = pgTable("rkbmd_ba", {
     namaPeserta: text("nama_peserta"),
     nipPeserta: varchar("nip_peserta", { length: 30 }),
     jabatanPeserta: text("jabatan_peserta"),
+    tanggalPerbaikan: timestamp("tanggal_perbaikan"),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
     updatedBy: text("updated_by"),
 });

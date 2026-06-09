@@ -15,7 +15,7 @@ export async function getRkbmdBaByPerangkatDaerahId(
 export async function updateRkbmdBaService(
   data: RkbmdBaContract.UpdateDTO,
   actor?: string
-): Promise<RkbmdBaContract.SelectDTO> {
+): Promise<void> {
   await upsertRkbmdBa(db, {
     pengantar: false,
     pengadaan: false,
@@ -26,5 +26,4 @@ export async function updateRkbmdBaService(
     updatedBy: actor,
     updatedAt: new Date(),
   });
-  return findRkbmdBaByPerangkatDaerahId(db, data.perangkatDaerahId)
 }

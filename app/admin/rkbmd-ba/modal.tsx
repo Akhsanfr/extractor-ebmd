@@ -1,11 +1,13 @@
-"use state"
+"use client";
 
 import { RkbmdBaContract } from "@/action/rkbmdBa/rkbmd-ba-contract";
 import { Perekon } from "./page";
 import { useEffect, useState } from "react";
 import { updateRkbmdBaAction } from "@/action/rkbmdBa/rkbmd-ba-action";
-import { generateBaDesk } from "@/lib/rkbmd/generateBaDesk";
-import { Button, Checkbox, Input, Label, Modal, TextField } from "@heroui/react";
+import { Button, Calendar, Checkbox, DateField, DatePicker, DateValue, Input, Label, Modal, TextField } from "@heroui/react";
+import { parseDate } from "@internationalized/date";
+import { X } from "lucide-react";
+
 
 export default function ModalBA({
     row,
@@ -16,7 +18,7 @@ export default function ModalBA({
     row: RkbmdBaContract.SelectDTO | null;
     perekon: Perekon;
     onClose: () => void;
-    onSuccess: (updated: RkbmdBaContract.SelectDTO) => void;
+    onSuccess: () => void;
 }) {
     const isOpen = !!row;
 
@@ -26,17 +28,25 @@ export default function ModalBA({
     const [namaPeserta, setNamaPeserta] = useState("");
     const [nipPeserta, setNipPeserta] = useState("");
     const [jabatanPeserta, setJabatanPeserta] = useState("");
+    const [tanggalPerbaikan, setTanggalPerbaikan] =
+        useState<DateValue | null>(null);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
 
     useEffect(() => {
         if (!row) return;
+        console.log("tgl", row.tanggalPerbaikan)
         setPengantar(row.pengantar);
         setPengadaan(row.pengadaan);
         setPemeliharaan(row.pemeliharaan);
         setNamaPeserta(row.namaPeserta ?? "");
         setNipPeserta(row.nipPeserta ?? "");
         setJabatanPeserta(row.jabatanPeserta ?? "");
+        setTanggalPerbaikan(
+            row.tanggalPerbaikan
+                ? parseDate(row.tanggalPerbaikan.toISOString().slice(0, 10)) as unknown as DateValue
+                : null
+        );
         setError("");
     }, [row]);
 
@@ -52,25 +62,27 @@ export default function ModalBA({
             namaPeserta: namaPeserta.trim() || null,
             nipPeserta: nipPeserta.trim() || null,
             jabatanPeserta: jabatanPeserta.trim() || null,
+            tanggalPerbaikan: tanggalPerbaikan
+                ? new Date(tanggalPerbaikan.toString())
+                : null,
             updatedBy: `${perekon.nama} (${perekon.nip})`,
         });
-        setSaving(false);
         if (!result.success) {
-            // setError(result.message ?? "Gagal menyimpan.");
+            alert(`Gagal menyimpan data ${result.error?.message}`)
             return;
         }
-        onSuccess(result.data);
-        onClose();
+        onSuccess()
+        setSaving(false);
     };
 
     return (
         <Modal isOpen={isOpen}>
-            <Modal.Backdrop >
+            <Modal.Backdrop>
                 <Modal.Container>
                     <Modal.Dialog>
                         <Modal.CloseTrigger onPress={onClose} />
                         <Modal.Header>
-                            <Modal.Heading>Edit BA — {row?.perangkatDaerahId}</Modal.Heading>
+                            <Modal.Heading>Edit BA — {row?.perangkatDaerah}</Modal.Heading>
                         </Modal.Header>
 
                         <Modal.Body className="flex flex-col gap-4 p-4">
@@ -107,17 +119,62 @@ export default function ModalBA({
                                 </div>
                             </div>
 
+                            {/* Tanggal Perbaikan */}
+                            <DatePicker
+                                name="tanggalPerbaikan"
+                                value={tanggalPerbaikan}
+                                onChange={setTanggalPerbaikan}
+                            >
+                                <Label>Tanggal Perbaikan</Label>
+                                <DateField.Group fullWidth>
+                                    <DateField.Input>
+                                        {(segment) => <DateField.Segment segment={segment} />}
+                                    </DateField.Input>
+                                    <DateField.Suffix>
+                                        <DatePicker.Trigger>
+                                            <DatePicker.TriggerIndicator />
+                                        </DatePicker.Trigger>
+                                        <Button onPress={() => setTanggalPerbaikan(null)}>
+                                            <X />
+                                        </Button>
+                                    </DateField.Suffix>
+                                </DateField.Group>
+                                <DatePicker.Popover>
+                                    <Calendar aria-label="Tanggal perbaikan">
+                                        <Calendar.Header>
+                                            <Calendar.YearPickerTrigger>
+                                                <Calendar.YearPickerTriggerHeading />
+                                                <Calendar.YearPickerTriggerIndicator />
+                                            </Calendar.YearPickerTrigger>
+                                            <Calendar.NavButton slot="previous" />
+                                            <Calendar.NavButton slot="next" />
+                                        </Calendar.Header>
+                                        <Calendar.Grid>
+                                            <Calendar.GridHeader>
+                                                {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
+                                            </Calendar.GridHeader>
+                                            <Calendar.GridBody>
+                                                {(date) => <Calendar.Cell date={date} />}
+                                            </Calendar.GridBody>
+                                        </Calendar.Grid>
+                                        <Calendar.YearPickerGrid>
+                                            <Calendar.YearPickerGridBody>
+                                                {({ year }) => <Calendar.YearPickerCell year={year} />}
+                                            </Calendar.YearPickerGridBody>
+                                        </Calendar.YearPickerGrid>
+                                    </Calendar>
+                                </DatePicker.Popover>
+                            </DatePicker>
+
                             {/* Peserta */}
                             <div className="flex flex-col gap-3">
                                 <p className="text-xs font-medium text-default-500 uppercase tracking-wider">
                                     Data Peserta
                                 </p>
-
                                 <TextField name="namaPeserta" value={namaPeserta} onChange={setNamaPeserta}>
                                     <Label>Nama Peserta</Label>
                                     <Input placeholder="Nama lengkap peserta" />
                                 </TextField>
-
                                 <TextField name="nipPeserta" value={nipPeserta} onChange={setNipPeserta}>
                                     <Label>NIP Peserta</Label>
                                     <Input placeholder="NIP peserta" />

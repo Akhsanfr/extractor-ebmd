@@ -47,7 +47,7 @@ export async function exportBADesk(
 
     const rowsPengadaan: any[][] = [];
 
-    rowsPengadaan.push(["RENCANA KEBUTUHAN BARANG MILIK DAERAH"]);
+    rowsPengadaan.push(["HASIL PENELAAHAN RENCANA KEBUTUHAN PENGADAAN BMD"]);
     rowsPengadaan.push(["(RENCANA PENGADAAN)"]);
     rowsPengadaan.push(["PENGGUNA BARANG " + rkbmdBA.perangkatDaerah]);
     rowsPengadaan.push(["TAHUN 2027"]);
@@ -243,7 +243,7 @@ export async function exportBADesk(
     const rowsPemeliharaan: any[][] = [];
 
     // --- HEADER (sama persis dgn pengadaan) ---
-    rowsPemeliharaan.push(["RENCANA KEBUTUHAN BARANG MILIK DAERAH"]);                      // r0
+    rowsPemeliharaan.push(["HASIL PENELAAHAN RENCANA KEBUTUHAN PEMELIHARAAN BMD"]);                      // r0
     rowsPemeliharaan.push(["(RENCANA PEMELIHARAAN)"]);                                      // r1
     rowsPemeliharaan.push(["PENGGUNA BARANG " + rkbmdBA.perangkatDaerah]);                 // r2  ← pakai rkbmdBA, bukan pemeliharaanData[0]
     rowsPemeliharaan.push(["TAHUN 2027"]);                                                  // r3

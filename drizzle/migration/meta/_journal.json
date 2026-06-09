@@ -43,6 +43,13 @@
       "when": 1780899054381,
       "tag": "0005_living_menace",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1780967572754,
+      "tag": "0006_pretty_freak",
+      "breakpoints": true
     }
   ]
 }

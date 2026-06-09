@@ -29,11 +29,11 @@ export async function getRkbmdBaByIdAction(
 
 export async function updateRkbmdBaAction(
   input: RkbmdBaContract.InsertDTO
-): Promise<ActionResponse<RkbmdBaContract.SelectDTO>> {
+): Promise<ActionResponse<null>> {
   try {
     const parsed = RkbmdBaContract.update.parse(input);
-    const data = await updateRkbmdBaService(parsed);
-    return { success: true, data };
+    await updateRkbmdBaService(parsed);
+    return { success: true, data: null };
   } catch (error) {
     return handleActionError(error);
   }

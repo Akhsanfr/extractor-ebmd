@@ -6,7 +6,7 @@ import { getRkbmdBaAction, updateRkbmdBaAction } from "@/action/rkbmdBa/rkbmd-ba
 import { RkbmdBaContract } from "@/action/rkbmdBa/rkbmd-ba-contract";
 import { Check, Minus, Pen, Printer } from "lucide-react";
 import { generateBaDesk } from "@/lib/rkbmd/generateBaDesk";
-import EditBaModal from "./modal";
+import EditBaModal from "./modal ASDAD";
 import ModalBA from "./modal";
 import { exportBADesk } from "@/lib/rkbmd/exportBADesk";
 import { ListPemeliharaan, ListPengadaan } from "@/types/rkbmd";
@@ -130,10 +130,9 @@ export default function RkbmdBaPage() {
             (d.namaPeserta ?? "").toLowerCase().includes(search.toLowerCase())
     );
 
-    const handleUpdated = (updated: RkbmdBaContract.SelectDTO) => {
-        setData((prev) =>
-            prev.map((d) => (d.perangkatDaerahId === updated.perangkatDaerahId ? updated : d))
-        );
+    const handleUpdated = () => {
+        load()
+        setSelected(null)
     };
 
     const handleBaDesk = async (data: RkbmdBaContract.SelectDTO) => {

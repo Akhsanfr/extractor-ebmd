@@ -75,7 +75,7 @@ export async function generateBaDesk(perekon: Perekon, data: RkbmdBaContract.Sel
         hasilSuratPengantar: data.pengantar ? "sesuai dengan ketentuan" : "tidak sesuai dengan ketentuan",
         hasilUsulanRKBMDPengadaan: data.pengadaan ? "sesuai dengan ketentuan" : "tidak sesuai dengan ketentuan",
         hasilUsulanRKBMDPemeliharaan: data.pemeliharaan ? "sesuai dengan ketentuan" : "tidak sesuai dengan ketentuan",
-        tanggalPerbaikan: data.tanggalPerbaikan
+        tanggalPerbaikan: data.tanggalPerbaikan ? data.tanggalPerbaikan.toLocaleDateString("id-ID") : null
     });
 
     // 4. Render (throw jika ada placeholder yang tidak ditemukan)

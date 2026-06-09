@@ -1,12 +1,43 @@
 import * as XLSX from "xlsx";
 import { ListPengadaan, FormPemeliharan } from "@/types/rkbmd";
-import { AsetType } from "@/types/bmd"; // Pastikan path import ini sesuai
+import { AsetType } from "@/types/bmd";
 
-/**
- * Fungsi untuk membaca dan mengekstrak data dari file Excel RKBMD
- * Mengembalikan objek berisi data Pengadaan dan Pemeliharaan beserta relasi Aset Type-nya.
- * @param file - File dari <input type="file">
- */
+const ROMAN_NUMERALS = new Set([
+    "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
+    "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
+    "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX",
+    "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL",
+    "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L",
+    "LI", "LII", "LIII", "LIV", "LV"
+]);
+
+interface HierarchyState {
+    curPengguna: string;
+    curKuasa: string;
+    curProgram: string;
+    curKegiatan: string;
+    curOutput: string;
+}
+
+function parseHierarchy(colGroup: string, s: HierarchyState): void {
+    const romanMatch = colGroup.match(/^([A-Z]+)\.\s+(.*)$/);
+    if (romanMatch && ROMAN_NUMERALS.has(romanMatch[1])) {
+        s.curPengguna = romanMatch[2];
+        s.curKuasa = ""; s.curProgram = ""; s.curKegiatan = ""; s.curOutput = "";
+    } else if (/^[A-Z]\.\s+(.*)$/.test(colGroup)) {
+        s.curProgram = colGroup.match(/^[A-Z]\.\s+(.*)$/)?.[1] || colGroup;
+        s.curKegiatan = ""; s.curOutput = "";
+    } else if (/^\d+\.\s+(.*)$/.test(colGroup)) {
+        s.curKuasa = colGroup.match(/^\d+\.\s+(.*)$/)?.[1] || colGroup;
+        s.curProgram = ""; s.curKegiatan = ""; s.curOutput = "";
+    } else if (/^\d+\)\.\s+(.*)$/.test(colGroup)) {
+        s.curKegiatan = colGroup.match(/^\d+\)\.\s+(.*)$/)?.[1] || colGroup;
+        s.curOutput = "";
+    } else if (/^[a-z]\.\s+(.*)$/.test(colGroup)) {
+        s.curOutput = colGroup.match(/^[a-z]\.\s+(.*)$/)?.[1] || colGroup;
+    }
+}
+
 export async function importRkbmdFromExcel(file: File): Promise<{
     pengadaanData: ListPengadaan[];
     pemeliharaanData: FormPemeliharan[];
@@ -28,7 +59,6 @@ export async function importRkbmdFromExcel(file: File): Promise<{
                 const asetTypeMap = new Map<string, AsetType>();
                 if (workbook.Sheets["METADATA"]) {
                     const rowsMeta = XLSX.utils.sheet_to_json<any[]>(workbook.Sheets["METADATA"], { header: 1 });
-                    // Mulai dari 1 untuk skip baris header ["KODE_BARANG", "ASET_TYPE"]
                     for (let i = 1; i < rowsMeta.length; i++) {
                         const rowMeta = rowsMeta[i];
                         if (rowMeta && rowMeta[0] && rowMeta[1]) {
@@ -39,8 +69,6 @@ export async function importRkbmdFromExcel(file: File): Promise<{
                     }
                 }
 
-                // Helper function untuk mengambil aset type berdasarkan kode barang
-                // Fallback default ke "peralatan_mesin" jika entah kenapa tidak ada di metadata
                 const getAsetType = (kode: string): AsetType => {
                     return asetTypeMap.get(kode) || "peralatan_mesin";
                 };
@@ -49,56 +77,33 @@ export async function importRkbmdFromExcel(file: File): Promise<{
                 // 1. IMPORT SHEET: PENGADAAN
                 // ============================================================================
                 if (workbook.Sheets["PENGADAAN"]) {
-                    // Ambil raw data sebagai array of arrays (AoA)
                     const rowsP = XLSX.utils.sheet_to_json<any[]>(workbook.Sheets["PENGADAAN"], { header: 1 });
+                    const s: HierarchyState = { curPengguna: "", curKuasa: "", curProgram: "", curKegiatan: "", curOutput: "" };
 
-                    let curPengguna = "", curKuasa = "", curProgram = "", curKegiatan = "", curOutput = "";
-
-                    // Data tabel pengadaan dimulai dari baris ke-12 (index 11)
                     for (let i = 11; i < rowsP.length; i++) {
                         const row = rowsP[i];
                         if (!row || row.length === 0) continue;
-
-                        // Deteksi bagian akhir (area tanda tangan) untuk berhenti membaca
                         if (typeof row[12] === "string" && row[12].includes("..................")) break;
 
                         const colGroup = row[1] ? String(row[1]).trim() : "";
                         const colKodeBarang = row[2] ? String(row[2]).trim() : "";
-                        const colKodeBarangOpt = row[8] ? String(row[8]).trim() : ""; // Kode barang yg bisa dioptimalkan
+                        const colKodeBarangOpt = row[8] ? String(row[8]).trim() : "";
 
                         if (colGroup && !colKodeBarang) {
-                            // Cek pola menggunakan Regex untuk menentukan level hierarki
-                            // PENTING: reset variabel level bawah saat level atas berubah,
-                            // agar nilai lama tidak "bleeding" ke grup berikutnya.
-                            if (/^[IVXLCDM]+\.\s+(.*)$/.test(colGroup)) {
-                                curPengguna = colGroup.match(/^[IVXLCDM]+\.\s+(.*)$/)?.[1] || colGroup;
-                                curKuasa = ""; curProgram = ""; curKegiatan = ""; curOutput = "";
-                            } else if (/^\d+\.\s+(.*)$/.test(colGroup)) {
-                                curKuasa = colGroup.match(/^\d+\.\s+(.*)$/)?.[1] || colGroup;
-                                curProgram = ""; curKegiatan = ""; curOutput = "";
-                            } else if (/^[A-Z]\.\s+(.*)$/.test(colGroup)) {
-                                curProgram = colGroup.match(/^[A-Z]\.\s+(.*)$/)?.[1] || colGroup;
-                                curKegiatan = ""; curOutput = "";
-                            } else if (/^\d+\)\.\s+(.*)$/.test(colGroup)) {
-                                curKegiatan = colGroup.match(/^\d+\)\.\s+(.*)$/)?.[1] || colGroup;
-                                curOutput = "";
-                            } else if (/^[a-z]\.\s+(.*)$/.test(colGroup)) {
-                                curOutput = colGroup.match(/^[a-z]\.\s+(.*)$/)?.[1] || colGroup;
-                            }
+                            parseHierarchy(colGroup, s);
                         } else if (colKodeBarang && colKodeBarang !== "-" && colKodeBarang !== "") {
-                            // Ini adalah baris Data Barang
                             pengadaanData.push({
-                                penggunaBarang: curPengguna,
-                                kuasaPenggunaBarang: curKuasa,
-                                program: curProgram,
-                                kegiatan: curKegiatan,
-                                output: curOutput,
+                                penggunaBarang: s.curPengguna,
+                                kuasaPenggunaBarang: s.curKuasa,
+                                program: s.curProgram,
+                                kegiatan: s.curKegiatan,
+                                output: s.curOutput,
                                 usulan: {
                                     kodeBarang: colKodeBarang,
                                     namaBarang: row[3] || "",
                                     jumlah: Number(row[4]) || 0,
                                     satuan: row[5] || "",
-                                    asetType: getAsetType(colKodeBarang) // Mengambil dari Map
+                                    asetType: getAsetType(colKodeBarang)
                                 },
                                 bmdBisaDioptimalkan: {
                                     kodeBarang: colKodeBarangOpt,
@@ -121,51 +126,31 @@ export async function importRkbmdFromExcel(file: File): Promise<{
                 // ============================================================================
                 if (workbook.Sheets["PEMELIHARAAN"]) {
                     const rowsM = XLSX.utils.sheet_to_json<any[]>(workbook.Sheets["PEMELIHARAAN"], { header: 1 });
+                    const s: HierarchyState = { curPengguna: "", curKuasa: "", curProgram: "", curKegiatan: "", curOutput: "" };
 
-                    let curPengguna = "", curKuasa = "", curProgram = "", curKegiatan = "", curOutput = "";
-
-                    // Data tabel pemeliharaan dimulai dari baris ke-13 (index 12)
                     for (let i = 12; i < rowsM.length; i++) {
                         const row = rowsM[i];
                         if (!row || row.length === 0) continue;
-
-                        // Deteksi bagian akhir (area tanda tangan) untuk berhenti membaca
                         if (typeof row[10] === "string" && row[10].includes("..................")) break;
 
                         const colGroup = row[1] ? String(row[1]).trim() : "";
                         const colKodeBarang = row[2] ? String(row[2]).trim() : "";
 
                         if (colGroup && !colKodeBarang) {
-                            // Reset variabel level bawah saat level atas berubah (sama seperti PENGADAAN)
-                            if (/^[IVXLCDM]+\.\s+(.*)$/.test(colGroup)) {
-                                curPengguna = colGroup.match(/^[IVXLCDM]+\.\s+(.*)$/)?.[1] || colGroup;
-                                curKuasa = ""; curProgram = ""; curKegiatan = ""; curOutput = "";
-                            } else if (/^\d+\.\s+(.*)$/.test(colGroup)) {
-                                curKuasa = colGroup.match(/^\d+\.\s+(.*)$/)?.[1] || colGroup;
-                                curProgram = ""; curKegiatan = ""; curOutput = "";
-                            } else if (/^[A-Z]\.\s+(.*)$/.test(colGroup)) {
-                                curProgram = colGroup.match(/^[A-Z]\.\s+(.*)$/)?.[1] || colGroup;
-                                curKegiatan = ""; curOutput = "";
-                            } else if (/^\d+\)\.\s+(.*)$/.test(colGroup)) {
-                                curKegiatan = colGroup.match(/^\d+\)\.\s+(.*)$/)?.[1] || colGroup;
-                                curOutput = "";
-                            } else if (/^[a-z]\.\s+(.*)$/.test(colGroup)) {
-                                curOutput = colGroup.match(/^[a-z]\.\s+(.*)$/)?.[1] || colGroup;
-                            }
+                            parseHierarchy(colGroup, s);
                         } else if (colKodeBarang && colKodeBarang !== "-" && colKodeBarang !== "") {
-                            // Ini adalah baris Data Barang
                             pemeliharaanData.push({
-                                penggunaBarang: curPengguna,
-                                kuasaPenggunaBarang: curKuasa,
-                                program: curProgram,
-                                kegiatan: curKegiatan,
-                                output: curOutput,
+                                penggunaBarang: s.curPengguna,
+                                kuasaPenggunaBarang: s.curKuasa,
+                                program: s.curProgram,
+                                kegiatan: s.curKegiatan,
+                                output: s.curOutput,
                                 bmd: {
                                     kodeBarang: colKodeBarang,
                                     namaBarang: row[3] || "",
                                     jumlah: Number(row[4]) || 0,
                                     satuan: row[5] || "",
-                                    asetType: getAsetType(colKodeBarang) // Mengambil dari Map
+                                    asetType: getAsetType(colKodeBarang)
                                 },
                                 usulanPemeliharaan: {
                                     namaPemeliharaan: row[10] || "",

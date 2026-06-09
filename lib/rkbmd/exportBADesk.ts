@@ -515,5 +515,5 @@ export async function exportBADesk(
 
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     const blob = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-    saveAs(blob, `BA DESK ${rkbmdBA.perangkatDaerah}.xlsx`);
+    saveAs(blob, `PENELAAHAN ${rkbmdBA.perangkatDaerah}.xlsx`);
 }

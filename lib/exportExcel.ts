@@ -1,27 +1,31 @@
 import * as XLSX from "xlsx-js-style";
 import { saveAs } from "file-saver";
 import { ListPemeliharaan, ListPengadaan } from "@/types/rkbmd";
+import { toLowerAlpha, toRoman, toUpperAlpha } from "./formater/convertAlfaNumeric";
 
 /**
  * Fungsi Gabungan untuk Mengekspor Rencana Pengadaan dan Rencana Pemeliharaan
  * ke dalam satu file Excel dengan dua sheet terpisah.
+ *
+ * KONVENSI HIERARKI (harus konsisten dengan fn import parseHierarchy):
+ *
+ *   Pengguna Barang  → `${toRoman(idx + 1)}. ${nama}`          ← roman match ROMAN_NUMERALS set
+ *   Kuasa Pengguna   → `${idx}. ${nama}`                       ← pattern: /^\d+\.\s+(.*)/
+ *   Program          → `${toUpperAlpha(idx)}. ${nama}`          ← pattern: /^[A-Z]\.\s+(.*)/
+ *   Kegiatan         → `${idx}). ${nama}`                       ← pattern: /^\d+\)\s+(.*)/   ← TANPA titik sebelum spasi
+ *   Output           → `${toLowerAlpha(idx)}. ${nama}`          ← pattern: /^[a-z]\.\s+(.*)/
+ *
+ * CATATAN: import menggunakan .trim() sebelum regex, jadi indentasi boleh bebas.
+ * Namun indentasi dipertahankan untuk keterbacaan Excel.
  */
 export async function exportRkbmdToExcel(
     pengadaanData: ListPengadaan[],
-    pemeliharaanData: (ListPemeliharaan)[]
+    pemeliharaanData: ListPemeliharaan[]
 ) {
     const wb = XLSX.utils.book_new();
     const borderThin = {
         top: { style: "thin" }, bottom: { style: "thin" },
         left: { style: "thin" }, right: { style: "thin" }
-    };
-
-    // Helper untuk penomoran
-    const getAlpha = (i: number) => String.fromCharCode(65 + i); // A, B, C
-    const getLowerAlpha = (i: number) => String.fromCharCode(97 + i); // a, b, c
-    const getRoman = (i: number) => {
-        const roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
-        return roman[i] || (i + 1).toString();
     };
 
     // ============================================================================
@@ -31,13 +35,11 @@ export async function exportRkbmdToExcel(
 
     pengadaanData.forEach((item) => {
         const { penggunaBarang, kuasaPenggunaBarang, program, kegiatan, output } = item;
-
         if (!groupedPengadaan[penggunaBarang]) groupedPengadaan[penggunaBarang] = {};
         if (!groupedPengadaan[penggunaBarang][kuasaPenggunaBarang]) groupedPengadaan[penggunaBarang][kuasaPenggunaBarang] = {};
         if (!groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program]) groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program] = {};
         if (!groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan]) groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan] = {};
         if (!groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan][output]) groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan][output] = [];
-
         groupedPengadaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan][output].push(item);
     });
 
@@ -68,27 +70,32 @@ export async function exportRkbmdToExcel(
 
     let pengIdx = 0;
     for (const [pengguna, kuasas] of Object.entries(groupedPengadaan)) {
-        rowsPengadaan.push(["", `${getRoman(pengIdx)}. ${pengguna}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+        // FIX: toRoman dimulai dari 1, bukan 0
+        rowsPengadaan.push(["", `${toRoman(pengIdx + 1)}. ${pengguna}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
 
-        let kuasaIdxP = 1;
+        let kuasaIdx = 1;
         for (const [kuasa, programs] of Object.entries(kuasas as Record<string, any>)) {
             const isKuasaEmpty = !kuasa || kuasa.trim() === "" || kuasa === "-" || kuasa === "null";
             if (!isKuasaEmpty) {
-                rowsPengadaan.push(["", `     ${kuasaIdxP}. ${kuasa}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
-                kuasaIdxP++;
+                // FIX: pattern konsisten → `${n}. ` agar cocok dengan /^\d+\.\s+(.*)/
+                rowsPengadaan.push(["", `     ${kuasaIdx}. ${kuasa}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+                kuasaIdx++;
             }
 
             let progIdx = 0;
             for (const [program, kegiatans] of Object.entries(programs as Record<string, any>)) {
-                rowsPengadaan.push(["", `         ${getAlpha(progIdx)}. ${program}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+                // OK: toUpperAlpha(0)="A" → "A. ..." cocok /^[A-Z]\.\s+(.*)/
+                rowsPengadaan.push(["", `         ${toUpperAlpha(progIdx)}. ${program}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
 
                 let kegIdx = 1;
                 for (const [kegiatan, outputs] of Object.entries(kegiatans as Record<string, any>)) {
-                    rowsPengadaan.push(["", `             ${kegIdx}). ${kegiatan}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+                    // FIX: `${n}) ` (TANPA titik setelah kurung) agar cocok /^\d+\)\s+(.*)/
+                    rowsPengadaan.push(["", `             ${kegIdx}) ${kegiatan}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
 
                     let outIdx = 0;
                     for (const [output, items] of Object.entries(outputs as Record<string, any>)) {
-                        rowsPengadaan.push(["", `                 ${getLowerAlpha(outIdx)}. ${output}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
+                        // OK: toLowerAlpha(0)="a" → "a. ..." cocok /^[a-z]\.\s+(.*)/
+                        rowsPengadaan.push(["", `                 ${toLowerAlpha(outIdx)}. ${output}`, "", "", "", "", "", "", "", "", "", "", "", "", ""]);
 
                         for (const item of items as ListPengadaan[]) {
                             rowsPengadaan.push([
@@ -110,7 +117,6 @@ export async function exportRkbmdToExcel(
     }
     const endIdxPengadaan = rowsPengadaan.length;
 
-    // ... (Sisa footer pengadaan sama seperti sebelumnya) ...
     rowsPengadaan.push([]);
     rowsPengadaan.push([]);
     rowsPengadaan.push(["", "", "", "", "", "", "", "", "", "", "", "", ".................., .................................... (21)", "", ""]);
@@ -153,12 +159,11 @@ export async function exportRkbmdToExcel(
                     }
                 };
             } else if (R >= endIdxPengadaan) {
-                wsPengadaan[cellRef].s = { font: { sz: 10, bold: R === endIdxPengadaan + 7 }, alignment: { vertical: "center" } };
+                wsPengadaan[cellRef].s = { font: { sz: 10 }, alignment: { vertical: "center" } };
             }
         }
     }
     XLSX.utils.book_append_sheet(wb, wsPengadaan, "PENGADAAN");
-
 
     // ============================================================================
     // 2. PROSES DATA & SHEET: PEMELIHARAAN
@@ -167,20 +172,15 @@ export async function exportRkbmdToExcel(
 
     pemeliharaanData.forEach((item) => {
         const { penggunaBarang, kuasaPenggunaBarang, program, kegiatan, output } = item;
-
-        // 1. Tambahkan Pengguna Barang ke Root Grouping Pemeliharaan
         if (!groupedPemeliharaan[penggunaBarang]) groupedPemeliharaan[penggunaBarang] = {};
         if (!groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang]) groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang] = {};
         if (!groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang][program]) groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang][program] = {};
         if (!groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan]) groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan] = {};
         if (!groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan][output]) groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan][output] = [];
-
         groupedPemeliharaan[penggunaBarang][kuasaPenggunaBarang][program][kegiatan][output].push(item);
     });
 
     const rowsPemeliharaan: any[][] = [];
-
-    // 2. Ambil Header Dinamis
     const headerPenggunaBarangM = pemeliharaanData.length > 0 ? pemeliharaanData[0].penggunaBarang : "................(2)";
 
     rowsPemeliharaan.push(["RENCANA KEBUTUHAN BARANG MILIK DAERAH"]);
@@ -204,36 +204,34 @@ export async function exportRkbmdToExcel(
 
     const startIdxPemeliharaan = rowsPemeliharaan.length;
 
-    // 3. Looping berjenjang dari Pengguna Barang
     let pengIdxM = 0;
     for (const [pengguna, kuasas] of Object.entries(groupedPemeliharaan)) {
-        rowsPemeliharaan.push(["", `${getRoman(pengIdxM)}. ${pengguna}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+        // FIX: toRoman dimulai dari 1
+        rowsPemeliharaan.push(["", `${toRoman(pengIdxM + 1)}. ${pengguna}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
 
         let kuasaIdxM = 1;
         for (const [kuasa, programs] of Object.entries(kuasas as Record<string, any>)) {
-
-            // 4. Mekanisme Skip jika Kuasa Pengguna Barang kosong
             const isKuasaEmpty = !kuasa || kuasa.trim() === "" || kuasa === "-" || kuasa === "null";
             if (!isKuasaEmpty) {
+                // FIX: konsisten `${n}. ` cocok /^\d+\.\s+(.*)/
                 rowsPemeliharaan.push(["", `     ${kuasaIdxM}. ${kuasa}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
                 kuasaIdxM++;
             }
 
             let progIdx = 0;
             for (const [program, kegiatans] of Object.entries(programs as Record<string, any>)) {
-                rowsPemeliharaan.push(["", `         ${getAlpha(progIdx)}. ${program}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+                rowsPemeliharaan.push(["", `         ${toUpperAlpha(progIdx)}. ${program}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
 
                 let kegIdx = 1;
                 for (const [kegiatan, outputs] of Object.entries(kegiatans as Record<string, any>)) {
-                    rowsPemeliharaan.push(["", `             ${kegIdx}). ${kegiatan}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+                    // FIX: `${n}) ` tanpa titik, cocok /^\d+\)\s+(.*)/
+                    rowsPemeliharaan.push(["", `             ${kegIdx}) ${kegiatan}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
 
                     let outIdx = 0;
                     for (const [output, items] of Object.entries(outputs as Record<string, any>)) {
-                        rowsPemeliharaan.push(["", `                 ${getLowerAlpha(outIdx)}. ${output}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
+                        rowsPemeliharaan.push(["", `                 ${toLowerAlpha(outIdx)}. ${output}`, "", "", "", "", "", "", "", "", "", "", "", ""]);
 
                         for (const item of items as any[]) {
-                            // Penyesuaian agar kompatibel dengan Type `FormPemeliharan` 
-                            // Fallback (||) digunakan jika properties berada di level flat object atau nested object
                             const kodeBrg = item.bmd?.kodeBarang || item.kodeBarang || "-";
                             const namaBrg = item.bmd?.namaBarang || item.namaBarang || "-";
                             const jmlTersedia = item.bmd?.jumlah || item.jumlahTersedia || "-";
@@ -242,7 +240,6 @@ export async function exportRkbmdToExcel(
                             const nmPemeliharaan = item.usulanPemeliharaan?.namaPemeliharaan || item.namaPemeliharaan || "-";
                             const jmlPemeliharaan = item.usulanPemeliharaan?.jumlah || item.jumlah || "-";
                             const satPemeliharaan = item.usulanPemeliharaan?.satuan || item.satuan || "-";
-
                             const ket = item.keterangan || "";
 
                             rowsPemeliharaan.push([
@@ -267,7 +264,6 @@ export async function exportRkbmdToExcel(
     rowsPemeliharaan.push([]);
     rowsPemeliharaan.push(["", "", "", "", "", "", "", "", "", "", ".................., .................................... (21)"]);
     rowsPemeliharaan.push(["", "", "", "", "", "", "", "", "", "", "PENGGUNA BARANG………(22)"]);
-    // ... sisa footer petunjuk pengisian diabaikan agar kode tidak terlalu panjang (Anda bisa mempertahankan array aslinya di kode Anda)
     rowsPemeliharaan.push([]);
     rowsPemeliharaan.push(["Petunjuk Pengisian"]);
     rowsPemeliharaan.push(["(1)", "Diisi nomor halaman."]);
@@ -292,7 +288,6 @@ export async function exportRkbmdToExcel(
         for (let C = 0; C < 14; ++C) {
             const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
             if (!wsPemeliharaan[cellRef]) wsPemeliharaan[cellRef] = { t: "s", v: "" };
-
             if (R === 0 || R === 1) {
                 wsPemeliharaan[cellRef].s = { font: { bold: true, sz: 12 }, alignment: { horizontal: "center", vertical: "center" } };
             } else if (R >= 2 && R <= 6) {
@@ -308,17 +303,15 @@ export async function exportRkbmdToExcel(
                     }
                 };
             } else if (R >= endIdxPemeliharaan) {
-                wsPemeliharaan[cellRef].s = { font: { sz: 10, bold: R === endIdxPemeliharaan + 7 }, alignment: { vertical: "center" } };
+                wsPemeliharaan[cellRef].s = { font: { sz: 10 }, alignment: { vertical: "center" } };
             }
         }
     }
     XLSX.utils.book_append_sheet(wb, wsPemeliharaan, "PEMELIHARAAN");
 
     // ============================================================================
-    // 3. GENERATE & DOWNLOAD WORKBOOK GABUNGAN
+    // 3. SHEET: METADATA (hidden)
     // ============================================================================
-
-    // A. Kumpulkan semua relasi Kode Barang dan Aset Type
     const globalAsetTypeMap = new Map<string, string>();
 
     pengadaanData.forEach((item) => {
@@ -331,39 +324,27 @@ export async function exportRkbmdToExcel(
     });
 
     pemeliharaanData.forEach((item) => {
-        const bmdData = (item as any).bmd || item; // Fallback jika format flat/nested
+        const bmdData = (item as any).bmd || item;
         if (bmdData?.kodeBarang && bmdData?.asetType) {
             globalAsetTypeMap.set(bmdData.kodeBarang, bmdData.asetType);
         }
     });
 
-    // B. Buat Row untuk Sheet METADATA
     const metadataRows: any[][] = [["KODE_BARANG", "ASET_TYPE"]];
     globalAsetTypeMap.forEach((asetType, kodeBarang) => {
         metadataRows.push([kodeBarang, asetType]);
     });
 
-    // C. Convert ke Sheet dan Append
     const wsMetadata = XLSX.utils.aoa_to_sheet(metadataRows);
     XLSX.utils.book_append_sheet(wb, wsMetadata, "METADATA");
 
-    // D. Sembunyikan Sheet METADATA
-    // SheetJS mengatur visibilitas melalui properti wb.Workbook.Sheets array
-    if (!wb.Workbook) {
-        wb.Workbook = { Views: [{ activeTab: 0 } as any] };
-    }
-
-    if (!wb.Workbook.Sheets) {
-        wb.Workbook.Sheets = [];
-    }
-
-    // Index mengikuti urutan append: 0=PENGADAAN, 1=PEMELIHARAAN, 2=METADATA
+    if (!wb.Workbook) wb.Workbook = { Views: [{ activeTab: 0 } as any] };
+    if (!wb.Workbook.Sheets) wb.Workbook.Sheets = [];
     wb.Workbook.Sheets = [
         {}, // PENGADAAN (Normal)
         {}, // PEMELIHARAAN (Normal)
         { Hidden: 1 } // METADATA (Hidden)
     ];
-
 
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     const blob = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });

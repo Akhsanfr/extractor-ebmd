@@ -5260,5 +5260,11 @@
         "LOKASI": "SEKRETARIAT DPRD",
         "STATUS": "Pengguna Barang",
         "PARENT ID": ""
+    },
+    {
+        "ID": "xx.xx.xx",
+        "LOKASI": "BADAN PENDAPATAN DAERAH",
+        "STATUS": "Pengguna Barang",
+        "PARENT ID": ""
     }
 ]

@@ -1,0 +1,1 @@
+ALTER TABLE "sebaran_bmd" RENAME COLUMN "statusBhumi" TO "status_bhumi";

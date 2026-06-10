@@ -1,4 +1,5 @@
 import { pgTable, varchar, text, timestamp, boolean, customType } from "drizzle-orm/pg-core";
+import { sebaranBmdStatusBhumiEnum } from "./enum";
 
 // PostGIS geometry type
 const geometry = customType<{ data: string; driverData: string }>({
@@ -18,6 +19,7 @@ export const sebaranBmd = pgTable("sebaran_bmd", {
     pic: text("pic"),
     updatedAt: timestamp("updated_at", { withTimezone: true }),
     statusPlotting: boolean("status_plotting"),  // ← baru
+    statusBhumi: sebaranBmdStatusBhumiEnum("status_bhumi"), // APP BHUMI
 });
 
 export type SebaranBmd = typeof sebaranBmd.$inferSelect;

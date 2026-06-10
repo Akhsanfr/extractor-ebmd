@@ -7,6 +7,8 @@ import type {
     ExcelRowInput,
     KmlExportItem,
     PaginatedResult,
+    UpdateBmdInput,
+    UpdateBmdResult,
     UpdateStatusPlottingResult,
     UploadPolygonInput,
     UploadPolygonResult,
@@ -143,6 +145,48 @@ export async function updateStatusPlotting(
     } catch (err) {
         console.error("[setStatusPlottingFalse] DB error:", err);
         return { success: false, message: "Gagal memperbarui status plotting." };
+    }
+}
+
+// ─── Update BMD unified ───────────────────────────────────────────────────────
+
+export async function updateBmd(input: UpdateBmdInput): Promise<UpdateBmdResult> {
+    const { nibar, updatedBy, geoJsonString, statusBhumi } = input;
+
+    // Minimal satu field harus diisi
+    if (geoJsonString === undefined && statusBhumi === undefined)
+        return { success: false, message: "Tidak ada perubahan yang disimpan." };
+
+    const existing = await repo.findByNibar(nibar);
+    if (!existing) return { success: false, message: `NIBAR ${nibar} tidak ditemukan.` };
+
+    // Validasi GeoJSON jika ada
+    let geometryString: string | undefined;
+    if (geoJsonString !== undefined) {
+        const validation = validateGeoJson(geoJsonString);
+        if ("error" in validation) return { success: false, message: validation.error };
+        geometryString = JSON.stringify(validation.geometry);
+    }
+
+    try {
+        await repo.updateBmd({
+            nibar,
+            updatedBy,
+            geoJsonString: geometryString,
+            statusBhumi,
+        });
+
+        const parts: string[] = [];
+        if (geometryString !== undefined) parts.push("polygon diperbarui");
+        if (statusBhumi !== undefined) parts.push("status plotting diperbarui");
+
+        return {
+            success: true,
+            message: `NIBAR ${nibar}: ${parts.join(" dan ")}.`,
+        };
+    } catch (err) {
+        console.error("[updateBmd] DB error:", err);
+        return { success: false, message: "Gagal menyimpan perubahan ke database." };
     }
 }
 

@@ -1,5 +1,7 @@
 // ─── DTOs ────────────────────────────────────────────────────────────────────
 
+import { StatusBhumi } from "@/enum/sebaranBmd";
+
 export interface BmdTanahDTO {
     nibar: string;
     nibel: string | null;
@@ -11,6 +13,7 @@ export interface BmdTanahDTO {
     updatedAt: Date | null;
     hasPolygon: boolean;
     statusPlotting: boolean | null;
+    statusBhumi: StatusBhumi | null
 }
 
 export interface BmdTanahWithGeomDTO extends BmdTanahDTO {
@@ -82,6 +85,23 @@ export interface UploadPolygonResult {
 // ─── Status Plotting ─────────────────────────────────────────────────────────
 
 export interface UpdateStatusPlottingResult {
+    success: boolean;
+    message: string;
+}
+
+// ─── Update BMD (unified: polygon + status) ──────────────────────────────────
+
+export interface UpdateBmdInput {
+    nibar: string;
+    updatedBy: string;
+    /** Jika diisi, polygon akan diperbarui */
+    geoJsonString?: string;
+    statusBhumi?: StatusBhumi | null;
+    /** Jika diisi, status_plotting akan diperbarui */
+    // statusPlotting?: boolean;
+}
+
+export interface UpdateBmdResult {
     success: boolean;
     message: string;
 }

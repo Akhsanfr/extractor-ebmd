@@ -110,6 +110,7 @@ export default function BmdTanahPage() {
                     page: pg,
                     pageSize: PAGE_SIZE,
                 });
+                console.log(result)
                 setRows(result.data);
                 setTotal(result.total);
             } finally {
@@ -538,19 +539,9 @@ export default function BmdTanahPage() {
                                             </Table.Cell>
 
                                             <Table.Cell>
-                                                {row.statusPlotting === null ? (
-                                                    <Chip size="sm" color="default">
-                                                        Belum Diset
-                                                    </Chip>
-                                                ) : row.statusPlotting ? (
-                                                    <Chip size="sm" color="success">
-                                                        Sudah Plotting
-                                                    </Chip>
-                                                ) : (
-                                                    <Chip size="sm" color="danger">
-                                                        Belum Terplotting
-                                                    </Chip>
-                                                )}
+                                                <Chip>
+                                                    {row.statusBhumi}
+                                                </Chip>
                                             </Table.Cell>
 
                                             <Table.Cell>

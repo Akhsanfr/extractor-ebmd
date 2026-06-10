@@ -9,6 +9,7 @@ import type {
     ExcelRowInput,
     KmlExportItem,
     PaginatedResult,
+    UpdateBmdInput,
 } from "./sebaranBmd.contract";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -48,6 +49,7 @@ const selectCols = {
     updatedAt: sebaranBmd.updatedAt,
     hasPolygon: sql<boolean>`(${sebaranBmd.polygon} IS NOT NULL)`,
     statusPlotting: sebaranBmd.statusPlotting,
+    statusBhumi: sebaranBmd.statusBhumi
 };
 
 // ─── Repository ──────────────────────────────────────────────────────────────
@@ -177,6 +179,45 @@ export async function updateStatusPlotting(
             updatedAt: new Date(),
         })
         .where(eq(sebaranBmd.nibar, nibar));
+}
+
+// ─── Update BMD unified (polygon + status dalam satu transaksi) ──────────────
+
+export async function updateBmd(input: UpdateBmdInput): Promise<void> {
+    console.log("call repo")
+
+    // Jika ada GeoJSON baru → update polygon via raw SQL (butuh ST_GeomFromGeoJSON)
+    if (input.geoJsonString !== undefined) {
+        console.log("update ada geojson")
+        // const statusVal = statusPlotting ?? true; // default sudahPlotting jika paste GeoJSON
+        await db.execute(sql`
+            UPDATE sebaran_bmd
+            SET
+                polygon         = ST_Multi(ST_GeomFromGeoJSON(${input.geoJsonString}::text)),
+                status_bhumi = ${input.statusBhumi},
+                updated_by      = ${input.updatedBy},
+                updated_at      = NOW()
+            WHERE nibar = ${input.nibar}
+        `);
+        return;
+    }
+
+    // Hanya update status tanpa polygon
+    if (input.statusBhumi !== undefined) {
+        console.log("update status bhumi")
+        const res = await db
+            .update(sebaranBmd)
+            .set({
+                statusBhumi: input.statusBhumi,
+                updatedBy: input.updatedBy,
+                updatedAt: new Date(),
+            })
+            .where(eq(sebaranBmd.nibar, input.nibar));
+        console.log("hasil", res)
+        return;
+    }
+    console.log("gak ada apa2")
+
 }
 
 // ─── KML Export ──────────────────────────────────────────────────────────────

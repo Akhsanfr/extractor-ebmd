@@ -50,6 +50,20 @@
       "when": 1780967572754,
       "tag": "0006_pretty_freak",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1781075354327,
+      "tag": "0007_white_unus",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1781078366887,
+      "tag": "0008_tired_the_enforcers",
+      "breakpoints": true
     }
   ]
 }

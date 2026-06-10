@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import * as service from "./sebaranBmd.service";
 import type {
     BmdTanahFilterParams,
+    UpdateBmdInput,
+    UpdateBmdResult,
     UpdateStatusPlottingResult,
     UploadPolygonResult,
     UpsertExcelResult,
@@ -41,6 +43,14 @@ export async function updateStatusPlottingAction(
     updatedBy: string
 ): Promise<UpdateStatusPlottingResult> {
     const result = await service.updateStatusPlotting(nibar, value, updatedBy);
+    if (result.success) revalidatePath("/sebaran-bmd");
+    return result;
+}
+
+// ─── Update BMD unified (polygon + status) ───────────────────────────────────
+
+export async function updateBmdAction(input: UpdateBmdInput): Promise<UpdateBmdResult> {
+    const result = await service.updateBmd(input);
     if (result.success) revalidatePath("/sebaran-bmd");
     return result;
 }

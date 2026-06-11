@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { Modal, Button, toast, Spinner, Label, Select, Description, ListBox } from "@heroui/react";
+import { Modal, Button, toast, Spinner, Label, Select, Description, ListBox, TextField, Input } from "@heroui/react";
 import {
     updateBmdAction,
     getPolygonGeoJsonAction,
@@ -89,6 +89,7 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
     const [statusBhumi, setStatusBhumi] = useState<StatusBhumi | null>(
         booleanToStatusBhumi(bmd.statusPlotting)
     );
+    const [keterangan, setKetarangan] = useState(bmd.keterangan)
 
     const [error, setError] = useState<string | null>(null);
 
@@ -186,13 +187,12 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
         // if (!canSave) return;
         setLoading(true);
         try {
-            console.log("sp", statusBhumi)
             const result = await updateBmdAction({
                 nibar: bmd.nibar,
                 updatedBy: namaPic,
                 geoJsonString: geoJsonText ?? undefined,
                 statusBhumi: statusBhumi,
-                // statusPlotting: statusBhumi !== null ? statusBhumiToBoolean(statusBhumi) : undefined,
+                keterangan,
             });
 
             if (result.success) {
@@ -277,8 +277,10 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
                                         </Select.Popover>
                                     </Select>
                                 </div>
-
-
+                                <TextField name="keterangan" value={keterangan ?? ""} onChange={setKetarangan}>
+                                    <Label>Keterangan</Label>
+                                    <Input placeholder="Misal : beda luas bhumi dengan sertifikat..." />
+                                </TextField>
 
                                 <input
                                     type="file"

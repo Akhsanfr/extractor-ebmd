@@ -154,11 +154,13 @@ export async function updateStatusPlotting(
 // ─── Update BMD unified ───────────────────────────────────────────────────────
 
 export async function updateBmd(input: UpdateBmdInput): Promise<UpdateBmdResult> {
-    const { nibar, updatedBy, geoJsonString, statusBhumi } = input;
+    const { nibar, updatedBy, geoJsonString, statusBhumi, keterangan } = input;
 
+    console.log(geoJsonString);
+    console.log(statusBhumi);
     // Minimal satu field harus diisi
-    if (geoJsonString === undefined && statusBhumi === undefined)
-        return { success: false, message: "Tidak ada perubahan yang disimpan." };
+    if (geoJsonString === undefined && statusBhumi === null)
+        return { success: false, message: "Data spasial atau status bhumi wajib diisi terlebih dahulu." };
 
     const existing = await repo.findByNibar(nibar);
     if (!existing) return { success: false, message: `NIBAR ${nibar} tidak ditemukan.` };
@@ -177,6 +179,7 @@ export async function updateBmd(input: UpdateBmdInput): Promise<UpdateBmdResult>
             updatedBy,
             geoJsonString: geometryString,
             statusBhumi,
+            keterangan,
         });
 
         const parts: string[] = [];

@@ -98,6 +98,7 @@ export interface UpdateBmdInput {
     /** Jika diisi, polygon akan diperbarui */
     geoJsonString?: string;
     statusBhumi?: StatusBhumi | null;
+    keterangan: string | null;
     /** Jika diisi, status_plotting akan diperbarui */
     // statusPlotting?: boolean;
 }
@@ -147,4 +148,4 @@ export namespace SebaranBMDContract {
     export type SelectDTO = z.infer<typeof SebaranBMDContract.select>;
     export type UpdateDTO = z.infer<typeof SebaranBMDContract.update>;
 }
-export type InputFindAll = { pic?: string, hasPolygon?: boolean, statusBhumi?: StatusBhumi }
+export type InputFindAll = { pic?: string, hasPolygon?: boolean, statusBhumi?: StatusBhumi | "all" | "belum set" }

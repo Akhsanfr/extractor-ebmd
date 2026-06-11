@@ -58,6 +58,18 @@ function StatCard({ label, value, sub }: { label: string; value: string | number
     );
 }
 
+const copasScriptBhumi = async () => {
+    try {
+        const scriptBhumi = await fetch("/sebaran-bmd/script-bhumi.js")
+            .then(res => res.text());
+        await navigator.clipboard.writeText(scriptBhumi);
+        toast.success("Berhasil menyalin script Bhumi. Silakan buka app Bhumi ATR/BPN, tempel pada console")
+    } catch (error) {
+        toast.danger("Gagal menyalin script Bhumi")
+    }
+}
+
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function BmdTanahPage() {
@@ -78,7 +90,7 @@ export default function BmdTanahPage() {
 
     const [filterPic, setFilterPic] = useState("");
     const [filterStatus, setFilterStatus] = useState<StatusPolygonFilter>("semua");
-    const [filterStatusBhumi, setStatusBhumi] = useState<StatusBhumi | "semua">("semua");
+    const [filterStatusBhumi, setStatusBhumi] = useState<StatusBhumi | "all">("all");
     const [search, setSearch] = useState("");
     const searchRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -103,7 +115,7 @@ export default function BmdTanahPage() {
         async (pg: number) => {
             setLoading(true);
             try {
-                const result = await actionSebaranBmdGetAll({ page: pg, limit: PAGE_SIZE, filter: { pic: filterPic, statusBhumi: filterStatusBhumi === "semua" ? undefined : filterStatusBhumi } })
+                const result = await actionSebaranBmdGetAll({ page: pg, limit: PAGE_SIZE, filter: { pic: filterPic, statusBhumi: filterStatusBhumi } })
                 console.log(result)
                 if (!result.success) throw result.error
                 setTotal(result.data.total);
@@ -129,9 +141,9 @@ export default function BmdTanahPage() {
         fetchList(1);
     }, [filterPic, filterStatus, search, fetchList]);
 
-    // useEffect(() => {
-    //     fetchList(page);
-    // }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        fetchList(page);
+    }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // ── Handlers ──────────────────────────────────────────────────────────────
 
@@ -402,7 +414,7 @@ export default function BmdTanahPage() {
                 <Separator />
 
                 {/* ── Filter ── */}
-                <div className="flex flex-wrap gap-3">
+                <div className="flex gap-2 items-end">
                     {/* Filter PIC */}
                     <Select
                         className="w-56"
@@ -471,6 +483,9 @@ export default function BmdTanahPage() {
                                     <ListBox.Item id="all" key="all" textValue="Semua">
                                         <Label>Semua</Label>
                                     </ListBox.Item>
+                                    <ListBox.Item id="belum set" key="belum set" textValue="Semua">
+                                        <Label>Belum Set</Label>
+                                    </ListBox.Item>
 
                                     {Object.entries(StatusBhumi).map(([key, value]) => (
                                         <ListBox.Item id={value} key={key} textValue={value}>
@@ -481,12 +496,13 @@ export default function BmdTanahPage() {
                             </ListBox>
                         </Select.Popover>
                     </Select>
+                    <Button onPress={copasScriptBhumi}>Script Bhumi</Button>
 
                     {/* Search */}
-                    <TextField className="w-72" onChange={handleSearchChange}>
+                    {/* <TextField className="w-72" onChange={handleSearchChange}>
                         <Label>Cari NIBAR / Nomor / Desa</Label>
                         <Input />
-                    </TextField>
+                    </TextField> */}
                 </div>
 
                 {/* ── Table ── */}

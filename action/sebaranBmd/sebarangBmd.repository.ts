@@ -93,7 +93,7 @@ const selectCols = {
 
 export const SebarangBmdRepository = {
     findAll: async (input: PaginationInput<InputFindAll>): Promise<PaginationResult<SebaranBMDContract.SelectDTO[]>> => {
-
+        console.log("find all", input.filter)
         const conditions = and(
             input.filter.pic ? eq(sebaranBmd.pic, input.filter.pic) : undefined,
             input.filter.hasPolygon !== undefined
@@ -101,7 +101,7 @@ export const SebarangBmdRepository = {
                     ? isNotNull(sebaranBmd.polygon)
                     : isNull(sebaranBmd.polygon)
                 : undefined,
-            input.filter.statusBhumi ? eq(sebaranBmd.statusBhumi, input.filter.statusBhumi) : undefined,
+            input.filter.statusBhumi === "all" ? undefined : input.filter.statusBhumi === "belum set" || input.filter.statusBhumi === undefined ? isNull(sebaranBmd.statusBhumi) : eq(sebaranBmd.statusBhumi, input.filter.statusBhumi),
         )
         const [rows, countRows] = await Promise.all([
             db
@@ -155,7 +155,7 @@ export async function getStatPerPic(): Promise<BmdTanahStatPerPicDTO[]> {
         .select({
             pic: sebaranBmd.pic,
             total: sql<number>`count(*)::int`,
-            sudahPlotting: sql<number>`count(*) filter (where ${sebaranBmd.statusPlotting} IS NOT NULL)::int`,
+            sudahPlotting: sql<number>`count(*) filter (where ${sebaranBmd.statusBhumi} IS NOT NULL)::int`,
             sudahDigitasi: sql<number>`count(*) filter (where ${sebaranBmd.polygon} IS NOT NULL)::int`,
         })
         .from(sebaranBmd)
@@ -216,19 +216,15 @@ export async function updateStatusPlotting(
 // ─── Update BMD unified (polygon + status dalam satu transaksi) ──────────────
 
 export async function updateBmd(input: UpdateBmdInput): Promise<void> {
-    console.log("call repo")
-
-    // Jika ada GeoJSON baru → update polygon via raw SQL (butuh ST_GeomFromGeoJSON)
     if (input.geoJsonString !== undefined) {
-        console.log("update ada geojson")
-        // const statusVal = statusPlotting ?? true; // default sudahPlotting jika paste GeoJSON
         await db.execute(sql`
             UPDATE sebaran_bmd
             SET
                 polygon         = ST_Multi(ST_GeomFromGeoJSON(${input.geoJsonString}::text)),
                 status_bhumi = ${input.statusBhumi},
                 updated_by      = ${input.updatedBy},
-                updated_at      = NOW()
+                updated_at      = NOW(),
+                keterangan = ${input.keterangan}
             WHERE nibar = ${input.nibar}
         `);
         return;
@@ -243,12 +239,12 @@ export async function updateBmd(input: UpdateBmdInput): Promise<void> {
                 statusBhumi: input.statusBhumi,
                 updatedBy: input.updatedBy,
                 updatedAt: new Date(),
+                keterangan: input.keterangan
             })
             .where(eq(sebaranBmd.nibar, input.nibar));
-        console.log("hasil", res)
+
         return;
     }
-    console.log("gak ada apa2")
 
 }
 

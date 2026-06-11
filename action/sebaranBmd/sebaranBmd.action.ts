@@ -4,12 +4,16 @@ import { revalidatePath } from "next/cache";
 import * as service from "./sebaranBmd.service";
 import type {
     BmdTanahFilterParams,
+    InputFindAll,
+    PaginatedResult,
+    SebaranBMDContract,
     UpdateBmdInput,
     UpdateBmdResult,
     UpdateStatusPlottingResult,
     UploadPolygonResult,
     UpsertExcelResult,
 } from "./sebaranBmd.contract";
+import { ActionResponse, handleActionError, PaginationInput, PaginationResult } from "../actionResponse";
 
 // ─── Statistik ───────────────────────────────────────────────────────────────
 
@@ -19,9 +23,9 @@ export async function getDistinctPicAction() { return service.getDistinctPic(); 
 
 // ─── Data Table ──────────────────────────────────────────────────────────────
 
-export async function getListBmdAction(params: BmdTanahFilterParams) {
-    return service.getListBmd(params);
-}
+// export async function getListBmdAction(params: BmdTanahFilterParams) {
+//     return service.getListBmd(params);
+// }
 
 // ─── Upload GeoJSON ──────────────────────────────────────────────────────────
 
@@ -73,4 +77,12 @@ export async function exportKmlAction(): Promise<{ kmlString: string; filename: 
 
 export async function getPolygonGeoJsonAction(nibar: string): Promise<string | null> {
     return service.getPolygonGeoJson(nibar);
+}
+
+export async function actionSebaranBmdGetAll(input: PaginationInput<InputFindAll>): Promise<ActionResponse<PaginationResult<SebaranBMDContract.SelectDTO[]>>> {
+    try {
+        return { success: true, data: await service.SebarangBmdService.findAll(input) }
+    } catch (error) {
+        return handleActionError(error)
+    }
 }

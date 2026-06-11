@@ -1,0 +1,1 @@
+ALTER TABLE "sebaran_bmd" ADD COLUMN "keterangan" text;

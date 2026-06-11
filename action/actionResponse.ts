@@ -28,19 +28,31 @@ export type ActionResponse<T> =
 /**
  * PAGINATION
  */
-export type PaginationMeta = {
+// export type PaginationMeta = {
+//     page: number;
+//     limit: number;
+//     total: number;
+//     totalPages: number;
+// };
+
+
+export type PaginationInput<T> = {
+    filter: T;
     page: number;
     limit: number;
+};
+
+export type PaginationResult<T> = {
+    data: T;
     total: number;
-    totalPages: number;
 };
 
-export type ResponsePaginated<T> = {
-    data: T[];
-    pagination: PaginationMeta;
-};
+// export type ResponsePaginated<T> = {
+//     data: T[];
+//     pagination: PaginationMeta;
+// };
 
-export type ActionResponsePaginated<T> = ActionResponse<ResponsePaginated<T>>;
+// export type ActionResponsePaginated<T> = ActionResponse<ResponsePaginated<T>>;
 
 export class OperationalError extends Error {
     public readonly validation?: Record<string, string[]>;

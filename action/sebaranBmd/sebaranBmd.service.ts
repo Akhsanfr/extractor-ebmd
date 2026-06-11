@@ -5,8 +5,10 @@ import type {
     BmdTanahStatDTO,
     BmdTanahStatPerPicDTO,
     ExcelRowInput,
+    InputFindAll,
     KmlExportItem,
     PaginatedResult,
+    SebaranBMDContract,
     UpdateBmdInput,
     UpdateBmdResult,
     UpdateStatusPlottingResult,
@@ -14,6 +16,7 @@ import type {
     UploadPolygonResult,
     UpsertExcelResult,
 } from "./sebaranBmd.contract";
+import { PaginationInput, PaginationResult } from "../actionResponse";
 
 // ─── Validasi GeoJSON ─────────────────────────────────────────────────────────
 
@@ -102,11 +105,11 @@ export async function getStatistik(): Promise<BmdTanahStatDTO> { return repo.get
 export async function getStatistikPerPic(): Promise<BmdTanahStatPerPicDTO[]> { return repo.getStatPerPic(); }
 export async function getDistinctPic(): Promise<string[]> { return repo.getDistinctPic(); }
 
-export async function getListBmd(
-    params: BmdTanahFilterParams
-): Promise<PaginatedResult<BmdTanahDTO>> {
-    return repo.findAllPaginated(params);
-}
+// export async function getListBmd(
+//     params: BmdTanahFilterParams
+// ): Promise<PaginatedResult<BmdTanahDTO>> {
+//     return repo.findAllPaginated(params);
+// }
 
 export async function uploadPolygon(
     input: UploadPolygonInput
@@ -294,4 +297,11 @@ export async function exportKml(): Promise<{ kmlString: string; filename: string
 
 export async function getPolygonGeoJson(nibar: string): Promise<string | null> {
     return repo.getPolygonGeoJson(nibar);
+}
+
+
+export const SebarangBmdService = {
+    async findAll(input: PaginationInput<InputFindAll>): Promise<PaginationResult<SebaranBMDContract.SelectDTO[]>> {
+        return await repo.SebarangBmdRepository.findAll(input)
+    }
 }

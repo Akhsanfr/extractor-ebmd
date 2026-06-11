@@ -7,10 +7,14 @@ import type {
     BmdTanahStatDTO,
     BmdTanahStatPerPicDTO,
     ExcelRowInput,
+    InputFindAll,
     KmlExportItem,
     PaginatedResult,
+    SebaranBMDContract,
     UpdateBmdInput,
 } from "./sebaranBmd.contract";
+import { PaginationInput, PaginationResult } from "../actionResponse";
+import { StatusBhumi } from "@/enum/sebaranBmd";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -54,41 +58,69 @@ const selectCols = {
 
 // ─── Repository ──────────────────────────────────────────────────────────────
 
-export async function findAllPaginated(
-    params: BmdTanahFilterParams
-): Promise<PaginatedResult<BmdTanahDTO>> {
-    const { pic, status, statusPlotting, search, page = 1, pageSize = 20 } = params;
-    const offset = (page - 1) * pageSize;
+// export async function findAllPaginated(
+//     params: BmdTanahFilterParams
+// ): Promise<PaginatedResult<SebaranBMDContract.SelectDTO[]>> {
+//     const { pic, status, statusPlotting, search, page = 1, pageSize = 20 } = params;
+//     const offset = (page - 1) * pageSize;
 
-    const conditions = [
-        pic && pic !== "" ? eq(sebaranBmd.pic, pic) : undefined,
-        buildStatusCondition(status),
-        buildStatusPlottingCondition(statusPlotting),
-        buildSearchCondition(search),
-    ].filter(Boolean);
+//     const conditions = [
+//         pic && pic !== "" ? eq(sebaranBmd.pic, pic) : undefined,
+//         buildStatusCondition(status),
+//         buildStatusPlottingCondition(statusPlotting),
+//         buildSearchCondition(search),
+//     ].filter(Boolean);
 
-    const where = conditions.length > 0 ? and(...(conditions as any[])) : undefined;
+//     const where = conditions.length > 0 ? and(...(conditions as any[])) : undefined;
 
-    const [rows, countRows] = await Promise.all([
-        db
-            .select(selectCols)
-            .from(sebaranBmd)
-            .where(where)
-            .orderBy(sebaranBmd.nibar)
-            .limit(pageSize)
-            .offset(offset),
-        db
-            .select({ count: sql<number>`count(*)::int` })
-            .from(sebaranBmd)
-            .where(where),
-    ]);
+//     const [rows, countRows] = await Promise.all([
+//         db
+//             .select()
+//             .from(sebaranBmd)
+//             .where(where)
+//             .orderBy(sebaranBmd.nibar)
+//             .limit(pageSize)
+//             .offset(offset),
+//         db
+//             .select({ count: sql<number>`count(*)::int` })
+//             .from(sebaranBmd)
+//             .where(where),
+//     ]);
 
-    return { data: rows, total: countRows[0].count, page, pageSize };
+//     return { data: rows, total: countRows[0].count, page, pageSize };
+// }
+
+
+export const SebarangBmdRepository = {
+    findAll: async (input: PaginationInput<InputFindAll>): Promise<PaginationResult<SebaranBMDContract.SelectDTO[]>> => {
+
+        const conditions = and(
+            input.filter.pic ? eq(sebaranBmd.pic, input.filter.pic) : undefined,
+            input.filter.hasPolygon !== undefined
+                ? input.filter.hasPolygon
+                    ? isNotNull(sebaranBmd.polygon)
+                    : isNull(sebaranBmd.polygon)
+                : undefined,
+            input.filter.statusBhumi ? eq(sebaranBmd.statusBhumi, input.filter.statusBhumi) : undefined,
+        )
+        const [rows, countRows] = await Promise.all([
+            db
+                .select()
+                .from(sebaranBmd)
+                .orderBy(sebaranBmd.nibar)
+                .where(conditions)
+                .limit(input.limit)
+                .offset((input.page - 1) * input.limit),
+
+            db.$count(sebaranBmd, conditions),
+        ]);
+        return { data: rows, total: countRows };
+    }
 }
 
-export async function findByNibar(nibar: string): Promise<BmdTanahDTO | null> {
+export async function findByNibar(nibar: string): Promise<SebaranBMDContract.SelectDTO | null> {
     const rows = await db
-        .select(selectCols)
+        .select()
         .from(sebaranBmd)
         .where(eq(sebaranBmd.nibar, nibar))
         .limit(1);
@@ -100,7 +132,7 @@ export async function getStat(): Promise<BmdTanahStatDTO> {
     const rows = await db
         .select({
             total: sql<number>`count(*)::int`,
-            sudahDiproses: sql<number>`count(*) filter (where ${sebaranBmd.statusPlotting} IS NOT NULL)::int`,
+            sudahDiproses: sql<number>`count(*) filter (where ${sebaranBmd.statusBhumi} IS NOT NULL)::int`,
             sudahDigitasi: sql<number>`count(*) filter (where ${sebaranBmd.polygon} IS NOT NULL)::int`,
         })
         .from(sebaranBmd);

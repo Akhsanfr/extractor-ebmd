@@ -1,6 +1,7 @@
-// ─── DTOs ────────────────────────────────────────────────────────────────────
-
+import { sebaranBmd } from "@/drizzle/schema";
 import { StatusBhumi } from "@/enum/sebaranBmd";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import z from "zod";
 
 export interface BmdTanahDTO {
     nibar: string;
@@ -136,3 +137,14 @@ export interface KmlExportItem {
     pic: string | null;
     polygonKml: string;
 }
+
+
+export const SebaranBMDContract = {
+    select: createSelectSchema(sebaranBmd),
+    update: createInsertSchema(sebaranBmd),
+}
+export namespace SebaranBMDContract {
+    export type SelectDTO = z.infer<typeof SebaranBMDContract.select>;
+    export type UpdateDTO = z.infer<typeof SebaranBMDContract.update>;
+}
+export type InputFindAll = { pic?: string, hasPolygon?: boolean, statusBhumi?: StatusBhumi }

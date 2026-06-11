@@ -7,7 +7,7 @@ import {
     updateBmdAction,
     getPolygonGeoJsonAction,
 } from "@/action/sebaranBmd/sebaranBmd.action";
-import { BmdTanahDTO } from "@/action/sebaranBmd/sebaranBmd.contract";
+import { BmdTanahDTO, SebaranBMDContract } from "@/action/sebaranBmd/sebaranBmd.contract";
 import { Clipboard } from "lucide-react";
 import { StatusBhumi } from "@/enum/sebaranBmd";
 
@@ -21,7 +21,7 @@ const LeafletMap = dynamic(() => import("./leafletMap"), {
 });
 
 interface Props {
-    bmd: BmdTanahDTO;
+    bmd: SebaranBMDContract.SelectDTO;
     namaPic: string;
     isOpen: boolean;
     onClose: () => void;
@@ -103,11 +103,10 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
     useEffect(() => {
         if (!isOpen) return;
 
-        if (!bmd.hasPolygon) {
+        if (!bmd.polygon) {
             setExistingGeoJson(null);
             return;
         }
-
         setLoadingExisting(true);
         getPolygonGeoJsonAction(bmd.nibar)
             .then((raw) => {
@@ -121,7 +120,7 @@ export function UploadPolygonModal({ bmd, namaPic, isOpen, onClose, onSuccess }:
             })
             .catch(() => setExistingGeoJson(null))
             .finally(() => setLoadingExisting(false));
-    }, [isOpen, bmd.nibar, bmd.hasPolygon]);
+    }, [isOpen, bmd.nibar, bmd.polygon]);
 
     // Preview: GeoJSON baru (paste/file) > existing dari DB
     const previewGeoJson = geoJsonText ?? existingGeoJson;

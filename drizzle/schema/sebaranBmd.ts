@@ -20,6 +20,7 @@ export const sebaranBmd = pgTable("sebaran_bmd", {
     updatedAt: timestamp("updated_at", { withTimezone: true }),
     statusPlotting: boolean("status_plotting"),  // ← baru
     statusBhumi: sebaranBmdStatusBhumiEnum("status_bhumi"), // APP BHUMI
+    keterangan: text("keterangan"),
 });
 
 export type SebaranBmd = typeof sebaranBmd.$inferSelect;

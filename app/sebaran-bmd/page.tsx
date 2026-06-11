@@ -21,19 +21,20 @@ import { Download, Eye, Upload } from "lucide-react";
 import {
     exportKmlAction,
     getDistinctPicAction,
-    getListBmdAction,
     getStatistikAction,
     getStatistikPerPicAction,
+    actionSebaranBmdGetAll,
 } from "@/action/sebaranBmd/sebaranBmd.action";
 import type {
-    BmdTanahDTO,
     BmdTanahStatDTO,
     BmdTanahStatPerPicDTO,
     StatusPolygonFilter,
     StatusPlottingFilter,
+    SebaranBMDContract,
 } from "@/action/sebaranBmd/sebaranBmd.contract";
 import { UploadPolygonModal } from "./modal";
 import { UploadExcelModal } from "./modalExcel";
+import { StatusBhumi } from "@/enum/sebaranBmd";
 
 const PAGE_SIZE = 20;
 
@@ -70,18 +71,18 @@ export default function BmdTanahPage() {
     const [statPerPic, setStatPerPic] = useState<BmdTanahStatPerPicDTO[]>([]);
     const [picOptions, setPicOptions] = useState<string[]>([]);
 
-    const [rows, setRows] = useState<BmdTanahDTO[]>([]);
+    const [rows, setRows] = useState<SebaranBMDContract.SelectDTO[]>([]);
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
 
     const [filterPic, setFilterPic] = useState("");
     const [filterStatus, setFilterStatus] = useState<StatusPolygonFilter>("semua");
-    const [filterStatusPlotting, setFilterStatusPlotting] = useState<StatusPlottingFilter>("semua");
+    const [filterStatusBhumi, setStatusBhumi] = useState<StatusBhumi | "semua">("semua");
     const [search, setSearch] = useState("");
     const searchRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const [activeBmd, setActiveBmd] = useState<BmdTanahDTO | null>(null);
+    const [activeBmd, setActiveBmd] = useState<SebaranBMDContract.SelectDTO | null>(null);
     const [excelModalOpen, setExcelModalOpen] = useState(false);
     const [kmlLoading, setKmlLoading] = useState(false);
 
@@ -102,22 +103,19 @@ export default function BmdTanahPage() {
         async (pg: number) => {
             setLoading(true);
             try {
-                const result = await getListBmdAction({
-                    pic: filterPic || undefined,
-                    status: filterStatus,
-                    statusPlotting: filterStatusPlotting,
-                    search: search || undefined,
-                    page: pg,
-                    pageSize: PAGE_SIZE,
-                });
+                const result = await actionSebaranBmdGetAll({ page: pg, limit: PAGE_SIZE, filter: { pic: filterPic, statusBhumi: filterStatusBhumi === "semua" ? undefined : filterStatusBhumi } })
                 console.log(result)
-                setRows(result.data);
-                setTotal(result.total);
-            } finally {
+                if (!result.success) throw result.error
+                setTotal(result.data.total);
+                setRows(result.data.data)
+            } catch (e: any) {
+                toast.danger(e.message)
+            }
+            finally {
                 setLoading(false);
             }
         },
-        [filterPic, filterStatus, filterStatusPlotting, search]
+        [filterPic, filterStatus, filterStatusBhumi, search]
     );
 
     // ── Effects ───────────────────────────────────────────────────────────────
@@ -129,11 +127,11 @@ export default function BmdTanahPage() {
     useEffect(() => {
         setPage(1);
         fetchList(1);
-    }, [filterPic, filterStatus, filterStatusPlotting, search, fetchList]);
+    }, [filterPic, filterStatus, search, fetchList]);
 
-    useEffect(() => {
-        fetchList(page);
-    }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+    //     fetchList(page);
+    // }, [page]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // ── Handlers ──────────────────────────────────────────────────────────────
 
@@ -460,8 +458,8 @@ export default function BmdTanahPage() {
                     {/* Filter Status Plotting */}
                     <Select
                         selectionMode="single"
-                        value={filterStatusPlotting}
-                        onChange={(value) => setFilterStatusPlotting(value as StatusPlottingFilter)}
+                        value={filterStatusBhumi}
+                        onChange={(value) => setStatusBhumi(value as StatusBhumi)}
                     >
                         <Label>Status Plotting</Label>
                         <Select.Trigger>
@@ -469,18 +467,17 @@ export default function BmdTanahPage() {
                         </Select.Trigger>
                         <Select.Popover>
                             <ListBox>
-                                <ListBox.Item id="semua" key="semua" textValue="Semua">
-                                    <Label>Semua</Label>
-                                </ListBox.Item>
-                                <ListBox.Item id="sudah" key="sudah" textValue="Sudah Plotting">
-                                    <Label>Sudah Plotting</Label>
-                                </ListBox.Item>
-                                <ListBox.Item id="belum" key="belum" textValue="Belum Terplotting">
-                                    <Label>Belum Terplotting</Label>
-                                </ListBox.Item>
-                                <ListBox.Item id="belum_diset" key="belum_diset" textValue="Belum Diset">
-                                    <Label>Belum Diset</Label>
-                                </ListBox.Item>
+                                <>
+                                    <ListBox.Item id="all" key="all" textValue="Semua">
+                                        <Label>Semua</Label>
+                                    </ListBox.Item>
+
+                                    {Object.entries(StatusBhumi).map(([key, value]) => (
+                                        <ListBox.Item id={value} key={key} textValue={value}>
+                                            <Label>{value}</Label>
+                                        </ListBox.Item>
+                                    ))}
+                                </>
                             </ListBox>
                         </Select.Popover>
                     </Select>
@@ -527,7 +524,7 @@ export default function BmdTanahPage() {
                                             <Table.Cell>{row.pic ?? "-"}</Table.Cell>
 
                                             <Table.Cell>
-                                                {row.hasPolygon ? (
+                                                {row.polygon ? (
                                                     <Chip color="success" size="sm">
                                                         Sudah Digitasi
                                                     </Chip>

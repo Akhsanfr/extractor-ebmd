@@ -1,0 +1,355 @@
+{
+  "id": "7dc8f2d3-4ce2-46aa-b077-0d915dc45ba1",
+  "prevId": "73dcf388-32c6-4d7c-8870-ea567d027533",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.perangkat_daerah": {
+      "name": "perangkat_daerah",
+      "schema": "",
+      "columns": {
+        "kode_lokasi": {
+          "name": "kode_lokasi",
+          "type": "varchar(30)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nama_lokasi": {
+          "name": "nama_lokasi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jabatan": {
+          "name": "jabatan",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_by": {
+          "name": "updated_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sebaran_bmd": {
+      "name": "sebaran_bmd",
+      "schema": "",
+      "columns": {
+        "nibar": {
+          "name": "nibar",
+          "type": "varchar(50)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nibel": {
+          "name": "nibel",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "polygon": {
+          "name": "polygon",
+          "type": "geometry(MultiPolygon,4326)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hak": {
+          "name": "hak",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nomor": {
+          "name": "nomor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "desa": {
+          "name": "desa",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_by": {
+          "name": "updated_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pic": {
+          "name": "pic",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status_plotting": {
+          "name": "status_plotting",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status_bhumi": {
+          "name": "status_bhumi",
+          "type": "sebaran_bmd_status_bhumi",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "keterangan": {
+          "name": "keterangan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.rkbmd_ba": {
+      "name": "rkbmd_ba",
+      "schema": "",
+      "columns": {
+        "perangkat_daerah_id": {
+          "name": "perangkat_daerah_id",
+          "type": "varchar(30)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "pengantar": {
+          "name": "pengantar",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "pengadaan": {
+          "name": "pengadaan",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "pemeliharaan": {
+          "name": "pemeliharaan",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "nomor_surat": {
+          "name": "nomor_surat",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nama_peserta": {
+          "name": "nama_peserta",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nip_peserta": {
+          "name": "nip_peserta",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jabatan_peserta": {
+          "name": "jabatan_peserta",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tanggal_perbaikan": {
+          "name": "tanggal_perbaikan",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_by": {
+          "name": "updated_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "rkbmd_ba_perangkat_daerah_id_perangkat_daerah_kode_lokasi_fk": {
+          "name": "rkbmd_ba_perangkat_daerah_id_perangkat_daerah_kode_lokasi_fk",
+          "tableFrom": "rkbmd_ba",
+          "tableTo": "perangkat_daerah",
+          "columnsFrom": [
+            "perangkat_daerah_id"
+          ],
+          "columnsTo": [
+            "kode_lokasi"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.bmd": {
+      "name": "bmd",
+      "schema": "",
+      "columns": {
+        "nibar": {
+          "name": "nibar",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nomor_register": {
+          "name": "nomor_register",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kode_barang": {
+          "name": "kode_barang",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nama_barang": {
+          "name": "nama_barang",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "spesifikasi_nama_barang": {
+          "name": "spesifikasi_nama_barang",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "spesifikasi_lainnya": {
+          "name": "spesifikasi_lainnya",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jumlah": {
+          "name": "jumlah",
+          "type": "numeric(18, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "satuan": {
+          "name": "satuan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lokasi": {
+          "name": "lokasi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "perangkat_daerah_id": {
+          "name": "perangkat_daerah_id",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "bmd_perangkat_daerah_id_perangkat_daerah_kode_lokasi_fk": {
+          "name": "bmd_perangkat_daerah_id_perangkat_daerah_kode_lokasi_fk",
+          "tableFrom": "bmd",
+          "tableTo": "perangkat_daerah",
+          "columnsFrom": [
+            "perangkat_daerah_id"
+          ],
+          "columnsTo": [
+            "kode_lokasi"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.sebaran_bmd_status_bhumi": {
+      "name": "sebaran_bmd_status_bhumi",
+      "schema": "public",
+      "values": [
+        "sudahPlotting",
+        "belumPlotting",
+        "salahPlotting"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

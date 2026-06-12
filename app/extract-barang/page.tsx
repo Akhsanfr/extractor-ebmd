@@ -1,75 +1,111 @@
-"use client"
+"use client";
 
-import { actionExtractDaftarBarang } from "@/action/extractorDaftarBarang"
-import { useState } from "react"
-export default function Page() {
-    const [isLoading, setIsLoading] = useState(false)
-    const [result, setResult] = useState<any[] | null>(null)
-    const [error, setError] = useState<string | null>(null)
+import { useEffect, useState } from "react";
+import { Select, Label, Description, ListBox, toast } from "@heroui/react";
+import { getPerangkatDaerahAction } from "@/action/perangkatDaerah/action";
+import { PerangkatDaerahContract } from "@/action/perangkatDaerah/contract";
+import { syncBmdDataAction } from "@/action/bmd/bmd.action";
+
+export default function SyncBmdPage() {
+    const [perangkatDaerahList, setPerangkatDaerahList] = useState<PerangkatDaerahContract.SelectDTO[]>([]);
+    const [selectedKodeLokasi, setSelectedKodeLokasi] = useState<string | null>(null);
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [isFetchingPd, setIsFetchingPd] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [resultMessage, setResultMessage] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function fetchPerangkatDaerah() {
+            try {
+                const res = await getPerangkatDaerahAction();
+                if (!res.success) throw res.error
+            } catch (err: any) {
+                toast.danger("Gagal memuat perangkat daerah. " + err.message)
+            } finally {
+                setIsFetchingPd(false);
+            }
+        }
+
+        fetchPerangkatDaerah();
+    }, []);
 
     const handleSyncData = async () => {
-        setIsLoading(true)
-        setError(null)
-        setResult(null)
+        if (!selectedKodeLokasi) {
+            setError("Silakan pilih Perangkat Daerah terlebih dahulu.");
+            return;
+        }
+
+        const selectedPd = perangkatDaerahList.find(pd => pd.kodeLokasi === selectedKodeLokasi);
+        if (!selectedPd) return;
+
+        setIsLoading(true);
+        setError(null);
+        setResultMessage(null);
 
         try {
-            // Memanggil Server Action langsung dari fungsi onClick
-            const res = await actionExtractDaftarBarang('01.00.00', 'DINAS PENDIDIKAN')
-
-            if (res.success && res.data) {
-                setResult(res.data)
-                console.info("Data Mentah")
-                console.table(res.rawData)
-                console.info("Data Final")
-                console.table(res.data)
-            } else {
-                setError(res.error || "Terjadi kesalahan yang tidak diketahui")
-            }
-        } catch (err) {
-            setError("Gagal menghubungi server action.")
+            // Hanya panggil satu Server Action. Tarik, proses, dan simpan per batch akan berlaku di Server.
+            const res = await syncBmdDataAction(selectedPd);
+            if (!res.success) throw res.error
+        } catch (err: any) {
+            toast.danger("Gagal menyimpan data. " + err.message)
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
 
     return (
         <div className="p-8 max-w-4xl mx-auto">
-            <h1 className="text-2xl font-bold mb-4 text-gray-800">
-                Sinkronisasi Aset Tanah (KIB A)
-            </h1>
-
+            <h1 className="text-2xl font-bold mb-2 text-gray-800">Sinkronisasi Data BMD</h1>
             <p className="text-gray-600 mb-6">
-                Klik tombol di bawah untuk menarik data dari portal E-BMD Pasuruan, mengubah Excel menjadi JSON, dan menampilkannya.
+                Pilih perangkat daerah dari senarai di bawah, kemudian klik butang untuk mengekstrak dan menyimpan data secara berperingkat (batch of 50).
             </p>
 
-            <button
-                onClick={handleSyncData}
-                disabled={isLoading}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md disabled:bg-blue-300 transition-colors"
-            >
-                {isLoading ? "Memproses Data..." : "Tarik Data Excel"}
-            </button>
-
-            {/* Tampilan Error */}
-            {error && (
-                <div className="mt-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-md">
-                    <strong>Error:</strong> {error}
+            <div className="space-y-6">
+                <div className="max-w-md">
+                    <Select
+                        isDisabled={isFetchingPd || isLoading}
+                        selectedKey={selectedKodeLokasi}
+                        onSelectionChange={(key) => setSelectedKodeLokasi(key as string)}
+                    >
+                        <Label>Pilih Perangkat Daerah</Label>
+                        <Select.Trigger>
+                            <Select.Value />
+                            <Select.Indicator />
+                        </Select.Trigger>
+                        <Select.Popover>
+                            <ListBox items={perangkatDaerahList}>
+                                {(pd) => (
+                                    <ListBox.Item id={pd.kodeLokasi} textValue={pd.namaLokasi}>
+                                        <Label>{pd.namaLokasi}</Label>
+                                        <Description>Kode: {pd.kodeLokasi}</Description>
+                                    </ListBox.Item>
+                                )}
+                            </ListBox>
+                        </Select.Popover>
+                    </Select>
                 </div>
-            )}
 
-            {/* Tampilan Hasil (Preview JSON) */}
-            {result && (
-                <div className="mt-6">
-                    <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-md mb-4">
-                        Berhasil mengekstrak <strong>{result.length}</strong> baris data!
+                <button
+                    onClick={handleSyncData}
+                    disabled={isLoading || !selectedKodeLokasi}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md disabled:bg-gray-400 transition-colors"
+                >
+                    {isLoading ? "Memproses Data Server..." : "Tarik & Upsert Data BMD"}
+                </button>
+
+                {error && (
+                    <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-md">
+                        <strong>Error:</strong> {error}
                     </div>
+                )}
 
-                    <h3 className="font-semibold text-gray-700 mb-2">Pratinjau Data (3 Baris Pertama):</h3>
-                    <pre className="bg-gray-900 text-green-400 p-4 rounded-md overflow-x-auto text-sm">
-                        {JSON.stringify(result.slice(0, 3), null, 2)}
-                    </pre>
-                </div>
-            )}
+                {resultMessage && (
+                    <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-md">
+                        ✅ <strong>Berhasil!</strong> {resultMessage}
+                    </div>
+                )}
+            </div>
         </div>
-    )
+    );
 }

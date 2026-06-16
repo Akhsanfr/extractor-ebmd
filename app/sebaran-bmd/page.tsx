@@ -35,7 +35,6 @@ import type {
 import { UploadPolygonModal } from "./modal";
 import { UploadExcelModal } from "./modalExcel";
 import { StatusBhumi } from "@/enum/sebaranBmd";
-import { fi } from "zod/locales";
 
 const PAGE_SIZE = 20;
 
@@ -502,10 +501,10 @@ export default function BmdTanahPage() {
                             </ListBox>
                         </Select.Popover>
                     </Select>
-                    <TextField className="w-72" value={nibarInput} onChange={handleNibarChange}>
+                    {/* <TextField className="w-72" value={nibarInput} onChange={handleNibarChange}>
                         <Label>Cari NIBAR</Label>
                         <Input />
-                    </TextField>
+                    </TextField> */}
 
 
 

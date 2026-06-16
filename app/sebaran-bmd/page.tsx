@@ -35,6 +35,7 @@ import type {
 import { UploadPolygonModal } from "./modal";
 import { UploadExcelModal } from "./modalExcel";
 import { StatusBhumi } from "@/enum/sebaranBmd";
+import { fi } from "zod/locales";
 
 const PAGE_SIZE = 20;
 
@@ -88,6 +89,7 @@ export default function BmdTanahPage() {
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
 
+    const [filterNibar, setFilterNibar] = useState("")
     const [filterPic, setFilterPic] = useState("");
     const [filterStatus, setFilterStatus] = useState<StatusPolygonFilter>("semua");
     const [filterStatusBhumi, setStatusBhumi] = useState<StatusBhumi | "all">("all");
@@ -115,8 +117,8 @@ export default function BmdTanahPage() {
         async (pg: number) => {
             setLoading(true);
             try {
-                const result = await actionSebaranBmdGetAll({ page: pg, limit: PAGE_SIZE, filter: { pic: filterPic, statusBhumi: filterStatusBhumi } })
-                console.log(result)
+                console.log(filterNibar)
+                const result = await actionSebaranBmdGetAll({ page: pg, limit: PAGE_SIZE, filter: { pic: filterPic, statusBhumi: filterStatusBhumi, nibar: filterNibar ?? undefined } })
                 if (!result.success) throw result.error
                 setTotal(result.data.total);
                 setRows(result.data.data)
@@ -139,7 +141,7 @@ export default function BmdTanahPage() {
     useEffect(() => {
         setPage(1);
         fetchList(1);
-    }, [filterPic, filterStatus, search, fetchList]);
+    }, [filterPic, filterStatus, search, fetchList, filterNibar]);
 
     useEffect(() => {
         fetchList(page);
@@ -159,10 +161,14 @@ export default function BmdTanahPage() {
         setNamaPic(inputLoginPic);
         toast.success(`Berhasil masuk sebagai ${inputLoginPic}`);
     }
+    // Ganti state + ref
 
-    function handleSearchChange(val: string) {
-        if (searchRef.current) clearTimeout(searchRef.current);
-        searchRef.current = setTimeout(() => setSearch(val), 400);
+    const [nibarInput, setNibarInput] = useState(""); // nilai input UI
+    const nibarRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    function handleNibarChange(val: string) {
+        setNibarInput(val);
+        if (nibarRef.current) clearTimeout(nibarRef.current);
+        nibarRef.current = setTimeout(() => setFilterNibar(val), 400);
     }
 
     async function handleExportKml() {
@@ -496,13 +502,16 @@ export default function BmdTanahPage() {
                             </ListBox>
                         </Select.Popover>
                     </Select>
+                    <TextField className="w-72" value={nibarInput} onChange={handleNibarChange}>
+                        <Label>Cari NIBAR</Label>
+                        <Input />
+                    </TextField>
+
+
+
                     <Button onPress={copasScriptBhumi}>Script Bhumi</Button>
 
                     {/* Search */}
-                    {/* <TextField className="w-72" onChange={handleSearchChange}>
-                        <Label>Cari NIBAR / Nomor / Desa</Label>
-                        <Input />
-                    </TextField> */}
                 </div>
 
                 {/* ── Table ── */}

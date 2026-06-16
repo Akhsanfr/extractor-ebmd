@@ -148,4 +148,4 @@ export namespace SebaranBMDContract {
     export type SelectDTO = z.infer<typeof SebaranBMDContract.select>;
     export type UpdateDTO = z.infer<typeof SebaranBMDContract.update>;
 }
-export type InputFindAll = { pic?: string, hasPolygon?: boolean, statusBhumi?: StatusBhumi | "all" | "belum set" }
+export type InputFindAll = { pic?: string, hasPolygon?: boolean, statusBhumi?: StatusBhumi | "all" | "belum set", nibar?: string }

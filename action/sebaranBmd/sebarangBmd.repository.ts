@@ -95,6 +95,7 @@ export const SebarangBmdRepository = {
     findAll: async (input: PaginationInput<InputFindAll>): Promise<PaginationResult<SebaranBMDContract.SelectDTO[]>> => {
         console.log("find all", input.filter)
         const conditions = and(
+            input.filter.nibar ? eq(sebaranBmd.nibar, input.filter.nibar) : undefined,
             input.filter.pic ? eq(sebaranBmd.pic, input.filter.pic) : undefined,
             input.filter.hasPolygon !== undefined
                 ? input.filter.hasPolygon

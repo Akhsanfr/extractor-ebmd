@@ -115,7 +115,7 @@ export default function RkbmdBaPage() {
     const load = useCallback(async () => {
         setIsLoading(true);
         const result = await getRkbmdBaAction();
-        if (result.success) setData(result.data);
+        if (result.success) setData(result.data.sort((a, b) => a.perangkatDaerah.localeCompare(b.perangkatDaerah)));
         setIsLoading(false);
     }, []);
 
@@ -206,14 +206,24 @@ export default function RkbmdBaPage() {
                                         </Chip>
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <Chip size="sm" color={row.pengadaan ? "success" : "default"}>
-                                            {row.pengadaan ? <Check /> : <Minus />}
-                                        </Chip>
+                                        <div className="flex flex-col gap-1 items-start">
+                                            <Chip size="sm" color={row.pengadaan ? "success" : "default"}>
+                                                {row.pengadaan ? <Check /> : <Minus />}
+                                            </Chip>
+                                            <span className="text-xs text-default-400 whitespace-nowrap">
+                                                {pengadaan.filter((d) => d.penggunaBarang == row.perangkatDaerah).length} item
+                                            </span>
+                                        </div>
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <Chip size="sm" color={row.pemeliharaan ? "success" : "default"}>
-                                            {row.pemeliharaan ? <Check /> : <Minus />}
-                                        </Chip>
+                                        <div className="flex flex-col gap-1 items-start">
+                                            <Chip size="sm" color={row.pemeliharaan ? "success" : "default"}>
+                                                {row.pemeliharaan ? <Check /> : <Minus />}
+                                            </Chip>
+                                            <span className="text-xs text-default-400 whitespace-nowrap">
+                                                {pemeliharaan.filter((d) => d.penggunaBarang == row.perangkatDaerah).length} item
+                                            </span>
+                                        </div>
                                     </Table.Cell>
                                     <Table.Cell>
                                         {row.namaPeserta ? (

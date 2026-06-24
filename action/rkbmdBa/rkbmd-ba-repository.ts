@@ -37,6 +37,8 @@ export async function upsertRkbmdBa(
     .onConflictDoUpdate({
       target: rkbmdBaTable.perangkatDaerahId,
       set: {
+        pengantarNomor: data.pengantarNomor,
+        pengantarTanggal: data.pengantarTanggal,
         pengantar: data.pengantar,
         pengadaan: data.pengadaan,
         pemeliharaan: data.pemeliharaan,

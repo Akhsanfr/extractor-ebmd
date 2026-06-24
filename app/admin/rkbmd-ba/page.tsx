@@ -1,15 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Button, Checkbox, Chip, Description, Input, Label, Modal, Table, TextField } from "@heroui/react";
+import { Button, Checkbox, Chip, Description, Dropdown, Input, Label, Modal, Popover, Spinner, Table, TextField } from "@heroui/react";
 import { getRkbmdBaAction, updateRkbmdBaAction } from "@/action/rkbmdBa/rkbmd-ba-action";
 import { RkbmdBaContract } from "@/action/rkbmdBa/rkbmd-ba-contract";
-import { Check, Minus, Pen, Printer, RefreshCw } from "lucide-react";
+import { Check, FileText, Minus, Pen, Printer, RefreshCw, ScrollText } from "lucide-react";
 import { generateBaDesk } from "@/lib/rkbmd/generateBaDesk";
 import ModalBA from "./modal";
 import { exportBADesk } from "@/lib/rkbmd/exportBADesk";
 import { ListPemeliharaan, ListPengadaan } from "@/types/rkbmd";
 import { loadStorage, PEMELIHARAAN_STORAGE_KEY, PENGADAAN_STORAGE_KEY } from "@/lib/bmd-storage";
+import { generateSuratHasilPenelaahan } from "@/lib/rkbmd/generateSuratHasilPenelaahan";
 
 export interface Perekon {
     nama: string;
@@ -99,7 +100,118 @@ function PerekonModal({
     );
 }
 
+type PrintActionKey = "baPenelaahan" | "suratHasilPenelaahan" | "baDesk";
 
+function PrintMenu({
+    row,
+    perekon,
+    pengadaan,
+    pemeliharaan,
+}: {
+    row: RkbmdBaContract.SelectDTO;
+    perekon: Perekon | null;
+    pengadaan: ListPengadaan[];
+    pemeliharaan: ListPemeliharaan[];
+}) {
+    const [running, setRunning] = useState<PrintActionKey | null>(null);
+    const isBusy = running !== null;
+
+    const actions: Record<PrintActionKey, () => Promise<void>> = {
+        baPenelaahan: async () => {
+            if (!perekon) return;
+            const filteredPengadaan = pengadaan.filter((d) => d.penggunaBarang === row.perangkatDaerah);
+            const filteredPemeliharaan = pemeliharaan.filter((d) => d.penggunaBarang === row.perangkatDaerah);
+            await exportBADesk(filteredPengadaan, filteredPemeliharaan, perekon, row);
+        },
+        suratHasilPenelaahan: async () => {
+            await generateSuratHasilPenelaahan(row);
+        },
+        baDesk: async () => {
+            if (!perekon) return;
+            await generateBaDesk(perekon, row);
+        },
+    };
+
+    const handleAction = async (key: React.Key) => {
+        const action = key as PrintActionKey;
+        if (!perekon) {
+            alert("Isi data perekon terlebih dahulu");
+            return;
+        }
+        setRunning(action);
+        try {
+            await actions[action]();
+        } catch (err) {
+            console.error(`Gagal mencetak (${action}):`, err);
+            alert("Gagal mencetak dokumen. Coba lagi.");
+        } finally {
+            setRunning(null);
+        }
+    };
+
+    return (
+        <Dropdown>
+            <Button size="sm" aria-label="Menu cetak" isDisabled={isBusy}>
+                {isBusy ? <Spinner size="sm" /> : <Printer />}
+            </Button>
+            <Dropdown.Popover className="w-[320px]">
+                <div className="px-3 pt-2 pb-1">
+                    <span className="text-sm font-semibold">Cetak Dokumen</span>
+                    <span className="block text-xs text-default-400 font-normal">
+                        {row.perangkatDaerah}
+                    </span>
+                </div>
+
+                <Dropdown.Menu
+                    disabledKeys={isBusy ? ["baDesk", "baPenelaahan", "suratHasilPenelaahan"] : []}
+                    onAction={handleAction}
+                >
+                    <Dropdown.Item id="baDesk" textValue="BA Desk">
+                        <div className="flex h-8 items-start justify-center pt-px">
+                            {running === "baDesk" ? (
+                                <Spinner size="sm" />
+                            ) : (
+                                <FileText className="size-4 shrink-0 text-default-400" />
+                            )}
+                        </div>
+                        <div className="flex flex-col">
+                            <Label>BA DESK</Label>
+                            <Description>Berita acara PBMD dengan Pengurus Barang</Description>
+                        </div>
+                    </Dropdown.Item>
+
+                    <Dropdown.Item id="baPenelaahan" textValue="BA Penelaahan">
+                        <div className="flex h-8 items-start justify-center pt-px">
+                            {running === "baPenelaahan" ? (
+                                <Spinner size="sm" />
+                            ) : (
+                                <FileText className="size-4 shrink-0 text-default-400" />
+                            )}
+                        </div>
+                        <div className="flex flex-col">
+                            <Label>BA PENELAAHAN</Label>
+                            <Description>BA penelaahan usulan RKBMD oleh Pengelola Barang</Description>
+                        </div>
+                    </Dropdown.Item>
+
+                    <Dropdown.Item id="suratHasilPenelaahan" textValue="Surat Hasil Penelaahan">
+                        <div className="flex h-8 items-start justify-center pt-px">
+                            {running === "suratHasilPenelaahan" ? (
+                                <Spinner size="sm" />
+                            ) : (
+                                <ScrollText className="size-4 shrink-0 text-default-400" />
+                            )}
+                        </div>
+                        <div className="flex flex-col">
+                            <Label>SURAT HASIL PENELAAHAN</Label>
+                            <Description>Surat hasil penelaahan oleh Pengelola Barang</Description>
+                        </div>
+                    </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown.Popover>
+        </Dropdown>
+    );
+}
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -130,30 +242,19 @@ export default function RkbmdBaPage() {
     );
 
     const handleUpdated = () => {
-        load()
-        setSelected(null)
+        load();
+        setSelected(null);
     };
-
-    const handleBaDesk = async (data: RkbmdBaContract.SelectDTO) => {
-        if (!perekon) {
-            alert("Isi data perekon terlebih dahulu")
-            return
-        }
-        await generateBaDesk(perekon, data)
-        const filteredPengadaan = pengadaan.filter((d) => d.penggunaBarang == data.perangkatDaerah)
-        const filteredPemeliharaan = pemeliharaan.filter((d) => d.penggunaBarang == data.perangkatDaerah)
-        await exportBADesk(filteredPengadaan, filteredPemeliharaan, perekon, data);
-    }
 
     const loadPengadaanDanPemeliharan = useCallback(() => {
         const pengadaan = loadStorage<ListPengadaan[]>(PENGADAAN_STORAGE_KEY);
         const pemeliharaan = loadStorage<ListPemeliharaan[]>(PEMELIHARAAN_STORAGE_KEY);
         setPengadaan(pengadaan ?? []);
-        setPemeliharaan(pemeliharaan ?? [])
-    }, [])
+        setPemeliharaan(pemeliharaan ?? []);
+    }, []);
     useEffect(() => {
-        loadPengadaanDanPemeliharan()
-    }, [loadPengadaanDanPemeliharan])
+        loadPengadaanDanPemeliharan();
+    }, [loadPengadaanDanPemeliharan]);
 
     return (
         <div className="mx-auto max-w-5xl px-4 py-8">
@@ -181,7 +282,9 @@ export default function RkbmdBaPage() {
                 <TextField name="search" value={search} onChange={setSearch} className="flex-1">
                     <Input placeholder="Cari perangkat daerah atau peserta..." />
                 </TextField>
-                <Button onPress={loadPengadaanDanPemeliharan}><RefreshCw />  Reload item pengadaan dan pemeliharaan</Button>
+                <Button onPress={loadPengadaanDanPemeliharan}>
+                    <RefreshCw /> Reload item pengadaan dan pemeliharaan
+                </Button>
             </div>
 
             <Table>
@@ -205,9 +308,19 @@ export default function RkbmdBaPage() {
                                         </span>
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <Chip size="sm" color={row.pengantar ? "success" : "default"}>
-                                            {row.pengantar ? <Check /> : <Minus />}
-                                        </Chip>
+                                        <div className="flex flex-col gap-0.5 items-start">
+                                            <div className="flex items-center gap-1">
+                                                <Chip size="sm" color={row.pengantar ? "success" : "default"}>
+                                                    {row.pengantar ? <Check /> : <Minus />}
+                                                </Chip>
+                                                <span className="text-sm font-bold">
+                                                    {row.pengantarTanggal?.toLocaleDateString("id-ID")}
+                                                </span>
+                                            </div>
+                                            <span className="text-xs">
+                                                {row.pengantarNomor}
+                                            </span>
+                                        </div>
                                     </Table.Cell>
                                     <Table.Cell>
                                         <div className="flex flex-col gap-1 items-start">
@@ -248,9 +361,12 @@ export default function RkbmdBaPage() {
                                     </Table.Cell>
                                     <Table.Cell>
                                         <div className="flex gap-2">
-                                            <Button size="sm" onPress={() => handleBaDesk(row)}>
-                                                <Printer />
-                                            </Button>
+                                            <PrintMenu
+                                                row={row}
+                                                perekon={perekon}
+                                                pengadaan={pengadaan}
+                                                pemeliharaan={pemeliharaan}
+                                            />
                                             <Button size="sm" onPress={() => setSelected(row)}>
                                                 <Pen />
                                             </Button>

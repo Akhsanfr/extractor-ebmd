@@ -23,6 +23,8 @@ export default function ModalBA({
     const isOpen = !!row;
 
     const [pengantar, setPengantar] = useState(false);
+    const [pengantarTanggal, setPengantarTanggal] = useState<DateValue | null>(null);
+    const [pengantarNomor, setPengantarNomor] = useState("");
     const [pengadaan, setPengadaan] = useState(false);
     const [pemeliharaan, setPemeliharaan] = useState(false);
     const [namaPeserta, setNamaPeserta] = useState("");
@@ -37,6 +39,8 @@ export default function ModalBA({
         if (!row) return;
         console.log("tgl", row.tanggalPerbaikan)
         setPengantar(row.pengantar);
+        setPengantarTanggal(row.pengantarTanggal ? parseDate(row.pengantarTanggal.toISOString().slice(0, 10)) as unknown as DateValue : null);
+        setPengantarNomor(row.pengantarNomor ?? "");
         setPengadaan(row.pengadaan);
         setPemeliharaan(row.pemeliharaan);
         setNamaPeserta(row.namaPeserta ?? "");
@@ -65,6 +69,10 @@ export default function ModalBA({
             tanggalPerbaikan: tanggalPerbaikan
                 ? new Date(tanggalPerbaikan.toString())
                 : null,
+            pengantarTanggal: pengantarTanggal
+                ? new Date(pengantarTanggal.toString())
+                : null,
+            pengantarNomor: pengantarNomor.trim() || null,
             updatedBy: `${perekon.nama} (${perekon.nip})`,
         });
         if (!result.success) {
@@ -116,6 +124,55 @@ export default function ModalBA({
                                             <Label htmlFor="pemeliharaan">Pemeliharaan</Label>
                                         </Checkbox.Content>
                                     </Checkbox>
+                                    <TextField name="pengantarNomor" value={pengantarNomor} onChange={setPengantarNomor}>
+                                        <Label>Nomor Pengantar</Label>
+                                        <Input placeholder="Nomor pengantar" />
+                                    </TextField>
+                                    <DatePicker
+                                        name="pengantarTanggal"
+                                        value={pengantarTanggal}
+                                        onChange={setPengantarTanggal}
+                                    >
+                                        <Label>Pengantar Tanggal</Label>
+                                        <DateField.Group fullWidth>
+                                            <DateField.Input>
+                                                {(segment) => <DateField.Segment segment={segment} />}
+                                            </DateField.Input>
+                                            <DateField.Suffix>
+                                                <DatePicker.Trigger>
+                                                    <DatePicker.TriggerIndicator />
+                                                </DatePicker.Trigger>
+                                                <Button onPress={() => setPengantarTanggal(null)}>
+                                                    <X />
+                                                </Button>
+                                            </DateField.Suffix>
+                                        </DateField.Group>
+                                        <DatePicker.Popover>
+                                            <Calendar aria-label="Tanggal perbaikan">
+                                                <Calendar.Header>
+                                                    <Calendar.YearPickerTrigger>
+                                                        <Calendar.YearPickerTriggerHeading />
+                                                        <Calendar.YearPickerTriggerIndicator />
+                                                    </Calendar.YearPickerTrigger>
+                                                    <Calendar.NavButton slot="previous" />
+                                                    <Calendar.NavButton slot="next" />
+                                                </Calendar.Header>
+                                                <Calendar.Grid>
+                                                    <Calendar.GridHeader>
+                                                        {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
+                                                    </Calendar.GridHeader>
+                                                    <Calendar.GridBody>
+                                                        {(date) => <Calendar.Cell date={date} />}
+                                                    </Calendar.GridBody>
+                                                </Calendar.Grid>
+                                                <Calendar.YearPickerGrid>
+                                                    <Calendar.YearPickerGridBody>
+                                                        {({ year }) => <Calendar.YearPickerCell year={year} />}
+                                                    </Calendar.YearPickerGridBody>
+                                                </Calendar.YearPickerGrid>
+                                            </Calendar>
+                                        </DatePicker.Popover>
+                                    </DatePicker>
                                 </div>
                             </div>
 

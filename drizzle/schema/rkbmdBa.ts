@@ -8,6 +8,8 @@ export const rkbmdBaTable = pgTable("rkbmd_ba", {
     pengantar: boolean("pengantar").notNull().default(false),
     pengadaan: boolean("pengadaan").notNull().default(false),
     pemeliharaan: boolean("pemeliharaan").notNull().default(false),
+    pengantarTanggal: timestamp("pengantar_tanggal"),
+    pengantarNomor: text("pengantar_nomor"),
     nomorSurat: text("nomor_surat"),
     namaPeserta: text("nama_peserta"),
     nipPeserta: varchar("nip_peserta", { length: 30 }),

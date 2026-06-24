@@ -181,7 +181,7 @@ export default function RkbmdBaPage() {
                 <TextField name="search" value={search} onChange={setSearch} className="flex-1">
                     <Input placeholder="Cari perangkat daerah atau peserta..." />
                 </TextField>
-                <Button><RefreshCw />  Reload item pengadaan dan pemeliharaan</Button>
+                <Button onPress={loadPengadaanDanPemeliharan}><RefreshCw />  Reload item pengadaan dan pemeliharaan</Button>
             </div>
 
             <Table>

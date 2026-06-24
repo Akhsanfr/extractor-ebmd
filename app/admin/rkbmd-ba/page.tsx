@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Button, Checkbox, Chip, Description, Input, Label, Modal, Table, TextField } from "@heroui/react";
 import { getRkbmdBaAction, updateRkbmdBaAction } from "@/action/rkbmdBa/rkbmd-ba-action";
 import { RkbmdBaContract } from "@/action/rkbmdBa/rkbmd-ba-contract";
-import { Check, Minus, Pen, Printer } from "lucide-react";
+import { Check, Minus, Pen, Printer, RefreshCw } from "lucide-react";
 import { generateBaDesk } from "@/lib/rkbmd/generateBaDesk";
 import ModalBA from "./modal";
 import { exportBADesk } from "@/lib/rkbmd/exportBADesk";
@@ -34,8 +34,8 @@ function PerekonModal({
     isOpen: boolean;
     onConfirm: (p: Perekon) => void;
 }) {
-    const [nama, setNama] = useState("Fernanda Akhsanuddin Almas");
-    const [nip, setNip] = useState("199910102022011002");
+    const [nama, setNama] = useState("");
+    const [nip, setNip] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
@@ -145,12 +145,15 @@ export default function RkbmdBaPage() {
         await exportBADesk(filteredPengadaan, filteredPemeliharaan, perekon, data);
     }
 
-    useEffect(() => {
+    const loadPengadaanDanPemeliharan = useCallback(() => {
         const pengadaan = loadStorage<ListPengadaan[]>(PENGADAAN_STORAGE_KEY);
         const pemeliharaan = loadStorage<ListPemeliharaan[]>(PEMELIHARAAN_STORAGE_KEY);
         setPengadaan(pengadaan ?? []);
         setPemeliharaan(pemeliharaan ?? [])
     }, [])
+    useEffect(() => {
+        loadPengadaanDanPemeliharan()
+    }, [loadPengadaanDanPemeliharan])
 
     return (
         <div className="mx-auto max-w-5xl px-4 py-8">
@@ -174,10 +177,11 @@ export default function RkbmdBaPage() {
                 </div>
             )}
 
-            <div className="mb-4">
-                <TextField name="search" value={search} onChange={setSearch}>
+            <div className="mb-4 flex gap-2">
+                <TextField name="search" value={search} onChange={setSearch} className="flex-1">
                     <Input placeholder="Cari perangkat daerah atau peserta..." />
                 </TextField>
+                <Button><RefreshCw />  Reload item pengadaan dan pemeliharaan</Button>
             </div>
 
             <Table>

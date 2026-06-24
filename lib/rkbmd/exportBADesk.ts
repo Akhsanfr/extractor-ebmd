@@ -300,15 +300,15 @@ export async function exportBADesk(
                             const satTersedia = item.bmd?.satuan || item.satuan || "-";
                             const nmPemeliharaan = item.usulanPemeliharaan?.namaPemeliharaan || item.namaPemeliharaan || "-";
                             const jmlPemeliharaan = item.usulanPemeliharaan?.jumlah || item.jumlah || "-";
-                            const satPemeliharaan = item.usulanPemeliharaan?.satuan || item.satuan || "-";
+                            const satPemeliharaan = item.usulanPemeliharaan?.satuan || item.bmd?.satuan || "-";
                             const ket = item.keterangan || "";
 
                             rowsPemeliharaan.push([
                                 "", "",
                                 kodeBrg, namaBrg, jmlTersedia, satTersedia,
                                 "Milik Sendiri", "v", "", "",
-                                nmPemeliharaan, jmlPemeliharaan, satPemeliharaan,
-                                jmlPemeliharaan, satPemeliharaan, ket
+                                nmPemeliharaan, jmlPemeliharaan, satTersedia,
+                                jmlPemeliharaan, satTersedia, ket
                             ]);
                         }
                         outIdx++;

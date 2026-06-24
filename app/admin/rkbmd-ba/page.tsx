@@ -34,8 +34,8 @@ function PerekonModal({
     isOpen: boolean;
     onConfirm: (p: Perekon) => void;
 }) {
-    const [nama, setNama] = useState("");
-    const [nip, setNip] = useState("");
+    const [nama, setNama] = useState("Fernanda Akhsanuddin Almas");
+    const [nip, setNip] = useState("199910102022011002");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 

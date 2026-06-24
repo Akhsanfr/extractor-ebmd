@@ -101,12 +101,13 @@ export default function PemeliharaanPage() {
     const handleDeleteSelected = () => {
         if (confirm(`Hapus ${selectedCount} data yang dipilih?`)) {
             if (selectedKeys === "all") {
+                const indicesToDelete = new Set(filteredData.map((f) => f.originalIndex));
                 setListPemeliharaan((prev) =>
-                    prev.filter((item) => !filteredData.some((f) => f === item))
+                    prev.filter((_, i) => !indicesToDelete.has(i))
                 );
             } else {
-                const ids = new Set(selectedKeys as Set<string>);
-                setListPemeliharaan((prev) => prev.filter((_, i) => !ids.has(String(i))));
+                const ids = new Set(Array.from(selectedKeys as Set<string>).map(Number));
+                setListPemeliharaan((prev) => prev.filter((_, i) => !ids.has(i)));
             }
             setSelectedKeys(new Set());
         }
@@ -244,7 +245,7 @@ export default function PemeliharaanPage() {
                             )}
                         >
                             {filteredData.map((item, index) => (
-                                <Table.Row key={index} id={String(index)}>
+                                <Table.Row key={item.originalIndex} id={String(item.originalIndex)}>
                                     <Table.Cell className="pr-0">
                                         <Checkbox
                                             aria-label={`Pilih baris ${index + 1}`}
@@ -331,10 +332,10 @@ export default function PemeliharaanPage() {
                                             <Button variant="secondary" isIconOnly onPress={() => handleDuplicate(item)} aria-label="Duplikat">
                                                 <Copy size={16} />
                                             </Button>
-                                            <Button isIconOnly variant="secondary" onPress={() => handleOpen(item, index)} aria-label="Edit">
+                                            <Button isIconOnly variant="secondary" onPress={() => handleOpen(item, item.originalIndex)} aria-label="Edit">
                                                 <Pen size={16} />
                                             </Button>
-                                            <Button isIconOnly variant="danger-soft" onPress={() => handleDelete(index)} aria-label="Hapus">
+                                            <Button isIconOnly variant="danger-soft" onPress={() => handleDelete(item.originalIndex)} aria-label="Hapus">
                                                 <Trash size={16} />
                                             </Button>
                                         </div>

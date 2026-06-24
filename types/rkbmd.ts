@@ -50,6 +50,7 @@ export type VerifiedUsulan<T extends Renja> = T & {
     kegiatanVerified: boolean;
     /** true hanya jika semua 4 field di atas true */
     isFullyVerified: boolean;
+    originalIndex: number;
 };
 
 export type ProgramKegiatanJson = {

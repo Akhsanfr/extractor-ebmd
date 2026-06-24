@@ -48,7 +48,7 @@ export const buildVerifiedList = <T extends Renja>(
         kegiatanByProgram.get(p.PROGRAM)!.add(p.KEGIATAN);
     }
 
-    return list.map((item) => {
+    return list.map((item, index) => {
         const penggunaBarangVerified = pdReady
             ? pdList.some((pd) => pd.LOKASI === item.penggunaBarang)
             : true;
@@ -82,6 +82,7 @@ export const buildVerifiedList = <T extends Renja>(
                 kuasaPenggunaBarangVerified &&
                 programVerified &&
                 kegiatanVerified,
+            originalIndex: index,
         };
     });
 };

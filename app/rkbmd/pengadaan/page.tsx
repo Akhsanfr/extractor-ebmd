@@ -93,12 +93,13 @@ export default function RekapPengadaanPage() {
     const handleDeleteSelected = () => {
         if (confirm(`Hapus ${selectedCount} data yang dipilih?`)) {
             if (selectedKeys === "all") {
+                const indicesToDelete = new Set(filteredData.map((f) => f.originalIndex));
                 setListPengadaan((prev) =>
-                    prev.filter((item) => !filteredData.some((f) => f === item))
+                    prev.filter((_, i) => !indicesToDelete.has(i))
                 );
             } else {
-                const ids = new Set(selectedKeys as Set<string>);
-                setListPengadaan((prev) => prev.filter((_, i) => !ids.has(String(i))));
+                const ids = new Set(Array.from(selectedKeys as Set<string>).map(Number));
+                setListPengadaan((prev) => prev.filter((_, i) => !ids.has(i)));
             }
             setSelectedKeys(new Set());
         }
@@ -254,7 +255,7 @@ export default function RekapPengadaanPage() {
                             )}
                         >
                             {filteredData.map((item, index) => (
-                                <Table.Row key={index} id={String(index)}>
+                                <Table.Row key={item.originalIndex} id={String(item.originalIndex)}>
                                     <Table.Cell className="pr-0">
                                         <Checkbox aria-label={`Pilih baris ${index + 1}`} slot="selection" variant="secondary">
                                             <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
@@ -323,8 +324,8 @@ export default function RekapPengadaanPage() {
                                     <TableCell className="align-top">
                                         <div className="flex items-center justify-center gap-1.5">
                                             <Button variant="secondary" isIconOnly onPress={() => handleDuplicate(item)} aria-label="Duplikat"><Copy /></Button>
-                                            <Button isIconOnly variant="secondary" onPress={() => handleOpen(item, index)} aria-label="Edit"><Pen /></Button>
-                                            <Button isIconOnly variant="danger-soft" onPress={() => handleDelete(index)} aria-label="Hapus"><Trash /></Button>
+                                            <Button isIconOnly variant="secondary" onPress={() => handleOpen(item, item.originalIndex)} aria-label="Edit"><Pen /></Button>
+                                            <Button isIconOnly variant="danger-soft" onPress={() => handleDelete(item.originalIndex)} aria-label="Hapus"><Trash /></Button>
                                         </div>
                                     </TableCell>
                                 </Table.Row>

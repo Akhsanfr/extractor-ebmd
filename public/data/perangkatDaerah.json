@@ -4867,7 +4867,7 @@
     },
     {
         "ID": "13.00.00",
-        "LOKASI": "DINAS KETAHANAN PANGAN DAN PERTANIAN",
+        "LOKASI": "DINAS KETAHANAN PANGAN, PERTANIAN DAN PERIKANAN",
         "STATUS": "Pengguna Barang",
         "PARENT ID": ""
     },
@@ -4933,7 +4933,7 @@
     },
     {
         "ID": "24.00.00",
-        "LOKASI": "DINAS PARIWISATA",
+        "LOKASI": "DINAS KEBUDAYAAN DAN PARIWISATA",
         "STATUS": "Pengguna Barang",
         "PARENT ID": ""
     },

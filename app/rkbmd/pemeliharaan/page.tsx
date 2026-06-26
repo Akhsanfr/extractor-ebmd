@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Alert, Button, Checkbox, cn, Table, TableBody, TableCell, TableRow, EmptyState } from "@heroui/react";
+import { useState, useEffect, useMemo } from "react";
+import { Alert, Button, Checkbox, cn, Table, TableBody, TableCell, TableRow, EmptyState, Pagination } from "@heroui/react";
 import type { Selection } from "@heroui/react";
 import { Plus, Copy, Pen, Trash, Wrench, TriangleAlert } from "lucide-react";
 import FormPemeliharaanModal from "./addData";
@@ -34,9 +34,74 @@ export default function PemeliharaanPage() {
         setData: setListPemeliharaan,
     } = useVerifiedUsulan<ListPemeliharaan>(PEMELIHARAAN_STORAGE_KEY);
 
+    const [page, setPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
+
+    // Reset page to 1 when filter changes
+    useEffect(() => {
+        setPage(1);
+    }, [filter]);
+
+    // Reset selected keys when page or rowsPerPage changes
+    useEffect(() => {
+        setSelectedKeys(new Set());
+    }, [page, rowsPerPage]);
+
+    const paginatedData = useMemo(() => {
+        const start = (page - 1) * rowsPerPage;
+        return filteredData.slice(start, start + rowsPerPage);
+    }, [filteredData, page, rowsPerPage]);
+
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    const from = filteredData.length === 0 ? 0 : (page - 1) * rowsPerPage + 1;
+    const to = Math.min(page * rowsPerPage, filteredData.length);
+
+    const getPageNumbers = (): (number | "ellipsis")[] => {
+        const siblingCount = 1;
+        const totalPageNumbers = siblingCount + 5;
+
+        if (totalPages <= totalPageNumbers) {
+            return Array.from({ length: totalPages }, (_, i) => i + 1);
+        }
+
+        const leftSiblingIndex = Math.max(page - siblingCount, 1);
+        const rightSiblingIndex = Math.min(page + siblingCount, totalPages);
+
+        const shouldShowLeftDots = leftSiblingIndex > 2;
+        const shouldShowRightDots = rightSiblingIndex < totalPages - 2;
+
+        const firstPageIndex = 1;
+        const lastPageIndex = totalPages;
+
+        if (!shouldShowLeftDots && shouldShowRightDots) {
+            const leftItemCount = 3 + 2 * siblingCount;
+            const leftRange = Array.from({ length: leftItemCount }, (_, i) => i + 1);
+            return [...leftRange, "ellipsis", totalPages];
+        }
+
+        if (shouldShowLeftDots && !shouldShowRightDots) {
+            const rightItemCount = 3 + 2 * siblingCount;
+            const rightRange = Array.from(
+                { length: rightItemCount },
+                (_, i) => totalPages - rightItemCount + i + 1
+            );
+            return [firstPageIndex, "ellipsis", ...rightRange];
+        }
+
+        if (shouldShowLeftDots && shouldShowRightDots) {
+            const middleRange = Array.from(
+                { length: rightSiblingIndex - leftSiblingIndex + 1 },
+                (_, i) => leftSiblingIndex + i
+            );
+            return [firstPageIndex, "ellipsis", ...middleRange, "ellipsis", lastPageIndex];
+        }
+
+        return [];
+    };
+
     const selectedCount =
         selectedKeys === "all"
-            ? filteredData.length
+            ? paginatedData.length
             : (selectedKeys as Set<string>).size;
 
     // ── Effects ───────────────────────────────────────────────────────────────
@@ -101,7 +166,7 @@ export default function PemeliharaanPage() {
     const handleDeleteSelected = () => {
         if (confirm(`Hapus ${selectedCount} data yang dipilih?`)) {
             if (selectedKeys === "all") {
-                const indicesToDelete = new Set(filteredData.map((f) => f.originalIndex));
+                const indicesToDelete = new Set(paginatedData.map((f) => f.originalIndex));
                 setListPemeliharaan((prev) =>
                     prev.filter((_, i) => !indicesToDelete.has(i))
                 );
@@ -244,7 +309,7 @@ export default function PemeliharaanPage() {
                                 </EmptyState>
                             )}
                         >
-                            {filteredData.map((item, index) => (
+                            {paginatedData.map((item, index) => (
                                 <Table.Row key={item.originalIndex} id={String(item.originalIndex)}>
                                     <Table.Cell className="pr-0">
                                         <Checkbox
@@ -346,6 +411,72 @@ export default function PemeliharaanPage() {
                     </Table.Content>
                 </Table.ScrollContainer>
             </Table>
+
+            {/* ── Pagination Controls ── */}
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4 px-2">
+                <div className="text-sm text-foreground/60">
+                    Menampilkan {from} - {to} dari {filteredData.length} data
+                </div>
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm text-foreground/60">Baris per halaman:</span>
+                        <select
+                            className="bg-background border border-divider rounded px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                            value={rowsPerPage}
+                            onChange={(e) => {
+                                setRowsPerPage(Number(e.target.value));
+                                setPage(1);
+                            }}
+                        >
+                            <option value={10}>10</option>
+                            <option value={25}>25</option>
+                            <option value={50}>50</option>
+                            <option value={100}>100</option>
+                            <option value={500}>500</option>
+                        </select>
+                    </div>
+                    {totalPages > 1 && (
+                        <Pagination color="primary" size="sm">
+                            <Pagination.Content>
+                                <Pagination.Item>
+                                    <Pagination.Previous
+                                        isDisabled={page === 1}
+                                        onPress={() => setPage((prev) => Math.max(1, prev - 1))}
+                                    >
+                                        <Pagination.PreviousIcon />
+                                    </Pagination.Previous>
+                                </Pagination.Item>
+
+                                {getPageNumbers().map((p, i) =>
+                                    p === "ellipsis" ? (
+                                        <Pagination.Item key={`ellipsis-${i}`}>
+                                            <Pagination.Ellipsis />
+                                        </Pagination.Item>
+                                    ) : (
+                                        <Pagination.Item key={p}>
+                                            <Pagination.Link
+                                                isActive={p === page}
+                                                onPress={() => setPage(p)}
+                                            >
+                                                {p}
+                                            </Pagination.Link>
+                                        </Pagination.Item>
+                                    )
+                                )}
+
+                                <Pagination.Item>
+                                    <Pagination.Next
+                                        isDisabled={page === totalPages}
+                                        onPress={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+                                    >
+                                        <Pagination.NextIcon />
+                                    </Pagination.Next>
+                                </Pagination.Item>
+                            </Pagination.Content>
+                        </Pagination>
+                    )}
+                </div>
+            </div>
 
             {duplicateData && (
                 <FormPemeliharaanModal

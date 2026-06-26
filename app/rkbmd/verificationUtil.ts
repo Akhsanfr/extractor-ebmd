@@ -37,7 +37,8 @@ export const buildVerifiedList = <T extends Renja>(
     const pdReady = pdList.length > 0;
     const progReady = programList.length > 0;
 
-    // Set untuk lookup O(1)
+    // Set untuk lookup O(1) lokasi
+    const pdSet = new Set(pdReady ? pdList.map((pd) => pd.LOKASI) : []);
     const programSet = new Set(programList.map((p) => p.PROGRAM));
     // Map: PROGRAM → Set<KEGIATAN> untuk validasi pasangan
     const kegiatanByProgram = new Map<string, Set<string>>();
@@ -50,12 +51,12 @@ export const buildVerifiedList = <T extends Renja>(
 
     return list.map((item, index) => {
         const penggunaBarangVerified = pdReady
-            ? pdList.some((pd) => pd.LOKASI === item.penggunaBarang)
+            ? pdSet.has(item.penggunaBarang)
             : true;
 
         const kuasaPenggunaBarangVerified = pdReady
             ? item.kuasaPenggunaBarang.length > 0
-                ? pdList.some((pd) => pd.LOKASI === item.kuasaPenggunaBarang)
+                ? pdSet.has(item.kuasaPenggunaBarang)
                 : true
             : true;
 

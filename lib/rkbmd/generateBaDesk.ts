@@ -45,7 +45,6 @@ const bulan = new Intl.DateTimeFormat("id-ID", {
 }).format(now);
 
 export async function generateBaDesk(perekon: Perekon, data: RkbmdBaContract.SelectDTO): Promise<void> {
-    console.log("perekon", perekon)
     // 1. Fetch template dari /public
     const response = await fetch("/rkbmd/template-ba-desk.docx");
     if (!response.ok) {

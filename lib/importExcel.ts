@@ -2,15 +2,7 @@ import * as XLSX from "xlsx";
 import { ListPengadaan, FormPemeliharan } from "@/types/rkbmd";
 import { AsetType } from "@/types/bmd";
 import { parseHierarchy } from "./rkbmd/parseHierarchy";
-
-const ROMAN_NUMERALS = new Set([
-    "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
-    "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
-    "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX",
-    "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL",
-    "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L",
-    "LI", "LII", "LIII", "LIV", "LV"
-]);
+import { dedupArray, isEqualPemeliharaan, isEqualPengadaan } from "./rkbmd/cekDuplikat";
 
 interface HierarchyState {
     curPengguna: string;
@@ -20,49 +12,6 @@ interface HierarchyState {
     curOutput: string;
 }
 
-// function parseHierarchy(colGroup: string, s: HierarchyState): void {
-//     const trimmed = colGroup.trim();
-
-//     // Pengguna Barang: "I. ...", "II. ...", dst
-//     const romanMatch = trimmed.match(/^([A-Z]+)\.\s+(.*)$/);
-//     if (romanMatch && ROMAN_NUMERALS.has(romanMatch[1])) {
-//         s.curPengguna = romanMatch[2].trim();
-//         s.curKuasa = ""; s.curProgram = ""; s.curKegiatan = ""; s.curOutput = "";
-//         return;
-//     }
-
-//     // Program: "A. ...", "B. ...", dst
-//     const programMatch = trimmed.match(/^[A-Z]\.\s+(.*)$/);
-//     if (programMatch) {
-//         s.curProgram = programMatch[1].trim();
-//         s.curKegiatan = ""; s.curOutput = "";
-//         return;
-//     }
-
-//     // FIX: Kegiatan: "1) ...", "2) ..." — TANPA titik setelah kurung tutup
-//     const kegiatanMatch = trimmed.match(/^\d+\)\s+(.*)$/);
-//     if (kegiatanMatch) {
-//         s.curKegiatan = kegiatanMatch[1].trim();
-//         s.curOutput = "";
-//         return;
-//     }
-
-//     // Kuasa Pengguna Barang: "1. ...", "2. ..." — dicek SETELAH kegiatan
-//     // agar tidak salah tangkap (kegiatan pakai ")" bukan ".")
-//     const kuasaMatch = trimmed.match(/^\d+\.\s+(.*)$/);
-//     if (kuasaMatch) {
-//         s.curKuasa = kuasaMatch[1].trim();
-//         s.curProgram = ""; s.curKegiatan = ""; s.curOutput = "";
-//         return;
-//     }
-
-//     // Output: "a. ...", "b. ...", dst
-//     const outputMatch = trimmed.match(/^[a-z]\.\s+(.*)$/);
-//     if (outputMatch) {
-//         s.curOutput = outputMatch[1].trim();
-//         return;
-//     }
-// }
 
 export async function importRkbmdFromExcel(file: File): Promise<{
     pengadaanData: ListPengadaan[];
@@ -108,7 +57,6 @@ export async function importRkbmdFromExcel(file: File): Promise<{
 
                     for (let i = 11; i < rowsP.length; i++) {
                         const row = rowsP[i];
-                        console.log(`row[${i}]`, JSON.stringify(row?.slice(0, 5)));
                         if (!row || row.length === 0) continue;
                         if (typeof row[12] === "string" && row[12].includes("..................")) break;
 
@@ -119,7 +67,7 @@ export async function importRkbmdFromExcel(file: File): Promise<{
                         if (colGroup && !colKodeBarang) {
                             parseHierarchy(colGroup, s);
                         } else if (colKodeBarang && colKodeBarang !== "-" && colKodeBarang !== "") {
-                            pengadaanData.push({
+                            const newItem = {
                                 penggunaBarang: s.curPengguna,
                                 kuasaPenggunaBarang: s.curKuasa,
                                 program: s.curProgram,
@@ -143,7 +91,8 @@ export async function importRkbmdFromExcel(file: File): Promise<{
                                     jumlah: Number(row[12]) || 0,
                                     satuan: row[13] || ""
                                 }
-                            } as ListPengadaan);
+                            } as ListPengadaan;
+                            pengadaanData.push(newItem);
                         }
                     }
                 }
@@ -166,7 +115,7 @@ export async function importRkbmdFromExcel(file: File): Promise<{
                         if (colGroup && !colKodeBarang) {
                             parseHierarchy(colGroup, s);
                         } else if (colKodeBarang && colKodeBarang !== "-" && colKodeBarang !== "") {
-                            pemeliharaanData.push({
+                            const newItem = {
                                 penggunaBarang: s.curPengguna,
                                 kuasaPenggunaBarang: s.curKuasa,
                                 program: s.curProgram,
@@ -185,12 +134,16 @@ export async function importRkbmdFromExcel(file: File): Promise<{
                                     satuan: row[12] || ""
                                 },
                                 keterangan: row[13] || ""
-                            } as FormPemeliharan);
+                            } as FormPemeliharan;
+                            pemeliharaanData.push(newItem);
                         }
                     }
                 }
 
-                resolve({ pengadaanData, pemeliharaanData });
+                resolve({
+                    pengadaanData: dedupArray(pengadaanData, isEqualPengadaan),
+                    pemeliharaanData: dedupArray(pemeliharaanData, isEqualPemeliharaan),
+                });
             } catch (error) {
                 reject(error);
             }

@@ -76,7 +76,6 @@ function usePerangkatDaerahData() {
 export function AvailablePerangkatDaerah(
     props: PerangkatDaerahAutocompleteProps
 ) {
-    console.log(props.error)
     const { contains } = useFilter({ sensitivity: "base" });
 
     const { data = [], error, isLoading } =

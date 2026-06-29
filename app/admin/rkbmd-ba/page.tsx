@@ -288,7 +288,7 @@ export default function RkbmdBaPage() {
             </div>
 
             <Table>
-                <Table.ScrollContainer>
+                <Table.ScrollContainer className="h-[480px] overflow-y-auto">
                     <Table.Content aria-label="Daftar RKBMD BA">
                         <Table.Header>
                             <Table.Column isRowHeader width={160}>PERANGKAT DAERAH</Table.Column>

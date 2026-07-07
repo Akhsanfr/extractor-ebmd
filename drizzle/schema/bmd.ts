@@ -1,7 +1,7 @@
-import { pgTable, text, numeric, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, numeric, varchar, timestamp } from "drizzle-orm/pg-core";
 import { perangkatDaerahTable } from "./perangkatDaerah";
 
-export const bmd = pgTable("bmd", {
+export const bmdTable = pgTable("bmd", {
     nibar: text("nibar").primaryKey(),
     nomorRegister: text("nomor_register").notNull(),
     kodeBarang: text("kode_barang").notNull(),
@@ -14,6 +14,8 @@ export const bmd = pgTable("bmd", {
     }).notNull(),
     satuan: text("satuan"),
     lokasi: text("lokasi").notNull(),
-    perangkatDaerahId: varchar("perangkat_daerah_id", { length: 30 })
+    perangkatDaerahKodeLokasi: varchar("perangkat_daerah_id", { length: 30 })
         .references(() => perangkatDaerahTable.kodeLokasi, { onDelete: "cascade" }),
+    lastSyncAt: timestamp("last_sync_at", { withTimezone: true }),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });

@@ -1,0 +1,1 @@
+ALTER TABLE "kode_persediaan" ADD COLUMN "kategori" text;

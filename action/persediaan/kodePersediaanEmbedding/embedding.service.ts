@@ -1,4 +1,3 @@
-// app/action/embedding/embedding.service.ts
 import { db } from "@/drizzle";
 import {
     claimEmbeddingBatch,
@@ -10,17 +9,12 @@ import {
     findKodePersediaanWithoutEmbeddingRow,
     insertPendingEmbeddingBatch,
 } from "./embedding.repository";
-import { generateEmbedding } from "../ollama/ollama.service";
+import { generateEmbedding, generateEmbeddingBatch } from "../ollama/ollama.service";
 
 const BATCH_SIZE = 10;
 const POLL_INTERVAL_MS = 3000;
 const EMBEDDING_MODEL = "bge-m3";
 
-/**
- * Claim + tandai processing dalam SATU transaksi pendek (lock dilepas
- * begitu commit). Panggilan Ollama (bisa sampai 60 detik) TIDAK boleh
- * berada di dalam transaksi ini, supaya tidak menahan row lock lama.
- */
 async function claimAndMarkProcessing(): Promise<EmbeddingJob[]> {
     return db.transaction(async (tx) => {
         const jobs = await claimEmbeddingBatch(tx, BATCH_SIZE);
@@ -31,28 +25,38 @@ async function claimAndMarkProcessing(): Promise<EmbeddingJob[]> {
     });
 }
 
-async function processJob(job: EmbeddingJob) {
-    try {
-        const embedding = await generateEmbedding({
-            kategori: job.kategori,
-            namaBarang: job.namaBarang,
-            satuan: job.satuan,
-        });
-
+/** Tandai satu job selesai/gagal — dipisah biar dipakai di jalur batch maupun fallback. */
+async function finalizeJob(job: EmbeddingJob, embedding: number[] | null, error?: string) {
+    if (embedding) {
         await markCompleted(db, {
             kodePersediaanId: job.kodePersediaanId,
             embedding,
-            embeddingHash: job.contentHash, // content_hash sudah dihitung saat create/update
+            embeddingHash: job.contentHash,
             model: EMBEDDING_MODEL,
         });
-
         console.log(`✅ [${job.kodePersediaanId}] embedding selesai`);
-    } catch (err: any) {
+    } else {
         await markFailed(db, {
             kodePersediaanId: job.kodePersediaanId,
-            lastError: err?.message ?? "Unknown error",
+            lastError: error ?? "Unknown error",
         });
-        console.error(`❌ [${job.kodePersediaanId}] gagal embed:`, err?.message);
+        console.error(`❌ [${job.kodePersediaanId}] gagal embed:`, error);
+    }
+}
+
+/** Fallback: proses satu-satu ketika batch call gagal total, supaya item bermasalah bisa diisolasi. */
+async function processJobsIndividually(jobs: EmbeddingJob[]) {
+    for (const job of jobs) {
+        try {
+            const embedding = await generateEmbedding({
+                kategori: job.kategori,
+                namaBarang: job.namaBarang,
+                satuan: job.satuan,
+            });
+            await finalizeJob(job, embedding);
+        } catch (err: any) {
+            await finalizeJob(job, null, err?.message);
+        }
     }
 }
 
@@ -60,20 +64,29 @@ async function processBatch(): Promise<number> {
     const jobs = await claimAndMarkProcessing();
     if (jobs.length === 0) return 0;
 
-    await Promise.all(jobs.map(processJob));
+    try {
+        const embeddings = await generateEmbeddingBatch(
+            jobs.map((job) => ({
+                kategori: job.kategori,
+                namaBarang: job.namaBarang,
+                satuan: job.satuan,
+            }))
+        );
+        await Promise.all(jobs.map((job, i) => finalizeJob(job, embeddings[i])));
+    } catch (err: any) {
+        // Batch gagal total (misal timeout jaringan) — coba isolasi per item.
+        console.error("⚠️ Batch embedding gagal, fallback ke per-item:", err?.message);
+        await processJobsIndividually(jobs);
+    }
+
     return jobs.length;
 }
 
-/** Sekali jalan — berguna untuk testing/manual trigger. */
 export async function runEmbeddingWorkerOnce() {
     await recoverStuckProcessing(db);
     return processBatch();
 }
 
-/**
- * Worker loop — dijalankan sebagai PROSES TERPISAH via PM2, BUKAN dari
- * request Next.js. Lihat scripts/embedding-worker.ts sebagai entrypoint.
- */
 export async function startEmbeddingWorker() {
     console.log("🚀 Embedding worker started");
     let tick = 0;
@@ -81,7 +94,7 @@ export async function startEmbeddingWorker() {
     while (true) {
         try {
             if (tick % 10 === 0) {
-                await recoverStuckProcessing(db); // ~tiap 30 detik
+                await recoverStuckProcessing(db);
             }
             const processed = await processBatch();
             if (processed > 0) console.log(`📦 Processed ${processed} job(s)`);
@@ -95,32 +108,15 @@ export async function startEmbeddingWorker() {
 
 const BACKFILL_BATCH_SIZE = 500;
 
-/**
- * BACKFILL — jalan sekali (manual trigger), bukan bagian dari worker loop.
- * Tujuannya cuma memastikan SETIAP proposal punya baris di
- * shsProposalEmbedding dengan status 'pending'. Proses embedding-nya
- * sendiri tetap ditangani worker yang sudah berjalan terus-menerus.
- *
- * Aman untuk di-rerun berkali-kali (idempotent) — proposal yang sudah
- * punya baris otomatis tidak akan muncul lagi di query berikutnya.
- */
 export async function backfillMissingEmbeddingRows() {
     let totalInserted = 0;
-
     console.log("🚀 Mulai backfill embedding rows untuk proposal existing...");
 
     while (true) {
-        const missing = await findKodePersediaanWithoutEmbeddingRow(db, {
-            limit: BACKFILL_BATCH_SIZE,
-        });
-
+        const missing = await findKodePersediaanWithoutEmbeddingRow(db, { limit: BACKFILL_BATCH_SIZE });
         if (missing.length === 0) break;
 
-        await insertPendingEmbeddingBatch(
-            db,
-            missing.map((p) => p.id),
-        );
-
+        await insertPendingEmbeddingBatch(db, missing.map((p) => p.id));
         totalInserted += missing.length;
         console.log(`📦 Batch: ${missing.length} baris pending ditambahkan (total: ${totalInserted})`);
     }

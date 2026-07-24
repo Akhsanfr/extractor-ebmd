@@ -4,3 +4,5 @@ export * from "./sebaranBmd";
 export * from "./rkbmdBa";
 export * from "./bmd";
 export * from "./auth"
+export * from "./kodePersediaan"
+export * from "./kodePersediaanEmbedding"

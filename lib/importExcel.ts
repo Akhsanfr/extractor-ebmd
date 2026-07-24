@@ -12,6 +12,23 @@ interface HierarchyState {
     curOutput: string;
 }
 
+// Helper: sort data berdasarkan Pengguna Barang -> Kuasa Pengguna Barang
+function sortByHierarchy<T extends { penggunaBarang: string; kuasaPenggunaBarang: string }>(
+    data: T[]
+): T[] {
+    return [...data].sort((a, b) => {
+        const penggunaCompare = a.penggunaBarang.localeCompare(b.penggunaBarang, "id", {
+            sensitivity: "base",
+            numeric: true,
+        });
+        if (penggunaCompare !== 0) return penggunaCompare;
+
+        return a.kuasaPenggunaBarang.localeCompare(b.kuasaPenggunaBarang, "id", {
+            sensitivity: "base",
+            numeric: true,
+        });
+    });
+}
 
 export async function importRkbmdFromExcel(file: File): Promise<{
     pengadaanData: ListPengadaan[];
@@ -141,8 +158,8 @@ export async function importRkbmdFromExcel(file: File): Promise<{
                 }
 
                 resolve({
-                    pengadaanData: dedupArray(pengadaanData, isEqualPengadaan),
-                    pemeliharaanData: dedupArray(pemeliharaanData, isEqualPemeliharaan),
+                    pengadaanData: sortByHierarchy(dedupArray(pengadaanData, isEqualPengadaan)),
+                    pemeliharaanData: sortByHierarchy(dedupArray(pemeliharaanData, isEqualPemeliharaan)),
                 });
             } catch (error) {
                 reject(error);

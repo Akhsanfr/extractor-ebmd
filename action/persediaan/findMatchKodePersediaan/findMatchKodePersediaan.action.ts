@@ -13,7 +13,7 @@ export async function actionFindMatchKodePersediaan(
         if (!validated.success) {
             throw new OperationalError(
                 "Validasi gagal",
-                validated.error.flatten().fieldErrors
+                // validated.error.flatten().fieldErrors
             );
         }
 

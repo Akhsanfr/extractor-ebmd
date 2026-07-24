@@ -64,7 +64,7 @@ export class OperationalError extends Error {
     }
 }
 
-export function handleActionError(error: unknown): ActionResponse<never> {
+export function handleActionError(error: unknown, actionName?: string): ActionResponse<never> {
     if (error instanceof OperationalError) {
         return {
             success: false,
@@ -76,7 +76,7 @@ export function handleActionError(error: unknown): ActionResponse<never> {
         };
     }
 
-    console.error("[System Error]", error);
+    console.error(`[System Error ${actionName ? `| ${actionName}` : ""}]`, error);
     return {
         success: false,
         error: {

@@ -4,5 +4,7 @@ export * from "./sebaranBmd";
 export * from "./rkbmdBa";
 export * from "./bmd";
 export * from "./auth"
+export * from "./userProfile"
+export * from "./userRole"
 export * from "./kodePersediaan"
 export * from "./kodePersediaanEmbedding"

@@ -130,7 +130,7 @@ export function SuratPesananUploader() {
             console.log(response);
             if (!response.success) {
                 console.error(response);
-                setMatchError(response.message ?? "Gagal mencari kodefikasi");
+                // setMatchError(response.message ?? "Gagal mencari kodefikasi");
                 return;
             }
 
@@ -169,7 +169,7 @@ export function SuratPesananUploader() {
             const response = await extractSuratPesananAction(formData);
             if (!response.success) {
                 console.error(response)
-                setErrorMessage(response.message ?? "Gagal mengekstrak dokumen");
+                // setErrorMessage(response.message ?? "Gagal mengekstrak dokumen");
                 return;
             }
 

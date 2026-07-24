@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { OllamaContract } from "../ollama/ollama.contract";
 import { createSelectSchema } from "drizzle-zod";
 import { kodePersediaan } from "@/drizzle/schema";
 
@@ -38,8 +37,14 @@ export const KodePersediaanContract = {
     kode108: true,
     namaBarang: true,
     satuan: true
+  }),
+  createHash: createSelectSchema(kodePersediaan).pick({
+    kategori: true,
+    nama108: true,
+    namaBarang: true,
+    satuan: true,
+    keywords: true,
   })
-  // result: z.array(KodePersediaanResultSchema),
 };
 
 // ─── Namespace Type ───────────────────────────────────────────────────────────
@@ -48,4 +53,5 @@ export namespace KodePersediaanContract {
   export type InputDTO = z.infer<typeof KodePersediaanContract.input>;
   export type CandidateDTO = z.infer<typeof KodePersediaanCandidateSchema>;
   export type ResultDTO = z.infer<typeof KodePersediaanContract.select>;
+  export type CreateHashDTO = z.infer<typeof KodePersediaanContract.createHash>;
 }

@@ -1,6 +1,6 @@
 // pgvector belum punya type bawaan di drizzle-orm/pg-core, jadi bikin customType.
 
-import { customType, integer, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { boolean, customType, integer, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { embeddingStatusEnum } from "./enum";
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { kodePersediaan } from "./kodePersediaan";
@@ -52,7 +52,10 @@ export const kodePersediaanEmbedding = pgTable("kode_persediaan_embedding", {
     /** Nama model embedding yang dipakai, mis. "bge-m3". */
     model: varchar("model", { length: 50 }),
 
-    status: embeddingStatusEnum("status").notNull().default("pending"),
+    statusEmbedding: embeddingStatusEnum("status_embedding").notNull().default("pending"),
+    isSearchReady: boolean("is_search_ready")
+        .notNull()
+        .default(false),
 
     startedAt: timestamp("started_at", { mode: "date" }),
     completedAt: timestamp("completed_at", { mode: "date" }),

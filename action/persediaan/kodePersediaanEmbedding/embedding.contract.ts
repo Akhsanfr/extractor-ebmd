@@ -29,7 +29,7 @@ const dbBase = createSelectSchema(kodePersediaanEmbedding, {
     embedding: embeddingVectorSchema.nullable(),
     embeddingHash: z.string().length(64).nullable(),
     model: z.string().max(50).nullable(),
-    status: embeddingStatusSchema,
+    statusEmbedding: embeddingStatusSchema,
     retryCount: z.number().int().min(0),
     lastError: z.string().nullable(),
 });
@@ -45,7 +45,7 @@ const selectSchema = dbBase;
  */
 const selectStatusSchema = dbBase.pick({
     kodePersediaanId: true,
-    status: true,
+    statusEmbedding: true,
     retryCount: true,
     lastError: true,
     completedAt: true,
@@ -59,7 +59,7 @@ const selectStatusSchema = dbBase.pick({
 const selectForSimilaritySchema = dbBase.pick({
     kodePersediaanId: true,
     embedding: true,
-    status: true,
+    statusEmbedding: true,
 });
 
 // ─────────────────────────────────────────────

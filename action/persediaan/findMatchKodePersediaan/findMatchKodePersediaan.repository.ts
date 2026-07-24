@@ -44,7 +44,7 @@ export const FindMatchKodePersediaanRepository = {
       )
       .where(
         and(
-          eq(kodePersediaanEmbedding.status, "completed"),
+          eq(kodePersediaanEmbedding.isSearchReady, true),
           isNull(kodePersediaan.deletedAt)
         )
       )

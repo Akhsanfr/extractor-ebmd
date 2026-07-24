@@ -3,6 +3,7 @@ import { z } from "zod";
 export const OllamaContract = {
     input: z.object({
         kategori: z.string().optional(),
+        nama108: z.string().optional(),
         namaBarang: z.string(),
         satuan: z.string(),
         keywords: z.string().optional(),

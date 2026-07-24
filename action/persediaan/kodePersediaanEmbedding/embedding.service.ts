@@ -50,6 +50,7 @@ async function processJobsIndividually(jobs: EmbeddingJob[]) {
         try {
             const embedding = await generateEmbedding({
                 kategori: job.kategori,
+                nama108: job.nama108,
                 namaBarang: job.namaBarang,
                 satuan: job.satuan,
             });
@@ -68,6 +69,7 @@ async function processBatch(): Promise<number> {
         const embeddings = await generateEmbeddingBatch(
             jobs.map((job) => ({
                 kategori: job.kategori,
+                nama108: job.nama108,
                 namaBarang: job.namaBarang,
                 satuan: job.satuan,
             }))

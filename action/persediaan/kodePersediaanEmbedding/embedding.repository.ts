@@ -42,38 +42,55 @@ export async function claimEmbeddingBatch(
             retryCount: kodePersediaanEmbedding.retryCount,
         })
         .from(kodePersediaanEmbedding)
-        .innerJoin(kodePersediaan, eq(kodePersediaan.id, kodePersediaanEmbedding.kodePersediaanId))
+        .innerJoin(
+            kodePersediaan,
+            eq(kodePersediaan.id, kodePersediaanEmbedding.kodePersediaanId)
+        )
         .where(
             and(
                 isNull(kodePersediaan.deletedAt),
                 or(
+                    // belum pernah berhasil / gagal dan masih boleh retry
                     and(
-                        inArray(kodePersediaanEmbedding.status, ["pending", "failed"]),
+                        inArray(kodePersediaanEmbedding.statusEmbedding, [
+                            "pending",
+                            "failed",
+                        ]),
                         lt(kodePersediaanEmbedding.retryCount, MAX_RETRY)
                     ),
+
+                    // content berubah
                     and(
-                        eq(kodePersediaanEmbedding.status, "completed"),
+                        eq(kodePersediaanEmbedding.statusEmbedding, "completed"),
                         ne(
                             sql`coalesce(${kodePersediaanEmbedding.embeddingHash}, '')`,
                             sql`coalesce(${kodePersediaan.contentHash}, '')`
                         )
                     ),
+
+                    // model berubah
                     and(
-                        eq(kodePersediaanEmbedding.status, "completed"),
-                        ne(sql`coalesce(${kodePersediaanEmbedding.model}, '')`, ACTIVE_MODEL)
+                        eq(kodePersediaanEmbedding.statusEmbedding, "completed"),
+                        ne(
+                            sql`coalesce(${kodePersediaanEmbedding.model}, '')`,
+                            ACTIVE_MODEL
+                        )
                     )
                 )
             )
         )
         .orderBy(kodePersediaanEmbedding.updatedAt)
         .limit(limit)
-        .for("update", { of: kodePersediaanEmbedding, skipLocked: true }) as unknown as Promise<EmbeddingJob[]>;
+        .for("update", {
+            of: kodePersediaanEmbedding,
+            skipLocked: true,
+        }) as unknown as Promise<EmbeddingJob[]>;
 }
 
 export async function markProcessing(tx: DbOrTx, kodePersediaanId: number) {
     await tx
         .update(kodePersediaanEmbedding)
-        .set({ status: "processing", startedAt: new Date(), updatedAt: new Date() })
+        .set({ statusEmbedding: "processing", startedAt: new Date(), updatedAt: new Date() })
         .where(eq(kodePersediaanEmbedding.kodePersediaanId, kodePersediaanId));
 }
 
@@ -92,7 +109,8 @@ export async function markCompleted(
             embedding: params.embedding,
             embeddingHash: params.embeddingHash,
             model: params.model,
-            status: "completed",
+            isSearchReady: true,
+            statusEmbedding: "completed",
             completedAt: new Date(),
             updatedAt: new Date(),
             retryCount: 0,
@@ -108,7 +126,7 @@ export async function markFailed(
     await dbOrTx
         .update(kodePersediaanEmbedding)
         .set({
-            status: "failed",
+            statusEmbedding: "failed",
             lastError: params.lastError,
             retryCount: sql`${kodePersediaanEmbedding.retryCount} + 1`,
             updatedAt: new Date(),
@@ -124,10 +142,10 @@ export async function recoverStuckProcessing(dbOrTx: DbOrTx) {
     const threshold = new Date(Date.now() - STUCK_PROCESSING_MINUTES * 60_000);
     await dbOrTx
         .update(kodePersediaanEmbedding)
-        .set({ status: "pending", updatedAt: new Date() })
+        .set({ statusEmbedding: "pending", updatedAt: new Date() })
         .where(
             and(
-                eq(kodePersediaanEmbedding.status, "processing"),
+                eq(kodePersediaanEmbedding.statusEmbedding, "processing"),
                 lt(kodePersediaanEmbedding.startedAt, threshold)
             )
         );
@@ -139,7 +157,7 @@ export async function recoverStuckProcessing(dbOrTx: DbOrTx) {
 export async function insertPendingEmbedding(tx: DbOrTx, kodePersediaanId: number) {
     await tx.insert(kodePersediaanEmbedding).values({
         kodePersediaanId,
-        status: "pending",
+        statusEmbedding: "pending",
     });
 }
 
@@ -151,7 +169,7 @@ export async function insertPendingEmbedding(tx: DbOrTx, kodePersediaanId: numbe
 export async function markEmbeddingPending(tx: DbOrTx, kodePersediaanId: number) {
     await tx
         .update(kodePersediaanEmbedding)
-        .set({ status: "pending", updatedAt: new Date() })
+        .set({ statusEmbedding: "pending", updatedAt: new Date() })
         .where(eq(kodePersediaanEmbedding.kodePersediaanId, kodePersediaanId));
 }
 
@@ -163,7 +181,7 @@ export async function getEmbeddingBykodePersediaanId(
         .select({
             kodePersediaanId: kodePersediaanEmbedding.kodePersediaanId,
             embedding: kodePersediaanEmbedding.embedding,
-            status: kodePersediaanEmbedding.status,
+            statusEmbedding: kodePersediaanEmbedding.statusEmbedding,
         })
         .from(kodePersediaanEmbedding)
         .where(eq(kodePersediaanEmbedding.kodePersediaanId, kodePersediaanId))

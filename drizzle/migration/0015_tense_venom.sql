@@ -1,0 +1,2 @@
+ALTER TABLE "kode_persediaan_embedding" RENAME COLUMN "status" TO "status_embedding";--> statement-breakpoint
+ALTER TABLE "kode_persediaan_embedding" ADD COLUMN "is_search_ready" boolean DEFAULT false NOT NULL;

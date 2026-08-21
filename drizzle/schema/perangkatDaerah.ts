@@ -9,5 +9,6 @@ export const perangkatDaerahTable = pgTable("perangkat_daerah", {
     createdBy: text("created_by"),
     updatedBy: text("updated_by"),
 });
-
+export type SelectPerangkatDaerah = typeof perangkatDaerahTable.$inferSelect;
+export type InsertPerangkatDaerah = typeof perangkatDaerahTable.$inferInsert;
 export type PerangkatDaerahTable = typeof perangkatDaerahTable;

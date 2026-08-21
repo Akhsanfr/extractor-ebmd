@@ -1,4 +1,4 @@
-import { PerangkatDaerahContract } from "@/action/perangkatDaerah/contract";
+import { PerangkatDaerahContract } from "@/action/perangkatDaerah/perangkatDaerah.contract";
 import { userProfileTable } from "@/drizzle/schema/userProfile";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 

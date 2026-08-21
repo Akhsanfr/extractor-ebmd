@@ -1,5 +1,6 @@
 "use client"
 
+import { actionTesExtractEbmd } from "@/action/tes/extractor.action";
 import { actionTesAuthoriseUser } from "@/action/tes/tes.action"
 import { actionGetUserWithDetail } from "@/action/user/user/user.action";
 import { UserContract } from "@/action/user/user/user.contract";
@@ -35,6 +36,16 @@ export default function TesPage() {
         setUser(null);
         getUserDetail()
     }
+
+    const tesExtractEbmd = async () => {
+        try {
+            const res = await actionTesExtractEbmd();
+            if (!res.success) throw res.error
+            console.log("res", res)
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
     useEffect(() => {
         getUserDetail();
     }, [])
@@ -52,6 +63,7 @@ export default function TesPage() {
                     </CardContent>
                 </Card> : <p>User belum login</p>
         }
+        <Button onClick={tesExtractEbmd}>Tes Extract EBMD</Button>
     </div>
 
 }

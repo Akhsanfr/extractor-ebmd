@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { perangkatDaerahTable } from "@/drizzle/schema/perangkatDaerah";
 import { DbOrTx } from "../baseDbOrTx";
+import { PerangkatDaerahJabatan } from "@/enum/perangkatDaerah";
 
 type SelectPerangkatDaerah = InferSelectModel<typeof perangkatDaerahTable>;
 type InsertPerangkatDaerah = InferInsertModel<typeof perangkatDaerahTable>;
@@ -25,6 +26,14 @@ export async function findPerangkatDaerahByKodeLokasi(
     .where(eq(perangkatDaerahTable.kodeLokasi, kodeLokasi));
 
   return row;
+}
+export async function findPerangkatDaerahByJabatan(
+  dbOrTx: DbOrTx,
+  jabatan: PerangkatDaerahJabatan
+): Promise<SelectPerangkatDaerah[]> {
+  return dbOrTx.query.perangkatDaerahTable.findMany({
+    where: eq(perangkatDaerahTable.jabatan, jabatan)
+  })
 }
 
 export async function upsertPerangkatDaerah(

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Select, Label, Description, ListBox, toast } from "@heroui/react";
 import { getPerangkatDaerahAction } from "@/action/perangkatDaerah/action";
-import { PerangkatDaerahContract } from "@/action/perangkatDaerah/contract";
+import { PerangkatDaerahContract } from "@/action/perangkatDaerah/perangkatDaerah.contract";
 import { syncBmdDataAction } from "@/action/bmd/bmd.action";
 
 export default function SyncBmdPage() {

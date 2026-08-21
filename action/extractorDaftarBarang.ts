@@ -5,7 +5,7 @@ import https from 'https';
 import * as xlsx from 'xlsx';
 import fs from 'fs';
 import path from 'path';
-import { PerangkatDaerahContract } from './perangkatDaerah/contract';
+import { PerangkatDaerahContract } from './perangkatDaerah/perangkatDaerah.contract';
 
 type PerangkatDaerah = {
     No: string,

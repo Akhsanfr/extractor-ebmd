@@ -6,7 +6,7 @@ import { bmdService } from "./bmd.service";
 import { actionExtractDaftarBarang } from "@/action/extractorDaftarBarang"; // Pastikan path ini betul
 import { db } from "@/drizzle";
 import { ActionResponse, handleActionError, OperationalError } from "../actionResponse";
-import { PerangkatDaerahContract } from "../perangkatDaerah/contract";
+import { PerangkatDaerahContract } from "../perangkatDaerah/perangkatDaerah.contract";
 
 export async function syncBmdDataAction(perangkatDaerah: PerangkatDaerahContract.SelectDTO): Promise<ActionResponse<{ totalProcessed: number }>> {
   try {

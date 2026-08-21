@@ -2,7 +2,7 @@ import { db } from "@/drizzle";
 import { UserContract } from "./user.contract";
 import { UserRepository } from "./user.repository";
 import { UserRole } from "@/enum/user";
-import { auth } from "@/lib/auth";
+import { auth, AuthSession } from "@/lib/auth";
 import { OperationalError } from "@/action/actionResponse";
 import { UserRoleRepository } from "../userRole/userRole.repository";
 
@@ -16,7 +16,7 @@ export const UserService = {
     authorizeUser: async (
         reqHeaders: Headers,
         rolesToVerify: UserRole[] = []
-    ): Promise<void> => {
+    ): Promise<AuthSession> => {
         try {
 
             const authSession = await auth.api.getSession({ headers: reqHeaders });
@@ -26,7 +26,7 @@ export const UserService = {
                 );
             }
             if (rolesToVerify.length == 0) {
-                return;
+                return authSession;
             }
             const userRolesEntries = await UserRoleRepository.getRolesByUserId(db, authSession.user.id);
             const userRoles = userRolesEntries.map(r => r.role as UserRole);
@@ -34,6 +34,7 @@ export const UserService = {
                 const hasAccess = userRoles.some(role => rolesToVerify.includes(role));
                 if (!hasAccess) throw new OperationalError(`Pengguna tidak memiliki akses. Role dibutuhkan: ${rolesToVerify.join(", ")}. Role Anda: ${userRoles.join(", ")}`);
             }
+            return authSession;
         } catch (error: any) {
             throw error;
         }

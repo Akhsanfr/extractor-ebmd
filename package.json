@@ -8,12 +8,15 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest",
-    "worker:embedding": "tsx scripts/kodePersediaan/embedding.ts"
+    "worker:embedding": "tsx scripts/kodePersediaan/embedding.ts",
+    "worker:ebmd": "tsx scripts/sync/ebmd.worker.ts",
+    "fetch:ebmd": "tsx scripts/ebmd/fetch.ts"
   },
   "dependencies": {
     "@better-auth/drizzle-adapter": "^1.6.23",
     "@heroui/react": "^3.0.5",
     "@heroui/styles": "^3.0.5",
+    "@hookform/resolvers": "^5.5.7",
     "@internationalized/date": "^3.12.2",
     "@neondatabase/serverless": "^1.1.0",
     "axios": "^1.16.1",
@@ -32,6 +35,7 @@
     "next-themes": "^0.4.6",
     "pg": "^8.21.0",
     "pizzip": "^3.2.0",
+    "playwright": "^1.62.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.76.0",

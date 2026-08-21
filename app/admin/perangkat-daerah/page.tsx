@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { Button, Chip, Modal, Table } from "@heroui/react";
-import { PerangkatDaerahContract } from "@/action/perangkatDaerah/contract";
+import { PerangkatDaerahContract } from "@/action/perangkatDaerah/perangkatDaerah.contract";
 import {
     getPerangkatDaerahAction,
     upsertManyPerangkatDaerahAction,

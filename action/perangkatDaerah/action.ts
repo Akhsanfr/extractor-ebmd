@@ -1,11 +1,13 @@
 "use server";
+import { PerangkatDaerahJabatan } from "@/enum/perangkatDaerah";
 import { ActionResponse, handleActionError } from "../actionResponse";
-import { PerangkatDaerahContract } from "./contract";
+import { PerangkatDaerahContract } from "./perangkatDaerah.contract";
 import {
   getAllPerangkatDaerah,
   getPerangkatDaerahByKodeLokasi,
   upsertPerangkatDaerahService,
   upsertManyPerangkatDaerahService,
+  getPerangkatDaerahByJabatan,
 } from "./service";
 
 export async function getPerangkatDaerahAction(): Promise<
@@ -29,6 +31,17 @@ export async function getPerangkatDaerahByKodeLokasiAction(
     return handleActionError(error);
   }
 }
+export async function actionGetListPerangkatDaerahByJabatan(
+  jabatan: PerangkatDaerahJabatan
+): Promise<ActionResponse<PerangkatDaerahContract.SelectDTO[]>> {
+  try {
+    const data = await getPerangkatDaerahByJabatan(jabatan);
+    return { success: true, data };
+  } catch (error) {
+    return handleActionError(error);
+  }
+}
+
 
 export async function upsertPerangkatDaerahAction(
   input: unknown

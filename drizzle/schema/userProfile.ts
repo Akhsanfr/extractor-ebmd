@@ -1,7 +1,6 @@
 import { pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { userTable } from "./auth";
 import { perangkatDaerahTable } from "./perangkatDaerah";
-import { relations } from "drizzle-orm";
 
 export const userProfileTable = pgTable("user_profile", {
     id: serial("id").primaryKey(),
@@ -24,17 +23,6 @@ export const userProfileTable = pgTable("user_profile", {
     updatedBy: text("updated_by").references(() => userTable.id, { onDelete: "restrict" }),
     deletedBy: text("deleted_by").references(() => userTable.id, { onDelete: "restrict" }),
 });
-
-export const userProfileRelations = relations(userProfileTable, ({ one }) => ({
-    user: one(userTable, {
-        fields: [userProfileTable.userId],
-        references: [userTable.id],
-    }),
-    perangkatDaerah: one(perangkatDaerahTable, {
-        fields: [userProfileTable.perangkatDaerahKodeLokasi],
-        references: [perangkatDaerahTable.kodeLokasi],
-    }),
-}));
 
 export type SelectUserProfile = typeof userProfileTable.$inferSelect;
 export type InsertUserProfile = typeof userProfileTable.$inferInsert;

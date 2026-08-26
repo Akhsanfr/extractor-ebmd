@@ -1,7 +1,4 @@
-import { eq, getTableColumns } from "drizzle-orm";
-import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
-import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
-import type { PgTransaction } from "drizzle-orm/pg-core";
+import { eq, getColumns } from "drizzle-orm";
 import { perangkatDaerahTable, rkbmdBaTable } from "@/drizzle/schema"; import { DbOrTx } from "../baseDbOrTx";
 import { RkbmdBaContract } from "./rkbmd-ba-contract";
 ;
@@ -10,7 +7,7 @@ export async function findAllRkbmdBa(
   dbOrTx: DbOrTx
 ): Promise<RkbmdBaContract.SelectDTO[]> {
   return dbOrTx
-    .select({ ...getTableColumns(rkbmdBaTable), perangkatDaerah: getTableColumns(perangkatDaerahTable).namaLokasi })
+    .select({ ...getColumns(rkbmdBaTable), perangkatDaerah: getColumns(perangkatDaerahTable).namaLokasi })
     .from(rkbmdBaTable).innerJoin(perangkatDaerahTable, eq(rkbmdBaTable.perangkatDaerahId, perangkatDaerahTable.kodeLokasi))
     .orderBy(rkbmdBaTable.perangkatDaerahId);
 }
@@ -20,7 +17,7 @@ export async function findRkbmdBaByPerangkatDaerahId(
   perangkatDaerahId: string
 ): Promise<RkbmdBaContract.SelectDTO> {
   const [row] = await dbOrTx
-    .select({ ...getTableColumns(rkbmdBaTable), perangkatDaerah: getTableColumns(perangkatDaerahTable).namaLokasi })
+    .select({ ...getColumns(rkbmdBaTable), perangkatDaerah: getColumns(perangkatDaerahTable).namaLokasi })
     .from(rkbmdBaTable)
     .where(eq(rkbmdBaTable.perangkatDaerahId, perangkatDaerahId));
   if (!row) throw new Error("Data tidak ditemukan");

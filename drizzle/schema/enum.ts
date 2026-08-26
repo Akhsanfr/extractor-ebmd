@@ -1,10 +1,10 @@
 import { pgEnum } from "drizzle-orm/pg-core";
-import { StatusBhumi } from "@/enum/sebaranBmd";
-import { BmdSyncStatus, BmdSubSyncStatus } from "@/enum/bmdSync";
-import { BmdAssetType } from "@/enum/bmd";
-import { EmbeddingStatus } from "@/enum/embedding";
-import { UserRole } from "@/enum/user";
-import { SyncJobType, SyncStatus } from "@/enum/sync";
+import { StatusBhumi } from "./../../enum/sebaranBmd";
+import { BmdSyncStatus, BmdSubSyncStatus } from "./../../enum/bmdSync";
+import { BmdAssetType } from "./../../enum/bmd";
+import { EmbeddingStatus } from "./../../enum/embedding";
+import { UserRole } from "./../../enum/user";
+import { SyncJobType, SyncStatus } from "./../../enum/sync";
 
 export const sebaranBmdStatusBhumiEnum = pgEnum("sebaran_bmd_status_bhumi", StatusBhumi);
 export const bmdSyncStatusEnum = pgEnum("bmd_sync_status", BmdSyncStatus);

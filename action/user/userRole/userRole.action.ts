@@ -1,78 +1,29 @@
 "use server"
-import { ActionResponse, handleActionError } from "@/action/actionResponse";
+import { ActionResponse, handleActionError, OperationalError } from "@/action/actionResponse";
 import { UserRoleContract } from "./userRole.contract";
 import { UserRoleService } from "./userRole.service";
 import { UserRole } from "@/enum/user";
-
-export const actionGetUserRoles = async (
-    userId: string
-): Promise<ActionResponse<UserRoleContract.Select[]>> => {
+import { UserService } from "../user/user.service";
+import { headers } from "next/headers";
+import { revalidatePath } from "next/cache";
+export const actionSyncUserRoles = async (input: UserRoleContract.SyncRoles): Promise<ActionResponse<undefined>> => {
     try {
-        const data = await UserRoleService.getRolesByUserId(userId);
-        return { success: true, data };
-    } catch (error) {
-        return handleActionError(error);
-    }
-};
+        const user = await UserService.authorizeUser(await headers(), [UserRole.ADMIN]);
 
-export const actionAttachUserRole = async (
-    userId: string,
-    role: UserRole
-): Promise<ActionResponse<UserRoleContract.Select>> => {
-    try {
-        const parsed = UserRoleContract.attachRole.parse({ userId, role });
-        const data = await UserRoleService.attachRole(parsed.userId, parsed.role);
-        return { success: true, data };
-    } catch (error) {
-        return handleActionError(error);
-    }
-};
+        const validated = UserRoleContract.syncRoles.safeParse(input);
 
-export const actionAttachUserRoles = async (
-    userId: string,
-    roles: UserRole[]
-): Promise<ActionResponse<UserRoleContract.Select[]>> => {
-    try {
-        const parsed = UserRoleContract.attachRoles.parse({ userId, roles });
-        const data = await UserRoleService.attachRoles(parsed.userId, parsed.roles);
-        return { success: true, data };
-    } catch (error) {
-        return handleActionError(error);
-    }
-};
+        if (!validated.success) {
+            console.log(validated)
+            throw new OperationalError(
+                "Validation failed",
+                validated.error.flatten((issue) => issue.message).fieldErrors
+            );
+        }
 
-export const actionDetachUserRole = async (
-    userId: string,
-    role: UserRole
-): Promise<ActionResponse<{ detached: boolean }>> => {
-    try {
-        const parsed = UserRoleContract.detachRole.parse({ userId, role });
-        const detached = await UserRoleService.detachRole(parsed.userId, parsed.role);
-        return { success: true, data: { detached } };
-    } catch (error) {
-        return handleActionError(error);
-    }
-};
+        await UserRoleService.syncRoles(validated.data, user.user.id);
 
-export const actionDetachAllUserRoles = async (
-    userId: string
-): Promise<ActionResponse<{ detached: boolean }>> => {
-    try {
-        const detached = await UserRoleService.detachAllRoles(userId);
-        return { success: true, data: { detached } };
-    } catch (error) {
-        return handleActionError(error);
-    }
-};
-
-export const actionSyncUserRoles = async (
-    userId: string,
-    roles: UserRole[]
-): Promise<ActionResponse<UserRoleContract.Select[]>> => {
-    try {
-        const parsed = UserRoleContract.attachRoles.parse({ userId, roles });
-        const data = await UserRoleService.syncRoles(parsed.userId, parsed.roles);
-        return { success: true, data };
+        revalidatePath("/dashboard/admin/user-role");
+        return { success: true, data: undefined };
     } catch (error) {
         return handleActionError(error);
     }

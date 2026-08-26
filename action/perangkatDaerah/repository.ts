@@ -32,7 +32,9 @@ export async function findPerangkatDaerahByJabatan(
   jabatan: PerangkatDaerahJabatan
 ): Promise<SelectPerangkatDaerah[]> {
   return dbOrTx.query.perangkatDaerahTable.findMany({
-    where: eq(perangkatDaerahTable.jabatan, jabatan)
+    where: {
+      jabatan
+    }
   })
 }
 

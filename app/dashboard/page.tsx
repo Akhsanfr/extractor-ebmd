@@ -1,3 +1,6 @@
-export default function DashboardPage() {
-    return <div>Dashboard Page</div>
+import { redirect } from "next/navigation";
+
+export default function Page() {
+  // otomatis langsung diarahkan ke home
+  redirect("/dashboard/home");
 }

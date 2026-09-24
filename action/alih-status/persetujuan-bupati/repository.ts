@@ -5,29 +5,54 @@ import { alihStatusPersetujuanBupatiTable } from "@/drizzle/schema";
 import { OperationalError } from "@/action/actionResponse";
 
 export const AlihStatusPersetujuanBupatiRepository = {
-    async findByGroupId(db: DbOrTx, groupId: number): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO> {
-        const res = await db.query.alihStatusPersetujuanBupatiTable.findFirst({
+    async findAll(db: DbOrTx, tahun: number): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO[]> {
+        return await db.query.alihStatusPersetujuanBupatiTable.findMany({
             where: {
-                groupId
+                tahun
             }
         });
+    },
+    async findById(db: DbOrTx, id: number): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO> {
+        const res = await db.query.alihStatusPersetujuanBupatiTable.findFirst({
+            where: { id },
+        });
         if (!res) {
-            throw new OperationalError(`Data Persetujuan Alih Status dengan ID Persetujuan ${groupId} tidak ditemukan`);
+            throw new OperationalError(`Data Persetujuan Bupati dengan ID ${id} tidak ditemukan`);
         }
         return res;
     },
-    async insert(db: DbOrTx, data: AlihStatusPersetujuanBupatiContract.InsertDTO): Promise<void> {
-        await db.insert(alihStatusPersetujuanBupatiTable).values(data);
+    async findByIds(db: DbOrTx, ids: number[]): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO[]> {
+        return await db.query.alihStatusPersetujuanBupatiTable.findMany({
+            where: {
+                id: {
+                    in: ids
+                }
+            }
+        });
     },
-    async update(db: DbOrTx, data: AlihStatusPersetujuanBupatiContract.UpdateDTO): Promise<void> {
+    async findForAvailableBAST(db: DbOrTx, tahun: number): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO[]> {
+        return await db.query.alihStatusPersetujuanBupatiTable.findMany({
+            where: {
+                tahun,
+                data: {
+                    persetujuanBupatiId: {
+                        isNotNull: true,
+                    },
+                    bastId: {
+                        isNull: true,
+                    },
+                },
+            }
+        });
+    },
+    async insert(db: DbOrTx, data: AlihStatusPersetujuanBupatiContract.InsertDTO): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO> {
+        return (await db.insert(alihStatusPersetujuanBupatiTable).values(data).returning())[0];
+    },
+    async update(db: DbOrTx, data: AlihStatusPersetujuanBupatiContract.UpdateDTO): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO> {
         const { id, ...updateData } = data;
-        await db.update(alihStatusPersetujuanBupatiTable).set(updateData).where(eq(alihStatusPersetujuanBupatiTable.id, id));
+        return (await db.update(alihStatusPersetujuanBupatiTable).set(updateData).where(eq(alihStatusPersetujuanBupatiTable.id, id)).returning())[0];
     },
-    async remove(db: DbOrTx, data: AlihStatusPersetujuanBupatiContract.RemoveDTO): Promise<void> {
-        const { id } = data;
-        await db
-            .update(alihStatusPersetujuanBupatiTable)
-            .set({ deletedAt: data.deletedAt, deletedBy: data.deletedBy })
-            .where(eq(alihStatusPersetujuanBupatiTable.id, id));
+    async remove(db: DbOrTx, data: AlihStatusPersetujuanBupatiContract.DeleteDTO): Promise<void> {
+        await db.delete(alihStatusPersetujuanBupatiTable).where(eq(alihStatusPersetujuanBupatiTable.id, data.id));
     },
 };

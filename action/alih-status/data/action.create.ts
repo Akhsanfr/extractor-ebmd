@@ -8,19 +8,17 @@ import { auth } from "@/lib/auth/auth";
 
 export async function actionCreateAlihStatusData(
     input: AlihStatusDataContract.CreateDTO,
-): Promise<ActionResponse<undefined>> {
+): Promise<ActionResponse<AlihStatusDataContract.SelectDTO>> {
 
     try {
         const session = await auth.api.getSession({ headers: await headers() });
         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
         const validated = AlihStatusDataContract.create.parse(input);
-        await AlihStatusDataService.insert(validated, session.user.id);
-
-        revalidatePath("/dashboard/alih-status/data");
+        const data = await AlihStatusDataService.insert(validated, session.user.id);
 
         return {
             success: true,
-            data: undefined,
+            data,
         };
     } catch (err) {
         return handleActionError(err, "actionCreateAlihStatusData");
@@ -35,7 +33,6 @@ export async function actionImportAlihStatusData(
         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
         AlihStatusDataContract.importData.parse(input);
         await AlihStatusDataService.import(input, session.user.id);
-        revalidatePath("/dashboard/alih-status/data");
         return {
             success: true,
             data: undefined,

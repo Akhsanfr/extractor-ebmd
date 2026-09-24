@@ -1,4 +1,3 @@
-import { UserContract } from "@/action/user/user/user.contract";
 import { persistentAtom } from "@nanostores/persistent";
 import { UserWithRole } from "better-auth/plugins";
 

@@ -1,2 +1,0 @@
-CREATE TYPE "public"."sebaran_bmd_status_bhumi" AS ENUM('sudahPlotting', 'belumPlotting', 'salahPlotting');--> statement-breakpoint
-ALTER TABLE "sebaran_bmd" ADD COLUMN "statusBhumi" "sebaran_bmd_status_bhumi";

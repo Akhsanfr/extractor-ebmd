@@ -2,7 +2,6 @@
 import { ActionResponse, handleActionError, OperationalError } from "@/action/actionResponse";
 import { AlihStatusMasterContract } from "./contract";
 import { AlihStatusMasterService } from "./service";
-import { UserService } from "@/action/user/user/user.service";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth/auth";
 
@@ -19,6 +18,22 @@ export async function actionGetListAlihStatusMaster(): Promise<
         };
     } catch (err) {
         return handleActionError(err, "actionGetListAlihStatusMaster");
+    }
+}
+
+export async function actionGetListMasterWithoutPersetujuan(): Promise<
+    ActionResponse<AlihStatusMasterContract.SelectDTO[]>
+> {
+    try {
+        const session = await auth.api.getSession({ headers: await headers() });
+        if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
+        const data = await AlihStatusMasterService.getListMasterWithoutPersetujuan(session.user.id);
+        return {
+            success: true,
+            data,
+        };
+    } catch (err) {
+        return handleActionError(err, "actionGetListMasterWithoutPersetujuan");
     }
 }
 

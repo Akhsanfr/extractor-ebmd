@@ -1,15 +1,22 @@
-import { pgTable, serial, text, date, integer, timestamp, index } from "drizzle-orm/pg-core";
-import { alihStatusMasterTable, userTable } from "./../../schema";
+import { pgTable, serial, text, date, integer, timestamp, index, snakeCase } from "drizzle-orm/pg-core";
+import { alihStatusMasterTable, alihStatusTypeEnum, userTable } from "./../../schema";
+import { AlihStatusType } from "@/enum/alihStatus";
 
-export const alihStatusPermohonanTable = pgTable(
+export const alihStatusPermohonanTable = snakeCase.table(
     "alih_status_permohonan",
     {
         id: serial("id").primaryKey(),
+        alihStatusType: alihStatusTypeEnum().notNull(),
         alasan: text("alasan"),
         suratNomor: text("surat_nomor"),
         suratTanggal: date("surat_tanggal"),
         suratHal: text("surat_hal"),
-        masterId: integer("master_id").references(() => alihStatusMasterTable.id).notNull().unique(),
+        tahun: integer().notNull(),
+        perangkatDaerahAsal: text().notNull(),
+        penggunaBarangAsalNama: text(),
+        penggunaBarangAsalNIP: text(),
+        penggunaBarangAsalJabatan: text(),
+        penggunaBarangAsalPangkat: text(),
         createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
         createdBy: text("created_by").references(() => userTable.id),
         updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
@@ -17,7 +24,5 @@ export const alihStatusPermohonanTable = pgTable(
         deletedAt: timestamp("deleted_at", { withTimezone: true }).defaultNow().notNull(),
         deletedBy: text("deleted_by").references(() => userTable.id),
     },
-    (table) => [
-        index("alih_status_permohonan_surat_nomor_idx").on(table.suratNomor),
-    ],
+    (table) => [index().on(table.tahun)],
 );

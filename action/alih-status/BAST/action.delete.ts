@@ -18,8 +18,6 @@ export async function actionDeleteAlihStatusBAST(
         const validated = AlihStatusBASTContract.delete.parse(input);
         await AlihStatusBASTService.remove(validated, session.user.id);
 
-        revalidatePath("/dashboard/alih-status/bast");
-
         return {
             success: true,
             data: undefined,

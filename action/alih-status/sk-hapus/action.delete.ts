@@ -18,7 +18,6 @@ export async function actionDeleteAlihStatusSKHapus(
         const validated = AlihStatusSKHapusContract.delete.parse(input);
         await AlihStatusSKHapusService.remove(validated, session.user.id);
 
-        revalidatePath("/dashboard/alih-status/sk-hapus");
 
         return {
             success: true,

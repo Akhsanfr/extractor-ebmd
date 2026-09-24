@@ -8,23 +8,19 @@ import { auth } from "@/lib/auth/auth";
 
 export async function actionEditAlihStatusPermohonanPenghapusan(
     input: AlihStatusPermohonanPenghapusanContract.EditDTO,
-): Promise<ActionResponse<undefined>> {
+): Promise<ActionResponse<AlihStatusPermohonanPenghapusanContract.SelectDTO>> {
 
     try {
         const session = await auth.api.getSession({ headers: await headers() });
         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
         const validated = AlihStatusPermohonanPenghapusanContract.edit.parse(input);
 
-        await AlihStatusPermohonanPenghapusanService.update(validated, session.user.id);
-
-        revalidatePath("/dashboard/alih-status/permohonan-penghapusan");
-
         return {
             success: true,
-            data: undefined,
-            message: "Permohonan penghapusan alih status berhasil diperbarui.",
+            data: await AlihStatusPermohonanPenghapusanService.update(validated, session.user.id),
+            message: "Persetujuan PermohonanPenghapusan alih status berhasil diperbarui.",
         };
     } catch (err) {
-        return handleActionError(err, "actionEditAlihStatusPermohonanPenghapusan");
+        return handleActionError(err, "actionEditAlihStatusPersetujuanPermohonanPenghapusan");
     }
 }

@@ -1,1 +1,0 @@
-ALTER TABLE "sebaran_bmd" ADD COLUMN "nibel" varchar(50);

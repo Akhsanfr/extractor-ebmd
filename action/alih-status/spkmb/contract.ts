@@ -1,17 +1,20 @@
 import { alihStatusSpkmbTable } from "@/drizzle/schema";
+import { PerangkatDaerah } from "@/enum/perangkatDaerah";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const AlihStatusSpkmbContract = {
-    select: createSelectSchema(alihStatusSpkmbTable),
+export const AlihStatusSPKMBContract = {
+
+    query: z.object({
+        masterIds: z.number().array()
+    }),
+    select: createSelectSchema(alihStatusSpkmbTable).extend({ perangkatDaerahTujuan: z.enum(PerangkatDaerah) }),
 
     create: createInsertSchema(alihStatusSpkmbTable)
+        .extend({ dataIds: z.number().int().positive().array() })
         .omit({ createdAt: true, createdBy: true }),
-    import: createInsertSchema(alihStatusSpkmbTable)
-        .omit({ createdAt: true, createdBy: true })
-        .array(),
-
-    insert: createInsertSchema(alihStatusSpkmbTable),
+    insert: createInsertSchema(alihStatusSpkmbTable)
+        .extend({ dataIds: z.number().int().positive().array() }),
 
     edit: createInsertSchema(alihStatusSpkmbTable)
         .extend({ id: z.number().int().positive() })
@@ -23,17 +26,16 @@ export const AlihStatusSpkmbContract = {
     delete: z.object({ id: z.number().int().positive() }),
     remove: z.object({
         id: z.number().int().positive(),
-        deletedAt: z.date().default(new Date()),
-        deletedBy: z.string(),
     }),
 };
 
-export namespace AlihStatusSpkmbContract {
-    export type SelectDTO = z.infer<typeof AlihStatusSpkmbContract.select>;
-    export type CreateDTO = z.infer<typeof AlihStatusSpkmbContract.create>;
-    export type InsertDTO = z.infer<typeof AlihStatusSpkmbContract.insert>;
-    export type EditDTO = z.infer<typeof AlihStatusSpkmbContract.edit>;
-    export type UpdateDTO = z.infer<typeof AlihStatusSpkmbContract.update>;
-    export type DeleteDTO = z.infer<typeof AlihStatusSpkmbContract.delete>;
-    export type RemoveDTO = z.infer<typeof AlihStatusSpkmbContract.remove>;
+export namespace AlihStatusSPKMBContract {
+    export type QueryDTO = z.infer<typeof AlihStatusSPKMBContract.query>;
+    export type SelectDTO = z.infer<typeof AlihStatusSPKMBContract.select>;
+    export type CreateDTO = z.infer<typeof AlihStatusSPKMBContract.create>;
+    export type InsertDTO = z.infer<typeof AlihStatusSPKMBContract.insert>;
+    export type EditDTO = z.infer<typeof AlihStatusSPKMBContract.edit>;
+    export type UpdateDTO = z.infer<typeof AlihStatusSPKMBContract.update>;
+    export type DeleteDTO = z.infer<typeof AlihStatusSPKMBContract.delete>;
+    export type RemoveDTO = z.infer<typeof AlihStatusSPKMBContract.remove>;
 }

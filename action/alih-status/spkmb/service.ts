@@ -1,34 +1,40 @@
 import { AlihStatusSpkmbRepository } from "./repository";
 import { db } from "@/drizzle";
-import { AlihStatusSpkmbContract } from "./contract";
+import { AlihStatusSPKMBContract } from "./contract";
 import { verifyPermissions } from "@/lib/auth/auth";
+import { AlihStatusDataRepository } from "../data/repository";
 
 export const AlihStatusSpkmbService = {
-    async getByMasterId(userId: string, masterId: number): Promise<AlihStatusSpkmbContract.SelectDTO> {
+    async getList(userId: string, ids: number[]): Promise<AlihStatusSPKMBContract.SelectDTO[]> {
         await verifyPermissions(userId, {
             "alih-status": ["read"]
         });
-        return AlihStatusSpkmbRepository.findByMasterId(db, masterId);
+        return AlihStatusSpkmbRepository.findByIds(db, ids);
     },
 
-    async insert(data: AlihStatusSpkmbContract.InsertDTO, userId: string): Promise<void> {
+    async insert(userId: string, data: AlihStatusSPKMBContract.InsertDTO,): Promise<AlihStatusSPKMBContract.SelectDTO> {
         await verifyPermissions(userId, {
             "alih-status": ["create"]
         });
-        await AlihStatusSpkmbRepository.insert(db, { ...data, createdAt: new Date(), createdBy: userId });
+        return await db.transaction(async (tx) => {
+            const res = await AlihStatusSpkmbRepository.insert(tx, { ...data, createdAt: new Date(), createdBy: userId });
+            if (res.id === undefined) throw new Error("Gagal membuat data SPKMB")
+            await AlihStatusDataRepository.link(tx, data.dataIds, { spkmbId: res.id })
+            return res;
+        })
     },
 
-    async update(data: AlihStatusSpkmbContract.EditDTO, userId: string): Promise<void> {
+    async update(data: AlihStatusSPKMBContract.EditDTO, userId: string): Promise<AlihStatusSPKMBContract.SelectDTO> {
         await verifyPermissions(userId, {
             "alih-status": ["update"]
         });
-        await AlihStatusSpkmbRepository.update(db, { ...data, updatedAt: new Date(), updatedBy: userId });
+        return await AlihStatusSpkmbRepository.update(db, { ...data, updatedAt: new Date(), updatedBy: userId });
     },
 
-    async remove(data: AlihStatusSpkmbContract.DeleteDTO, userId: string): Promise<void> {
+    async remove(data: AlihStatusSPKMBContract.DeleteDTO, userId: string): Promise<void> {
         await verifyPermissions(userId, {
             "alih-status": ["delete"]
         });
-        await AlihStatusSpkmbRepository.remove(db, { ...data, deletedAt: new Date(), deletedBy: userId });
+        await AlihStatusSpkmbRepository.remove(db, { ...data });
     },
 };

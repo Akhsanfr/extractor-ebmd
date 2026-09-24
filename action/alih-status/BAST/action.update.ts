@@ -8,20 +8,16 @@ import { auth } from "@/lib/auth/auth";
 
 export async function actionEditAlihStatusBAST(
     input: AlihStatusBASTContract.EditDTO,
-): Promise<ActionResponse<undefined>> {
+): Promise<ActionResponse<AlihStatusBASTContract.SelectDTO>> {
 
     try {
         const session = await auth.api.getSession({ headers: await headers() });
         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
         const validated = AlihStatusBASTContract.edit.parse(input);
 
-        await AlihStatusBASTService.update(validated, session.user.id);
-
-        revalidatePath("/dashboard/alih-status/bast");
-
         return {
             success: true,
-            data: undefined,
+            data: await AlihStatusBASTService.update(validated, session.user.id),
             message: "Persetujuan BAST alih status berhasil diperbarui.",
         };
     } catch (err) {

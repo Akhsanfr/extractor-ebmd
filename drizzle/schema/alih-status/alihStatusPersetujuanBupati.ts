@@ -1,14 +1,15 @@
-import { pgTable, serial, text, date, integer, timestamp, index } from "drizzle-orm/pg-core";
-import { alihStatusGroupPersetujuanTable, userTable } from "./../../schema";
+import { pgTable, serial, text, date, integer, timestamp, index, snakeCase } from "drizzle-orm/pg-core";
+import { alihStatusTypeEnum, userTable } from "./../../schema";
 
-export const alihStatusPersetujuanBupatiTable = pgTable(
+export const alihStatusPersetujuanBupatiTable = snakeCase.table(
     "alih_status_persetujuan_bupati",
     {
         id: serial("id").primaryKey(),
-        groupId: integer().references(() => alihStatusGroupPersetujuanTable.id).notNull(),
+        tahun: integer().notNull(),
         suratNomor: text("surat_nomor"),
         suratTanggal: date("surat_tanggal"),
         suratHal: text("surat_hal"),
+        alihStatusType: alihStatusTypeEnum().notNull(),
         createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
         createdBy: text("created_by").references(() => userTable.id),
         updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
@@ -16,5 +17,5 @@ export const alihStatusPersetujuanBupatiTable = pgTable(
         deletedAt: timestamp("deleted_at", { withTimezone: true }).defaultNow().notNull(),
         deletedBy: text("deleted_by").references(() => userTable.id),
     },
-    (table) => [index("alih_status_persetujuan_bupati_group_idx").on(table.groupId)],
+    (table) => [index().on(table.tahun)],
 );

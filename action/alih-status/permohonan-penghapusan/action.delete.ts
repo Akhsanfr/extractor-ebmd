@@ -16,9 +16,7 @@ export async function actionDeleteAlihStatusPermohonanPenghapusan(
         const session = await auth.api.getSession({ headers: await headers() });
         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
         const validated = AlihStatusPermohonanPenghapusanContract.delete.parse(input);
-        await AlihStatusPermohonanPenghapusanService.remove(validated, session.user.id);
-
-        revalidatePath("/dashboard/alih-status/permohonan-penghapusan");
+        await AlihStatusPermohonanPenghapusanService.remove(validated, session.user.id)
 
         return {
             success: true,

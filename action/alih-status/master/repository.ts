@@ -1,7 +1,7 @@
-import { eq, getColumns, getColumnTable, getTableColumns, sql } from "drizzle-orm";
+import { eq, getColumns, getColumnTable, getTableColumns, isNull, sql } from "drizzle-orm";
 import { AlihStatusMasterContract } from "./contract";
 import { DbOrTx } from "../../baseDbOrTx";
-import { alihStatusDataTable, alihStatusGroupPersetujuanMasterTable, alihStatusGroupPersetujuanTable, alihStatusMasterTable } from "@/drizzle/schema";
+import { alihStatusDataTable, alihStatusGroupPenghapusanTable, alihStatusGroupPersetujuanTable, alihStatusMasterTable } from "@/drizzle/schema";
 import { OperationalError } from "@/action/actionResponse";
 
 export const AlihStatusMasterRepository = {
@@ -16,10 +16,25 @@ export const AlihStatusMasterRepository = {
         }
         return res;
     },
+    async findAllWherePersetujuanNull(
+        db: DbOrTx,
+    ): Promise<AlihStatusMasterContract.SelectDTO[]> {
+        return await db.query.alihStatusMasterTable.findMany({
+            where: {
+                persetujuanId: {
+                    isNull: true,
+                },
+            },
+        });
+    },
+
+
     async findAllWithSumData(db: DbOrTx): Promise<AlihStatusMasterContract.SelectWithSumDataDTO[]> {
         return await db
             .select({
                 ...getColumns(alihStatusMasterTable),
+                persetujuan: alihStatusGroupPersetujuanTable.nama,
+                penghapusan: alihStatusGroupPenghapusanTable.nama,
                 totalNilaiPerolehan: sql<number>`
             coalesce(sum(${alihStatusDataTable.nilaiPerolehan}), 0)
         `,
@@ -35,12 +50,27 @@ export const AlihStatusMasterRepository = {
                     alihStatusMasterTable.id,
                 ),
             )
-            .groupBy(alihStatusMasterTable.id);
+            .leftJoin(
+                alihStatusGroupPersetujuanTable,
+                eq(
+                    alihStatusGroupPersetujuanTable.id,
+                    alihStatusMasterTable.persetujuanId,
+                )
+            )
+            .leftJoin(
+                alihStatusGroupPenghapusanTable,
+                eq(
+                    alihStatusGroupPenghapusanTable.id,
+                    alihStatusMasterTable.penghapusanId,
+                )
+            )
+            .groupBy(alihStatusMasterTable.id, alihStatusGroupPersetujuanTable.nama, alihStatusGroupPenghapusanTable.nama)
+            .orderBy(alihStatusMasterTable.perangkatDaerahAsal);
     },
     async findAllWithSumDataByGroupPersetujuan(
         db: DbOrTx,
         groupId: number,
-    ): Promise<AlihStatusMasterContract.SelectWithSumDataDTO[]> {
+    ): Promise<AlihStatusMasterContract.SelectWithSumDataByGroupDTO[]> {
         return await db
             .select({
                 ...getColumns(alihStatusMasterTable),
@@ -54,13 +84,6 @@ export const AlihStatusMasterRepository = {
             `,
             })
             .from(alihStatusMasterTable)
-            .innerJoin(
-                alihStatusGroupPersetujuanMasterTable,
-                eq(
-                    alihStatusGroupPersetujuanMasterTable.masterId,
-                    alihStatusMasterTable.id,
-                ),
-            )
             .leftJoin(
                 alihStatusDataTable,
                 eq(
@@ -68,13 +91,16 @@ export const AlihStatusMasterRepository = {
                     alihStatusMasterTable.id,
                 ),
             )
-            .where(
+            .leftJoin(
+                alihStatusGroupPersetujuanTable,
                 eq(
-                    alihStatusGroupPersetujuanMasterTable.groupId,
-                    groupId,
-                ),
+                    alihStatusGroupPersetujuanTable.id,
+                    alihStatusMasterTable.persetujuanId,
+                )
             )
-            .groupBy(alihStatusMasterTable.id);
+            .where(eq(alihStatusGroupPersetujuanTable.id, groupId))
+            .groupBy(alihStatusMasterTable.id)
+            .orderBy(alihStatusMasterTable.perangkatDaerahAsal);
     },
     async findAll(db: DbOrTx): Promise<AlihStatusMasterContract.SelectDTO[]> {
         return await db.query.alihStatusMasterTable.findMany();
@@ -85,6 +111,11 @@ export const AlihStatusMasterRepository = {
     async update(db: DbOrTx, data: AlihStatusMasterContract.UpdateDTO): Promise<void> {
         const { id, ...updateData } = data;
         await db.update(alihStatusMasterTable).set(updateData).where(eq(alihStatusMasterTable.id, id));
+    },
+    async connectPersetujuan(db: DbOrTx, data: AlihStatusMasterContract.ConnectGroupDTO): Promise<void> {
+        await db.update(alihStatusMasterTable).set({
+            persetujuanId: data.groupId
+        }).where(eq(alihStatusMasterTable.id, data.masterId));
     },
     async remove(db: DbOrTx, data: AlihStatusMasterContract.RemoveDTO): Promise<void> {
         const { id } = data;

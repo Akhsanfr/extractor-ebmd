@@ -1,12 +1,11 @@
-import { pgTable, serial, text, date, integer, timestamp, index } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, date, integer, timestamp, index, snakeCase } from "drizzle-orm/pg-core";
 import { userTable } from "./../../schema";
-import { alihStatusGroupPenghapusanTable } from "./alihStatusGroupPenghapusan";
 
-export const alihStatusSKHapusTable = pgTable(
+export const alihStatusSKHapusTable = snakeCase.table(
     "alih_status_sk_hapus",
     {
         id: serial("id").primaryKey(),
-        groupId: integer("group_id").references(() => alihStatusGroupPenghapusanTable.id).notNull(),
+        tahun: integer(),
         suratNomor: text("surat_nomor"),
         suratTanggal: date("surat_tanggal"),
         suratHal: text("surat_hal"),
@@ -17,5 +16,5 @@ export const alihStatusSKHapusTable = pgTable(
         deletedAt: timestamp("deleted_at", { withTimezone: true }).defaultNow().notNull(),
         deletedBy: text("deleted_by").references(() => userTable.id),
     },
-    (table) => [index().on(table.groupId)],
+    (table) => [index().on(table.tahun)],
 );

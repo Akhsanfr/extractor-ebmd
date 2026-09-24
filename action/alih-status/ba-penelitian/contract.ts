@@ -1,11 +1,21 @@
 import { alihStatusBAPenelitianTable } from "@/drizzle/schema";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
+import { AlihStatusDataContract } from "../data/contract";
+import { AlihStatusPermohonanContract } from "../permohonan/contract";
 
 export const AlihStatusBAPenelitianContract = {
     select: createSelectSchema(alihStatusBAPenelitianTable),
 
-    create: createInsertSchema(alihStatusBAPenelitianTable)
+    selectWithDetail: z.object({
+        BAPenelitian: createSelectSchema(alihStatusBAPenelitianTable),
+        data: AlihStatusDataContract.select.array(),
+        permohonan: AlihStatusPermohonanContract.select.array()
+    }),
+
+    create: createInsertSchema(alihStatusBAPenelitianTable).extend({
+        dataIds: z.number().array()
+    })
         .omit({ createdAt: true, createdBy: true }),
     import: createInsertSchema(alihStatusBAPenelitianTable)
         .omit({ createdAt: true, createdBy: true })
@@ -30,6 +40,7 @@ export const AlihStatusBAPenelitianContract = {
 
 export namespace AlihStatusBAPenelitianContract {
     export type SelectDTO = z.infer<typeof AlihStatusBAPenelitianContract.select>;
+    export type SelectWithDetailDTO = z.infer<typeof AlihStatusBAPenelitianContract.selectWithDetail>;
     export type CreateDTO = z.infer<typeof AlihStatusBAPenelitianContract.create>;
     export type InsertDTO = z.infer<typeof AlihStatusBAPenelitianContract.insert>;
     export type EditDTO = z.infer<typeof AlihStatusBAPenelitianContract.edit>;

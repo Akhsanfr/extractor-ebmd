@@ -17,6 +17,14 @@ export const AlihStatusMasterService = {
         return AlihStatusMasterRepository.findAllWithSumData(db);
     },
 
+    async getListMasterWithoutPersetujuan(userId: string): Promise<AlihStatusMasterContract.SelectDTO[]> {
+        await verifyPermissions(userId, {
+            "alih-status": ["read"]
+        });
+        return AlihStatusMasterRepository.findAllWherePersetujuanNull(db);
+    },
+
+
 
     async getById(id: number, userId: string): Promise<AlihStatusMasterContract.SelectDTO> {
         await verifyPermissions(userId, {
@@ -37,6 +45,13 @@ export const AlihStatusMasterService = {
             "alih-status": ["update"]
         });
         await AlihStatusMasterRepository.update(db, { ...data, updatedAt: new Date(), updatedBy: userId });
+    },
+
+    async connectPersetujuan(data: AlihStatusMasterContract.ConnectGroupDTO, userId: string): Promise<void> {
+        await verifyPermissions(userId, {
+            "alih-status": ["create"]
+        });
+        await AlihStatusMasterRepository.connectPersetujuan(db, data);
     },
 
     async remove(data: AlihStatusMasterContract.DeleteDTO, userId: string): Promise<void> {

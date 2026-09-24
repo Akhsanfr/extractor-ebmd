@@ -1,10 +1,9 @@
 import { redirect } from "next/navigation";
-import DashboardClientLayout from "./dashboardClientLayout";
+import DashboardClientLayout from "./dashboardClientLayout"; import { headers } from "next/headers";
+
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { actionGetUserWithDetail } from "@/action/user/user/user.action";
 import { Alert } from "@heroui/react";
-import { auth } from "@/lib/auth/auth";
-import { headers } from "next/headers"
 import { UserWithRole } from "better-auth/plugins";
 
 export default async function DashboardLayout({
@@ -12,16 +11,16 @@ export default async function DashboardLayout({
 }: {
     children: React.ReactNode
 }) {
+    const hd = await headers();
+    const pathname = hd.get("x-pathname") ?? "/";
+    const res = await actionGetUserWithDetail();
+    if (!res.success || !res.data) {
+        return redirect(`/auth?last-url=${encodeURIComponent(pathname)}`);
+    }
 
     try {
-        const hd = await headers();
-        const pathname = hd.get("x-pathname") ?? "/";
-        const resUser = await auth.api.getSession({ headers: hd });
-        if (!resUser) {
-            return redirect(`/auth?last-url=${encodeURIComponent(pathname)}`);
-        }
         return (
-            <DashboardClientLayout user={resUser.user as UserWithRole}>
+            <DashboardClientLayout user={res.data as UserWithRole}>
                 {children}
             </DashboardClientLayout>
         );

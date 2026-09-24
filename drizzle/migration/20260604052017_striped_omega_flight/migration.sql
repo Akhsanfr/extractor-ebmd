@@ -1,1 +1,0 @@
-ALTER TABLE "sebaran_bmd" ADD COLUMN "status_plotting" boolean DEFAULT null;

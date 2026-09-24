@@ -2,33 +2,72 @@ import { AlihStatusPersetujuanBupatiRepository } from "./repository";
 import { db } from "@/drizzle";
 import { AlihStatusPersetujuanBupatiContract } from "./contract";
 import { verifyPermissions } from "@/lib/auth/auth";
+import { AlihStatusDataRepository } from "../data/repository";
+import { AlihStatusPermohonanRepository } from "../permohonan/repository";
+import { AlihStatusBAPenelitianRepository } from "../ba-penelitian/repository";
+import { AlihStatusNodinRepository } from "../nodin/repository";
 
 export const AlihStatusPersetujuanBupatiService = {
-    async getByGroupId(groupId: number, userId: string): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO> {
+    async getList(userId: string, tahun: number): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO[]> {
         await verifyPermissions(userId, {
             "alih-status": ["read"]
         });
-        return AlihStatusPersetujuanBupatiRepository.findByGroupId(db, groupId);
+        return AlihStatusPersetujuanBupatiRepository.findAll(db, tahun);
     },
+    async getDetailWithDetail(userId: string, id: number): Promise<AlihStatusPersetujuanBupatiContract.SelectWithDetailDTO> {
+        await verifyPermissions(userId, {
+            "alih-status": ["read"]
+        });
 
-    async insert(data: AlihStatusPersetujuanBupatiContract.InsertDTO, userId: string): Promise<void> {
+
+        const persetujuanBupati = await AlihStatusPersetujuanBupatiRepository.findById(db, id);
+
+        const data = await AlihStatusDataRepository.find(db, { persetujuanBupatiId: [id] });
+
+        const permohonanIds = [...new Set(data.map(e => e.permohonanId))].filter((id): id is number => id !== null && id !== undefined);
+        const permohonan = await AlihStatusPermohonanRepository.findByIds(db, permohonanIds);
+
+        const BAPenelitianIds = [...new Set(data.map(e => e.BAPenelitianId))].filter((id): id is number => id !== null && id !== undefined);
+        const BAPenelitian = await AlihStatusBAPenelitianRepository.findByIds(db, BAPenelitianIds);
+
+        const nodinIds = [...new Set(data.map(e => e.nodinId))].filter((id): id is number => id !== null && id !== undefined);
+        const nodin = await AlihStatusNodinRepository.findByIds(db, nodinIds);
+        return {
+            persetujuanBupati,
+            permohonan,
+            data,
+            BAPenelitian,
+            nodin
+        };
+    },
+    async getForAvailableBAST(userId: string, tahun: number): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO[]> {
+        await verifyPermissions(userId, {
+            "alih-status": ["read"]
+        });
+        return AlihStatusPersetujuanBupatiRepository.findForAvailableBAST(db, tahun);
+    },
+    async insert(data: AlihStatusPersetujuanBupatiContract.CreateDTO, userId: string): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO> {
         await verifyPermissions(userId, {
             "alih-status": ["create"]
         });
-        await AlihStatusPersetujuanBupatiRepository.insert(db, { ...data, createdAt: new Date(), createdBy: userId });
+        return await db.transaction(async tx => {
+            const res = await AlihStatusPersetujuanBupatiRepository.insert(tx, { ...data, createdAt: new Date(), createdBy: userId });
+            await AlihStatusDataRepository.link(tx, data.dataIds, { persetujuanBupatiId: res.id })
+            return res;
+        })
     },
 
-    async update(data: AlihStatusPersetujuanBupatiContract.EditDTO, userId: string): Promise<void> {
+    async update(data: AlihStatusPersetujuanBupatiContract.EditDTO, userId: string): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO> {
         await verifyPermissions(userId, {
             "alih-status": ["update"]
         });
-        await AlihStatusPersetujuanBupatiRepository.update(db, { ...data, updatedAt: new Date(), updatedBy: userId });
+        return await AlihStatusPersetujuanBupatiRepository.update(db, { ...data, updatedAt: new Date(), updatedBy: userId });
     },
 
     async remove(data: AlihStatusPersetujuanBupatiContract.DeleteDTO, userId: string): Promise<void> {
         await verifyPermissions(userId, {
             "alih-status": ["delete"]
         });
-        await AlihStatusPersetujuanBupatiRepository.remove(db, { ...data, deletedAt: new Date(), deletedBy: userId });
+        await AlihStatusPersetujuanBupatiRepository.remove(db, data);
     },
 };

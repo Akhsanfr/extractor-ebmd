@@ -18,8 +18,6 @@ export async function actionDeleteAlihStatusPermohonan(
         const validated = AlihStatusPermohonanContract.delete.parse(input);
         await AlihStatusPermohonanService.remove(validated, session.user.id);
 
-        revalidatePath("/dashboard/alih-status/permohonan");
-
         return {
             success: true,
             data: undefined,

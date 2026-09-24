@@ -1,15 +1,30 @@
 import { alihStatusSKHapusTable } from "@/drizzle/schema";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
+import { AlihStatusPermohonanPenghapusanContract } from "../permohonan-penghapusan/contract";
+import { AlihStatusDataContract } from "../data/contract";
+import { AlihStatusPermohonanContract } from "../permohonan/contract";
+import { AlihStatusBAPenelitianContract } from "../ba-penelitian/contract";
+import { AlihStatusNodinContract } from "../nodin/contract";
+import { AlihStatusPersetujuanBupatiContract } from "../persetujuan-bupati/contract";
+import { AlihStatusBASTContract } from "../bast/contract";
 
 export const AlihStatusSKHapusContract = {
     select: createSelectSchema(alihStatusSKHapusTable),
+    selectWithDetail: z.object({
+        data: AlihStatusDataContract.select.array(),
+        permohonan: AlihStatusPermohonanContract.select.array(),
+        BAPenelitian: AlihStatusBAPenelitianContract.select.array(),
+        nodin: AlihStatusNodinContract.select.array(),
+        persetujuanBupati: AlihStatusPersetujuanBupatiContract.select.array(),
+        bast: AlihStatusBASTContract.select.array(),
+        permohonanPenghapusan: AlihStatusPermohonanPenghapusanContract.select.array(),
+        SKHapus: createSelectSchema(alihStatusSKHapusTable)
+    }),
 
-    create: createInsertSchema(alihStatusSKHapusTable)
-        .omit({ createdAt: true, createdBy: true }),
-    import: createInsertSchema(alihStatusSKHapusTable)
-        .omit({ createdAt: true, createdBy: true })
-        .array(),
+    create: createInsertSchema(alihStatusSKHapusTable).extend({
+        dataIds: z.number().array()
+    }).omit({ createdAt: true, createdBy: true }),
 
     insert: createInsertSchema(alihStatusSKHapusTable),
 
@@ -30,6 +45,7 @@ export const AlihStatusSKHapusContract = {
 
 export namespace AlihStatusSKHapusContract {
     export type SelectDTO = z.infer<typeof AlihStatusSKHapusContract.select>;
+    export type SelectWithDetailDTO = z.infer<typeof AlihStatusSKHapusContract.selectWithDetail>;
     export type CreateDTO = z.infer<typeof AlihStatusSKHapusContract.create>;
     export type InsertDTO = z.infer<typeof AlihStatusSKHapusContract.insert>;
     export type EditDTO = z.infer<typeof AlihStatusSKHapusContract.edit>;

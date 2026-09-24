@@ -11,7 +11,6 @@ import {
     Map
 } from "lucide-react";
 import { Avatar, Button, Card, cn, Dropdown, Label, Separator, toast, Tooltip } from "@heroui/react";
-import { UserContract } from "@/action/user/user/user.contract";
 import { authClient } from "@/lib/auth/auth-client";
 import { UserWithRole } from "better-auth/plugins";
 import { UserRole } from "@/enum/user";
@@ -54,9 +53,13 @@ const ALL_MENU_ITEMS: MenuItem[] = [
         label: "Alih Status", path: "/dashboard/alih-status", icon: <UserCog size={20} />,
         allowedRoles: [UserRole.ADMIN],
         children: [
-            { label: "Master Data", path: "/dashboard/alih-status/master", icon: <ClipboardCheck size={18} />, allowedRoles: [UserRole.ADMIN,] },
-            { label: "Group Persetujuan", path: "/dashboard/alih-status/group-persetujuan", icon: <ClipboardCheck size={18} />, allowedRoles: [UserRole.ADMIN,] },
-            { label: "Group Penghapusan", path: "/dashboard/alih-status/group-penghapusan", icon: <ClipboardCheck size={18} />, allowedRoles: [UserRole.ADMIN,] },
+            { label: "Permohonan", path: "/dashboard/alih-status/permohonan", icon: <ClipboardCheck size={18} />, allowedRoles: [UserRole.ADMIN,] },
+            { label: "BA Penelitian", path: "/dashboard/alih-status/ba-penelitian", icon: <ClipboardCheck size={18} />, allowedRoles: [UserRole.ADMIN,] },
+            { label: "Nota Dinas", path: "/dashboard/alih-status/nota-dinas", icon: <ClipboardCheck size={18} />, allowedRoles: [UserRole.ADMIN,] },
+            { label: "Persetujuan Bupati", path: "/dashboard/alih-status/persetujuan-bupati", icon: <ClipboardCheck size={18} />, allowedRoles: [UserRole.ADMIN,] },
+            { label: "BAST", path: "/dashboard/alih-status/bast", icon: <ClipboardCheck size={18} />, allowedRoles: [UserRole.ADMIN,] },
+            { label: "Permohonan Penghapusan", path: "/dashboard/alih-status/permohonan-penghapusan", icon: <ClipboardCheck size={18} />, allowedRoles: [UserRole.ADMIN,] },
+            { label: "SK Hapus", path: "/dashboard/alih-status/sk-hapus", icon: <ClipboardCheck size={18} />, allowedRoles: [UserRole.ADMIN,] },
         ]
     },
 ];
@@ -112,12 +115,9 @@ export default function SideBar({ user, isCollapsed, onCloseMobile }: { user: Us
     const router = useRouter();
 
     const roles = useMemo(() => {
-        console.log("userrrrr", user)
         return parseRoles(user.role)
     }, [user])
 
-
-    console.log("roles", roles)
 
 
     const handleLogout = async () => {

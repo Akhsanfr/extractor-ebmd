@@ -2,25 +2,24 @@
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { ActionResponse, handleActionError, OperationalError } from "@/action/actionResponse";
-import { AlihStatusSpkmbContract } from "./contract";
+import { AlihStatusSPKMBContract } from "./contract";
 import { AlihStatusSpkmbService } from "./service";
 import { auth } from "@/lib/auth/auth";
 
 export async function actionCreateAlihStatusSpkmb(
-    input: AlihStatusSpkmbContract.CreateDTO,
-): Promise<ActionResponse<undefined>> {
+    input: AlihStatusSPKMBContract.CreateDTO,
+): Promise<ActionResponse<AlihStatusSPKMBContract.SelectDTO>> {
 
     try {
         const session = await auth.api.getSession({ headers: await headers() });
         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
-        const validated = AlihStatusSpkmbContract.create.parse(input);
-        await AlihStatusSpkmbService.insert(validated, session.user.id);
+        const validated = AlihStatusSPKMBContract.create.parse(input);
+        const res = await AlihStatusSpkmbService.insert(session.user.id, validated);
 
-        revalidatePath("/dashboard/alih-status/spkmb");
 
         return {
             success: true,
-            data: undefined,
+            data: res,
         };
     } catch (err) {
         return handleActionError(err, "actionCreateAlihStatusSpkmb");

@@ -10,7 +10,8 @@
     "test": "vitest",
     "worker:embedding": "tsx scripts/kodePersediaan/embedding.ts",
     "worker:ebmd": "tsx scripts/sync/ebmd.worker.ts",
-    "fetch:ebmd": "tsx scripts/ebmd/fetch.ts"
+    "fetch:ebmd": "tsx scripts/ebmd/fetch.ts",
+    "export-table": "tsx scripts/export-table.ts"
   },
   "dependencies": {
     "@better-auth/drizzle-adapter": "1.7.1",
@@ -22,6 +23,10 @@
     "@nanostores/react": "^1.1.0",
     "@neondatabase/serverless": "^1.1.0",
     "@react-aria/i18n": "^3.13.1",
+    "@tanstack/react-query": "^5.102.8",
+    "@tanstack/react-store": "^0.11.1",
+    "@tanstack/react-table": "^9.2.4",
+    "@tanstack/react-virtual": "^3.14.10",
     "axios": "^1.16.1",
     "better-auth": "1.7.1",
     "decimal.js": "^10.6.0",
@@ -43,6 +48,7 @@
     "react-dom": "19.2.4",
     "react-hook-form": "^7.76.0",
     "react-leaflet": "^5.0.0",
+    "react-number-format": "^5.4.5",
     "swr": "^2.4.1",
     "xlsx": "^0.18.5",
     "xlsx-js-style": "^1.2.0",

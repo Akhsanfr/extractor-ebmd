@@ -1,1 +1,0 @@
-ALTER TABLE "rkbmd_ba" ADD COLUMN "tanggal_perbaikan" timestamp;

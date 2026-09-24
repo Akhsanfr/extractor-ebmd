@@ -8,20 +8,18 @@ import { auth } from "@/lib/auth/auth";
 
 export async function actionEditAlihStatusNodin(
     input: AlihStatusNodinContract.EditDTO,
-): Promise<ActionResponse<undefined>> {
+): Promise<ActionResponse<AlihStatusNodinContract.SelectDTO>> {
 
     try {
         const session = await auth.api.getSession({ headers: await headers() });
         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
         const validated = AlihStatusNodinContract.edit.parse(input);
 
-        await AlihStatusNodinService.update(validated, session.user.id);
-
-        revalidatePath("/dashboard/alih-status/nodin");
+        const res = await AlihStatusNodinService.update(validated, session.user.id);
 
         return {
             success: true,
-            data: undefined,
+            data: res,
             message: "Nota dinas alih status berhasil diperbarui.",
         };
     } catch (err) {

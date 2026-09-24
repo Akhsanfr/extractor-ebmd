@@ -1,11 +1,26 @@
 import { alihStatusNodinTable } from "@/drizzle/schema";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
+import { AlihStatusDataContract } from "../data/contract";
+import { AlihStatusPermohonanContract } from "../permohonan/contract";
+import { AlihStatusBAPenelitianContract } from "../ba-penelitian/contract";
+import { AlihStatusSPKMBContract } from "../spkmb/contract";
 
 export const AlihStatusNodinContract = {
     select: createSelectSchema(alihStatusNodinTable),
 
-    create: createInsertSchema(alihStatusNodinTable)
+    selectWithDetail: z.object({
+        nodin: createSelectSchema(alihStatusNodinTable),
+        data: AlihStatusDataContract.select.array(),
+        BAPenelitian: AlihStatusBAPenelitianContract.select.array(),
+        permohonan: AlihStatusPermohonanContract.select.array(),
+        spkmb: AlihStatusSPKMBContract.select.array(),
+    }),
+
+
+    create: createInsertSchema(alihStatusNodinTable).extend({
+        dataIds: z.number().array()
+    })
         .omit({ createdAt: true, createdBy: true }),
     import: createInsertSchema(alihStatusNodinTable)
         .omit({ createdAt: true, createdBy: true })
@@ -30,6 +45,7 @@ export const AlihStatusNodinContract = {
 
 export namespace AlihStatusNodinContract {
     export type SelectDTO = z.infer<typeof AlihStatusNodinContract.select>;
+    export type SelectWithDetailDTO = z.infer<typeof AlihStatusNodinContract.selectWithDetail>;
     export type CreateDTO = z.infer<typeof AlihStatusNodinContract.create>;
     export type InsertDTO = z.infer<typeof AlihStatusNodinContract.insert>;
     export type EditDTO = z.infer<typeof AlihStatusNodinContract.edit>;

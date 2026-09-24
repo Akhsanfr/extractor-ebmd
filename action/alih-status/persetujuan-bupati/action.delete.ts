@@ -17,9 +17,6 @@ export async function actionDeleteAlihStatusPersetujuanBupati(
         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
         const validated = AlihStatusPersetujuanBupatiContract.delete.parse(input);
         await AlihStatusPersetujuanBupatiService.remove(validated, session.user.id);
-
-        revalidatePath("/dashboard/alih-status/persetujuan-bupati");
-
         return {
             success: true,
             data: undefined,

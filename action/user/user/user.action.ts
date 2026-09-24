@@ -17,7 +17,6 @@ export const actionGetUserWithDetailByUserId = async (
 }
 export const actionGetUserWithDetail = async (): Promise<ActionResponse<UserContract.SelectWithDetail | null>> => {
     try {
-        console.log("get user")
         const res = await UserService.getUserWithDetail(await headers());
         return { success: true, data: res };
     } catch (error) {

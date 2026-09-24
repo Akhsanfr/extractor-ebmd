@@ -8,19 +8,17 @@ import { auth } from "@/lib/auth/auth";
 
 export async function actionCreateAlihStatusPermohonan(
     input: AlihStatusPermohonanContract.CreateDTO,
-): Promise<ActionResponse<undefined>> {
+): Promise<ActionResponse<AlihStatusPermohonanContract.SelectDTO>> {
 
     try {
         const session = await auth.api.getSession({ headers: await headers() });
         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
         const validated = AlihStatusPermohonanContract.create.parse(input);
-        await AlihStatusPermohonanService.insert(validated, session.user.id);
-
-        revalidatePath("/dashboard/alih-status/permohonan");
+        const result = await AlihStatusPermohonanService.insert(validated, session.user.id);
 
         return {
             success: true,
-            data: undefined,
+            data: result,
         };
     } catch (err) {
         return handleActionError(err, "actionCreateAlihStatusPermohonan");

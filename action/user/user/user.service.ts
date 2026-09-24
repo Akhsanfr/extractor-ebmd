@@ -15,7 +15,7 @@ export const UserService = {
     },
     getUserWithDetail: async (reqHeaders: Headers): Promise<UserContract.SelectWithDetail | null> => {
         const session = await auth.api.getSession({ headers: reqHeaders });
-        console.log("ses", session)
+
         if (!session?.user) {
             throw new OperationalError(
                 "Pengguna belum login atau sesi pengguna sudah berakhir."
@@ -25,7 +25,7 @@ export const UserService = {
     },
     getUserWithRoles: async (reqHeaders: Headers): Promise<UserContract.SelectWithRole> => {
         const session = await auth.api.getSession({ headers: reqHeaders });
-        console.log("ses", session)
+
         if (!session?.user) {
             throw new OperationalError(
                 "Pengguna belum login atau sesi pengguna sudah berakhir."

@@ -6,7 +6,6 @@ import DetailData from "../../_component/data";
 import DetailNodin from "../../_component/nodin";
 import DetailBAPenelitian from "../../_component/baPenelitian";
 import { actionGetListBASTWithDetail } from "@/action/alih-status/bast/action.read";
-import DetailBAST from "../../_component/bast";
 import AlihStatusBAST from "./bast";
 
 

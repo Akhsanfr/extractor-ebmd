@@ -3,7 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { actionImportAlihStatusData } from "@/action/alih-status/data/action.create";
 import { actionDeleteAlihStatusData } from "@/action/alih-status/data/action.delete";
-import { actionGetListAlihStatusData, actionGetListAlihStatusDataByMasterId } from "@/action/alih-status/data/action.read";
+import { actionGetListAlihStatusData } from "@/action/alih-status/data/action.read";
 import { AlihStatusDataContract } from "@/action/alih-status/data/contract";
 
 function unwrapAction<T>(result: { success: boolean; data?: T; error?: unknown }): T {

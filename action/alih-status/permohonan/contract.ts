@@ -9,13 +9,12 @@ import { PerangkatDaerah } from "@/enum/perangkatDaerah";
 
 export const AlihStatusPermohonanContract = {
     select: createSelectSchema(alihStatusPermohonanTable).extend({
-        alihStatusType: z.enum(AlihStatusType)
+        alihStatusType: z.enum(AlihStatusType),
     }),
     selectWithDetail: z.object({
         data: AlihStatusDataContract.select.array(),
         spkmb: AlihStatusSPKMBContract.select.array(),
         permohonan: createSelectSchema(alihStatusPermohonanTable).extend({
-            perangkatDaerahAsal: z.enum(PerangkatDaerah),
             alihStatusType: z.enum(AlihStatusType)
         }),
     }),

@@ -29,7 +29,7 @@ export async function getPerangkatDaerahByKodeLokasi(
   return row;
 }
 export async function getPerangkatDaerahByJabatan(
-  jabatan: PerangkatDaerahJabatan
+  jabatan: string
 ): Promise<PerangkatDaerahContract.SelectDTO[]> {
   console.info("jabatan : ", jabatan);
   const row = await findPerangkatDaerahByJabatan(db, jabatan);

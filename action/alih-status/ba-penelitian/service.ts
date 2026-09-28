@@ -20,7 +20,7 @@ export const AlihStatusBAPenelitianService = {
             "alih-status": ["read"]
         });
         const BAPenelitian = await AlihStatusBAPenelitianRepository.findById(db, id);
-        const data = await AlihStatusDataRepository.find(db, { BAPenelitianId: id });
+        const data = await AlihStatusDataRepository.find(db, { BAPenelitianId: [id] });
         const permohonanIds = [...new Set(data.map(e => e.permohonanId))].filter((id): id is number => id !== null && id !== undefined);
         const permohonan = await AlihStatusPermohonanRepository.findByIds(db, permohonanIds);
         return {

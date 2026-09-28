@@ -29,7 +29,7 @@ export async function findPerangkatDaerahByKodeLokasi(
 }
 export async function findPerangkatDaerahByJabatan(
   dbOrTx: DbOrTx,
-  jabatan: PerangkatDaerahJabatan
+  jabatan: string
 ): Promise<SelectPerangkatDaerah[]> {
   return dbOrTx.query.perangkatDaerahTable.findMany({
     where: {

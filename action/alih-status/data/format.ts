@@ -27,13 +27,14 @@ export const AlihStatusDataFormat = {
             tahun: row[10],
             asalUsul: row[11],
             jumlah: row[12],
-            nilaiPerolehan: parseRupiah(row[13]),
-            akumulasiPenyusutan: parseRupiah(row[14]),
-            nilaiBuku: parseRupiah(row[15]),
-            perangkatDaerahAsal: row[16],
-            perangkatDaerahTujuan: row[17],
+            luas: row[13],
+            nilaiPerolehan: parseRupiah(row[14]),
+            akumulasiPenyusutan: parseRupiah(row[15]),
+            nilaiBuku: parseRupiah(row[16]),
+            perangkatDaerahAsal: row[17],
+            perangkatDaerahTujuan: row[18],
             assetType: BmdAssetTypeFromLabel[
-                String(row[18]).trim().toLowerCase()
+                String(row[19]).trim().toLowerCase()
             ],
             spkmbId: null,
             permohonanId: null,

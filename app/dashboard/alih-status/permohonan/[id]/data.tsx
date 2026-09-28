@@ -25,12 +25,13 @@ import { AlihStatusDataFormat } from "@/action/alih-status/data/format";
 import ImportExcel from "@/component/import";
 import { AlihStatusTabelData } from "../../_component/data/tableData";
 import { EntityFormModal } from "../../_component/entityFormModal";
-import { AutocompleteFormField, SelectFormField, TextFormField } from "../../_component/formField";
+import { AutocompleteFormField, NumberFormField, SelectFormField, TextFormField } from "../../_component/formField";
 import { Controller } from "react-hook-form";
 import { BmdAssetType, BmdAssetTypeLabel } from "@/enum/bmd";
 import { AlihStatusPermohonanContract } from "@/action/alih-status/permohonan/contract";
 import { PerangkatDaerah } from "@/enum/perangkatDaerah";
 import Loading from "@/component/loading";
+import Decimal from "decimal.js";
 
 function getErrorMessage(error: unknown, fallback = "Terjadi kesalahan"): string {
     return error instanceof Error ? error.message : fallback;
@@ -186,12 +187,47 @@ export default function AlihStatusData({
                             <TextFormField className="col-span-3" format="nopol" control={form.control} errors={form.formState.errors} name="nomorPolisi" label="Nomor Polisi" />
                             <TextFormField className="col-span-5" control={form.control} errors={form.formState.errors} name="nomorRangka" label="Nomor Rangka" />
                             <TextFormField className="col-span-4" control={form.control} errors={form.formState.errors} name="nomorMesin" label="Nomor Mesin" />
-                            <TextFormField className="col-span-4" control={form.control} errors={form.formState.errors} name="tahun" label="Tahun" />
+                            <TextFormField className="col-span-2" control={form.control} errors={form.formState.errors} name="tahun" label="Tahun" />
                             <TextFormField className="col-span-4" control={form.control} errors={form.formState.errors} name="asalUsul" label="Asal Usul" />
-                            <TextFormField className="col-span-4" control={form.control} errors={form.formState.errors} name="jumlah" label="Jumlah" type="number" />
-                            <TextFormField className="col-span-4" control={form.control} errors={form.formState.errors} name="nilaiPerolehan" label="Nilai Perolehan" type="number" />
-                            <TextFormField className="col-span-4" control={form.control} errors={form.formState.errors} name="akumulasiPenyusutan" label="Akumulasi Penyusutan" type="number" />
-                            <TextFormField className="col-span-4" control={form.control} errors={form.formState.errors} name="nilaiBuku" label="Nilai Buku" type="number" />
+                            <NumberFormField className="col-span-2" control={form.control} errors={form.formState.errors} name="jumlah" label="Jumlah" />
+                            <NumberFormField className="col-span-4" control={form.control} errors={form.formState.errors} name="luas" label="Luas" />
+                            <NumberFormField
+                                className="col-span-4"
+                                control={form.control}
+                                errors={form.formState.errors}
+                                name="nilaiPerolehan"
+                                label="Nilai Perolehan"
+                                onChange={(v) => {
+                                    const perolehan = new Decimal(v ?? 0);
+                                    const penyusutan = new Decimal(form.getValues("akumulasiPenyusutan") || 0);
+                                    const nilaiBuku = perolehan.minus(penyusutan);
+                                    form.setValue("nilaiBuku", nilaiBuku.toString(), { shouldValidate: true });
+                                }}
+                            />
+
+                            <NumberFormField
+                                className="col-span-4"
+                                control={form.control}
+                                errors={form.formState.errors}
+                                name="akumulasiPenyusutan"
+                                label="Akumulasi Penyusutan"
+                                onChange={(v) => {
+                                    const penyusutan = new Decimal(v ?? 0);
+                                    const perolehan = new Decimal(form.getValues("nilaiPerolehan") || 0);
+                                    const nilaiBuku = perolehan.minus(penyusutan);
+                                    form.setValue("nilaiBuku", nilaiBuku.toString(), { shouldValidate: true });
+                                }}
+                            />
+
+                            <NumberFormField
+                                className="col-span-4"
+                                control={form.control}
+                                errors={form.formState.errors}
+                                name="nilaiBuku"
+                                label="Nilai Buku"
+                                readOnly
+                                placeholder="Otomatis terhitung"
+                            />
                             <SelectFormField options={["Baik", "Rusak Ringan", "Rusak Berat"].map((k) => ({
                                 label: k,
                                 value: k,

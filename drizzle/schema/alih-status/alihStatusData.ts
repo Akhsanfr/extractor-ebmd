@@ -32,7 +32,8 @@ export const alihStatusDataTable = snakeCase.table(
         asalUsul: text("asal_usul"),
         tahun: integer("tahun"),
 
-        jumlah: numeric("jumlah", { precision: 20, scale: 2 }),
+        jumlah: numeric({ precision: 20, scale: 2 }),
+        luas: numeric({ precision: 20, scale: 2 }),
 
         nilaiPerolehan: numeric("nilai_perolehan", { precision: 20, scale: 2 }).notNull(),
         akumulasiPenyusutan: numeric("akumulasi_penyusutan", { precision: 20, scale: 2 }).notNull(),

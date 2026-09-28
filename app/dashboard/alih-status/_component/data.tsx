@@ -7,7 +7,7 @@ export default function DetailData({ data, isLoading }: { data: AlihStatusDataCo
     return <>
         <Label>Data Barang Milik Daerah</Label>
         {isLoading ? <Loading /> :
-            <AlihStatusTabelData data={data} />
+            <AlihStatusTabelData data={data} isLoading={isLoading} />
         }
     </>
 }

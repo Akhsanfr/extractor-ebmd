@@ -159,8 +159,8 @@ export const alihStatusColumns = alihStatusColumnHelper.columns([
     alihStatusColumnHelper.accessor("jumlah", {
         id: "jumlah",
         size: ALIH_STATUS_COL_SIZE.jumlah,
-        header: () => <TableHeaderStack columns={["Jumlah"]} />,
-        cell: ({ getValue }) => <TableCellStack columns={[getValue()]} />,
+        header: () => <TableHeaderStack columns={["Jumlah", "Luas"]} />,
+        cell: ({ getValue, row }) => <TableCellStack columns={[getValue(), row.original.luas && `${row.original.luas} m²`]} />,
     }),
     alihStatusColumnHelper.display({
         id: "nilai",

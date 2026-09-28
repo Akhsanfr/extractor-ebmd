@@ -32,7 +32,7 @@ export async function getPerangkatDaerahByKodeLokasiAction(
   }
 }
 export async function actionGetListPerangkatDaerahByJabatan(
-  jabatan: PerangkatDaerahJabatan
+  jabatan: string
 ): Promise<ActionResponse<PerangkatDaerahContract.SelectDTO[]>> {
   try {
     const data = await getPerangkatDaerahByJabatan(jabatan);

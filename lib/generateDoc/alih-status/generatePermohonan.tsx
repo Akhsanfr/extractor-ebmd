@@ -1,7 +1,7 @@
 import { AlihStatusPermohonanContract } from "@/action/alih-status/permohonan/contract";
 import { generateDocument } from "..";
 import { angkaKeKata, formatRupiah, sumDecimal } from "@/lib/number";
-import { PerangkatDaerahJabatan } from "@/enum/perangkatDaerah";
+import { getPerangkatDaerahJabatan, PerangkatDaerahJabatan } from "@/enum/perangkatDaerah";
 import { getUniquePerangkatDaerah } from "./util";
 import { replaceNullWithDash } from "@/lib/array";
 
@@ -43,7 +43,7 @@ export const generatePermohonan = ({ permohonan, spkmb, data }: AlihStatusPermoh
         "pengguna-barang-asal-nama": permohonan.penggunaBarangAsalNama,
         "pengguna-barang-asal-nip": permohonan.penggunaBarangAsalNIP,
         "pengguna-barang-asal-pangkat": permohonan.penggunaBarangAsalPangkat,
-        "pengguna-barang-asal-jabatan-c": PerangkatDaerahJabatan[permohonan.perangkatDaerahAsal].toUpperCase(),
+        "pengguna-barang-asal-jabatan-c": getPerangkatDaerahJabatan(permohonan.perangkatDaerahAsal),
         "total-data": data.length,
         "total-perolehan": formatRupiah(sumDecimal(data.map(d => d.nilaiPerolehan))),
         "total-penyusutan": formatRupiah(sumDecimal(data.map(d => d.akumulasiPenyusutan))),

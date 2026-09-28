@@ -1,14 +1,57 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { ComponentPropsWithoutRef, useEffect, useState } from "react";
 import { Controller, Control, FieldValues, FieldErrors, Path } from "react-hook-form";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
-import { useFilter, Autocomplete, SearchField, Description, ListBox, TextField, Label, Input, ErrorMessage, TextArea, Checkbox, FieldError, Select, Key } from "@heroui/react";
+import {
+    useFilter,
+    Autocomplete,
+    SearchField,
+    Description,
+    ListBox,
+    TextField,
+    Label,
+    Input,
+    ErrorMessage,
+    TextArea,
+    Checkbox,
+    FieldError,
+    Select,
+    Key,
+} from "@heroui/react";
 
 function fieldErrorMessage(errors: FieldErrors<FieldValues>, name: string): string | undefined {
     const error = errors[name];
     return error?.message as string | undefined;
 }
+
+// ---------------------------------------------------------------------------
+// Prop pass-through helpers
+// Ambil tipe props asli tiap komponen HeroUI, lalu buang prop yang sudah kita
+// kontrol sendiri lewat react-hook-form's Controller (value/onChange/onBlur/ref).
+// Sisanya (readOnly, isDisabled, placeholder, maxLength, dst) bisa langsung
+// dipakai oleh konsumen field tanpa kita deklarasikan satu-satu.
+// ---------------------------------------------------------------------------
+type ManagedProps = "value" | "onChange" | "onBlur" | "ref";
+
+type InputHeroProps = Omit<ComponentPropsWithoutRef<typeof Input>, ManagedProps>;
+type TextAreaHeroProps = Omit<ComponentPropsWithoutRef<typeof TextArea>, ManagedProps>;
+type AutocompleteHeroProps = Omit<ComponentPropsWithoutRef<typeof Autocomplete>, ManagedProps | "children" | "selectionMode">;
+type SelectHeroProps = Omit<ComponentPropsWithoutRef<typeof Select>, ManagedProps | "children" | "selectionMode">;
+type CheckboxHeroProps = Omit<ComponentPropsWithoutRef<typeof Checkbox>, ManagedProps | "children" | "isSelected" | "onChange">;
+
+/**
+ * NumericFormat (react-number-format) punya tipe internal sendiri yang lebih
+ * sempit dari HTML native <input> (mis. `type` cuma "text"|"tel"|"password",
+ * `defaultValue` cuma string|number). Jadi NumberFormField TIDAK mewarisi
+ * InputHeroProps mentah — cukup subset prop <input> yang memang kompatibel
+ * dan berguna di sini (readOnly, isDisabled, placeholder, className, dst),
+ * plus semua opsi format dari NumericFormatProps sendiri.
+ */
+type NumberFormatOwnProps = Omit<
+    NumericFormatProps,
+    "value" | "onValueChange" | "customInput" | "getInputRef" | "type" | "defaultValue" | "onChange"
+>;
 
 /**
  * Segment-based formatter: splits raw input into fixed-type, fixed-max-length
@@ -140,6 +183,9 @@ function useFieldSuggestions(storageKey: string | undefined, maxItems = 10) {
     return { suggestions, remember };
 }
 
+// ---------------------------------------------------------------------------
+// TextFormField — text/date input, dengan dukungan segment format (NIP/NOPOL)
+// ---------------------------------------------------------------------------
 export function TextFormField<TValues extends FieldValues>({
     control,
     errors,
@@ -148,27 +194,26 @@ export function TextFormField<TValues extends FieldValues>({
     type = "text",
     className,
     suggestions: suggestionsEnabled = false,
-    numberFormat,
     format,
+    ...inputProps
 }: {
     control: Control<TValues>;
     errors: FieldErrors<TValues>;
     name: Path<TValues>;
     label: string;
-    type?: "text" | "date" | "number";
+    type?: "text" | "date";
     /** e.g. "col-span-4" when the parent's body uses a grid layout. */
     className?: string;
-    /** Remember previously typed values for this field and offer them as suggestions (ignored for type="number"). */
+    /** Remember previously typed values for this field and offer them as suggestions. */
     suggestions?: boolean;
-    /** Only applies when type="number". Formatting options passed through to react-number-format. */
-    numberFormat?: Omit<NumericFormatProps, "value" | "onValueChange" | "customInput" | "getInputRef">;
     /** Preset ("nip", "nopol") or custom segment format. Field value stays the raw (unspaced) characters. */
     format?: keyof typeof FORMAT_PRESETS | FieldSegmentFormat;
-}) {
-    const storageKey = suggestionsEnabled && type !== "number" ? `field-suggestions:${String(name)}` : undefined;
+} & Omit<InputHeroProps, "type">) {
+    const storageKey = suggestionsEnabled ? `field-suggestions:${String(name)}` : undefined;
     const { suggestions, remember } = useFieldSuggestions(storageKey);
     const listId = `${String(name)}-suggestions`;
     const groupFormat = resolveFormat(format);
+    const isReadOnly = Boolean(inputProps.readOnly);
 
     return (
         <Controller
@@ -181,7 +226,7 @@ export function TextFormField<TValues extends FieldValues>({
                     const rawValue = (field.value as string | undefined) ?? "";
 
                     return (
-                        <TextField className={className}>
+                        <TextField className={className} isReadOnly={isReadOnly}>
                             <Label>{label}</Label>
                             <Input
                                 type="text"
@@ -189,6 +234,7 @@ export function TextFormField<TValues extends FieldValues>({
                                 list={suggestionsEnabled ? listId : undefined}
                                 value={formatSegments(rawValue, groupFormat)}
                                 onChange={(e) => {
+                                    if (isReadOnly) return;
                                     field.onChange(parseFormattedValue(e.target.value, groupFormat));
                                 }}
                                 onBlur={(e) => {
@@ -196,6 +242,7 @@ export function TextFormField<TValues extends FieldValues>({
                                     field.onBlur();
                                 }}
                                 ref={field.ref}
+                                {...inputProps}
                             />
                             {suggestionsEnabled && (
                                 <datalist id={listId}>
@@ -211,43 +258,23 @@ export function TextFormField<TValues extends FieldValues>({
                     );
                 }
 
-                if (type === "number") {
-                    return (
-                        <TextField className={className}>
-                            <Label>{label}</Label>
-                            <NumericFormat
-                                customInput={Input}
-                                value={(field.value as number | undefined) ?? ""}
-                                onValueChange={(values) => {
-                                    field.onChange(values.floatValue);
-                                }}
-                                onBlur={field.onBlur}
-                                getInputRef={field.ref}
-                                thousandSeparator="."
-                                decimalSeparator=","
-                                allowNegative={false}
-                                {...numberFormat}
-                            />
-                            <ErrorMessage>
-                                {Boolean(errorMessage) && <>{errorMessage}</>}
-                            </ErrorMessage>
-                        </TextField>
-                    );
-                }
-
                 return (
-                    <TextField className={className}>
+                    <TextField className={className} isReadOnly={isReadOnly}>
                         <Label>{label}</Label>
                         <Input
                             type={type}
                             list={suggestionsEnabled ? listId : undefined}
                             value={(field.value as string | undefined) ?? ""}
-                            onChange={(e) => field.onChange(e.target.value)}
+                            onChange={(e) => {
+                                if (isReadOnly) return;
+                                field.onChange(e.target.value);
+                            }}
                             onBlur={(e) => {
                                 if (suggestionsEnabled) remember(e.target.value);
                                 field.onBlur();
                             }}
                             ref={field.ref}
+                            {...inputProps}
                         />
                         {suggestionsEnabled && (
                             <datalist id={listId}>
@@ -266,32 +293,107 @@ export function TextFormField<TValues extends FieldValues>({
     );
 }
 
-/** Multi-line text input variant, same wiring as `TextFormField`. */
-export function TextAreaFormField<TValues extends FieldValues>({
+// ---------------------------------------------------------------------------
+// NumberFormField — dedicated, dibangun di atas react-number-format
+// ---------------------------------------------------------------------------
+export function NumberFormField<TValues extends FieldValues>({
     control,
     errors,
     name,
     label,
     className,
+    readOnly,
+    isDisabled,
+    placeholder,
+    onChange, // ⬅️ baru — dipanggil setelah field.onChange, bawa nilai angka terbaru
+    ...numberFormat
 }: {
     control: Control<TValues>;
     errors: FieldErrors<TValues>;
     name: Path<TValues>;
     label: string;
     className?: string;
-}) {
+    readOnly?: boolean;
+    isDisabled?: boolean;
+    placeholder?: string;
+    /** Dipanggil tiap kali nilai berubah (setelah disimpan ke form). Berguna untuk field turunan seperti nilaiBuku. */
+    onChange?: (value: number | undefined) => void;
+} & NumberFormatOwnProps) {
+    const isReadOnly = Boolean(readOnly);
+
+    return (
+        <Controller
+            name={name}
+            control={control}
+            render={({ field }) => {
+                const errorMessage = fieldErrorMessage(errors, name);
+
+                return (
+                    <TextField className={className} isReadOnly={isReadOnly}>
+                        <Label>{label}</Label>
+                        <NumericFormat
+                            customInput={Input}
+                            value={(field.value as number | undefined) ?? ""}
+                            onValueChange={(values) => {
+                                if (isReadOnly || isDisabled) return;
+                                field.onChange(values.floatValue);
+                                onChange?.(values.floatValue); // ⬅️ panggil setelah update form field
+                            }}
+                            onBlur={field.onBlur}
+                            getInputRef={field.ref}
+                            thousandSeparator="."
+                            decimalSeparator=","
+                            allowNegative={false}
+                            readOnly={isReadOnly}
+                            disabled={isDisabled}
+                            placeholder={placeholder}
+                            {...numberFormat}
+                        />
+                        <ErrorMessage>
+                            {Boolean(errorMessage) && <>{errorMessage}</>}
+                        </ErrorMessage>
+                    </TextField>
+                );
+            }}
+        />
+    );
+}
+
+// ---------------------------------------------------------------------------
+// TextAreaFormField
+// ---------------------------------------------------------------------------
+export function TextAreaFormField<TValues extends FieldValues>({
+    control,
+    errors,
+    name,
+    label,
+    className,
+    ...areaProps
+}: {
+    control: Control<TValues>;
+    errors: FieldErrors<TValues>;
+    name: Path<TValues>;
+    label: string;
+    className?: string;
+} & TextAreaHeroProps) {
+    const isReadOnly = Boolean(areaProps.readOnly);
+
     return (
         <Controller
             name={name}
             control={control}
             render={({ field }) => (
-                <TextField className={className}>
+                <TextField className={className} isReadOnly={isReadOnly}>
                     <Label>{label}</Label>
                     <TextArea
                         value={(field.value as string | undefined) ?? ""}
-                        onChange={field.onChange}
+                        onChange={(e) => {
+                            if (isReadOnly) return;
+                            field.onChange(e);
+                        }}
                         onBlur={field.onBlur}
                         ref={field.ref}
+                        {...areaProps}
                     />
                     <ErrorMessage>
                         {Boolean(fieldErrorMessage(errors, name)) && <>{fieldErrorMessage(errors, name)}</>}
@@ -302,6 +404,9 @@ export function TextAreaFormField<TValues extends FieldValues>({
     );
 }
 
+// ---------------------------------------------------------------------------
+// AutocompleteFormField
+// ---------------------------------------------------------------------------
 export type AutocompleteOption = {
     label: string;
     value: string | number;
@@ -317,6 +422,7 @@ export function AutocompleteFormField<TValues extends FieldValues>({
     className,
     placeholder = "Pilih opsi...",
     onChange,
+    ...autoProps
 }: {
     control: Control<TValues>;
     selectionMode?: "single" | "multiple";
@@ -326,11 +432,12 @@ export function AutocompleteFormField<TValues extends FieldValues>({
     options: AutocompleteOption[];
     className?: string;
     placeholder?: string;
-    onChange?: (value: Key | Key[] | null) => void
-}) {
+    onChange?: (value: Key | Key[] | null) => void;
+} & AutocompleteHeroProps) {
     const { contains } = useFilter({
         sensitivity: "base",
     });
+    const isDisabled = Boolean(autoProps.isDisabled);
 
     return (
         <Controller
@@ -345,12 +452,14 @@ export function AutocompleteFormField<TValues extends FieldValues>({
                         <Autocomplete
                             value={field.value}
                             onChange={(value) => {
-                                onChange && onChange(value)
-                                field.onChange(value)
+                                if (isDisabled) return;
+                                onChange && onChange(value);
+                                field.onChange(value);
                             }}
                             onBlur={field.onBlur}
                             selectionMode={selectionMode}
                             placeholder={placeholder}
+                            {...autoProps}
                         >
                             <Label>{label}</Label>
 
@@ -409,6 +518,9 @@ export function AutocompleteFormField<TValues extends FieldValues>({
     );
 }
 
+// ---------------------------------------------------------------------------
+// CheckboxFormField
+// ---------------------------------------------------------------------------
 export function CheckboxFormField<TValues extends FieldValues>({
     control,
     errors,
@@ -416,6 +528,7 @@ export function CheckboxFormField<TValues extends FieldValues>({
     label,
     description,
     className,
+    ...checkboxProps
 }: {
     control: Control<TValues>;
     errors: FieldErrors<TValues>;
@@ -423,7 +536,9 @@ export function CheckboxFormField<TValues extends FieldValues>({
     label: string;
     description?: string;
     className?: string;
-}) {
+} & CheckboxHeroProps) {
+    const isDisabled = Boolean(checkboxProps.isDisabled);
+
     return (
         <Controller
             name={name}
@@ -432,7 +547,11 @@ export function CheckboxFormField<TValues extends FieldValues>({
                 <Checkbox
                     className={className}
                     isSelected={Boolean(field.value)}
-                    onChange={field.onChange}
+                    onChange={(isSelected) => {
+                        if (isDisabled) return;
+                        field.onChange(isSelected);
+                    }}
+                    {...checkboxProps}
                 >
                     <Checkbox.Content>
                         <Checkbox.Control>
@@ -461,7 +580,9 @@ export function CheckboxFormField<TValues extends FieldValues>({
     );
 }
 
-
+// ---------------------------------------------------------------------------
+// SelectFormField
+// ---------------------------------------------------------------------------
 export function SelectFormField<TValues extends FieldValues>({
     control,
     selectionMode = "single",
@@ -472,6 +593,7 @@ export function SelectFormField<TValues extends FieldValues>({
     className,
     description,
     placeholder = "Pilih opsi...",
+    ...selectProps
 }: {
     control: Control<TValues>;
     selectionMode?: "single" | "multiple";
@@ -482,7 +604,9 @@ export function SelectFormField<TValues extends FieldValues>({
     className?: string;
     description?: string;
     placeholder?: string;
-}) {
+} & SelectHeroProps) {
+    const isDisabled = Boolean(selectProps.isDisabled);
+
     return (
         <Controller
             name={name}
@@ -495,9 +619,13 @@ export function SelectFormField<TValues extends FieldValues>({
                     <div className={className}>
                         <Select
                             value={field.value as (string | number)[]}
-                            onChange={field.onChange}
+                            onChange={(value) => {
+                                if (isDisabled) return;
+                                field.onChange(value);
+                            }}
                             onBlur={field.onBlur}
                             selectionMode={selectionMode}
+                            {...selectProps}
                         >
                             <Label>{label}</Label>
                             <Select.Trigger>

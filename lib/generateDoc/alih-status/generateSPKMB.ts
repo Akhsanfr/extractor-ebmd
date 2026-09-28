@@ -2,7 +2,7 @@ import { AlihStatusPermohonanContract } from "@/action/alih-status/permohonan/co
 import { generateDocument } from "..";
 import { replaceNullWithDash } from "@/lib/array";
 import { formatRupiah, sumDecimal } from "@/lib/number";
-import { PerangkatDaerahJabatan } from "@/enum/perangkatDaerah";
+import { getPerangkatDaerahJabatan, PerangkatDaerahJabatan } from "@/enum/perangkatDaerah";
 
 export const generateSPKMB = (value: AlihStatusPermohonanContract.SelectWithDetailDTO | undefined, id: number) => {
     if (!value) throw new Error("Data belum tersedia")
@@ -34,8 +34,8 @@ export const generateSPKMB = (value: AlihStatusPermohonanContract.SelectWithDeta
         "pengguna-barang-tujuan-nama": filteredSpkmb.penggunaBarangTujuanNama,
         "pengguna-barang-tujuan-nip": filteredSpkmb.penggunaBarangTujuanNIP,
         "pengguna-barang-tujuan-pangkat": filteredSpkmb.penggunaBarangTujuanPangkat,
-        "pengguna-barang-tujuan-jabatan": PerangkatDaerahJabatan[filteredSpkmb.perangkatDaerahTujuan],
-        "pengguna-barang-tujuan-jabatan-c": PerangkatDaerahJabatan[filteredSpkmb.perangkatDaerahTujuan].toUpperCase(),
+        "pengguna-barang-tujuan-jabatan": getPerangkatDaerahJabatan(filteredSpkmb.perangkatDaerahTujuan),
+        "pengguna-barang-tujuan-jabatan-c": getPerangkatDaerahJabatan(filteredSpkmb.perangkatDaerahTujuan).toUpperCase(),
         "total-data": filteredData.length,
         "total-perolehan": formatRupiah(sumDecimal(filteredData.map(d => d.nilaiPerolehan))),
         "total-penyusutan": formatRupiah(sumDecimal(filteredData.map(d => d.akumulasiPenyusutan))),

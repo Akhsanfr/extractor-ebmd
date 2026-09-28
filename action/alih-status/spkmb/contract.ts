@@ -8,7 +8,7 @@ export const AlihStatusSPKMBContract = {
     query: z.object({
         masterIds: z.number().array()
     }),
-    select: createSelectSchema(alihStatusSpkmbTable).extend({ perangkatDaerahTujuan: z.enum(PerangkatDaerah) }),
+    select: createSelectSchema(alihStatusSpkmbTable),
 
     create: createInsertSchema(alihStatusSpkmbTable)
         .extend({ dataIds: z.number().int().positive().array() })

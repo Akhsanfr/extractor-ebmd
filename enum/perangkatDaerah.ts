@@ -8,61 +8,61 @@
 //     typeof PerangkatDaerahJabatan[keyof typeof PerangkatDaerahJabatan];
 
 export const PerangkatDaerah = [
-"Badan Keuangan dan Aset Daerah",
-"Badan Pendapatan Daerah",
-"Badan Kepegawaian dan Pengembangan Sumber Daya Manusia",
-"Badan Kesatuan Bangsa dan Politik",
-"Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah",
-"Dinas Cipta Karya dan Tata Ruang",
-"Dinas Kebudayaan dan Pariwisata",
-"Dinas Kependudukan dan Pencatatan Sipil",
-"Dinas Kesehatan Daerah, Pengendalian Penduduk dan Keluarga Berencana",
-"Dinas Ketahanan Pangan, Pertanian dan Perikanan",
-"Dinas Ketenagakerjaan",
-"Dinas Komunikasi dan Informatika",
-"Dinas Koperasi, Usaha Kecil, Menengah, Perindustrian dan Perdagangan",
-"Dinas Lingkungan Hidup",
-"Dinas Pemberdayaan Masyarakat dan Desa",
-"Dinas Pemuda dan Olahraga",
-"Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu",
-"Dinas Pendidikan",
-"Dinas Perhubungan",
-"Dinas Perpustakaan dan Kearsipan",
-"Dinas Perumahan dan Kawasan Permukiman",
-"Dinas Sosial, Pemberdayaan Perempuan dan Perlindungan Anak",
-"Dinas Sumber Daya Air, Bina Marga dan Bina Konstruksi",
-"Inspektorat Daerah",
-"Satuan Polisi Pamong Praja",
-"Sekretariat Daerah",
-"Sekretariat DPRD",
-"BPBD",
-"RSUD Bangil",
-"RSUD Grati",
-"Kecamatan Bangil",
-"Kecamatan Beji",
-"Kecamatan Gempol",
-"Kecamatan Gondang Wetan",
-"Kecamatan Grati",
-"Kecamatan Kejayan",
-"Kecamatan Kraton",
-"Kecamatan Lekok",
-"Kecamatan Lumbang",
-"Kecamatan Nguling",
-"Kecamatan Pandaan",
-"Kecamatan Pasrepan",
-"Kecamatan Pohjentrek",
-"Kecamatan Prigen",
-"Kecamatan Purwodadi",
-"Kecamatan Purwosari",
-"Kecamatan Puspo",
-"Kecamatan Rejoso",
-"Kecamatan Rembang",
-"Kecamatan Sukorejo",
-"Kecamatan Tosari",
-"Kecamatan Tutur",
-"Kecamatan Winongan",
-"Kecamatan Wonorejo",
-"Pengelola Barang Milik Daerah"
+    "Badan Keuangan dan Aset Daerah",
+    "Badan Pendapatan Daerah",
+    "Badan Kepegawaian dan Pengembangan Sumber Daya Manusia",
+    "Badan Kesatuan Bangsa dan Politik",
+    "Badan Perencanaan Pembangunan, Riset dan Inovasi Daerah",
+    "Dinas Cipta Karya dan Tata Ruang",
+    "Dinas Kebudayaan dan Pariwisata",
+    "Dinas Kependudukan dan Pencatatan Sipil",
+    "Dinas Kesehatan Daerah, Pengendalian Penduduk dan Keluarga Berencana",
+    "Dinas Ketahanan Pangan, Pertanian dan Perikanan",
+    "Dinas Ketenagakerjaan",
+    "Dinas Komunikasi dan Informatika",
+    "Dinas Koperasi, Usaha Kecil, Menengah, Perindustrian dan Perdagangan",
+    "Dinas Lingkungan Hidup",
+    "Dinas Pemberdayaan Masyarakat dan Desa",
+    "Dinas Pemuda dan Olahraga",
+    "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu",
+    "Dinas Pendidikan",
+    "Dinas Perhubungan",
+    "Dinas Perpustakaan dan Kearsipan",
+    "Dinas Perumahan dan Kawasan Permukiman",
+    "Dinas Sosial, Pemberdayaan Perempuan dan Perlindungan Anak",
+    "Dinas Sumber Daya Air, Bina Marga dan Bina Konstruksi",
+    "Inspektorat Daerah",
+    "Satuan Polisi Pamong Praja",
+    "Sekretariat Daerah",
+    "Sekretariat DPRD",
+    "BPBD",
+    "RSUD Bangil",
+    "RSUD Grati",
+    "Kecamatan Bangil",
+    "Kecamatan Beji",
+    "Kecamatan Gempol",
+    "Kecamatan Gondang Wetan",
+    "Kecamatan Grati",
+    "Kecamatan Kejayan",
+    "Kecamatan Kraton",
+    "Kecamatan Lekok",
+    "Kecamatan Lumbang",
+    "Kecamatan Nguling",
+    "Kecamatan Pandaan",
+    "Kecamatan Pasrepan",
+    "Kecamatan Pohjentrek",
+    "Kecamatan Prigen",
+    "Kecamatan Purwodadi",
+    "Kecamatan Purwosari",
+    "Kecamatan Puspo",
+    "Kecamatan Rejoso",
+    "Kecamatan Rembang",
+    "Kecamatan Sukorejo",
+    "Kecamatan Tosari",
+    "Kecamatan Tutur",
+    "Kecamatan Winongan",
+    "Kecamatan Wonorejo",
+    "Pengelola Barang Milik Daerah"
 ] as const;
 
 export type PerangkatDaerah = (typeof PerangkatDaerah)[number];
@@ -233,3 +233,18 @@ export const PerangkatDaerahJabatan: Record<PerangkatDaerah, string> = {
     "Pengelola Barang Milik Daerah":
         "Sekretaris Daerah",
 };
+function isPerangkatDaerahJabatanKey(
+    value: string
+): value is keyof typeof PerangkatDaerahJabatan {
+    return value in PerangkatDaerahJabatan;
+}
+
+export function getPerangkatDaerahJabatan(
+    value: string | null | undefined
+): string {
+    if (!value || !isPerangkatDaerahJabatanKey(value)) {
+        return "JABATAN";
+    }
+
+    return PerangkatDaerahJabatan[value].toUpperCase();
+}

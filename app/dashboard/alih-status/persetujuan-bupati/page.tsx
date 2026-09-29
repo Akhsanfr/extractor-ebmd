@@ -39,7 +39,7 @@ import ListAvailableNodin from "./ListAvailableNodin";
 import { TableCellStack } from "../_component/data/tableCellStack";
 import { AlihStatusType } from "@/enum/alihStatus";
 import DetailPersetujuanBupati from "../_component/persetujuanBupati";
-import ListAvailableData from "../_component/listAvailableData";
+import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import { angkaKeKata } from "@/lib/number";
 
 const features = tableFeatures({ columnVisibilityFeature });

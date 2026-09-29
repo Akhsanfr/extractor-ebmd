@@ -7,6 +7,8 @@ import DetailNodin from "../../_component/nodin";
 import DetailBAPenelitian from "../../_component/baPenelitian";
 import { actionGetListBASTWithDetail } from "@/action/alih-status/bast/action.read";
 import AlihStatusBAST from "./bast";
+import AlihStatusTrackingTimeline from "../../_component/tracking";
+import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
 
 
 export default function Content({ bastId }: { bastId: number }) {
@@ -23,6 +25,13 @@ export default function Content({ bastId }: { bastId: number }) {
 
     return <>
         <AlihStatusBAST query={query} queryKey={queryKey} />
+        <AlihStatusTrackingTimeline
+            sourceType={AlihStatusTrackingSourceType.ALIH_STATUS_BAST}
+            sourceId={bastId}
+            data={query.data?.tracking ?? []}
+            isLoading={query.isLoading}
+            queryKey={queryKey}
+        />
         <DetailPersetujuanBupati
             data={query.data?.persetujuanBupati ?? []} isLoading={query.isLoading}
         />

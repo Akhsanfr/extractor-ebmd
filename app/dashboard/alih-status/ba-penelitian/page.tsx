@@ -24,7 +24,7 @@ import { $year } from "@/state/year.store";
 import { useForm } from "react-hook-form";
 import ListAvailablePermohonan from "./ListAvailablePermohonan";
 import DetailBAPenelitian from "../_component/baPenelitian";
-import ListAvailableData from "../_component/listAvailableData";
+import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import { PerangkatDaerah } from "@/enum/perangkatDaerah";
 
 
@@ -43,7 +43,8 @@ export default function BaPenelitian() {
 
     const form = useForm<AlihStatusBAPenelitianContract.CreateDTO>({
         defaultValues: {
-            tahun: Number(tahun)
+            tahun: Number(tahun),
+            suratNomor: `000.2.3.2/     /202/${tahun}`
         }
     });
 

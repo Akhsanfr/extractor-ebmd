@@ -72,6 +72,15 @@ export const AlihStatusSKHapusService = {
         return await db.transaction(async tx => {
             const res = await AlihStatusSKHapusRepository.insert(db, { ...data, createdAt: new Date(), createdBy: userId });
             await AlihStatusDataRepository.link(tx, data.dataIds, { SKHapusId: res.id })
+            await AlihStatusTrackingRepository.create(tx, {
+                date: new Date().toISOString().slice(0, 10),
+                note: "Draft dibuat",
+                position: "Staf PBMD",
+                sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_SK_HAPUS,
+                sourceId: res.id,
+                createdAt: new Date(),
+                createdBy: userId,
+            })
             return res;
         })
     },

@@ -36,7 +36,7 @@ import { useForm } from "react-hook-form";
 import ListAvailableBAPenelitian from "./ListAvailableBAPenelitian";
 import { TableCellStack } from "../_component/data/tableCellStack";
 import { angkaKeKata } from "@/lib/number";
-import ListAvailableData from "../_component/listAvailableData";
+import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 
 const features = tableFeatures({ columnVisibilityFeature });
 

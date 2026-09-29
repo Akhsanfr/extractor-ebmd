@@ -26,7 +26,7 @@ import { useStore } from "@nanostores/react";
 import { $year } from "@/state/year.store";
 import { useForm } from "react-hook-form";
 import ListAvailableBAST from "./ListAvailableBAST";
-import ListAvailableData from "../_component/listAvailableData";
+import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import DetailPermohonanPenghapusan from "../_component/permohonanPenghapusan";
 import { PerangkatDaerah } from "@/enum/perangkatDaerah";
 import { PegawaiPangkatGolongan } from "@/enum/user";

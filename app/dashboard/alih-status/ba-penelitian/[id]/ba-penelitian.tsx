@@ -16,7 +16,6 @@ import { Edit, Printer, RefreshCw } from "lucide-react";
 import DetailBAPenelitian from "../../_component/baPenelitian";
 import { generateBAPenelitian } from "@/lib/generateDoc/alih-status/generateBAPenelitian";
 export default function AlihStatusBAPenelitian({ query, queryKey }: { query: UseQueryResult<AlihStatusBAPenelitianContract.SelectWithDetailDTO>, queryKey: unknown[] }) {
-    const tahun = useStore($year);
     const [formTarget, setFormTarget] = useState<
         AlihStatusBAPenelitianContract.SelectDTO | null | undefined
     >(undefined); // undefined = closed, null = create, object = edit

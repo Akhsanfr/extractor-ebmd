@@ -22,7 +22,7 @@ export default function Content({ permohonanId }: { permohonanId: number }) {
     return <>
         <AlihStatusPermohonan query={query} queryKey={queryKey} />
         <AlihStatusTrackingTimeline
-            sourceType={AlihStatusTrackingSourceType.ALIH_STATUS_SK_HAPUS}
+            sourceType={AlihStatusTrackingSourceType.ALIH_STATUS_PERMOHONAN}
             sourceId={permohonanId}
             data={query.data?.tracking ?? []}
             isLoading={query.isLoading}

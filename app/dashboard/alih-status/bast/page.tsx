@@ -23,7 +23,7 @@ import { $year } from "@/state/year.store";
 import { useForm } from "react-hook-form";
 import ListAvailableNodin from "./ListAvailablePersetujuanBupati";
 import DetailBAST from "../_component/bast";
-import ListAvailableData from "../_component/listAvailableData";
+import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import PilihPerangkatDaerahAsal from "./pilihPerangkatDaerahAsal";
 import { actionGetListPenggunaBarangForBAST } from "@/action/alih-status/bast/action.read";
 import Loading from "@/component/loading";

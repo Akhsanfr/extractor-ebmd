@@ -53,7 +53,19 @@ export const AlihStatusPermohonanService = {
         await verifyPermissions(userId, {
             "alih-status": ["create"]
         });
-        return await AlihStatusPermohonanRepository.insert(db, { ...data, createdAt: new Date(), createdBy: userId });
+        return await db.transaction(async tx => {
+            const res = await AlihStatusPermohonanRepository.insert(db, { ...data, createdAt: new Date(), createdBy: userId });
+            await AlihStatusTrackingRepository.create(tx, {
+                date: new Date().toISOString().slice(0, 10),
+                note: "Draft dibuat",
+                position: "Staf PBMD",
+                sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_PERMOHONAN,
+                sourceId: res.id,
+                createdAt: new Date(),
+                createdBy: userId,
+            })
+            return res;
+        })
     },
 
     async update(data: AlihStatusPermohonanContract.EditDTO, userId: string): Promise<AlihStatusPermohonanContract.SelectDTO> {

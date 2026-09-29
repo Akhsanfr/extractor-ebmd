@@ -69,6 +69,15 @@ export const AlihStatusPermohonanPenghapusanService = {
         return await db.transaction(async tx => {
             const res = await AlihStatusPermohonanPenghapusanRepository.insert(db, { ...data, createdAt: new Date(), createdBy: userId });
             await AlihStatusDataRepository.link(tx, data.dataIds, { permohonanPenghapusanId: res.id })
+            await AlihStatusTrackingRepository.create(tx, {
+                date: new Date().toISOString().slice(0, 10),
+                note: "Draft dibuat",
+                position: "Staf PBMD",
+                sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_PERMOHONAN_PENGHAPUSAN,
+                sourceId: res.id,
+                createdAt: new Date(),
+                createdBy: userId,
+            })
             return res;
         })
     },

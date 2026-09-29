@@ -26,7 +26,7 @@ const formatDate = (value: string) =>
         year: "numeric",
     }).format(new Date(`${value}T00:00:00`));
 
-export default function AlihStatusTrackingTimeline({
+export default function AlihStatusTracking({
     sourceType,
     sourceId,
     data,
@@ -93,14 +93,17 @@ export default function AlihStatusTrackingTimeline({
                                         )}
 
                                         {/* titik */}
-                                        <span
-                                            aria-hidden
-                                            className={
-                                                isLatest
-                                                    ? "relative mt-1 size-4 shrink-0 rounded-full bg-accent ring-4 ring-accent/20"
-                                                    : "relative mt-1 size-4 shrink-0 rounded-full border-2 border-border bg-surface"
-                                            }
-                                        />
+                                        {isLatest ? (
+                                            <span aria-hidden className="relative mt-1 flex size-4 shrink-0">
+                                                <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:animate-none" />
+                                                <span className="relative inline-flex size-4 rounded-full bg-accent ring-4 ring-accent/20" />
+                                            </span>
+                                        ) : (
+                                            <span
+                                                aria-hidden
+                                                className="relative mt-1 size-4 shrink-0 rounded-full border-2 border-border bg-surface"
+                                            />
+                                        )}
 
                                         <div className="flex min-w-0 flex-1 flex-col gap-1">
                                             <div className="flex flex-wrap items-center gap-2">

@@ -26,7 +26,7 @@ import { useStore } from "@nanostores/react";
 import { $year } from "@/state/year.store";
 import { useForm } from "react-hook-form";
 import ListAvailablePermohonanPenghapusan from "./ListAvailablePermohonanPenghapusan";
-import ListAvailableData from "../_component/listAvailableData";
+import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import DetailSKHapus from "../_component/SKHapus";
 
 const features = tableFeatures({ columnVisibilityFeature });

@@ -4,8 +4,7 @@ import { z } from "zod";
 import { AlihStatusDataContract } from "../data/contract";
 import { AlihStatusSPKMBContract } from "../spkmb/contract";
 import { AlihStatusType } from "@/enum/alihStatus";
-import { AlihStatusBAPenelitianContract } from "../ba-penelitian/contract";
-import { PerangkatDaerah } from "@/enum/perangkatDaerah";
+import { AlihStatusTrackingContract } from "../tracking/contract";
 
 export const AlihStatusPermohonanContract = {
     select: createSelectSchema(alihStatusPermohonanTable).extend({
@@ -17,6 +16,7 @@ export const AlihStatusPermohonanContract = {
         permohonan: createSelectSchema(alihStatusPermohonanTable).extend({
             alihStatusType: z.enum(AlihStatusType)
         }),
+        tracking: AlihStatusTrackingContract.select.array()
     }),
 
     create: createInsertSchema(alihStatusPermohonanTable).extend({

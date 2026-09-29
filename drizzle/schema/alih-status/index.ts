@@ -1,4 +1,3 @@
-export * from "./alihStatusMaster";
 export * from "./alihStatusData";
 export * from "./alihStatusSpkmb";
 export * from "./alihStatusPermohonan";
@@ -8,3 +7,4 @@ export * from "./alihStatusPersetujuanBupati";
 export * from "./alihStatusBAST";
 export * from "./alihStatusPermohonanPenghapusan";
 export * from "./alihStatusSKHapus";
+export * from "./alihStatusTracking";

@@ -5,7 +5,7 @@ import { BmdAssetType } from "./../../enum/bmd";
 import { EmbeddingStatus } from "./../../enum/embedding";
 import { UserRole } from "./../../enum/user";
 import { SyncJobType, SyncStatus } from "./../../enum/sync";
-import { AlihStatusType } from "@/enum/alihStatus";
+import { AlihStatusTrackingSourceType, AlihStatusType } from "@/enum/alihStatus";
 
 export const sebaranBmdStatusBhumiEnum = pgEnum("sebaran_bmd_status_bhumi", StatusBhumi);
 export const bmdSyncStatusEnum = pgEnum("bmd_sync_status", BmdSyncStatus);
@@ -20,3 +20,4 @@ export const syncJobTypeEnum = pgEnum("job_type", SyncJobType);
 
 
 export const alihStatusTypeEnum = pgEnum("alih_status_type", AlihStatusType);
+export const alihStatusTrackingSourceType = pgEnum("alih_status_source_type", AlihStatusTrackingSourceType);

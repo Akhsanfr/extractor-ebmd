@@ -3,14 +3,16 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 import { AlihStatusDataContract } from "../data/contract";
 import { AlihStatusPermohonanContract } from "../permohonan/contract";
+import { AlihStatusTrackingContract } from "../tracking/contract";
 
 export const AlihStatusBAPenelitianContract = {
     select: createSelectSchema(alihStatusBAPenelitianTable),
 
     selectWithDetail: z.object({
-        BAPenelitian: createSelectSchema(alihStatusBAPenelitianTable),
         data: AlihStatusDataContract.select.array(),
-        permohonan: AlihStatusPermohonanContract.select.array()
+        BAPenelitian: createSelectSchema(alihStatusBAPenelitianTable),
+        permohonan: AlihStatusPermohonanContract.select.array(),
+        tracking: AlihStatusTrackingContract.select.array()
     }),
 
     create: createInsertSchema(alihStatusBAPenelitianTable).extend({

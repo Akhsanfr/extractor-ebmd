@@ -6,6 +6,8 @@ import { AlihStatusDataRepository } from "../data/repository";
 import AlihStatusPermohonan from "@/app/dashboard/alih-status/permohonan/[id]/permohonan";
 import { AlihStatusPermohonanRepository } from "../permohonan/repository";
 import { OperationalError } from "@/action/actionResponse";
+import { AlihStatusTrackingRepository } from "../tracking/repository";
+import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
 
 export const AlihStatusBAPenelitianService = {
     async getList(userId: string, tahun: number): Promise<AlihStatusBAPenelitianContract.SelectDTO[]> {
@@ -23,7 +25,13 @@ export const AlihStatusBAPenelitianService = {
         const data = await AlihStatusDataRepository.find(db, { BAPenelitianId: [id] });
         const permohonanIds = [...new Set(data.map(e => e.permohonanId))].filter((id): id is number => id !== null && id !== undefined);
         const permohonan = await AlihStatusPermohonanRepository.findByIds(db, permohonanIds);
+
+        const tracking = await AlihStatusTrackingRepository.findBySource(db, {
+            sourceId: id,
+            sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_BA_PENELITIAN
+        })
         return {
+            tracking,
             BAPenelitian,
             permohonan,
             data

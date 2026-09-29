@@ -18,6 +18,7 @@ import {
     FieldError,
     Select,
     Key,
+    ComboBox
 } from "@heroui/react";
 
 function fieldErrorMessage(errors: FieldErrors<FieldValues>, name: string): string | undefined {
@@ -662,6 +663,77 @@ export function SelectFormField<TValues extends FieldValues>({
                                 </>
                             )}
                         </FieldError>
+                    </div>
+                );
+            }}
+        />
+    );
+}
+
+export function ComboBoxFormField<TValues extends FieldValues>({
+    control,
+    errors,
+    name,
+    label,
+    options,
+    className,
+    placeholder,
+    isDisabled,
+    isReadOnly,
+}: {
+    control: Control<TValues>;
+    errors: FieldErrors<TValues>;
+    name: Path<TValues>;
+    label: string;
+    /** Saran statis (mis. dari enum). User tetap bebas mengetik nilai lain. */
+    options: readonly string[];
+    className?: string;
+    placeholder?: string;
+    isDisabled?: boolean;
+    isReadOnly?: boolean;
+}) {
+    return (
+        <Controller
+            name={name}
+            control={control}
+            render={({ field }) => {
+                const errorMessage = fieldErrorMessage(errors, name);
+
+                return (
+                    <div className={className}>
+                        <ComboBox
+                            allowsCustomValue
+                            menuTrigger="focus"
+                            isDisabled={isDisabled}
+                            isReadOnly={isReadOnly}
+                            isInvalid={Boolean(errorMessage)}
+                            inputValue={(field.value as string | undefined) ?? ""}
+                            onInputChange={(text) => field.onChange(text)}
+                            onBlur={field.onBlur}
+                        >
+                            <Label>{label}</Label>
+                            <ComboBox.InputGroup>
+                                <Input placeholder={placeholder} ref={field.ref} />
+                                <ComboBox.Trigger />
+                            </ComboBox.InputGroup>
+                            <ComboBox.Popover>
+                                <ListBox
+                                    renderEmptyState={() => (
+                                        <div className="p-3 text-sm text-muted">
+                                            Tidak ada saran, nilai akan dipakai apa adanya
+                                        </div>
+                                    )}
+                                >
+                                    {options.map((opt) => (
+                                        <ListBox.Item key={opt} id={opt} textValue={opt}>
+                                            <Label>{opt}</Label>
+                                            <ListBox.ItemIndicator />
+                                        </ListBox.Item>
+                                    ))}
+                                </ListBox>
+                            </ComboBox.Popover>
+                            <FieldError>{errorMessage}</FieldError>
+                        </ComboBox>
                     </div>
                 );
             }}

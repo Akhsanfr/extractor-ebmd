@@ -6,6 +6,8 @@ import { AlihStatusDataRepository } from "../data/repository";
 import { AlihStatusPermohonanRepository } from "../permohonan/repository";
 import { AlihStatusBAPenelitianRepository } from "../ba-penelitian/repository";
 import { AlihStatusNodinRepository } from "../nodin/repository";
+import { AlihStatusTrackingRepository } from "../tracking/repository";
+import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
 
 export const AlihStatusPersetujuanBupatiService = {
     async getList(userId: string, tahun: number): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO[]> {
@@ -32,7 +34,13 @@ export const AlihStatusPersetujuanBupatiService = {
 
         const nodinIds = [...new Set(data.map(e => e.nodinId))].filter((id): id is number => id !== null && id !== undefined);
         const nodin = await AlihStatusNodinRepository.findByIds(db, nodinIds);
+
+        const tracking = await AlihStatusTrackingRepository.findBySource(db, {
+            sourceId: id,
+            sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_PERSETUJUAN_BUPATI
+        })
         return {
+            tracking,
             persetujuanBupati,
             permohonan,
             data,

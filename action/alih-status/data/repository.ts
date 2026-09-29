@@ -1,7 +1,7 @@
-import { and, Column, eq, getColumns, inArray, isNotNull, isNull, SQL, sql } from "drizzle-orm";
+import { and, Column, eq,  inArray, isNotNull, isNull, SQL, sql } from "drizzle-orm";
 import { AlihStatusDataContract } from "./contract";
 import { DbOrTx } from "../../baseDbOrTx";
-import { alihStatusDataTable, alihStatusMasterTable } from "@/drizzle/schema";
+import { alihStatusDataTable } from "@/drizzle/schema";
 
 const numberFilter = (
     column: Column,

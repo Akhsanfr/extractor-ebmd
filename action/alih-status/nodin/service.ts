@@ -6,6 +6,8 @@ import { AlihStatusDataRepository } from "../data/repository";
 import { AlihStatusPermohonanRepository } from "../permohonan/repository";
 import { AlihStatusBAPenelitianRepository } from "../ba-penelitian/repository";
 import { AlihStatusSpkmbRepository } from "../spkmb/repository";
+import { AlihStatusTrackingRepository } from "../tracking/repository";
+import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
 
 export const AlihStatusNodinService = {
     async getList(userId: string, tahun: number): Promise<AlihStatusNodinContract.SelectDTO[]> {
@@ -26,7 +28,13 @@ export const AlihStatusNodinService = {
         const BAPenelitian = await AlihStatusBAPenelitianRepository.findByIds(db, BAPenelitianIds);
         const permohonanIds = [...new Set(data.map(e => e.permohonanId))].filter((id): id is number => id !== null && id !== undefined);
         const permohonan = await AlihStatusPermohonanRepository.findByIds(db, permohonanIds);
+
+        const tracking = await AlihStatusTrackingRepository.findBySource(db, {
+            sourceId: id,
+            sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_NODIN
+        })
         return {
+            tracking,
             spkmb,
             nodin,
             permohonan,

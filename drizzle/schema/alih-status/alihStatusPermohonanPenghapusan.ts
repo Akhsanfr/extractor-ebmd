@@ -1,5 +1,5 @@
-import { pgTable, serial, text, date, integer, timestamp, index, snakeCase } from "drizzle-orm/pg-core";
-import { alihStatusMasterTable, userTable } from "./../../schema";
+import { serial, text, date, integer, timestamp, index, snakeCase } from "drizzle-orm/pg-core";
+import {  userTable } from "./../../schema";
 
 export const alihStatusPermohonanPenghapusanTable = snakeCase.table(
     "alih_status_permohonan_penghapusan",

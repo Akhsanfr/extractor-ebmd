@@ -5,6 +5,7 @@ import { AlihStatusDataContract } from "../data/contract";
 import { AlihStatusPermohonanContract } from "../permohonan/contract";
 import { AlihStatusBAPenelitianContract } from "../ba-penelitian/contract";
 import { AlihStatusSPKMBContract } from "../spkmb/contract";
+import { AlihStatusTrackingContract } from "../tracking/contract";
 
 export const AlihStatusNodinContract = {
     select: createSelectSchema(alihStatusNodinTable),
@@ -15,6 +16,7 @@ export const AlihStatusNodinContract = {
         BAPenelitian: AlihStatusBAPenelitianContract.select.array(),
         permohonan: AlihStatusPermohonanContract.select.array(),
         spkmb: AlihStatusSPKMBContract.select.array(),
+        tracking: AlihStatusTrackingContract.select.array()
     }),
 
 

@@ -6,7 +6,7 @@ import {
     index,
     snakeCase,
 } from "drizzle-orm/pg-core";
-import { alihStatusBAPenelitianTable, alihStatusBASTTable, alihStatusMasterTable, alihStatusNodinTable, alihStatusPermohonanPenghapusanTable, alihStatusPermohonanTable, alihStatusPersetujuanBupatiTable, alihStatusSKHapusTable, alihStatusSpkmbTable, bmdAssetTypeEnum, userTable } from "./../../schema";
+import { alihStatusBAPenelitianTable, alihStatusBASTTable, alihStatusNodinTable, alihStatusPermohonanPenghapusanTable, alihStatusPermohonanTable, alihStatusPersetujuanBupatiTable, alihStatusSKHapusTable, alihStatusSpkmbTable, bmdAssetTypeEnum, userTable } from "./../../schema";
 
 export const alihStatusDataTable = snakeCase.table(
     "alih_status_data",

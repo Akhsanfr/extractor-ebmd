@@ -10,6 +10,8 @@ import { AlihStatusPersetujuanBupatiRepository } from "../persetujuan-bupati/rep
 import { AlihStatusSpkmbRepository } from "../spkmb/repository";
 import { OperationalError } from "@/action/actionResponse";
 import { AlihStatusSPKMBContract } from "../spkmb/contract";
+import { AlihStatusTrackingRepository } from "../tracking/repository";
+import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
 
 export const AlihStatusBASTService = {
     async getList(userId: string, tahun: number): Promise<AlihStatusBASTContract.SelectDTO[]> {
@@ -37,7 +39,13 @@ export const AlihStatusBASTService = {
 
         const nodinIds = [...new Set(data.map(e => e.nodinId))].filter((id): id is number => id !== null && id !== undefined);
         const nodin = await AlihStatusNodinRepository.findByIds(db, nodinIds);
+
+        const tracking = await AlihStatusTrackingRepository.findBySource(db, {
+            sourceId: id,
+            sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_BAST
+        })
         return {
+            tracking,
             persetujuanBupati,
             permohonan,
             data,

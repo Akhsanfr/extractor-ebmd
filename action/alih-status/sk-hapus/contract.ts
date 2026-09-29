@@ -8,6 +8,7 @@ import { AlihStatusBAPenelitianContract } from "../ba-penelitian/contract";
 import { AlihStatusNodinContract } from "../nodin/contract";
 import { AlihStatusPersetujuanBupatiContract } from "../persetujuan-bupati/contract";
 import { AlihStatusBASTContract } from "../bast/contract";
+import { AlihStatusTrackingContract } from "../tracking/contract";
 
 export const AlihStatusSKHapusContract = {
     select: createSelectSchema(alihStatusSKHapusTable),
@@ -19,7 +20,8 @@ export const AlihStatusSKHapusContract = {
         persetujuanBupati: AlihStatusPersetujuanBupatiContract.select.array(),
         bast: AlihStatusBASTContract.select.array(),
         permohonanPenghapusan: AlihStatusPermohonanPenghapusanContract.select.array(),
-        SKHapus: createSelectSchema(alihStatusSKHapusTable)
+        SKHapus: createSelectSchema(alihStatusSKHapusTable),
+        tracking: AlihStatusTrackingContract.select.array()
     }),
 
     create: createInsertSchema(alihStatusSKHapusTable).extend({

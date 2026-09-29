@@ -5,6 +5,8 @@ import { verifyPermissions } from "@/lib/auth/auth";
 import { AlihStatusSpkmbRepository } from "../spkmb/repository";
 import { AlihStatusDataRepository } from "../data/repository";
 import { AlihStatusBAPenelitianRepository } from "../ba-penelitian/repository";
+import { AlihStatusTrackingRepository } from "../tracking/repository";
+import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
 
 export const AlihStatusPermohonanService = {
     async get(userId: string, id: number): Promise<AlihStatusPermohonanContract.SelectDTO> {
@@ -27,10 +29,17 @@ export const AlihStatusPermohonanService = {
         const data = await AlihStatusDataRepository.findByPermohonanId(db, id);
         const spkmb = await AlihStatusSpkmbRepository.findByIds(db,
             [...new Set(data.map((item) => item.spkmbId).filter(d => d !== null))]);
+
+
+        const tracking = await AlihStatusTrackingRepository.findBySource(db, {
+            sourceId: id,
+            sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_PERMOHONAN
+        })
         return {
             permohonan,
             data,
-            spkmb
+            spkmb,
+            tracking
         };
     },
     async getForAvailableBAPenelitian(userId: string, tahun: number): Promise<AlihStatusPermohonanContract.SelectDTO[]> {

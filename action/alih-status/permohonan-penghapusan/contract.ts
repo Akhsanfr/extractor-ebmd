@@ -7,6 +7,7 @@ import { AlihStatusPermohonanContract } from "../permohonan/contract";
 import { AlihStatusBAPenelitianContract } from "../ba-penelitian/contract";
 import { AlihStatusNodinContract } from "../nodin/contract";
 import { AlihStatusPersetujuanBupatiContract } from "../persetujuan-bupati/contract";
+import { AlihStatusTrackingContract } from "../tracking/contract";
 
 export const AlihStatusPermohonanPenghapusanContract = {
     select: createSelectSchema(alihStatusPermohonanPenghapusanTable),
@@ -17,7 +18,8 @@ export const AlihStatusPermohonanPenghapusanContract = {
         nodin: AlihStatusNodinContract.select.array(),
         persetujuanBupati: AlihStatusPersetujuanBupatiContract.select.array(),
         bast: AlihStatusBASTContract.select.array(),
-        permohonanPenghapusan: createSelectSchema(alihStatusPermohonanPenghapusanTable)
+        permohonanPenghapusan: createSelectSchema(alihStatusPermohonanPenghapusanTable),
+        tracking: AlihStatusTrackingContract.select.array()
     }),
 
 

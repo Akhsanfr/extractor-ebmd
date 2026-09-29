@@ -6,6 +6,7 @@ import { AlihStatusPermohonanContract } from "../permohonan/contract";
 import { AlihStatusBAPenelitianContract } from "../ba-penelitian/contract";
 import { AlihStatusNodinContract } from "../nodin/contract";
 import { AlihStatusPersetujuanBupatiContract } from "../persetujuan-bupati/contract";
+import { AlihStatusTrackingContract } from "../tracking/contract";
 
 export const AlihStatusBASTContract = {
     query: z.object({
@@ -19,6 +20,7 @@ export const AlihStatusBASTContract = {
         nodin: AlihStatusNodinContract.select.array(),
         persetujuanBupati: AlihStatusPersetujuanBupatiContract.select.array(),
         bast: createSelectSchema(alihStatusBASTTable),
+        tracking: AlihStatusTrackingContract.select.array()
     }),
     penggunaBarang: z.object({
         asal: z.object({

@@ -6,6 +6,7 @@ import { AlihStatusDataContract } from "../data/contract";
 import { AlihStatusBAPenelitianContract } from "../ba-penelitian/contract";
 import { AlihStatusPermohonanContract } from "../permohonan/contract";
 import { AlihStatusNodinContract } from "../nodin/contract";
+import { AlihStatusTrackingContract } from "../tracking/contract";
 
 export const AlihStatusPersetujuanBupatiContract = {
     select: createSelectSchema(alihStatusPersetujuanBupatiTable).extend({ alihStatusType: z.enum(AlihStatusType) }),
@@ -15,7 +16,8 @@ export const AlihStatusPersetujuanBupatiContract = {
         nodin: AlihStatusNodinContract.select.array(),
         data: AlihStatusDataContract.select.array(),
         BAPenelitian: AlihStatusBAPenelitianContract.select.array(),
-        permohonan: AlihStatusPermohonanContract.select.array()
+        permohonan: AlihStatusPermohonanContract.select.array(),
+        tracking: AlihStatusTrackingContract.select.array()
     }),
 
 

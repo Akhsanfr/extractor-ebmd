@@ -18,6 +18,8 @@ const formatTanggal = (tanggal: string | null) =>
 export const generateBAPenelitian = ({ permohonan, BAPenelitian, data }: AlihStatusBAPenelitianContract.SelectWithDetailDTO) => {
     if (BAPenelitian === null) throw new Error("Data belum tersedia");
     if (permohonan === null) throw new Error("Permohonan belum tersedia");
+    console.log("permohonan", permohonan)
+    // return;
 
     const tanggalBAPenelitian = BAPenelitian.suratTanggal !== null ? formatTanggalSurat(BAPenelitian.suratTanggal) : { hari: "HARI", tanggal: "TANGGAL", bulan: "BULAN", tahun: "TAHUN" };
 
@@ -42,6 +44,7 @@ export const generateBAPenelitian = ({ permohonan, BAPenelitian, data }: AlihSta
     const isTunggal = permohoanFormatted.length === 1;
     const isJamak = permohoanFormatted.length > 1;
     const tunggal = isTunggal ? permohoanFormatted[0] : null;
+    console.log("tunggal", tunggal)
 
     const objek =
         assetTypeUnik.length <= 1
@@ -68,14 +71,9 @@ export const generateBAPenelitian = ({ permohonan, BAPenelitian, data }: AlihSta
         "tahun": tanggalBAPenelitian?.tahun,
 
         // PERMOHONAN - TUNGGAL
+        "permohonan-tunggal": tunggal,
         "permohonan-nomor": tunggal?.suratNomor,
-        "permohonan-tanggal": tunggal?.suratTanggal
-            ? new Date(`${tunggal?.suratTanggal}T00:00:00`).toLocaleDateString("id-ID", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-            })
-            : `               ${new Date().getFullYear()}`,
+        "permohonan-tanggal": tunggal?.suratTanggal,
         "permohonan-hal": tunggal?.suratHal,
 
         // PERMOHONAN - JAMAK

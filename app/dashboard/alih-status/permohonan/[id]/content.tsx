@@ -3,8 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { actionGetDetailAlihStatusPermohonanWithDetail } from "@/action/alih-status/permohonan/action.read";
 import AlihStatusSpkmb from "./spkmb";
 import AlihStatusPermohonan from "./permohonan";
-import { AlihStatusTabelData } from "../../_component/data/tableData";
 import AlihStatusData from "./data";
+import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
+import AlihStatusTrackingTimeline from "../../_component/tracking";
 
 
 export default function Content({ permohonanId }: { permohonanId: number }) {
@@ -17,10 +18,16 @@ export default function Content({ permohonanId }: { permohonanId: number }) {
             return res.data
         }
     })
-    console.log(query.data)
 
     return <>
         <AlihStatusPermohonan query={query} queryKey={queryKey} />
+        <AlihStatusTrackingTimeline
+            sourceType={AlihStatusTrackingSourceType.ALIH_STATUS_SK_HAPUS}
+            sourceId={permohonanId}
+            data={query.data?.tracking ?? []}
+            isLoading={query.isLoading}
+            queryKey={queryKey}
+        />
         <AlihStatusData permohonanId={permohonanId}
             query={query}
             queryKey={queryKey} />

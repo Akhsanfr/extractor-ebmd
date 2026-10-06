@@ -7,6 +7,10 @@ import { AlihStatusType } from "@/enum/alihStatus";
 import { AlihStatusTrackingContract } from "../tracking/contract";
 
 export const AlihStatusPermohonanContract = {
+    query: z.object({
+        alihStatusType: z.enum(AlihStatusType),
+        tahun: z.number(),
+    }),
     select: createSelectSchema(alihStatusPermohonanTable).extend({
         alihStatusType: z.enum(AlihStatusType),
     }),
@@ -47,6 +51,7 @@ export const AlihStatusPermohonanContract = {
 };
 
 export namespace AlihStatusPermohonanContract {
+    export type QueryDTO = z.infer<typeof AlihStatusPermohonanContract.query>;
     export type SelectDTO = z.infer<typeof AlihStatusPermohonanContract.select>;
     export type SelectWithDetailDTO = z.infer<typeof AlihStatusPermohonanContract.selectWithDetail>;
     export type CreateDTO = z.infer<typeof AlihStatusPermohonanContract.create>;

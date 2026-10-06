@@ -3,6 +3,7 @@ import { AlihStatusPermohonanContract } from "./contract";
 import { DbOrTx } from "../../baseDbOrTx";
 import { alihStatusPermohonanTable } from "@/drizzle/schema";
 import { OperationalError } from "@/action/actionResponse";
+import { AlihStatusType } from "@/enum/alihStatus";
 
 export const AlihStatusPermohonanRepository = {
     async findById(db: DbOrTx, id: number): Promise<AlihStatusPermohonanContract.SelectDTO> {
@@ -25,18 +26,51 @@ export const AlihStatusPermohonanRepository = {
             }
         });
     },
-    async find(db: DbOrTx, tahun: number): Promise<AlihStatusPermohonanContract.SelectDTO[]> {
+    async find(
+        db: DbOrTx,
+        query: AlihStatusPermohonanContract.QueryDTO,
+    ): Promise<AlihStatusPermohonanContract.SelectDTO[]> {
+        const pengelola = "Pengelola Barang Milik Daerah";
+
+        const where =
+            query.alihStatusType ===
+                AlihStatusType.PENYERAHAN_KEPADA_PENGELOLA
+                ? {
+                    tahun: query.tahun,
+                    data: {
+                        perangkatDaerahTujuan: pengelola,
+                    },
+                }
+                : query.alihStatusType ===
+                    AlihStatusType.PENGALIHAN_STATUS_PENGGUNAAN_DARI_PENGELOLA
+                    ? {
+                        tahun: query.tahun,
+                        data: {
+                            perangkatDaerahAsal: pengelola,
+                        },
+                    }
+                    : {
+                        tahun: query.tahun,
+                        data: {
+                            perangkatDaerahAsal: { ne: pengelola },
+                            perangkatDaerahTujuan: { ne: pengelola },
+                        },
+                    };
+
         return await db.query.alihStatusPermohonanTable.findMany({
-            where: {
-                tahun,
+            where,
+            orderBy: {
+                id: "desc",
             },
-            orderBy: (table, { desc }) => [desc(table.id)],
         });
     },
     async findForAvailableBaPenelitian(db: DbOrTx, tahun: number): Promise<AlihStatusPermohonanContract.SelectDTO[]> {
         return await db.query.alihStatusPermohonanTable.findMany({
             where: {
                 tahun,
+                alihStatusType: {
+                    ne: AlihStatusType.PENYERAHAN_KEPADA_PENGELOLA
+                },
                 data: {
                     BAPenelitianId: {
                         isNull: true,

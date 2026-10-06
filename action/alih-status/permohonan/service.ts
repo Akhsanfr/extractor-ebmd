@@ -7,6 +7,7 @@ import { AlihStatusDataRepository } from "../data/repository";
 import { AlihStatusBAPenelitianRepository } from "../ba-penelitian/repository";
 import { AlihStatusTrackingRepository } from "../tracking/repository";
 import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
+import { AlihStatusPermohonanPenghapusanContract } from "../permohonan-penghapusan/contract";
 
 export const AlihStatusPermohonanService = {
     async get(userId: string, id: number): Promise<AlihStatusPermohonanContract.SelectDTO> {
@@ -15,11 +16,11 @@ export const AlihStatusPermohonanService = {
         });
         return AlihStatusPermohonanRepository.findById(db, id);
     },
-    async getList(userId: string, tahun: number): Promise<AlihStatusPermohonanContract.SelectDTO[]> {
+    async getList(userId: string, query: AlihStatusPermohonanContract.QueryDTO): Promise<AlihStatusPermohonanContract.SelectDTO[]> {
         await verifyPermissions(userId, {
             "alih-status": ["read"]
         });
-        return AlihStatusPermohonanRepository.find(db, tahun);
+        return AlihStatusPermohonanRepository.find(db, query);
     },
     async getWithDetail(userId: string, id: number): Promise<AlihStatusPermohonanContract.SelectWithDetailDTO> {
         await verifyPermissions(userId, {

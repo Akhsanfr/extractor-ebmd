@@ -17,6 +17,7 @@ import {
     ButtonGroup,
     ButtonGroupSeparator,
     Description,
+    Tabs,
 } from "@heroui/react";
 import { Edit, Eye, Plus, RefreshCcw, RefreshCw, Trash } from "lucide-react";
 import { AlihStatusPersetujuanBupatiContract } from "@/action/alih-status/persetujuan-bupati/contract";
@@ -57,6 +58,7 @@ export default function PersetujuanBupati() {
     const tahun = useStore($year);
     const router = useRouter();
     const queryClient = useQueryClient();
+    const [alihStatusType, setAlihStatusType] = useState<AlihStatusType>(AlihStatusType.PENGALIHAN_STATUS_PENGGUNAAN)
     const [selectedNodinIds, setSelectedNodinIds] = useState<number[]>([]);
     const [selectedData, setSelectedData] = useState<
         { id: number; perangkatDaerahAsal: string | null }[]
@@ -191,6 +193,21 @@ export default function PersetujuanBupati() {
     }
     return (
         <>
+            <Tabs
+                selectedKey={alihStatusType}
+                onSelectionChange={(key) => setAlihStatusType(String(key) as AlihStatusType)}
+            >
+                <Tabs.ListContainer>
+                    <Tabs.List aria-label="Jenis alih status">
+                        {Object.values(AlihStatusType).map((t) => (
+                            <Tabs.Tab key={t} id={t}>
+                                {t}
+                                <Tabs.Indicator />
+                            </Tabs.Tab>
+                        ))}
+                    </Tabs.List>
+                </Tabs.ListContainer>
+            </Tabs>
             <DetailPersetujuanBupati
                 action={
                     <ButtonGroup>

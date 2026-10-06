@@ -30,7 +30,7 @@ export const alihStatusDataTable = snakeCase.table(
         lokasi: text("lokasi"),
 
         asalUsul: text("asal_usul"),
-        tahun: integer("tahun"),
+        tahun_perolehan: integer(),
 
         jumlah: numeric({ precision: 20, scale: 2 }),
         luas: numeric({ precision: 20, scale: 2 }),
@@ -81,6 +81,8 @@ export const alihStatusDataTable = snakeCase.table(
             .references(() => alihStatusSKHapusTable.id, {
                 onDelete: "set null",
             }),
+
+        tahun: integer(),
         createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
         createdBy: text("created_by").references(() => userTable.id),
         updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),

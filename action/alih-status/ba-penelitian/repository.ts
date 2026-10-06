@@ -32,6 +32,7 @@ export const AlihStatusBAPenelitianRepository = {
         });
     },
     async findForAvailableNodin(db: DbOrTx, tahun: number): Promise<AlihStatusBAPenelitianContract.SelectDTO[]> {
+        console.log("TAHUN", tahun)
         return await db.query.alihStatusBAPenelitianTable.findMany({
             where: {
                 tahun,

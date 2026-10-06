@@ -1,4 +1,3 @@
-import BaPenelitian from "@/app/dashboard/alih-status/ba-penelitian/page";
 import { BmdAssetType, BmdAssetTypeLabel } from "@/enum/bmd";
 import { parseRupiah } from "@/lib/number"
 import { ExcelRow } from "@/lib/xlsx/parseXlsx"
@@ -24,7 +23,7 @@ export const AlihStatusDataFormat = {
             nomorMesin: row[7],
             kondisi: row[8],
             lokasi: row[9],
-            tahun: row[10],
+            tahunPerolehan: row[10],
             asalUsul: row[11],
             jumlah: row[12],
             luas: row[13],

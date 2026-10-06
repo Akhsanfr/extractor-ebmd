@@ -26,6 +26,8 @@ import ListAvailablePermohonan from "./ListAvailablePermohonan";
 import DetailBAPenelitian from "../_component/baPenelitian";
 import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import { PerangkatDaerah } from "@/enum/perangkatDaerah";
+import { JenisTabs } from "../_component/alihStatusTypeTabs";
+import { AlihStatusType } from "@/enum/alihStatus";
 
 
 // urutan step wizard di dalam modal

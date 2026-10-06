@@ -3,18 +3,31 @@
 import React, { useState, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-    ShieldCheck, ClipboardCheck,
+    ClipboardCheck,
     ChevronDown,
     Settings, Heart, X,
     ArrowRight,
     UserCog,
-    Map
 } from "lucide-react";
 import { Avatar, Button, Card, cn, Dropdown, Label, Separator, toast, Tooltip } from "@heroui/react";
 import { authClient } from "@/lib/auth/auth-client";
 import { UserWithRole } from "better-auth/plugins";
 import { UserRole } from "@/enum/user";
 import { useMemo } from "react";
+const EXCLUDED_PARAMS = ["page"];
+
+function withSearchParams(path: string, current: URLSearchParams): string {
+    const [base, query] = path.split("?");
+    const params = new URLSearchParams(current.toString());
+
+    EXCLUDED_PARAMS.forEach((key) => params.delete(key));
+
+    // Jika path menu punya query sendiri, nilainya menimpa yang dibawa.
+    new URLSearchParams(query).forEach((value, key) => params.set(key, value));
+
+    const qs = params.toString();
+    return qs ? `${base}?${qs}` : base;
+}
 
 interface MenuItem {
     label: string;
@@ -137,7 +150,7 @@ export default function SideBar({ user, isCollapsed, onCloseMobile }: { user: Us
                     <div className={cn("flex items-center gap-3", isCollapsed ? "justify-center" : "justify-between")}>
                         <div className="flex items-center gap-3">
                             <div className="flex-none rounded-xl bg-accent flex items-center justify-center text-accent-foreground font-black text-xl p-2">
-                                {isCollapsed ? "S" : "SI AKAD"}
+                                {isCollapsed ? "S" : "SI PANDU"}
                             </div>
                         </div>
                         <Button isIconOnly size="sm" variant="ghost" className="lg:hidden" onPress={onCloseMobile}>
@@ -145,7 +158,7 @@ export default function SideBar({ user, isCollapsed, onCloseMobile }: { user: Us
                         </Button>
                     </div>
                     <div className="text-xs">
-                        Sistem Informasi Aplikasi Keuangan dan Aset Daerah
+                        Sistem Pendukung Pengelolaan BMD Terpadu
                     </div>
 
                     {/* Navigasi */}
@@ -251,7 +264,7 @@ function NavItem({ item, roles, isCollapsed, onCloseMobile }: { item: MenuItem, 
                 if (allowedChildren && allowedChildren.length > 0 && !isCollapsed) {
                     setIsOpen(!isOpen);
                 } else if (item.path) {
-                    router.push(item.path);
+                    router.push(withSearchParams(item.path, searchParams));
                     if (window.innerWidth < 1024) onCloseMobile();
                 }
             }}

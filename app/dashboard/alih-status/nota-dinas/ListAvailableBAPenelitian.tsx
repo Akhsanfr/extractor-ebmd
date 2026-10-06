@@ -2,18 +2,21 @@
 
 import type { Selection } from "@heroui/react";
 
-import { Checkbox, Table } from "@heroui/react";
+import { Button, Checkbox, Table } from "@heroui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useStore } from "@nanostores/react";
 import { memo, useEffect, useMemo, useState } from "react";
 import { $year } from "@/state/year.store";
 import { actionGetListAlihStatusBAPenelitianForAvailableNodin } from "@/action/alih-status/ba-penelitian/action.read";
 import { AlihStatusBAPenelitianContract } from "@/action/alih-status/ba-penelitian/contract";
+import { useRouter } from "next/navigation";
+import { Eye } from "lucide-react";
 
 
 export default memo(function ListAvailableBAPenelitian({ onChange }: { onChange: (BAPenelitians: AlihStatusBAPenelitianContract.SelectDTO[]) => void }) {
     const QUERY_KEY = ["alih-status", "data", "available", "ba-penelitian"];
     const tahun = useStore($year);
+    const router = useRouter();
 
     const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
 
@@ -85,6 +88,9 @@ export default memo(function ListAvailableBAPenelitian({ onChange }: { onChange:
                         <Table.Column id="Tanggal Surat">
                             Tanggal Surat
                         </Table.Column>
+                        <Table.Column id="Detail">
+                            Detail
+                        </Table.Column>
                     </Table.Header>
                     <Table.Body>
                         {data.map((item) => (
@@ -107,6 +113,17 @@ export default memo(function ListAvailableBAPenelitian({ onChange }: { onChange:
                                 <Table.Cell>{item.perangkatDaerahAsal}</Table.Cell>
                                 <Table.Cell>{item.suratNomor}</Table.Cell>
                                 <Table.Cell>{item.suratTanggal}</Table.Cell>
+                                <Table.Cell>
+                                    <Button
+                                        size='sm'
+                                        variant="secondary"
+                                        onPress={() => {
+                                            router.push(`/dashboard/alih-status/ba-penelitian/${item.id}`)
+                                        }}
+                                    >
+                                        <Eye />
+                                    </Button>
+                                </Table.Cell>
                             </Table.Row>
                         ))}
                     </Table.Body>

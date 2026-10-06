@@ -5,28 +5,28 @@ import { AlihStatusPermohonanService } from "./service";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth/auth";
 
-export async function actionGetDetailAlihStatusPermohonan(id: number): Promise<
-    ActionResponse<AlihStatusPermohonanContract.SelectDTO>
-> {
-    try {
-        const session = await auth.api.getSession({ headers: await headers() });
-        if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
-        const data = await AlihStatusPermohonanService.get(session.user.id, id);
-        return {
-            success: true,
-            data,
-        };
-    } catch (err) {
-        return handleActionError(err, "actionGetAlihStatusPermohonan");
-    }
-}
-export async function actionGetListAlihStatusPermohonan(tahun: number): Promise<
+// export async function actionGetDetailAlihStatusPermohonan(id: number): Promise<
+//     ActionResponse<AlihStatusPermohonanContract.SelectDTO>
+// > {
+//     try {
+//         const session = await auth.api.getSession({ headers: await headers() });
+//         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
+//         const data = await AlihStatusPermohonanService.get(session.user.id, id);
+//         return {
+//             success: true,
+//             data,
+//         };
+//     } catch (err) {
+//         return handleActionError(err, "actionGetAlihStatusPermohonan");
+//     }
+// }
+export async function actionGetListAlihStatusPermohonan(query: AlihStatusPermohonanContract.QueryDTO): Promise<
     ActionResponse<AlihStatusPermohonanContract.SelectDTO[]>
 > {
     try {
         const session = await auth.api.getSession({ headers: await headers() });
         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
-        const data = await AlihStatusPermohonanService.getList(session.user.id, tahun);
+        const data = await AlihStatusPermohonanService.getList(session.user.id, query);
         return {
             success: true,
             data,

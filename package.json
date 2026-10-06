@@ -49,6 +49,7 @@
     "react-hook-form": "^7.76.0",
     "react-leaflet": "^5.0.0",
     "react-number-format": "^5.4.5",
+    "s3mini": "^1.0.2",
     "swr": "^2.4.1",
     "xlsx": "^0.18.5",
     "xlsx-js-style": "^1.2.0",

@@ -16,11 +16,6 @@ import { actionGetListAlihStatusSKHapus } from "@/action/alih-status/sk-hapus/ac
 import { actionCreateAlihStatusSKHapus } from "@/action/alih-status/sk-hapus/action.create";
 import { useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-    createColumnHelper,
-    tableFeatures,
-    useTable, columnVisibilityFeature
-} from "@tanstack/react-table";
 import { SelectFormField, TextFormField } from "../_component/formField";
 import { useStore } from "@nanostores/react";
 import { $year } from "@/state/year.store";
@@ -29,12 +24,7 @@ import ListAvailablePermohonanPenghapusan from "./ListAvailablePermohonanPenghap
 import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import DetailSKHapus from "../_component/SKHapus";
 
-const features = tableFeatures({ columnVisibilityFeature });
 
-const columnHelper = createColumnHelper<
-    typeof features,
-    AlihStatusSKHapusContract.SelectDTO
->();
 
 const queryKey = ["alih-status", "sk-hapus"];
 const STEPS = ["permohonan", "data", "ba"] as const;

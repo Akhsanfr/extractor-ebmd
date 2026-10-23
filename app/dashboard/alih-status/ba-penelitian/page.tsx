@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
     Button,
     toast,
@@ -10,7 +10,7 @@ import {
     Tooltip,
     ButtonGroupSeparator,
 } from "@heroui/react";
-import { Edit, Eye, Plus, RefreshCw, Trash } from "lucide-react";
+import { Eye, Plus, RefreshCw, Trash } from "lucide-react";
 import { AlihStatusBAPenelitianContract } from "@/action/alih-status/ba-penelitian/contract";
 import { actionDeleteAlihStatusBAPenelitian } from "@/action/alih-status/ba-penelitian/action.delete";
 import { actionGetListAlihStatusBAPenelitian } from "@/action/alih-status/ba-penelitian/action.read";
@@ -26,9 +26,14 @@ import ListAvailablePermohonan from "./ListAvailablePermohonan";
 import DetailBAPenelitian from "../_component/baPenelitian";
 import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import { PerangkatDaerah } from "@/enum/perangkatDaerah";
-import { JenisTabs } from "../_component/alihStatusTypeTabs";
-import { AlihStatusType } from "@/enum/alihStatus";
 
+type StatusFilter = "all" | "done" | "pending";
+
+const STATUS_OPTIONS: { id: StatusFilter; label: string }[] = [
+    { id: "all", label: "Semua" },
+    { id: "done", label: "Selesai" },
+    { id: "pending", label: "Belum Selesai" },
+];
 
 // urutan step wizard di dalam modal
 const STEPS = ["permohonan", "data", "ba"] as const;
@@ -42,6 +47,7 @@ export default function BaPenelitian() {
     const [selectedPermohonanIds, setSelectedPermohonanIds] = useState<number[]>([])
 
     const [formSelected, setFormSelected] = useState<FormStep>("permohonan")
+    const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
 
     const form = useForm<AlihStatusBAPenelitianContract.CreateDTO>({
         defaultValues: {
@@ -65,6 +71,13 @@ export default function BaPenelitian() {
             return res.data;
         },
     });
+
+    // Filter status (Semua / Selesai / Belum Selesai) diterapkan di sini sebelum masuk ke tabel
+    const filteredData = useMemo(() => {
+        const rows = query.data ?? [];
+        if (statusFilter === "all") return rows;
+        return rows.filter((d) => d.isDone === (statusFilter === "done"));
+    }, [query.data, statusFilter]);
 
     const handleDelete = async (id: number) => {
         try {
@@ -119,9 +132,6 @@ export default function BaPenelitian() {
         resetWizard();
     };
 
-
-
-
     const state = useOverlayState();
 
     const onSubmit = async (values: AlihStatusBAPenelitianContract.CreateDTO) => {
@@ -150,30 +160,47 @@ export default function BaPenelitian() {
         <>
             <DetailBAPenelitian
                 action={
-                    <ButtonGroup>
-                        <Tooltip>
-                            <Tooltip.Trigger>
-                                <Button isDisabled={query.isLoading} variant="secondary" isPending={query.isRefetching} onPress={(e) => queryClient.refetchQueries({ queryKey })}>
-                                    <RefreshCw className={query.isRefetching ? "animate-spin" : ""} />
+                    <div className="flex items-center gap-2">
+                        <ButtonGroup aria-label="Filter status berita acara">
+                            {STATUS_OPTIONS.map((opt) => (
+                                <Button
+                                    key={opt.id}
+                                    size="sm"
+                                    variant={statusFilter === opt.id ? "primary" : "outline"}
+                                    onPress={() => setStatusFilter(opt.id)}
+                                >
+                                    {opt.label}
                                 </Button>
-                            </Tooltip.Trigger>
-                            <Tooltip.Content>
-                                <Tooltip.Arrow />
-                                Muat Ulang Berita Acara Penelitian
-                            </Tooltip.Content>
-                        </Tooltip>
-                        <Tooltip>
-                            <Tooltip.Trigger>
-                                <Button variant="secondary" onPress={() => state.open()}><ButtonGroupSeparator /><Plus /></Button>
-                            </Tooltip.Trigger>
-                            <Tooltip.Content>
-                                <Tooltip.Arrow />
-                                Tambah Berita Acara Penelitian
-                            </Tooltip.Content>
-                        </Tooltip>
-                    </ButtonGroup>
+                            ))}
+                        </ButtonGroup>
+                        <ButtonGroup>
+                            <Tooltip>
+                                <Tooltip.Trigger>
+                                    <Button isDisabled={query.isLoading} variant="secondary" isPending={query.isRefetching} onPress={(e) => queryClient.refetchQueries({ queryKey })}>
+                                        <RefreshCw className={query.isRefetching ? "animate-spin" : ""} />
+                                    </Button>
+                                </Tooltip.Trigger>
+                                <Tooltip.Content>
+                                    <Tooltip.Arrow />
+                                    Muat Ulang Berita Acara Penelitian
+                                </Tooltip.Content>
+                            </Tooltip>
+                            <Tooltip>
+                                <Tooltip.Trigger>
+                                    <Button variant="secondary" onPress={() => state.open()}><ButtonGroupSeparator /><Plus /></Button>
+                                </Tooltip.Trigger>
+                                <Tooltip.Content>
+                                    <Tooltip.Arrow />
+                                    Tambah Berita Acara Penelitian
+                                </Tooltip.Content>
+                            </Tooltip>
+                        </ButtonGroup>
+                    </div>
                 }
-                data={query.data ?? []} isLoading={query.isLoading} shouldTable={true} rowAction={(row) =>
+                data={filteredData}
+                isLoading={query.isLoading}
+                shouldTable={true}
+                rowAction={(row) =>
                     <ButtonGroup>
                         <Tooltip>
                             <Tooltip.Trigger>

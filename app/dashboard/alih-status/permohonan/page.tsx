@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
     Button,
     toast,
@@ -24,14 +24,21 @@ import { $year } from "@/state/year.store";
 import { PegawaiPangkatGolongan } from "@/enum/user";
 import DetailPermohonan from "../_component/permohonan";
 import { PerangkatDaerah } from "@/enum/perangkatDaerah";
-import { JenisTabs, useJenis } from "../_component/alihStatusTypeTabs";
+
+type StatusFilter = "all" | "done" | "pending";
+
+const STATUS_OPTIONS: { id: StatusFilter; label: string }[] = [
+    { id: "all", label: "Semua" },
+    { id: "done", label: "Selesai" },
+    { id: "pending", label: "Belum Selesai" },
+];
 
 export default function PageGroupAlihStatus() {
     const tahun = useStore($year);
     const queryClient = useQueryClient();
     const router = useRouter();
-    // const { alihStatusType } = useJenis();
     const [alihStatusType, setAlihStatusType] = useState<AlihStatusType>(AlihStatusType.PENGALIHAN_STATUS_PENGGUNAAN)
+    const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
 
     const queryKey = ["alih-status", "permohonan", tahun, alihStatusType];
 
@@ -47,6 +54,13 @@ export default function PageGroupAlihStatus() {
             return res.data;
         },
     });
+
+    // Filter status (Semua / Selesai / Belum Selesai) diterapkan di sini sebelum masuk ke tabel
+    const filteredData = useMemo(() => {
+        const rows = query.data ?? [];
+        if (statusFilter === "all") return rows;
+        return rows.filter((d) => d.isDone === (statusFilter === "done"));
+    }, [query.data, statusFilter]);
 
     const [formTarget, setFormTarget] = useState<
         AlihStatusPermohonanContract.SelectDTO | null | undefined
@@ -93,16 +107,34 @@ export default function PageGroupAlihStatus() {
         </Tabs>
         <DetailPermohonan
             action={
-                <ButtonGroup>
-                    <Button variant="outline" isPending={query.isRefetching} onPress={refresh}>
-                        <RefreshCw className={query.isRefetching ? "animate-spin" : ""} />
-                    </Button>
-                    <Button variant="outline" onPress={() => { setFormTarget(null) }}>
-                        <ButtonGroupSeparator />
-                        <Plus />
-                    </Button>
-                </ButtonGroup>}
-            data={query.data ?? []} isLoading={query.isLoading} shouldTable={true} rowAction={(row) =>
+                <div className="flex items-center gap-2">
+                    <ButtonGroup aria-label="Filter status permohonan">
+                        {STATUS_OPTIONS.map((opt) => (
+                            <Button
+                                key={opt.id}
+                                size="sm"
+                                variant={statusFilter === opt.id ? "primary" : "outline"}
+                                onPress={() => setStatusFilter(opt.id)}
+                            >
+                                {opt.label}
+                            </Button>
+                        ))}
+                    </ButtonGroup>
+                    <ButtonGroup>
+                        <Button variant="outline" isPending={query.isRefetching} onPress={refresh}>
+                            <RefreshCw className={query.isRefetching ? "animate-spin" : ""} />
+                        </Button>
+                        <Button variant="outline" onPress={() => { setFormTarget(null) }}>
+                            <ButtonGroupSeparator />
+                            <Plus />
+                        </Button>
+                    </ButtonGroup>
+                </div>
+            }
+            data={filteredData}
+            isLoading={query.isLoading}
+            shouldTable={true}
+            rowAction={(row) =>
                 <ButtonGroup>
                     <Button
                         variant="secondary" size='sm'
@@ -138,7 +170,11 @@ export default function PageGroupAlihStatus() {
                     alihStatusType: formTarget?.alihStatusType ?? alihStatusType,
                     suratHal: formTarget?.suratHal ?? "Permohonan Pengalihan Status Penggunaan Barang Milik Daerah",
                     suratTanggal: formTarget?.suratTanggal ?? "",
-                    suratNomor: formTarget?.suratNomor ?? alihStatusType === AlihStatusType.PENGALIHAN_STATUS_PENGGUNAAN ? `000.2.3.2/     /     /${new Date().getFullYear()}` : "",
+                    suratNomor:
+                        formTarget?.suratNomor ??
+                        (alihStatusType === AlihStatusType.PENGALIHAN_STATUS_PENGGUNAAN
+                            ? `000.2.3.2/     /     /${new Date().getFullYear()}`
+                            : ""),
                     alasan: formTarget?.alasan ?? "",
                     tahun: formTarget?.tahun ?? Number(tahun) ?? new Date().getFullYear(),
                 }}

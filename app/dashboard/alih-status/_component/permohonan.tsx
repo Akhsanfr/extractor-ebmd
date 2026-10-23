@@ -29,7 +29,7 @@ import {
     type ColumnFiltersState,
     type PaginationState,
 } from "@tanstack/react-table";
-import { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import { TableCellStack } from "./data/tableCellStack";
 import { Table } from "@heroui/react";
 import Loading from "@/component/loading";
@@ -67,7 +67,9 @@ export default function DetailPermohonan({
 }) {
 
     const isJamak = (data?.length ?? 0) > 1;
-    const isKosong = !data || data.length === 0;
+    // Pada mode tabel, data kosong (mis. hasil filter) tetap ditampilkan sebagai tabel
+    // dengan baris "Tidak ada data", bukan alert "belum ada dokumen".
+    const isKosong = (!data || data.length === 0) && !shouldTable;
 
     return (
         <>
@@ -244,60 +246,6 @@ function ColumnHeaderAutocompleteFilter<TValue>({
                         </Autocomplete.Filter>
                     </Autocomplete.Popover>
                 </Autocomplete>
-            )}
-        </div>
-    );
-}
-
-// Header dengan Select untuk kolom boolean (Selesai / Belum Selesai)
-function ColumnHeaderBooleanFilter<TValue>({
-    title,
-    column,
-    trueLabel,
-    falseLabel,
-}: {
-    title: string;
-    column: Column<typeof features, AlihStatusPermohonanContract.SelectDTO, TValue>;
-    trueLabel: string;
-    falseLabel: string;
-}) {
-    const ALL = "__all__";
-    const filterValue = (column.getFilterValue() as string) ?? ALL;
-
-    return (
-        <div className="flex flex-col gap-1 py-1" onClick={(e) => e.stopPropagation()}>
-            <span>{title}</span>
-            {column.getCanFilter() && (
-                <Select
-                    className="w-full"
-                    placeholder="Semua status"
-                    value={filterValue}
-                    onChange={(key: Key | null) => {
-                        const value = key ? String(key) : ALL;
-                        column.setFilterValue(value === ALL ? undefined : value);
-                    }}
-                >
-                    <Select.Trigger>
-                        <Select.Value />
-                        <Select.Indicator />
-                    </Select.Trigger>
-                    <Select.Popover>
-                        <ListBox>
-                            <ListBox.Item id={ALL} textValue="Semua">
-                                Semua
-                                <ListBox.ItemIndicator />
-                            </ListBox.Item>
-                            <ListBox.Item id="true" textValue={trueLabel}>
-                                {trueLabel}
-                                <ListBox.ItemIndicator />
-                            </ListBox.Item>
-                            <ListBox.Item id="false" textValue={falseLabel}>
-                                {falseLabel}
-                                <ListBox.ItemIndicator />
-                            </ListBox.Item>
-                        </ListBox>
-                    </Select.Popover>
-                </Select>
             )}
         </div>
     );
@@ -482,18 +430,11 @@ function RenderTable({
                     />
                 ),
             }),
+            // Filter status dipindahkan ke switcher di DetailPermohonan.action (page),
+            // jadi kolom ini hanya menampilkan chip tanpa filter header.
             columnHelper.accessor("isDone", {
-                header: (ctx) => (
-                    <ColumnHeaderBooleanFilter
-                        title="Status Permohonan"
-                        column={ctx.column}
-                        trueLabel="Selesai"
-                        falseLabel="Belum Selesai"
-                    />
-                ),
-                // filter value berupa string "true" / "false", row value boolean
-                filterFn: (row, columnId, filterValue) =>
-                    String(row.getValue(columnId)) === filterValue,
+                header: "Status Permohonan",
+                enableColumnFilter: false,
                 cell: (ctx) =>
                     ctx.getValue() ? (
                         <Chip color="success">Selesai</Chip>
@@ -538,6 +479,14 @@ function RenderTable({
     // total baris setelah filter, sebelum paginasi
     const totalRows = table.getFilteredRowModel().rows.length;
     const pageCount = Math.max(1, Math.ceil(totalRows / pagination.pageSize));
+
+    // Filter status kini berada di luar tabel (data berubah dari parent),
+    // jadi pageIndex bisa melebihi jumlah halaman. Kembalikan ke halaman terakhir yang valid.
+    useEffect(() => {
+        if (pagination.pageIndex > 0 && pagination.pageIndex >= pageCount) {
+            setPagination((p) => ({ ...p, pageIndex: pageCount - 1 }));
+        }
+    }, [pageCount, pagination.pageIndex]);
 
     return (
         <>

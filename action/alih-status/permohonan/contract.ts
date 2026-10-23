@@ -48,6 +48,10 @@ export const AlihStatusPermohonanContract = {
         deletedAt: z.date().default(new Date()),
         deletedBy: z.string(),
     }),
+    resultAddBerkas: z.object({
+        tracking: AlihStatusTrackingContract.select,
+        isDone: z.boolean()
+    })
 };
 
 export namespace AlihStatusPermohonanContract {
@@ -60,4 +64,5 @@ export namespace AlihStatusPermohonanContract {
     export type UpdateDTO = z.infer<typeof AlihStatusPermohonanContract.update>;
     export type DeleteDTO = z.infer<typeof AlihStatusPermohonanContract.delete>;
     export type RemoveDTO = z.infer<typeof AlihStatusPermohonanContract.remove>;
+    export type ResultAddBerkasDTO = z.infer<typeof AlihStatusPermohonanContract.resultAddBerkas>;
 }

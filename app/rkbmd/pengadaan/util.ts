@@ -1,6 +1,6 @@
 // Type untuk keseluruhan array
 // export type PayloadRencanaKebutuhan = ItemRencanaKebutuhan[];
-import { AsetType } from "@/app/page";
+import { AsetType } from "@/app/page-old";
 import { loadStorage, PENGADAAN_STORAGE_KEY, PERANGKAT_DAERAH_KEY, saveStorage } from "@/lib/bmd-storage";
 import { PerangkatDaerah } from "@/types/perangkatDaerah";
 import { ListPengadaan } from "@/types/rkbmd";

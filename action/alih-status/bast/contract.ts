@@ -61,7 +61,10 @@ export const AlihStatusBASTContract = {
     delete: z.object({ id: z.number().int().positive() }),
     remove: z.object({
         id: z.number().int().positive()
-    }),
+    }), resultAddBerkas: z.object({
+        tracking: AlihStatusTrackingContract.select,
+        isDone: z.boolean()
+    })
 };
 
 export namespace AlihStatusBASTContract {
@@ -75,5 +78,5 @@ export namespace AlihStatusBASTContract {
     export type EditDTO = z.infer<typeof AlihStatusBASTContract.edit>;
     export type UpdateDTO = z.infer<typeof AlihStatusBASTContract.update>;
     export type DeleteDTO = z.infer<typeof AlihStatusBASTContract.delete>;
-    export type RemoveDTO = z.infer<typeof AlihStatusBASTContract.remove>;
+    export type RemoveDTO = z.infer<typeof AlihStatusBASTContract.remove>; export type ResultAddBerkasDTO = z.infer<typeof AlihStatusBAPenelitianContract.resultAddBerkas>;
 }

@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import DetailNodin from "../_component/nodin";
 import ListAvailableBAPenelitian from "./ListAvailableBAPenelitian";
+import { angkaKeKata } from "@/lib/number";
 
 
 
@@ -35,12 +36,17 @@ export default function Nodin() {
     const router = useRouter();
     const queryClient = useQueryClient();
     const [selectedBAPenelitian, setselectedBAPenelitian] = useState<number[]>([])
+    const [selectedData, setSelectedData] = useState<
+        { id: number; perangkatDaerahAsal: string | null }[]
+    >([]);
+
 
     const [formSelected, setFormSelected] = useState<FormStep>("permohonan")
 
     const form = useForm<AlihStatusNodinContract.CreateDTO>({
         defaultValues: {
-            tahun: Number(tahun)
+            tahun: Number(tahun),
+            suratNomor: "000.2.3.2/     /202/2026"
         }
     });
 
@@ -92,9 +98,24 @@ export default function Nodin() {
             toast.warning("Pilih minimal satu permohonan penghapusan terlebih dahulu");
             return;
         }
-        if (formSelected === "data" && form.getValues("dataIds").length === 0) {
-            toast.warning("Pilih minimal satu data terlebih dahulu");
-            return;
+        if (formSelected === "data") {
+            if (form.getValues("dataIds").length === 0) {
+                toast.warning("Pilih minimal satu data terlebih dahulu");
+                return;
+            }
+
+            const uniquePerangkatDaerah = Array.from(
+                new Set(selectedData.map((d) => d.perangkatDaerahAsal))
+            );
+
+            form.setValue(
+                "suratHal",
+                uniquePerangkatDaerah.length === 1
+                    ? `Permohonan Persetujaun atas pengalihan Status Barang Milik Daerah dari ${uniquePerangkatDaerah[0]}`
+                    : `Permohonan Persetujaun atas pengalihan Status Barang Milik Daerah dari ${angkaKeKata(
+                        uniquePerangkatDaerah.length
+                    )} Perangkat Daerah`
+            );
         }
         const nextIndex = stepIndex + 1;
         if (nextIndex < STEPS.length) {
@@ -162,7 +183,7 @@ export default function Nodin() {
                             variant="secondary" size='sm'
                             onPress={() =>
                                 router.push(
-                                    `/dashboard/alih-status/nodin/${row.id}`
+                                    `/dashboard/alih-status/nota-dinas/${row.id}`
                                 )
                             }
                         >
@@ -196,13 +217,18 @@ export default function Nodin() {
                                                 setselectedBAPenelitian(BAPenelitians.map((e) => e.id))
                                             }} />
                                         ) : formSelected === "data" ? (
-                                            <ListAvailableData column="permohonanPenghapusanId" values={selectedBAPenelitian} onChange={(e) => form.setValue("dataIds", e.map(d => d.id))} />
+                                            <ListAvailableData column="BAPenelitianId" values={selectedBAPenelitian} onChange={(e) => {
+                                                form.setValue("dataIds", e.map(d => d.id))
+                                                setSelectedData(e);
+                                            }
+                                            }
+                                            />
                                         ) : (
 
                                             <div className="grid grid-cols-2 gap-4">
                                                 <TextFormField label="Nomor Surat Nota Dinas" type="text" control={form.control} errors={form.formState.errors} name="suratNomor" />
                                                 <TextFormField label="Tanggal Surat Nota Dinas" type="date" control={form.control} errors={form.formState.errors} name="suratTanggal" />
-                                                <TextFormField label="Hal Surat Nota Dinas" type="date" control={form.control} errors={form.formState.errors} name="suratTanggal" />
+                                                <TextFormField label="Hal Surat Nota Dinas" control={form.control} errors={form.formState.errors} name="suratHal" className="col-span-2" />
 
                                             </div>
 

@@ -8,6 +8,11 @@ import { AlihStatusBAPenelitianRepository } from "../ba-penelitian/repository";
 import { AlihStatusNodinRepository } from "../nodin/repository";
 import { AlihStatusTrackingRepository } from "../tracking/repository";
 import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
+import { BerkasService } from "@/action/berkas/berkas.service";
+import { AlihStatusTrackingContract } from "../tracking/contract";
+const persetujuanBupatiBerkasScope = (id: number) =>
+    ["alih-status", "persetujuan-bupati", id] as const;
+const today = () => new Date().toISOString().slice(0, 10);
 
 export const AlihStatusPersetujuanBupatiService = {
     async getList(userId: string, tahun: number): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO[]> {
@@ -86,5 +91,115 @@ export const AlihStatusPersetujuanBupatiService = {
             "alih-status": ["delete"]
         });
         await AlihStatusPersetujuanBupatiRepository.remove(db, data);
+    },
+    async generatePresignedUrlBerkas(
+        userId: string,
+        id: number,
+    ): Promise<{ url: string; key: string }> {
+        await verifyPermissions(userId, { "alih-status": ["create"] });
+
+        return BerkasService.generateUploadUrl(persetujuanBupatiBerkasScope(id), {
+            extension: "pdf",
+        });
+    },
+
+    async updateBerkas(
+        userId: string,
+        persetujuanBupatiId: number,
+        key: string,
+    ): Promise<AlihStatusPersetujuanBupatiContract.ResultAddBerkasDTO> {
+        await verifyPermissions(userId, { "alih-status": ["create"] });
+
+        // Validasi key milik data ini + objek benar-benar ada di storage
+        await BerkasService.confirmUpload(key, persetujuanBupatiBerkasScope(persetujuanBupatiId));
+
+        const { tracking, oldKey }: { tracking: AlihStatusTrackingContract.SelectDTO, oldKey: string | null } = await db.transaction(async (tx) => {
+            const persetujuanBupati = await AlihStatusPersetujuanBupatiRepository.findById(tx, persetujuanBupatiId);
+
+            if (!persetujuanBupati) {
+                throw new Error("Persetujuan Bupati tidak ditemukan");
+            }
+
+            const previousKey = persetujuanBupati.keyBerkas;
+
+            await AlihStatusPersetujuanBupatiRepository.update(tx, {
+                ...persetujuanBupati,
+                keyBerkas: key,
+                updatedAt: new Date(),
+                updatedBy: userId,
+            });
+
+            const tracking = await AlihStatusTrackingRepository.create(tx, {
+                date: today(),
+                note: "Persetujuan Bupati telah diunggah",
+                position: "Bupati",
+                sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_PERSETUJUAN_BUPATI,
+                sourceId: persetujuanBupatiId,
+                createdAt: new Date(),
+                createdBy: userId,
+            });
+
+            return { tracking, oldKey: previousKey };
+        });
+
+        await BerkasService.deleteReplaced(oldKey, key);
+
+        return { tracking, isDone: true };
+    },
+
+    async getPreviewUrlBerkas(userId: string, id: number): Promise<string> {
+        await verifyPermissions(userId, { "alih-status": ["read"] });
+
+        const row = await AlihStatusPersetujuanBupatiRepository.findById(db, id);
+
+        if (!row) {
+            throw new Error("Persetujuan Bupati tidak ditemukan");
+        }
+
+        // Melempar "Berkas belum diunggah" kalau key kosong,
+        // dan "Berkas tidak ditemukan di storage" kalau objek hilang
+        return BerkasService.getPreviewUrl(row.keyBerkas);
+    },
+
+    async deleteBerkas(userId: string, id: number): Promise<void> {
+        await verifyPermissions(userId, { "alih-status": ["delete"] });
+
+        const oldKey = await db.transaction(async (tx) => {
+            const row = await AlihStatusPersetujuanBupatiRepository.findById(tx, id);
+
+            if (!row) {
+                throw new Error("Persetujuan Bupati tidak ditemukan");
+            }
+
+            if (!row.keyBerkas) {
+                throw new Error("Berkas belum diunggah");
+            }
+
+            const previousKey = row.keyBerkas;
+
+            await AlihStatusPersetujuanBupatiRepository.update(tx, {
+                ...row,
+                isDone: false,
+                keyBerkas: null,
+                updatedAt: new Date(),
+                updatedBy: userId,
+            });
+
+            await AlihStatusTrackingRepository.create(tx, {
+                date: today(),
+                note: "File dihapus",
+                position: "Staf PBMD",
+                sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_PERSETUJUAN_BUPATI,
+                sourceId: id,
+                createdAt: new Date(),
+                createdBy: userId,
+            });
+
+            return previousKey;
+        });
+
+        // Hapus objek di storage hanya setelah transaksi DB sukses,
+        // supaya kalau transaksi gagal file tidak hilang.
+        await BerkasService.deleteQuietly(oldKey);
     },
 };

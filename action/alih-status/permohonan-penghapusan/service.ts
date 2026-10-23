@@ -10,6 +10,11 @@ import { AlihStatusNodinRepository } from "../nodin/repository";
 import { AlihStatusPersetujuanBupatiRepository } from "../persetujuan-bupati/repository";
 import { AlihStatusTrackingRepository } from "../tracking/repository";
 import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
+import { BerkasService } from "@/action/berkas/berkas.service";
+import { AlihStatusTrackingContract } from "../tracking/contract";
+const PermohonanPenghapusanBerkasScope = (id: number) =>
+    ["alih-status", "permohonan-penghapusan", id] as const;
+const today = () => new Date().toISOString().slice(0, 10);
 
 export const AlihStatusPermohonanPenghapusanService = {
     async getList(userId: string, tahun: number): Promise<AlihStatusPermohonanPenghapusanContract.SelectDTO[]> {
@@ -94,5 +99,115 @@ export const AlihStatusPermohonanPenghapusanService = {
             "alih-status": ["delete"]
         });
         await AlihStatusPermohonanPenghapusanRepository.remove(db, data);
+    },
+    async generatePresignedUrlBerkas(
+        userId: string,
+        id: number,
+    ): Promise<{ url: string; key: string }> {
+        await verifyPermissions(userId, { "alih-status": ["create"] });
+
+        return BerkasService.generateUploadUrl(PermohonanPenghapusanBerkasScope(id), {
+            extension: "pdf",
+        });
+    },
+
+    async updateBerkas(
+        userId: string,
+        permohonanPenghapusanId: number,
+        key: string,
+    ): Promise<AlihStatusPermohonanPenghapusanContract.ResultAddBerkasDTO> {
+        await verifyPermissions(userId, { "alih-status": ["create"] });
+
+        // Validasi key milik data ini + objek benar-benar ada di storage
+        await BerkasService.confirmUpload(key, PermohonanPenghapusanBerkasScope(permohonanPenghapusanId));
+
+        const { tracking, oldKey }: { tracking: AlihStatusTrackingContract.SelectDTO, oldKey: string | null } = await db.transaction(async (tx) => {
+            const permohonanPenghapusan = await AlihStatusPermohonanPenghapusanRepository.findById(tx, permohonanPenghapusanId);
+
+            if (!permohonanPenghapusan) {
+                throw new Error("Permohonan Penghapusan tidak ditemukan");
+            }
+
+            const previousKey = permohonanPenghapusan.keyBerkas;
+
+            await AlihStatusPermohonanPenghapusanRepository.update(tx, {
+                ...permohonanPenghapusan,
+                keyBerkas: key,
+                updatedAt: new Date(),
+                updatedBy: userId,
+            });
+
+            const tracking = await AlihStatusTrackingRepository.create(tx, {
+                date: today(),
+                note: "Permohonan Penghapusan telah diunggah",
+                position: "Staf PBMD",
+                sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_PERMOHONAN_PENGHAPUSAN,
+                sourceId: permohonanPenghapusanId,
+                createdAt: new Date(),
+                createdBy: userId,
+            });
+
+            return { tracking, oldKey: previousKey };
+        });
+
+        await BerkasService.deleteReplaced(oldKey, key);
+
+        return { tracking, isDone: true };
+    },
+
+    async getPreviewUrlBerkas(userId: string, id: number): Promise<string> {
+        await verifyPermissions(userId, { "alih-status": ["read"] });
+
+        const row = await AlihStatusPermohonanPenghapusanRepository.findById(db, id);
+
+        if (!row) {
+            throw new Error("Permohonan Penghapusan tidak ditemukan");
+        }
+
+        // Melempar "Berkas belum diunggah" kalau key kosong,
+        // dan "Berkas tidak ditemukan di storage" kalau objek hilang
+        return BerkasService.getPreviewUrl(row.keyBerkas);
+    },
+
+    async deleteBerkas(userId: string, id: number): Promise<void> {
+        await verifyPermissions(userId, { "alih-status": ["delete"] });
+
+        const oldKey = await db.transaction(async (tx) => {
+            const row = await AlihStatusPermohonanPenghapusanRepository.findById(tx, id);
+
+            if (!row) {
+                throw new Error("Permohonan Penghapusan tidak ditemukan");
+            }
+
+            if (!row.keyBerkas) {
+                throw new Error("Berkas belum diunggah");
+            }
+
+            const previousKey = row.keyBerkas;
+
+            await AlihStatusPermohonanPenghapusanRepository.update(tx, {
+                ...row,
+                isDone: false,
+                keyBerkas: null,
+                updatedAt: new Date(),
+                updatedBy: userId,
+            });
+
+            await AlihStatusTrackingRepository.create(tx, {
+                date: today(),
+                note: "File dihapus",
+                position: "Staf PBMD",
+                sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_PERMOHONAN_PENGHAPUSAN,
+                sourceId: id,
+                createdAt: new Date(),
+                createdBy: userId,
+            });
+
+            return previousKey;
+        });
+
+        // Hapus objek di storage hanya setelah transaksi DB sukses,
+        // supaya kalau transaksi gagal file tidak hilang.
+        await BerkasService.deleteQuietly(oldKey);
     },
 };

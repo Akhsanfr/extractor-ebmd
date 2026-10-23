@@ -76,10 +76,13 @@ export default memo(function ListAvailablePermohonanPenghapusan({ onChange }: { 
                         <Table.Column isRowHeader id="id">
                             ID
                         </Table.Column>
-                        <Table.Column id="Nomor Surat">
+                        <Table.Column id="perangkat-daerah-asal">
+                            Perangkat Daerah Asal
+                        </Table.Column>
+                        <Table.Column id="nomor-surat">
                             Nomor Surat
                         </Table.Column>
-                        <Table.Column id="Tanggal Surat">
+                        <Table.Column id="tanggal-surat">
                             Tanggal Surat
                         </Table.Column>
                     </Table.Header>
@@ -101,6 +104,7 @@ export default memo(function ListAvailablePermohonanPenghapusan({ onChange }: { 
                                 <Table.Cell className="font-medium">
                                     # {item.id}
                                 </Table.Cell>
+                                <Table.Cell>{item.perangkatDaerahAsal}</Table.Cell>
                                 <Table.Cell>{item.suratNomor}</Table.Cell>
                                 <Table.Cell>{item.suratTanggal}</Table.Cell>
                             </Table.Row>

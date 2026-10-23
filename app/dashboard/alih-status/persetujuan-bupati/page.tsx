@@ -37,18 +37,11 @@ import { $year } from "@/state/year.store";
 import { useForm } from "react-hook-form";
 import ListAvailableNodin from "./ListAvailableNodin";
 // import ListAvailableData from "./ListAvailableData";
-import { TableCellStack } from "../_component/data/tableCellStack";
 import { AlihStatusType } from "@/enum/alihStatus";
 import DetailPersetujuanBupati from "../_component/persetujuanBupati";
 import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import { angkaKeKata } from "@/lib/number";
 
-const features = tableFeatures({ columnVisibilityFeature });
-
-const columnHelper = createColumnHelper<
-    typeof features,
-    AlihStatusPersetujuanBupatiContract.SelectDTO
->();
 
 const queryKey = ["alih-status", "persetujuanBupati"];
 const STEPS = ["permohonan", "data", "ba"] as const;

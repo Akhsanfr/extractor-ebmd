@@ -8,7 +8,6 @@ import {
     Input,
     Label,
     ListBox,
-    Pagination,
     ProgressBar,
     Select,
     Separator,
@@ -17,7 +16,7 @@ import {
     TextField,
     toast,
 } from "@heroui/react";
-import { Download, Eye, Upload, Search } from "lucide-react";
+import { Download, Eye, Upload } from "lucide-react";
 import {
     useTable,
     flexRender,
@@ -67,18 +66,18 @@ function StatCard({ label, value, sub }: { label: string; value: string | number
     );
 }
 
-const features = tableFeatures({ rowPaginationFeature, paginatedRowModel: createPaginatedRowModel() })
+const features = tableFeatures({ rowPaginationFeature, paginatedRowModel: createPaginatedRowModel() });
 const columnHelper = createColumnHelper<typeof features, SebaranBMDContract.SelectDTO>();
 
 const copasScriptBhumi = async () => {
     try {
-        const scriptBhumi = await fetch("/sebaran-bmd/script-bhumi.js").then(res => res.text());
+        const scriptBhumi = await fetch("/sebaran-bmd/script-bhumi.js").then((res) => res.text());
         await navigator.clipboard.writeText(scriptBhumi);
         toast.success("Berhasil menyalin script Bhumi. Silakan buka app Bhumi ATR/BPN, tempel pada console");
     } catch (error) {
         toast.danger("Gagal menyalin script Bhumi");
     }
-}
+};
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -114,6 +113,12 @@ export default function BmdTanahPage() {
         pageSize: PAGE_SIZE,
     });
 
+    // Reset ke halaman pertama (dipanggil langsung dari handler filter,
+    // bukan lewat useEffect, supaya tidak terjadi double fetch)
+    const resetPage = useCallback(() => {
+        setPagination((prev) => (prev.pageIndex === 0 ? prev : { ...prev, pageIndex: 0 }));
+    }, []);
+
     // ── Fetch helpers ─────────────────────────────────────────────────────────
 
     const fetchStat = useCallback(async () => {
@@ -127,27 +132,35 @@ export default function BmdTanahPage() {
         setPicOptions(pics);
     }, []);
 
+    // Penanda request terbaru, agar response lama tidak menimpa response baru
+    const requestIdRef = useRef(0);
+
     const fetchList = useCallback(async () => {
+        const requestId = ++requestIdRef.current;
         setLoading(true);
         try {
             const result = await actionSebaranBmdGetAll({
-                page: pagination.pageIndex + 1, // API expects 1-indexed 
+                page: pagination.pageIndex + 1, // API expects 1-indexed
                 limit: pagination.pageSize,
                 filter: {
                     pic: filterPic,
                     statusBhumi: filterStatusBhumi,
-                    nibar: filterNibar || undefined
-                }
+                    nibar: filterNibar || undefined,
+                    // TODO: filterStatus (Status Polygon) belum dikirim ke action.
+                    // Tambahkan ke contract + repository, lalu kirim di sini.
+                },
             });
+            if (requestId !== requestIdRef.current) return; // response usang, abaikan
             if (!result.success) throw result.error;
             setTotal(result.data.total);
             setRows(result.data.data);
         } catch (e: any) {
-            toast.danger(e.message);
+            if (requestId !== requestIdRef.current) return;
+            toast.danger(e?.message ?? "Gagal memuat data");
         } finally {
-            setLoading(false);
+            if (requestId === requestIdRef.current) setLoading(false);
         }
-    }, [pagination.pageIndex, pagination.pageSize, filterPic, filterStatus, filterStatusBhumi, filterNibar]);
+    }, [pagination.pageIndex, pagination.pageSize, filterPic, filterStatusBhumi, filterNibar]);
 
     // ── Effects ───────────────────────────────────────────────────────────────
 
@@ -155,23 +168,44 @@ export default function BmdTanahPage() {
         fetchStat();
     }, [fetchStat]);
 
-    // Fetch data whenever filters or pagination changes
+    // Fetch data setiap filter / pagination berubah
     useEffect(() => {
         fetchList();
     }, [fetchList]);
 
-    // Reset ke halaman pertama jika filter berubah
-    useEffect(() => {
-        setPagination(prev => ({ ...prev, pageIndex: 0 }));
-    }, [filterPic, filterStatus, filterStatusBhumi, filterNibar]);
-
     // ── Handlers ──────────────────────────────────────────────────────────────
 
     const nibarRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // Bersihkan timer debounce saat unmount
+    useEffect(() => {
+        return () => {
+            if (nibarRef.current) clearTimeout(nibarRef.current);
+        };
+    }, []);
+
     function handleNibarChange(val: string) {
         setNibarInput(val);
         if (nibarRef.current) clearTimeout(nibarRef.current);
-        nibarRef.current = setTimeout(() => setFilterNibar(val), 500);
+        nibarRef.current = setTimeout(() => {
+            setFilterNibar(val);
+            resetPage();
+        }, 500);
+    }
+
+    function handleFilterPicChange(value: unknown) {
+        setFilterPic(value === "all" || value === null ? "" : String(value));
+        resetPage();
+    }
+
+    function handleFilterStatusChange(value: unknown) {
+        setFilterStatus(value as StatusPolygonFilter);
+        resetPage();
+    }
+
+    function handleFilterStatusBhumiChange(value: unknown) {
+        setStatusBhumi(value as StatusBhumi | "all");
+        resetPage();
     }
 
     function handleLoginPic() {
@@ -211,50 +245,54 @@ export default function BmdTanahPage() {
         fetchList();
     }
 
-    const columns = useMemo(() => columnHelper.columns([
-        columnHelper.accessor("nibar", {
-            header: "NIBAR",
-            cell: info => info.getValue(),
-        }),
-
-        columnHelper.accessor("hak", {
-            header: "Hak",
-            cell: info => info.getValue() ?? "-",
-        }),
-        columnHelper.accessor("nomor", {
-            header: "Nomor",
-            cell: info => info.getValue() ?? "-",
-        }),
-        columnHelper.accessor("desa", {
-            header: "Desa",
-            cell: info => info.getValue() ?? "-",
-        }),
-        columnHelper.accessor("pic", {
-            header: "PIC",
-            cell: info => info.getValue() ?? "-",
-        }),
-        columnHelper.accessor("polygon", {
-            header: "Status Polygon",
-            cell: info => info.getValue() ? (
-                <Chip color="success" size="sm">Sudah Digitasi</Chip>
-            ) : (
-                <Chip size="sm">Belum Digitasi</Chip>
-            ),
-        }),
-        columnHelper.accessor("statusBhumi", {
-            header: "Status Plotting",
-            cell: info => <Chip>{info.getValue()}</Chip>,
-        }),
-        columnHelper.display({
-            id: "aksi",
-            header: "Aksi",
-            cell: info => (
-                <Button size="sm" variant="outline" onPress={() => setActiveBmd(info.row.original)}>
-                    <Eye size={14} className="mr-1" /> Aksi
-                </Button>
-            ),
-        }),
-    ]), []);
+    const columns = useMemo(
+        () =>
+            columnHelper.columns([
+                columnHelper.accessor("nibar", {
+                    header: "NIBAR",
+                    cell: (info) => info.getValue(),
+                }),
+                columnHelper.accessor("hak", {
+                    header: "Hak",
+                    cell: (info) => info.getValue() ?? "-",
+                }),
+                columnHelper.accessor("nomor", {
+                    header: "Nomor",
+                    cell: (info) => info.getValue() ?? "-",
+                }),
+                columnHelper.accessor("desa", {
+                    header: "Desa",
+                    cell: (info) => info.getValue() ?? "-",
+                }),
+                columnHelper.accessor("pic", {
+                    header: "PIC",
+                    cell: (info) => info.getValue() ?? "-",
+                }),
+                columnHelper.accessor("polygon", {
+                    header: "Status Polygon",
+                    cell: (info) =>
+                        info.getValue() ? (
+                            <Chip color="success" size="sm">Sudah Digitasi</Chip>
+                        ) : (
+                            <Chip size="sm">Belum Digitasi</Chip>
+                        ),
+                }),
+                columnHelper.accessor("statusBhumi", {
+                    header: "Status Plotting",
+                    cell: (info) => <Chip>{info.getValue()}</Chip>,
+                }),
+                columnHelper.display({
+                    id: "aksi",
+                    header: "Aksi",
+                    cell: (info) => (
+                        <Button size="sm" variant="outline" onPress={() => setActiveBmd(info.row.original)}>
+                            <Eye size={14} className="mr-1" /> Aksi
+                        </Button>
+                    ),
+                }),
+            ]),
+        []
+    );
 
     const table = useTable({
         data: rows,
@@ -269,6 +307,9 @@ export default function BmdTanahPage() {
     const from = total === 0 ? 0 : pagination.pageIndex * pagination.pageSize + 1;
     const to = Math.min((pagination.pageIndex + 1) * pagination.pageSize, total);
 
+    const tableRows = table.getRowModel().rows;
+    const columnCount = table.getAllLeafColumns().length;
+
     // ── Render ────────────────────────────────────────────────────────────────
     return (
         <>
@@ -278,10 +319,16 @@ export default function BmdTanahPage() {
                     <Card className="w-full max-w-sm">
                         <Card.Header className="pb-2 flex flex-col items-start">
                             <h2 className="text-xl font-bold">Verifikasi PIC</h2>
-                            <p className="text-sm text-default-500">Silakan pilih nama Anda dan masukkan password untuk mengakses data.</p>
+                            <p className="text-sm text-default-500">
+                                Silakan pilih nama Anda dan masukkan password untuk mengakses data.
+                            </p>
                         </Card.Header>
                         <Card.Content className="flex flex-col gap-4">
-                            <Select selectionMode="single" value={inputLoginPic} onChange={(value) => setInputLoginPic(String(value))}>
+                            <Select
+                                selectionMode="single"
+                                value={inputLoginPic}
+                                onChange={(value) => setInputLoginPic(String(value))}
+                            >
                                 <Label>Nama PIC</Label>
                                 <Select.Trigger><Select.Value /></Select.Trigger>
                                 <Select.Popover>
@@ -335,8 +382,16 @@ export default function BmdTanahPage() {
                     <>
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                             <StatCard label="Total BMD" value={stat.total} />
-                            <StatCard label="Sudah Diproses" value={stat.sudahDiproses} sub={`${stat.belumDiproses.toLocaleString("id-ID")} belum`} />
-                            <StatCard label="Sudah Digitasi" value={stat.sudahDigitasi} sub={`${stat.belumDigitasi.toLocaleString("id-ID")} belum`} />
+                            <StatCard
+                                label="Sudah Diproses"
+                                value={stat.sudahDiproses}
+                                sub={`${stat.belumDiproses.toLocaleString("id-ID")} belum`}
+                            />
+                            <StatCard
+                                label="Sudah Digitasi"
+                                value={stat.sudahDigitasi}
+                                sub={`${stat.belumDigitasi.toLocaleString("id-ID")} belum`}
+                            />
                             <StatCard label="% Proses" value={`${stat.progressProsesPct}%`} />
                             <StatCard label="% Digitasi" value={`${stat.progressDigitasiPct}%`} />
                         </div>
@@ -365,7 +420,12 @@ export default function BmdTanahPage() {
 
                 {/* ── Filter & Search Controls ── */}
                 <div className="flex flex-wrap gap-4 items-end">
-                    <Select className="w-56" selectionMode="single" value={filterPic} onChange={(value) => setFilterPic(value === "all" || value === null ? "" : String(value))}>
+                    <Select
+                        className="w-56"
+                        selectionMode="single"
+                        value={filterPic === "" ? "all" : filterPic}
+                        onChange={handleFilterPicChange}
+                    >
                         <Label>Filter PIC</Label>
                         <Select.Trigger><Select.Value /></Select.Trigger>
                         <Select.Popover>
@@ -378,7 +438,7 @@ export default function BmdTanahPage() {
                         </Select.Popover>
                     </Select>
 
-                    <Select selectionMode="single" value={filterStatus} onChange={(value) => setFilterStatus(value as StatusPolygonFilter)}>
+                    <Select selectionMode="single" value={filterStatus} onChange={handleFilterStatusChange}>
                         <Label>Status Polygon</Label>
                         <Select.Trigger><Select.Value /></Select.Trigger>
                         <Select.Popover>
@@ -390,7 +450,7 @@ export default function BmdTanahPage() {
                         </Select.Popover>
                     </Select>
 
-                    <Select selectionMode="single" value={filterStatusBhumi} onChange={(value) => setStatusBhumi(value as StatusBhumi)}>
+                    <Select selectionMode="single" value={filterStatusBhumi} onChange={handleFilterStatusBhumiChange}>
                         <Label>Status Plotting</Label>
                         <Select.Trigger><Select.Value /></Select.Trigger>
                         <Select.Popover>
@@ -424,31 +484,27 @@ export default function BmdTanahPage() {
                         <Table.ScrollContainer>
                             <Table.Content aria-label="Daftar BMD Tanah">
                                 <Table.Header>
-                                    {table.getFlatHeaders().map((header) => (
-                                        <Table.Column key={header.id}>
-                                            {flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext()
-                                            )}
+                                    {table.getFlatHeaders().map((header, idx) => (
+                                        <Table.Column key={header.id} id={header.id} isRowHeader={idx === 0}>
+                                            {flexRender(header.column.columnDef.header, header.getContext())}
                                         </Table.Column>
                                     ))}
                                 </Table.Header>
                                 <Table.Body>
-                                    {table.getRowModel().rows.length === 0 ? (
+                                    {tableRows.length === 0 ? (
+                                        // FIX: jumlah cell harus sama dengan jumlah kolom.
+                                        // Gunakan colSpan agar satu cell mencakup semua kolom.
                                         <Table.Row>
-                                            <Table.Cell className="text-center py-8">
+                                            <Table.Cell colSpan={columnCount} className="text-center py-8">
                                                 {loading ? <Spinner size="sm" /> : "Data tidak ditemukan"}
                                             </Table.Cell>
                                         </Table.Row>
                                     ) : (
-                                        table.getRowModel().rows.map((row) => (
+                                        tableRows.map((row) => (
                                             <Table.Row key={row.id}>
                                                 {row.getAllCells().map((cell) => (
                                                     <Table.Cell key={cell.id}>
-                                                        {flexRender(
-                                                            cell.column.columnDef.cell,
-                                                            cell.getContext()
-                                                        )}
+                                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                                     </Table.Cell>
                                                 ))}
                                             </Table.Row>
@@ -459,8 +515,8 @@ export default function BmdTanahPage() {
                         </Table.ScrollContainer>
                     </Table>
 
-                    {/* ── Pagination TanStack ── */}
-                    {/* {table.getPageCount() > 1 && (
+                    {/* ── Pagination TanStack ── (aktifkan kembali jika sudah siap)
+                    {table.getPageCount() > 1 && (
                         <div className="flex justify-center mt-2">
                             <Pagination
                                 total={table.getPageCount()}

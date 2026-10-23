@@ -9,6 +9,7 @@ import { actionEditAlihStatusPersetujuanBupati } from "@/action/alih-status/pers
 import { SelectFormField, TextFormField } from "../../_component/formField";
 import { AlihStatusType } from "@/enum/alihStatus";
 import { Delete, Edit, Printer, RefreshCw } from "lucide-react";
+import { generatePersetujuanBupati } from "@/lib/generateDoc/alih-status/generatePersetujuanBupati";
 export default function AlihStatusPersetujuanBupati({ query, queryKey }: { query: UseQueryResult<AlihStatusPersetujuanBupatiContract.SelectWithDetailDTO>, queryKey: unknown[] }) {
     const [formTarget, setFormTarget] = useState<
         AlihStatusPersetujuanBupatiContract.SelectDTO | null | undefined
@@ -31,12 +32,16 @@ export default function AlihStatusPersetujuanBupati({ query, queryKey }: { query
             toast.danger('Gagal menampilkan data terbaru. Muat ulang halaman ini.', { description: error.message })
         }
     }
-    const generatenodin = useCallback(() => { }, [query.data])
-    if (query.isLoading) return <div className="flex flex-col gap-3">
-        <Skeleton className="h-3 w-1/3" />
-        <Skeleton className="h-3 w-3/5" />
-        <Skeleton className="h-3 w-1/4" />
-    </div>
+    const print = useCallback(() => {
+        try {
+            if (!query.data) throw new Error("Data belum tersedia")
+            generatePersetujuanBupati(query.data)
+        } catch (error: any) {
+            toast.danger("Gagal mencetak draft dokumen Permohonan Penghapusan", {
+                description: error.message
+            });
+        }
+    }, [query.data]);
     return <>
         <div className="flex justify-between item-center">
             <Label>Detail Berita Acara Penelitian Alih Status</Label>
@@ -48,7 +53,7 @@ export default function AlihStatusPersetujuanBupati({ query, queryKey }: { query
                     <ButtonGroupSeparator />
                     <Edit />
                 </Button>
-                <Button variant="outline" onPress={generatenodin}>
+                <Button variant="outline" onPress={print}>
                     <ButtonGroupSeparator />
                     <Printer />
                 </Button>

@@ -46,7 +46,8 @@ export default function DetailSKHapus({
                     ) : isJamak || shouldTable ? (
                         <RenderTable data={data!} rowAction={rowAction} />
                     ) : (
-                        <Description items={[
+                        <Description items={[[
+
                             {
                                 label: "Nomor Surat",
                                 value: data[0].suratNomor
@@ -55,6 +56,11 @@ export default function DetailSKHapus({
                                 label: "Tanggal Surat",
                                 value: data[0].suratTanggal
                             }
+                        ],
+                        {
+                            label: "Hal Surat",
+                            value: data[0].suratHal
+                        }
                         ]} />
                     )}
         </>

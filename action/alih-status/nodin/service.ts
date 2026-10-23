@@ -8,6 +8,11 @@ import { AlihStatusBAPenelitianRepository } from "../ba-penelitian/repository";
 import { AlihStatusSpkmbRepository } from "../spkmb/repository";
 import { AlihStatusTrackingRepository } from "../tracking/repository";
 import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
+import { BerkasService } from "@/action/berkas/berkas.service";
+import { AlihStatusTrackingContract } from "../tracking/contract";
+const NodinBerkasScope = (id: number) =>
+    ["alih-status", "nodin", id] as const;
+const today = () => new Date().toISOString().slice(0, 10);
 
 export const AlihStatusNodinService = {
     async getList(userId: string, tahun: number): Promise<AlihStatusNodinContract.SelectDTO[]> {
@@ -81,5 +86,118 @@ export const AlihStatusNodinService = {
             "alih-status": ["delete"]
         });
         await AlihStatusNodinRepository.remove(db, { ...data, deletedAt: new Date(), deletedBy: userId });
+    },
+    async generatePresignedUrlBerkas(
+        userId: string,
+        id: number,
+    ): Promise<{ url: string; key: string }> {
+        await verifyPermissions(userId, { "alih-status": ["create"] });
+
+        return BerkasService.generateUploadUrl(NodinBerkasScope(id), {
+            extension: "pdf",
+        });
+    },
+
+    async updateBerkas(
+        userId: string,
+        nodinId: number,
+        key: string,
+    ): Promise<AlihStatusNodinContract.ResultAddBerkasDTO> {
+        await verifyPermissions(userId, { "alih-status": ["create"] });
+
+        // Validasi key milik data ini + objek benar-benar ada di storage
+        await BerkasService.confirmUpload(key, NodinBerkasScope(nodinId));
+
+        const { tracking, oldKey }: { tracking: AlihStatusTrackingContract.SelectDTO, oldKey: string | null } = await db.transaction(async (tx) => {
+            const nodin = await AlihStatusNodinRepository.findById(tx, nodinId);
+
+            if (!nodin) {
+                throw new Error("Nota Dinas tidak ditemukan");
+            }
+
+            const previousKey = nodin.keyBerkas;
+
+            await AlihStatusNodinRepository.update(tx, {
+                ...nodin,
+                keyBerkas: key,
+                updatedAt: new Date(),
+                updatedBy: userId,
+            });
+
+            const tracking = await AlihStatusTrackingRepository.create(tx, {
+                date: today(),
+                note: "Nota Dinas telah diunggah",
+                position: "Staf PBMD",
+                sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_NODIN,
+                sourceId: nodinId,
+                createdAt: new Date(),
+                createdBy: userId,
+            });
+
+            return { tracking, oldKey: previousKey };
+        });
+
+        await BerkasService.deleteReplaced(oldKey, key);
+
+        return { tracking, isDone: true };
+
+    },
+
+    async getPreviewUrlBerkas(userId: string, id: number): Promise<string> {
+        await verifyPermissions(userId, { "alih-status": ["read"] });
+
+        const row = await AlihStatusNodinRepository.findById(db, id);
+
+        if (!row) {
+            throw new Error("Nodin tidak ditemukan");
+        }
+
+        // Melempar "Berkas belum diunggah" kalau key kosong,
+        // dan "Berkas tidak ditemukan di storage" kalau objek hilang
+        return BerkasService.getPreviewUrl(row.keyBerkas);
+    },
+
+    async deleteBerkas(userId: string, id: number): Promise<void> {
+        await verifyPermissions(userId, {
+            "alih-status": ["delete"]
+        });
+
+        const oldKey = await db.transaction(async (tx) => {
+            const row = await AlihStatusNodinRepository.findById(tx, id);
+
+            if (!row) {
+                throw new Error("Nodin tidak ditemukan");
+            }
+
+            if (!row.keyBerkas) {
+                throw new Error("Berkas belum diunggah");
+            }
+
+            const previousKey = row.keyBerkas;
+
+            await AlihStatusNodinRepository.update(tx, {
+                ...row,
+                isDone: false,
+                keyBerkas: null,
+                updatedAt: new Date(),
+                updatedBy: userId,
+            });
+
+            await AlihStatusTrackingRepository.create(tx, {
+                date: today(),
+                note: "File dihapus",
+                position: "Staf PBMD",
+                sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_NODIN,
+                sourceId: id,
+                createdAt: new Date(),
+                createdBy: userId,
+            });
+
+            return previousKey;
+        });
+
+        // Hapus objek di storage hanya setelah transaksi DB sukses,
+        // supaya kalau transaksi gagal file tidak hilang.
+        await BerkasService.deleteQuietly(oldKey);
     },
 };

@@ -42,7 +42,10 @@ export const AlihStatusSKHapusContract = {
         id: z.number().int().positive(),
         deletedAt: z.date().default(new Date()),
         deletedBy: z.string(),
-    }),
+    }), resultAddBerkas: z.object({
+        tracking: AlihStatusTrackingContract.select,
+        isDone: z.boolean()
+    })
 };
 
 export namespace AlihStatusSKHapusContract {
@@ -53,5 +56,5 @@ export namespace AlihStatusSKHapusContract {
     export type EditDTO = z.infer<typeof AlihStatusSKHapusContract.edit>;
     export type UpdateDTO = z.infer<typeof AlihStatusSKHapusContract.update>;
     export type DeleteDTO = z.infer<typeof AlihStatusSKHapusContract.delete>;
-    export type RemoveDTO = z.infer<typeof AlihStatusSKHapusContract.remove>;
+    export type RemoveDTO = z.infer<typeof AlihStatusSKHapusContract.remove>; export type ResultAddBerkasDTO = z.infer<typeof AlihStatusBAPenelitianContract.resultAddBerkas>;
 }

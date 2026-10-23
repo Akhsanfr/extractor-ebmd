@@ -22,6 +22,7 @@ export type AlihStatusTrackingSourceType =
 
 
 export const AlihStatusTrackingPosition = {
+    STAF_PBMD: "Staf PBMD",
     KASUBBID_PENATAUSAHAAN: "Kasubbid Penatausahaan - Merissa",
     KASUBBID_PENGAMANAN: "Kasubbid Pengamanan - Sulton",
     JF_KEUANGAN: "JF Keuangan - Yuni",

@@ -1,5 +1,5 @@
 import { Description } from "@/component/description";
-import { Alert, Label } from "@heroui/react";
+import { Alert, Label, linkVariants } from "@heroui/react";
 import { createColumnHelper, flexRender, tableFeatures, useTable } from "@tanstack/react-table";
 import { ReactNode, useMemo } from "react";
 import { TableCellStack } from "./data/tableCellStack";
@@ -9,6 +9,8 @@ import { AlihStatusBASTContract } from "@/action/alih-status/bast/contract";
 import { TableHeaderStack } from "./data/tableHeaderStack";
 const features = tableFeatures({});
 const columnHelper = createColumnHelper<typeof features, AlihStatusBASTContract.SelectDTO>();
+import NextLink from "next/link";
+import { Link } from "@heroui/react";
 export default function DetailBAST({
     data,
     isLoading,
@@ -25,7 +27,7 @@ export default function DetailBAST({
 
     const isJamak = (data?.length ?? 0) > 1;
     const isKosong = !data || data.length === 0;
-
+    const slots = linkVariants();
     return (
         <>
             <div className="flex justify-between items-center">
@@ -46,67 +48,69 @@ export default function DetailBAST({
                     ) : isJamak || shouldTable ? (
                         <RenderTable data={data!} rowAction={rowAction} />
                     ) : (
-                        <Description items={[
-                            [{
-                                label: "ID",
-                                value: `# ${data[0].id}`
+                        <Description items={[[
+                            {
+                                label: "ID", value: <NextLink
+                                    className={slots.base()}
+                                    href={`/dashboard/alih-status/bast/${data![0].id}`}
+
+                                ># {data![0].id}<Link.Icon className={slots.icon()} /></NextLink>
+                            },
+                            { label: "Tahun", value: data![0].tahun }
+                        ],
+
+                        [{
+                            label: "Nomor Surat",
+                            value: data[0].suratNomor
+                        },
+                        {
+                            label: "Tanggal Surat",
+                            value: data[0].suratTanggal
+                        }], {
+                            label: "Perangkat Daerah Asal",
+                            value: data![0].perangkatDaerahAsal,
+                        },
+                        [
+                            {
+                                label: "Pengguna Barang Asal",
+                                value: data![0].penggunaBarangAsalNama,
                             },
                             {
-                                label: "Tahun",
-                                value: data[0].tahun
-                            }],
-                            [{
-                                label: "Nomor Surat",
-                                value: data[0].suratNomor
+                                label: "Pangkat Pengguna Barang Asal",
+                                value: data![0].penggunaBarangAsalPangkat,
+                            }
+                        ], [
+                            {
+                                label: "NIP Pengguna Barang Asal",
+                                value: data![0].penggunaBarangAsalNIP,
                             },
                             {
-                                label: "Tanggal Surat",
-                                value: data[0].suratTanggal
-                            }], {
-                                label: "Perangkat Daerah Asal",
-                                value: data![0].perangkatDaerahAsal,
+                                label: "Jabatan Pengguna Barang Asal",
+                                value: data![0].penggunaBarangAsalJabatan,
+                            }
+                        ], {
+                            label: "Perangkat Daerah Tujuan",
+                            value: data![0].perangkatDaerahTujuan,
+                        },
+                        [
+                            {
+                                label: "Pengguna Barang Tujuan",
+                                value: data![0].penggunaBarangTujuanNama,
                             },
-                            [
-                                {
-                                    label: "Pengguna Barang Asal",
-                                    value: data![0].penggunaBarangAsalNama,
-                                },
-                                {
-                                    label: "Pangkat Pengguna Barang Asal",
-                                    value: data![0].penggunaBarangAsalPangkat,
-                                }
-                            ], [
-                                {
-                                    label: "NIP Pengguna Barang Asal",
-                                    value: data![0].penggunaBarangAsalNIP,
-                                },
-                                {
-                                    label: "Jabatan Pengguna Barang Asal",
-                                    value: data![0].penggunaBarangAsalJabatan,
-                                }
-                            ], {
-                                label: "Perangkat Daerah Tujuan",
-                                value: data![0].perangkatDaerahTujuan,
+                            {
+                                label: "Pangkat Pengguna Barang Tujuan",
+                                value: data![0].penggunaBarangTujuanPangkat,
+                            }
+                        ], [
+                            {
+                                label: "NIP Pengguna Barang Tujuan",
+                                value: data![0].penggunaBarangTujuanNIP,
                             },
-                            [
-                                {
-                                    label: "Pengguna Barang Tujuan",
-                                    value: data![0].penggunaBarangTujuanNama,
-                                },
-                                {
-                                    label: "Pangkat Pengguna Barang Tujuan",
-                                    value: data![0].penggunaBarangTujuanPangkat,
-                                }
-                            ], [
-                                {
-                                    label: "NIP Pengguna Barang Tujuan",
-                                    value: data![0].penggunaBarangTujuanNIP,
-                                },
-                                {
-                                    label: "Jabatan Pengguna Barang Tujuan",
-                                    value: data![0].penggunaBarangTujuanJabatan,
-                                }
-                            ]
+                            {
+                                label: "Jabatan Pengguna Barang Tujuan",
+                                value: data![0].penggunaBarangTujuanJabatan,
+                            }
+                        ]
                         ]} />
                     )}
         </>

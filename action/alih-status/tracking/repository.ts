@@ -4,7 +4,7 @@ import { AlihStatusTrackingContract } from "./contract";
 import { alihStatusTrackingTable } from "@/drizzle/schema";
 import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
 export const AlihStatusTrackingRepository = {
-    async create(db: DbOrTx, data: AlihStatusTrackingContract.InsertDTO) {
+    async create(db: DbOrTx, data: AlihStatusTrackingContract.InsertDTO): Promise<AlihStatusTrackingContract.SelectDTO> {
         const [row] = await db.insert(alihStatusTrackingTable).values(data).returning();
         return row;
     },

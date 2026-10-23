@@ -12,7 +12,11 @@ import { OperationalError } from "@/action/actionResponse";
 import { AlihStatusSPKMBContract } from "../spkmb/contract";
 import { AlihStatusTrackingRepository } from "../tracking/repository";
 import { AlihStatusTrackingSourceType } from "@/enum/alihStatus";
-
+import { BerkasService } from "@/action/berkas/berkas.service";
+import { AlihStatusTrackingContract } from "../tracking/contract";
+const BASTBerkasScope = (id: number) =>
+    ["alih-status", "bast", id] as const;
+const today = () => new Date().toISOString().slice(0, 10);
 export const AlihStatusBASTService = {
     async getList(userId: string, tahun: number): Promise<AlihStatusBASTContract.SelectDTO[]> {
         await verifyPermissions(userId, {
@@ -117,5 +121,115 @@ export const AlihStatusBASTService = {
                 jabatan: permohonan[0].penggunaBarangAsalJabatan,
             }
         }
-    }
+    },
+    async generatePresignedUrlBerkas(
+        userId: string,
+        id: number,
+    ): Promise<{ url: string; key: string }> {
+        await verifyPermissions(userId, { "alih-status": ["create"] });
+
+        return BerkasService.generateUploadUrl(BASTBerkasScope(id), {
+            extension: "pdf",
+        });
+    },
+
+    async updateBerkas(
+        userId: string,
+        bastId: number,
+        key: string,
+    ): Promise<AlihStatusBASTContract.ResultAddBerkasDTO> {
+        await verifyPermissions(userId, { "alih-status": ["create"] });
+
+        // Validasi key milik data ini + objek benar-benar ada di storage
+        await BerkasService.confirmUpload(key, BASTBerkasScope(bastId));
+
+        const { tracking, oldKey }: { tracking: AlihStatusTrackingContract.SelectDTO, oldKey: string | null } = await db.transaction(async (tx) => {
+            const bast = await AlihStatusBASTRepository.findById(tx, bastId);
+
+            if (!bast) {
+                throw new Error("BAST tidak ditemukan");
+            }
+
+            const previousKey = bast.keyBerkas;
+
+            await AlihStatusBASTRepository.update(tx, {
+                ...bast,
+                keyBerkas: key,
+                updatedAt: new Date(),
+                updatedBy: userId,
+            });
+
+            const tracking = await AlihStatusTrackingRepository.create(tx, {
+                date: today(),
+                note: "Berita Acara Serah Terima (BAST) telah diunggah",
+                position: "Staf PBMD",
+                sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_BAST,
+                sourceId: bastId,
+                createdAt: new Date(),
+                createdBy: userId,
+            });
+
+            return { tracking, oldKey: previousKey };
+        });
+
+        await BerkasService.deleteReplaced(oldKey, key);
+
+        return { tracking, isDone: true };
+    },
+
+    async getPreviewUrlBerkas(userId: string, id: number): Promise<string> {
+        await verifyPermissions(userId, { "alih-status": ["read"] });
+
+        const row = await AlihStatusBASTRepository.findById(db, id);
+
+        if (!row) {
+            throw new Error("BAST tidak ditemukan");
+        }
+
+        // Melempar "Berkas belum diunggah" kalau key kosong,
+        // dan "Berkas tidak ditemukan di storage" kalau objek hilang
+        return BerkasService.getPreviewUrl(row.keyBerkas);
+    },
+
+    async deleteBerkas(userId: string, id: number): Promise<void> {
+        await verifyPermissions(userId, { "alih-status": ["delete"] });
+
+        const oldKey = await db.transaction(async (tx) => {
+            const row = await AlihStatusBASTRepository.findById(tx, id);
+
+            if (!row) {
+                throw new Error("BAST tidak ditemukan");
+            }
+
+            if (!row.keyBerkas) {
+                throw new Error("Berkas belum diunggah");
+            }
+
+            const previousKey = row.keyBerkas;
+
+            await AlihStatusBASTRepository.update(tx, {
+                ...row,
+                isDone: false,
+                keyBerkas: null,
+                updatedAt: new Date(),
+                updatedBy: userId,
+            });
+
+            await AlihStatusTrackingRepository.create(tx, {
+                date: today(),
+                note: "File dihapus",
+                position: "Staf PBMD",
+                sourceType: AlihStatusTrackingSourceType.ALIH_STATUS_BAST,
+                sourceId: id,
+                createdAt: new Date(),
+                createdBy: userId,
+            });
+
+            return previousKey;
+        });
+
+        // Hapus objek di storage hanya setelah transaksi DB sukses,
+        // supaya kalau transaksi gagal file tidak hilang.
+        await BerkasService.deleteQuietly(oldKey);
+    },
 };

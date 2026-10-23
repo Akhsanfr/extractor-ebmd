@@ -4,10 +4,11 @@ import { useQueryClient, UseQueryResult } from "@tanstack/react-query"
 import { useCallback, useState } from "react";
 import { EntityFormModal } from "../../_component/entityFormModal";
 import { TextFormField } from "../../_component/formField";
-import { Delete, Edit, RefreshCw } from "lucide-react";
+import { Delete, Edit, Printer, RefreshCw } from "lucide-react";
 import { actionCreateAlihStatusSKHapus } from "@/action/alih-status/sk-hapus/action.create";
 import { actionEditAlihStatusSKHapus } from "@/action/alih-status/sk-hapus/action.update";
 import DetailSKHapus from "../../_component/SKHapus";
+import { generateSKHapus } from "@/lib/generateDoc/alih-status/generateSKHapus";
 export default function AlihStatusSKHapus({ query, queryKey }: { query: UseQueryResult<AlihStatusSKHapusContract.SelectWithDetailDTO>, queryKey: unknown[] }) {
     const [formTarget, setFormTarget] = useState<
         AlihStatusSKHapusContract.SelectDTO | null | undefined
@@ -30,7 +31,16 @@ export default function AlihStatusSKHapus({ query, queryKey }: { query: UseQuery
             toast.danger('Gagal menampilkan data terbaru. Muat ulang halaman ini.', { description: error.message })
         }
     }
-    const generatenodin = useCallback(() => { }, [query.data])
+    const print = useCallback(() => {
+        try {
+            if (!query.data) throw new Error("Data belum tersedia")
+            generateSKHapus(query.data)
+        } catch (error: any) {
+            toast.danger("Gagal mencetak draft dokumen Permohonan Penghapusan", {
+                description: error.message
+            });
+        }
+    }, [query.data]);
     return <>
         <DetailSKHapus data={query.data ? [query.data.SKHapus] : []} isLoading={query.isLoading} action={<ButtonGroup>
             <Button variant="secondary" isPending={query.isRefetching} onPress={(e) => queryClient.refetchQueries({ queryKey })}>
@@ -40,9 +50,9 @@ export default function AlihStatusSKHapus({ query, queryKey }: { query: UseQuery
                 <ButtonGroupSeparator />
                 <Edit />
             </Button>
-            <Button variant="secondary" onPress={generatenodin}>
+            <Button variant="secondary" onPress={print}>
                 <ButtonGroupSeparator />
-                <Delete />
+                <Printer />
             </Button>
         </ButtonGroup>} />
         {formTarget !== undefined && (

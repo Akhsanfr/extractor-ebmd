@@ -12,6 +12,8 @@ export const alihStatusBAPenelitianTable = snakeCase.table(
         suratNomor: text(),
         suratTanggal: date(),
         isCompleted: boolean(),
+        keyBerkas: text(),
+        isDone: boolean().default(false).notNull(),
         createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
         createdBy: text("created_by").references(() => userTable.id),
         updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),

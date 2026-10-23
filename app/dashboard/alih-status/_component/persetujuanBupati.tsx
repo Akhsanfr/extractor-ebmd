@@ -1,11 +1,13 @@
 import { Description } from "@/component/description";
-import { Alert, Label } from "@heroui/react";
+import { Alert, Label, linkVariants } from "@heroui/react";
 import { createColumnHelper, flexRender, tableFeatures, useTable } from "@tanstack/react-table";
 import { ReactNode, useMemo } from "react";
 import { TableCellStack } from "./data/tableCellStack";
 import { Table } from "@heroui/react";
 import Loading from "@/component/loading";
 import { AlihStatusPersetujuanBupatiContract } from "@/action/alih-status/persetujuan-bupati/contract";
+import NextLink from "next/link";
+import { Link } from "@heroui/react";
 const features = tableFeatures({});
 const columnHelper = createColumnHelper<typeof features, AlihStatusPersetujuanBupatiContract.SelectDTO>();
 export default function DetailPersetujuanBupati({
@@ -24,7 +26,7 @@ export default function DetailPersetujuanBupati({
 
     const isJamak = (data?.length ?? 0) > 1;
     const isKosong = !data || data.length === 0;
-
+    const slots = linkVariants();
     return (
         <>
             <div className="flex justify-between items-center">
@@ -46,23 +48,32 @@ export default function DetailPersetujuanBupati({
                     ) : isJamak || shouldTable ? (
                         <RenderTable data={data!} rowAction={rowAction} />
                     ) : (
-                        <Description items={[
+                        <Description items={[[
                             {
-                                label: "Tipe Alih Status",
-                                value: data[0].alihStatusType
+                                label: "ID", value: <NextLink
+                                    className={slots.base()}
+                                    href={`/dashboard/alih-status/persetujuan-bupati/${data![0].id}`}
+
+                                ># {data![0].id}<Link.Icon className={slots.icon()} /></NextLink>
                             },
-                            {
-                                label: "Nomor Surat",
-                                value: data[0].suratNomor
-                            },
-                            {
-                                label: "Hal Surat",
-                                value: data[0].suratHal
-                            },
-                            {
-                                label: "Tanggal Surat",
-                                value: data[0].suratTanggal
-                            },
+                            { label: "Tahun", value: data![0].tahun }
+                        ],
+                        {
+                            label: "Tipe Alih Status",
+                            value: data[0].alihStatusType
+                        },
+                        {
+                            label: "Nomor Surat",
+                            value: data[0].suratNomor
+                        },
+                        {
+                            label: "Hal Surat",
+                            value: data[0].suratHal
+                        },
+                        {
+                            label: "Tanggal Surat",
+                            value: data[0].suratTanggal
+                        },
                         ]} />
                     )}
         </>

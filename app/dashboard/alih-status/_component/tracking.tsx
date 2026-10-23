@@ -52,7 +52,7 @@ export default function AlihStatusTracking({
 
     return (
         <>
-            <Card>
+            <Card variant="secondary">
                 <Card.Header className="flex flex-row items-center justify-between gap-3">
                     <div className="flex flex-col">
                         <Card.Title>Tracking Dokumen</Card.Title>

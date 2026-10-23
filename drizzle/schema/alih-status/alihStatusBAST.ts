@@ -1,4 +1,4 @@
-import { serial, text, integer, timestamp, index, uniqueIndex, date, snakeCase } from "drizzle-orm/pg-core";
+import { serial, text, integer, timestamp, index, uniqueIndex, date, snakeCase, boolean } from "drizzle-orm/pg-core";
 import { userTable } from "./../../schema"
 
 export const alihStatusBASTTable = snakeCase.table(
@@ -18,6 +18,8 @@ export const alihStatusBASTTable = snakeCase.table(
         penggunaBarangTujuanNIP: text(),
         penggunaBarangTujuanJabatan: text(),
         penggunaBarangTujuanPangkat: text(),
+        keyBerkas: text(),
+        isDone: boolean().default(false).notNull(),
         createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
         createdBy: text("created_by").references(() => userTable.id),
         updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),

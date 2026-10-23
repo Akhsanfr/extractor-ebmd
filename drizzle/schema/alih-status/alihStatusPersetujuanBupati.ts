@@ -1,4 +1,4 @@
-import { pgTable, serial, text, date, integer, timestamp, index, snakeCase } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, date, integer, timestamp, index, snakeCase, boolean } from "drizzle-orm/pg-core";
 import { alihStatusTypeEnum, userTable } from "./../../schema";
 
 export const alihStatusPersetujuanBupatiTable = snakeCase.table(
@@ -10,6 +10,8 @@ export const alihStatusPersetujuanBupatiTable = snakeCase.table(
         suratTanggal: date("surat_tanggal"),
         suratHal: text("surat_hal"),
         alihStatusType: alihStatusTypeEnum().notNull(),
+        keyBerkas: text(),
+        isDone: boolean().default(false).notNull(),
         createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
         createdBy: text("created_by").references(() => userTable.id),
         updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),

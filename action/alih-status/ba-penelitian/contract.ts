@@ -38,6 +38,10 @@ export const AlihStatusBAPenelitianContract = {
         deletedAt: z.date().default(new Date()),
         deletedBy: z.string(),
     }),
+    resultAddBerkas: z.object({
+        tracking: AlihStatusTrackingContract.select,
+        isDone: z.boolean()
+    })
 };
 
 export namespace AlihStatusBAPenelitianContract {
@@ -49,4 +53,5 @@ export namespace AlihStatusBAPenelitianContract {
     export type UpdateDTO = z.infer<typeof AlihStatusBAPenelitianContract.update>;
     export type DeleteDTO = z.infer<typeof AlihStatusBAPenelitianContract.delete>;
     export type RemoveDTO = z.infer<typeof AlihStatusBAPenelitianContract.remove>;
+    export type ResultAddBerkasDTO = z.infer<typeof AlihStatusBAPenelitianContract.resultAddBerkas>;
 }

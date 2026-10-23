@@ -1,4 +1,4 @@
-import { AsetType } from "@/app/page";
+import { AsetType } from "@/app/page-old";
 import { loadStorage, PEMELIHARAAN_STORAGE_KEY, PEMELIHARAAN_STORAGE_KEY_V1, PERANGKAT_DAERAH_KEY, saveStorage } from "@/lib/bmd-storage";
 import { PerangkatDaerah } from "@/types/perangkatDaerah";
 import { ListPemeliharaan } from "@/types/rkbmd";

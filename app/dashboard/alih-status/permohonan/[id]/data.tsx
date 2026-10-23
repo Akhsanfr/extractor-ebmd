@@ -125,17 +125,20 @@ export default function AlihStatusData({
                     const isDeletingThis = deletingId === item.id;
                     return (
                         <Table.Cell>
-                            <Button size="sm" onPress={() => setFormTarget(item)}>
-                                <Edit />
-                            </Button>
-                            <Button
-                                size="sm"
-                                variant="danger"
-                                isDisabled={isDeletingThis}
-                                onPress={() => handleDelete(item.id)}
-                            >
-                                <Trash />
-                            </Button>
+                            <ButtonGroup>
+                                <Button variant="secondary" size="sm" onPress={() => setFormTarget(item)}>
+                                    <Edit />
+                                </Button>
+                                <Button
+
+                                    size="sm"
+                                    variant="danger-soft"
+                                    isDisabled={isDeletingThis}
+                                    onPress={() => handleDelete(item.id)}
+                                >
+                                    <Trash />
+                                </Button>
+                            </ButtonGroup>
                         </Table.Cell>
                     );
                 }}

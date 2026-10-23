@@ -23,6 +23,8 @@ import { useForm } from "react-hook-form";
 import ListAvailablePermohonanPenghapusan from "./ListAvailablePermohonanPenghapusan";
 import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import DetailSKHapus from "../_component/SKHapus";
+import { AlihStatusDataContract } from "@/action/alih-status/data/contract";
+import { angkaKeKata } from "@/lib/number";
 
 
 
@@ -34,13 +36,18 @@ export default function SKHapus() {
     const tahun = useStore($year);
     const router = useRouter();
     const queryClient = useQueryClient();
-    const [selectedPermohonanPenghapusan, setSelectedPermohonanPenghapusan] = useState<number[]>([])
+    const [selectedPermohonanPenghapusan, setSelectedPermohonanPenghapusan] = useState<number[]>([]);
+    const [selectedData, setSelectedData] = useState<
+        AlihStatusDataContract.SelectDTO[]
+    >([]);
 
     const [formSelected, setFormSelected] = useState<FormStep>("permohonan")
 
     const form = useForm<AlihStatusSKHapusContract.CreateDTO>({
         defaultValues: {
-            tahun: Number(tahun)
+            tahun: Number(tahun),
+            suratHal: `PENGHAPUSAN BARANG MILIK DAERAH BERUPA xxx PADA xxx`,
+            suratNomor: `000.2.3.2/     /013/${tahun}`,
         }
     });
 
@@ -92,9 +99,46 @@ export default function SKHapus() {
             toast.warning("Pilih minimal satu permohonan penghapusan terlebih dahulu");
             return;
         }
-        if (formSelected === "data" && form.getValues("dataIds").length === 0) {
-            toast.warning("Pilih minimal satu data terlebih dahulu");
-            return;
+        if (formSelected === "data") {
+            if (form.getValues("dataIds").length === 0) {
+                toast.warning("Pilih minimal satu data terlebih dahulu");
+                return;
+            }
+
+            const formatList = (items: string[]): string => {
+                if (items.length <= 1) return items[0] ?? "";
+                if (items.length === 2) return `${items[0]} dan ${items[1]}`;
+                return `${items.slice(0, -1).join(", ")}, dan ${items[items.length - 1]}`;
+            };
+
+            // Ambil nilai unik, buang null/undefined/string kosong, dan rapikan spasi
+            const uniqueNonEmpty = (values: Array<string | null | undefined>): string[] =>
+                Array.from(
+                    new Set(
+                        values
+                            .map((v) => v?.trim())
+                            .filter((v): v is string => !!v)
+                    )
+                );
+
+            const uniquePerangkatDaerah = uniqueNonEmpty(
+                selectedData.map((d) => d.perangkatDaerahAsal)
+            );
+            const uniqueAssetType = uniqueNonEmpty(
+                selectedData.map((d) => d.assetType)
+            );
+
+            const jenisAset = uniqueAssetType.length
+                ? ` Berupa ${formatList(uniqueAssetType)}`
+                : "";
+            const perangkatDaerah = uniquePerangkatDaerah.length
+                ? ` pada ${formatList(uniquePerangkatDaerah)}`
+                : "";
+
+            form.setValue(
+                "suratHal",
+                `Penghapusan Barang Milik Daerah${jenisAset}${perangkatDaerah}`
+            );
         }
         const nextIndex = stepIndex + 1;
         if (nextIndex < STEPS.length) {
@@ -196,13 +240,16 @@ export default function SKHapus() {
                                                 setSelectedPermohonanPenghapusan(permohonans.map((e) => e.id))
                                             }} />
                                         ) : formSelected === "data" ? (
-                                            <ListAvailableData column="permohonanPenghapusanId" values={selectedPermohonanPenghapusan} onChange={(e) => form.setValue("dataIds", e.map(d => d.id))} />
+                                            <ListAvailableData column="permohonanPenghapusanId" values={selectedPermohonanPenghapusan} onChange={(e) => {
+                                                form.setValue("dataIds", e.map(d => d.id))
+                                                setSelectedData(e);
+                                            }} />
                                         ) : (
 
                                             <div className="grid grid-cols-2 gap-4">
                                                 <TextFormField label="Nomor Surat SK Hapus" type="text" control={form.control} errors={form.formState.errors} name="suratNomor" />
                                                 <TextFormField label="Tanggal Surat SK Hapus" type="date" control={form.control} errors={form.formState.errors} name="suratTanggal" />
-                                                <TextFormField label="Hal Surat SK Hapus" type="date" control={form.control} errors={form.formState.errors} name="suratTanggal" />
+                                                <TextFormField label="Hal Surat SK Hapus" control={form.control} errors={form.formState.errors} name="suratHal" className="col-span-2" />
 
                                             </div>
 

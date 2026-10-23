@@ -44,7 +44,10 @@ export const AlihStatusPersetujuanBupatiContract = {
         .extend({ id: z.number().int().positive(), createdBy: z.string(), updatedAt: z.date(), updatedBy: z.string(), alihStatusType: z.enum(AlihStatusType) })
         .omit({ createdAt: true, createdBy: true }),
 
-    delete: z.object({ id: z.number().int().positive() }),
+    delete: z.object({ id: z.number().int().positive() }), resultAddBerkas: z.object({
+        tracking: AlihStatusTrackingContract.select,
+        isDone: z.boolean()
+    })
 };
 
 export namespace AlihStatusPersetujuanBupatiContract {
@@ -54,5 +57,5 @@ export namespace AlihStatusPersetujuanBupatiContract {
     export type InsertDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.insert>;
     export type EditDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.edit>;
     export type UpdateDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.update>;
-    export type DeleteDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.delete>;
+    export type DeleteDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.delete>;export type ResultAddBerkasDTO = z.infer<typeof AlihStatusBAPenelitianContract.resultAddBerkas>;
 }

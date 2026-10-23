@@ -29,7 +29,7 @@ export const generateBAPenelitian = ({ permohonan, BAPenelitian, data }: AlihSta
             ? `${angkaKeKata(perangkatDaerahUnik.size)} Perangkat Daerah`
             : [...perangkatDaerahUnik][0] ?? "";
 
-    const assetTypeUnik = [...new Set(data.map((item) => item.assetType))];
+
 
     const permohoanFormatted = permohonan.sort((a, b) => {
         if (!a.suratTanggal && !b.suratTanggal) return 0;
@@ -45,7 +45,7 @@ export const generateBAPenelitian = ({ permohonan, BAPenelitian, data }: AlihSta
     const isJamak = permohoanFormatted.length > 1;
     const tunggal = isTunggal ? permohoanFormatted[0] : null;
     console.log("tunggal", tunggal)
-
+    const assetTypeUnik = [...new Set(data.map((item) => item.assetType))];
     const objek =
         assetTypeUnik.length <= 1
             ? assetTypeUnik.join("")

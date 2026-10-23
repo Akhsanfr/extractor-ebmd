@@ -1,11 +1,12 @@
 import { Description } from "@/component/description";
-import { Alert, Label } from "@heroui/react";
+import { Alert, Label, Link, linkVariants } from "@heroui/react";
 import { createColumnHelper, flexRender, tableFeatures, useTable } from "@tanstack/react-table";
 import { ReactNode, useMemo } from "react";
 import { TableCellStack } from "./data/tableCellStack";
 import { Table } from "@heroui/react";
 import Loading from "@/component/loading";
 import { AlihStatusPermohonanPenghapusanContract } from "@/action/alih-status/permohonan-penghapusan/contract";
+import NextLink from "next/link";
 const features = tableFeatures({});
 const columnHelper = createColumnHelper<typeof features, AlihStatusPermohonanPenghapusanContract.SelectDTO>();
 export default function DetailPermohonanPenghapusan({
@@ -24,7 +25,7 @@ export default function DetailPermohonanPenghapusan({
 
     const isJamak = (data?.length ?? 0) > 1;
     const isKosong = !data || data.length === 0;
-
+    const slots = linkVariants();
     return (
         <>
             <div className="flex justify-between items-center">
@@ -47,6 +48,15 @@ export default function DetailPermohonanPenghapusan({
                         <RenderTable data={data!} rowAction={rowAction} />
                     ) : (
                         <Description items={[[
+                            {
+                                label: "ID", value: <NextLink
+                                    className={slots.base()}
+                                    href={`/dashboard/alih-status/permohonan-penghapusan/${data![0].id}`}
+
+                                ># {data![0].id}<Link.Icon className={slots.icon()} /></NextLink>
+                            },
+                            { label: "Tahun", value: data![0].tahun }
+                        ], [
                             {
                                 label: "Nomor Surat",
                                 value: data[0].suratNomor

@@ -7,6 +7,7 @@ import {
     foreignKey,
     snakeCase,
     uniqueIndex,
+    text,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { rekonTypeEnum, masterPerangkatDaerah } from "./../../schema";
@@ -36,6 +37,8 @@ export const rekonTable = snakeCase.table(
             scale: 2,
             mode: "number",
         }).notNull(),
+        kertasKerjaId: text(),
+        baId: text(),
 
         createdAt: timestamp("created_at", {
             withTimezone: true,

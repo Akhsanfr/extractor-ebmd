@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { Button, Label, Modal, Table, toast, useOverlayState } from "@heroui/react";
+import { Button, Chip, Label, Modal, Table, toast, useOverlayState } from "@heroui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Import } from "lucide-react";
+import { FileSpreadsheet, Import } from "lucide-react";
 import { actionImportRekon } from "@/action/rekon/action.import";
 import { RekonContract } from "@/action/rekon/contract";
 import { RekonFormat } from "@/action/rekon/format";
@@ -53,30 +53,40 @@ export default function RekonImportModal({
     });
 
     const visibleRows = previewData.slice(0, PREVIEW_LIMIT);
+    const hasPreview = previewData.length > 0;
 
     return (
         <>
             <Button
-                variant="secondary"
+                variant="primary"
+                className="shadow-lg shadow-accent/30 transition-transform hover:scale-[1.03]"
                 isDisabled={tahun === undefined}
                 onPress={() => handleModalOpenChange(true)}
             >
-                <Import />
+                <Import size={18} />
                 Import
             </Button>
             <Modal isOpen={modal.isOpen} onOpenChange={handleModalOpenChange}>
                 <Modal.Backdrop>
-                    <Modal.Container size={previewData.length > 0 ? "cover" : "sm"}>
+                    <Modal.Container size={hasPreview ? "cover" : "sm"}>
                         <Modal.Dialog>
                             <Modal.Header>
-                                <Modal.Heading>
-                                    Import realisasi anggaran — {BULAN_LABEL[bulan - 1]} {tahun}
-                                </Modal.Heading>
+                                <div className="flex items-center gap-3">
+                                    <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-accent/10 text-accent">
+                                        <FileSpreadsheet size={18} />
+                                    </span>
+                                    <div>
+                                        <Modal.Heading>Import realisasi anggaran</Modal.Heading>
+                                        <p className="text-sm text-muted">
+                                            {BULAN_LABEL[bulan - 1]} {tahun}
+                                        </p>
+                                    </div>
+                                </div>
                             </Modal.Header>
                             <Modal.Body>
                                 <div className="flex flex-col gap-4">
-                                    {previewData.length === 0 ? (
-                                        <div className="flex flex-col gap-1">
+                                    {!hasPreview ? (
+                                        <div className="flex flex-col gap-1.5">
                                             <Label>File Excel</Label>
                                             <ImportExcel
                                                 validation={RekonContract.importItem}
@@ -90,26 +100,53 @@ export default function RekonImportModal({
                                             />
                                         </div>
                                     ) : (
-                                        <div className="flex flex-col gap-1">
-                                            <Label>
-                                                Preview ({visibleRows.length} dari {previewData.length} baris)
-                                            </Label>
+                                        <div className="flex flex-col gap-3">
+                                            <div className="flex flex-wrap items-center gap-2">
+                                                <Label>Preview</Label>
+                                                <Chip size="sm" variant="soft" color="accent">
+                                                    <Chip.Label>
+                                                        {visibleRows.length} dari {previewData.length} baris
+                                                    </Chip.Label>
+                                                </Chip>
+                                            </div>
                                             <Table aria-label="Preview import rekon">
                                                 <Table.ScrollContainer>
                                                     <Table.Content>
                                                         <Table.Header>
                                                             <Table.Column isRowHeader>Perangkat Daerah</Table.Column>
-                                                            <Table.Column>Aset Tetap</Table.Column>
-                                                            <Table.Column>Persediaan</Table.Column>
-                                                            <Table.Column>Pemeliharaan</Table.Column>
+                                                            <Table.Column>
+                                                                <div className="text-right">Aset Tetap</div>
+                                                            </Table.Column>
+                                                            <Table.Column>
+                                                                <div className="text-right">Persediaan</div>
+                                                            </Table.Column>
+                                                            <Table.Column>
+                                                                <div className="text-right">Pemeliharaan</div>
+                                                            </Table.Column>
                                                         </Table.Header>
                                                         <Table.Body>
                                                             {visibleRows.map((row) => (
                                                                 <Table.Row key={row.originalIndex}>
-                                                                    <Table.Cell>{row.perangkatDaerah}</Table.Cell>
-                                                                    <Table.Cell>{formatRupiah(row.asetTetap)}</Table.Cell>
-                                                                    <Table.Cell>{formatRupiah(row.persediaan)}</Table.Cell>
-                                                                    <Table.Cell>{formatRupiah(row.pemeliharaan)}</Table.Cell>
+                                                                    <Table.Cell>
+                                                                        <span className="font-medium">
+                                                                            {row.perangkatDaerah}
+                                                                        </span>
+                                                                    </Table.Cell>
+                                                                    <Table.Cell>
+                                                                        <div className="text-right tabular-nums">
+                                                                            {formatRupiah(row.asetTetap)}
+                                                                        </div>
+                                                                    </Table.Cell>
+                                                                    <Table.Cell>
+                                                                        <div className="text-right tabular-nums">
+                                                                            {formatRupiah(row.persediaan)}
+                                                                        </div>
+                                                                    </Table.Cell>
+                                                                    <Table.Cell>
+                                                                        <div className="text-right tabular-nums">
+                                                                            {formatRupiah(row.pemeliharaan)}
+                                                                        </div>
+                                                                    </Table.Cell>
                                                                 </Table.Row>
                                                             ))}
                                                         </Table.Body>
@@ -128,9 +165,9 @@ export default function RekonImportModal({
                                 >
                                     Batal
                                 </Button>
-                                {previewData.length > 0 && (
+                                {hasPreview && (
                                     <Button
-                                        variant="ghost"
+                                        variant="secondary"
                                         isDisabled={importMutation.isPending}
                                         onPress={resetImportState}
                                     >
@@ -138,7 +175,7 @@ export default function RekonImportModal({
                                     </Button>
                                 )}
                                 <Button
-                                    isDisabled={importMutation.isPending || previewData.length === 0}
+                                    isDisabled={importMutation.isPending || !hasPreview}
                                     onPress={() => importMutation.mutate()}
                                 >
                                     {importMutation.isPending ? "Menyimpan..." : "Simpan"}

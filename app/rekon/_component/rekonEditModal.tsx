@@ -1,14 +1,17 @@
 "use client";
 import { useState } from "react";
-import { Alert, Button, Input, Label, Modal, toast } from "@heroui/react";
+import { Alert, Button, Chip, Input, Label, Modal, toast } from "@heroui/react";
 import { useMutation, useQueryClient, type QueryKey } from "@tanstack/react-query";
+import { Pencil } from "lucide-react";
 import { actionEditRekon } from "@/action/rekon/action.update";
 import { RekonContract } from "@/action/rekon/contract";
+import { getSelisihStatus } from "./rekonStatus";
 import {
     BULAN_LABEL,
     REKON_TYPE_LABEL,
     formatRupiah,
     getErrorMessage,
+    hitungSelisih,
     nominalToInput,
     parseNominalInput,
     type RekonRow,
@@ -49,6 +52,14 @@ export default function RekonEditModal({
         },
     });
 
+    // Pratinjau selisih mengikuti isian pengguna (hanya tampilan, tidak dikirim ke server).
+    const nominalPreview = parseNominalInput(value);
+    const previewSelisih =
+        nominalPreview === null
+            ? null
+            : hitungSelisih({ realisasiAnggaran: target.realisasiAnggaran, inputBMD: nominalPreview });
+    const previewStatus = previewSelisih ? getSelisihStatus(previewSelisih) : null;
+
     const submit = () => {
         if (mutation.isPending) return;
         const nominal = parseNominalInput(value);
@@ -75,21 +86,28 @@ export default function RekonEditModal({
                 <Modal.Container size="sm">
                     <Modal.Dialog>
                         <Modal.Header>
-                            <Modal.Heading>Edit Input BMD</Modal.Heading>
+                            <div className="flex items-center gap-3">
+                                <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-accent/10 text-accent">
+                                    <Pencil size={18} />
+                                </span>
+                                <Modal.Heading>Edit Input BMD</Modal.Heading>
+                            </div>
                         </Modal.Header>
                         <Modal.Body>
-                            <div className="flex flex-col gap-4">
-                                <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
+                            <div className="flex flex-col gap-5">
+                                <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 rounded-2xl border border-border bg-surface p-4 text-sm">
                                     <dt className="text-muted">Perangkat Daerah</dt>
-                                    <dd>{target.perangkatDaerahNama}</dd>
+                                    <dd className="text-right font-medium">{target.perangkatDaerahNama}</dd>
                                     <dt className="text-muted">Jenis Rekon</dt>
-                                    <dd>{REKON_TYPE_LABEL[target.rekonType]}</dd>
+                                    <dd className="text-right">{REKON_TYPE_LABEL[target.rekonType]}</dd>
                                     <dt className="text-muted">Periode</dt>
-                                    <dd>
+                                    <dd className="text-right">
                                         {BULAN_LABEL[target.bulan - 1]} {target.tahun}
                                     </dd>
                                     <dt className="text-muted">Realisasi</dt>
-                                    <dd className="tabular-nums">{formatRupiah(target.realisasiAnggaran)}</dd>
+                                    <dd className="text-right font-medium tabular-nums">
+                                        {formatRupiah(target.realisasiAnggaran)}
+                                    </dd>
                                 </dl>
 
                                 {mutation.isError && (
@@ -102,7 +120,7 @@ export default function RekonEditModal({
                                     </Alert>
                                 )}
 
-                                <div className="flex flex-col gap-1">
+                                <div className="flex flex-col gap-1.5">
                                     <Label>Input BMD (Rp)</Label>
                                     <Input
                                         autoFocus
@@ -125,6 +143,26 @@ export default function RekonEditModal({
                                         <p className="text-xs text-muted">
                                             Gunakan koma untuk desimal. Titik diabaikan sebagai pemisah ribuan.
                                         </p>
+                                    )}
+                                </div>
+
+                                {/* Pratinjau selisih */}
+                                <div
+                                    className={`flex items-center justify-between rounded-2xl px-4 py-3 ${previewStatus ? previewStatus.softBgClass : "bg-default text-muted"
+                                        }`}
+                                >
+                                    <div>
+                                        <p className="text-xs uppercase tracking-wider opacity-80">
+                                            Kurang/Lebih
+                                        </p>
+                                        <p className="font-semibold tabular-nums">
+                                            {previewSelisih ? formatRupiah(previewSelisih) : "—"}
+                                        </p>
+                                    </div>
+                                    {previewStatus && (
+                                        <Chip size="sm" variant="soft" color={previewStatus.chipColor}>
+                                            <Chip.Label>{previewStatus.label}</Chip.Label>
+                                        </Chip>
                                     )}
                                 </div>
                             </div>

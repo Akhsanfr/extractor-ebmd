@@ -1,11 +1,14 @@
 "use client";
 import { useMemo, useState } from "react";
-import { Alert, Label, ListBox, Select, Tabs, type Key } from "@heroui/react";
+import { Alert, Card, Chip, Label, ListBox, Select, Tabs, type Key } from "@heroui/react";
 import { useQuery } from "@tanstack/react-query";
+import { Scale } from "lucide-react";
 import { actionGetListRekon } from "@/action/rekon/action.read";
 import Loading from "@/component/loading";
 import RekonEditModal from "./rekonEditModal";
 import RekonImportModal from "./rekonImportModal";
+import RekonShell from "./rekonShell";
+import RekonSummary from "./rekonSummary";
 import RekonTable from "./rekonTable";
 import {
     BULAN_LABEL,
@@ -18,7 +21,7 @@ import {
 } from "./rekonUtil";
 import { RekonType } from "@/enum/rekon";
 
-export default function RekonContent() {
+function RekonBody() {
     const tahunOptions = useMemo(() => getTahunOptions(), []);
 
     // Filter disimpan di sini, jadi tetap terjaga saat pengguna berinteraksi dengan tabel.
@@ -40,7 +43,23 @@ export default function RekonContent() {
     });
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
+            {/* Header */}
+            <header className="flex flex-wrap items-center gap-4">
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-accent text-accent-foreground shadow-lg shadow-accent/30">
+                    <Scale size={22} />
+                </span>
+                <div className="min-w-0">
+                    <h1 className="text-2xl font-bold tracking-tight">Rekon Realisasi &amp; Input BMD</h1>
+                    <p className="text-sm text-muted">
+                        Bandingkan realisasi anggaran dengan input BMD untuk setiap perangkat daerah.
+                    </p>
+                </div>
+                <div className="ml-auto">
+                    <RekonImportModal tahun={tahun} bulan={bulan} />
+                </div>
+            </header>
+
             {tahun === undefined && (
                 <Alert status="warning">
                     <Alert.Indicator />
@@ -53,88 +72,111 @@ export default function RekonContent() {
                 </Alert>
             )}
 
-            <div className="flex flex-row flex-wrap items-end gap-3">
-                <Select
-                    className="w-32"
-                    placeholder="Pilih tahun"
-                    value={tahun === undefined ? undefined : String(tahun)}
-                    onChange={(key: Key | null) => key && setTahun(Number(key))}
-                >
-                    <Label>Tahun</Label>
-                    <Select.Trigger>
-                        <Select.Value />
-                        <Select.Indicator />
-                    </Select.Trigger>
-                    <Select.Popover>
-                        <ListBox>
-                            {tahunOptions.map((t) => (
-                                <ListBox.Item key={t} id={String(t)} textValue={String(t)}>
-                                    {t}
-                                    <ListBox.ItemIndicator />
-                                </ListBox.Item>
-                            ))}
-                        </ListBox>
-                    </Select.Popover>
-                </Select>
+            {/* Filter */}
+            <Card className="border border-border">
+                <Card.Content className="flex flex-row flex-wrap items-end gap-4 p-4">
+                    <Select
+                        className="w-32"
+                        placeholder="Pilih tahun"
+                        value={tahun === undefined ? undefined : String(tahun)}
+                        onChange={(key: Key | null) => key && setTahun(Number(key))}
+                    >
+                        <Label>Tahun</Label>
+                        <Select.Trigger>
+                            <Select.Value />
+                            <Select.Indicator />
+                        </Select.Trigger>
+                        <Select.Popover>
+                            <ListBox>
+                                {tahunOptions.map((t) => (
+                                    <ListBox.Item key={t} id={String(t)} textValue={String(t)}>
+                                        {t}
+                                        <ListBox.ItemIndicator />
+                                    </ListBox.Item>
+                                ))}
+                            </ListBox>
+                        </Select.Popover>
+                    </Select>
 
-                <Select
-                    className="w-44"
-                    value={String(bulan)}
-                    onChange={(key: Key | null) => key && setBulan(Number(key))}
-                >
-                    <Label>Bulan</Label>
-                    <Select.Trigger>
-                        <Select.Value />
-                        <Select.Indicator />
-                    </Select.Trigger>
-                    <Select.Popover>
-                        <ListBox>
-                            {BULAN_LABEL.map((label, i) => (
-                                <ListBox.Item key={label} id={String(i + 1)} textValue={label}>
-                                    {label}
-                                    <ListBox.ItemIndicator />
-                                </ListBox.Item>
-                            ))}
-                        </ListBox>
-                    </Select.Popover>
-                </Select>
+                    <Select
+                        className="w-44"
+                        value={String(bulan)}
+                        onChange={(key: Key | null) => key && setBulan(Number(key))}
+                    >
+                        <Label>Bulan</Label>
+                        <Select.Trigger>
+                            <Select.Value />
+                            <Select.Indicator />
+                        </Select.Trigger>
+                        <Select.Popover>
+                            <ListBox>
+                                {BULAN_LABEL.map((label, i) => (
+                                    <ListBox.Item key={label} id={String(i + 1)} textValue={label}>
+                                        {label}
+                                        <ListBox.ItemIndicator />
+                                    </ListBox.Item>
+                                ))}
+                            </ListBox>
+                        </Select.Popover>
+                    </Select>
 
-                <Tabs
-                    selectedKey={rekonType}
-                    onSelectionChange={(key: Key) => {
-                        if (isRekonType(key)) setRekonType(key);
-                    }}
-                >
-                    <Tabs.ListContainer>
-                        <Tabs.List aria-label="Jenis rekon">
-                            {Object.values(RekonType).map((type) => (
-                                <Tabs.Tab key={type} id={type}>
-                                    {REKON_TYPE_LABEL[type]}
-                                    <Tabs.Indicator />
-                                </Tabs.Tab>
-                            ))}
-                        </Tabs.List>
-                    </Tabs.ListContainer>
-                </Tabs>
+                    <div className="flex flex-col gap-1">
+                        <span className="text-sm font-medium">Jenis rekon</span>
+                        <Tabs
+                            selectedKey={rekonType}
+                            onSelectionChange={(key: Key) => {
+                                if (isRekonType(key)) setRekonType(key);
+                            }}
+                        >
+                            <Tabs.ListContainer>
+                                <Tabs.List aria-label="Jenis rekon">
+                                    {Object.values(RekonType).map((type) => (
+                                        <Tabs.Tab key={type} id={type}>
+                                            {REKON_TYPE_LABEL[type]}
+                                            <Tabs.Indicator />
+                                        </Tabs.Tab>
+                                    ))}
+                                </Tabs.List>
+                            </Tabs.ListContainer>
+                        </Tabs>
+                    </div>
+                </Card.Content>
+            </Card>
 
-                <div className="ml-auto">
-                    <RekonImportModal tahun={tahun} bulan={bulan} />
-                </div>
-            </div>
+            {/* Ringkasan */}
+            <RekonSummary data={query.data} />
 
-            {query.isError ? (
-                <Alert status="danger">
-                    <Alert.Indicator />
-                    <Alert.Content>
-                        <Alert.Title>Gagal memuat data rekon</Alert.Title>
-                        <Alert.Description>{getErrorMessage(query.error)}</Alert.Description>
-                    </Alert.Content>
-                </Alert>
-            ) : query.isLoading ? (
-                <Loading />
-            ) : (
-                <RekonTable data={query.data ?? []} onEdit={setEditTarget} />
-            )}
+            {/* Tabel */}
+            <Card className="border border-border">
+                <Card.Header className="flex-row items-center justify-between gap-3">
+                    <div>
+                        <Card.Title className="text-base">{REKON_TYPE_LABEL[rekonType]}</Card.Title>
+                        <Card.Description>
+                            {BULAN_LABEL[bulan - 1]} {tahun ?? "—"}
+                        </Card.Description>
+                    </div>
+                    {query.data && (
+                        <Chip color="accent" variant="soft" size="sm">
+                            <Chip.Label>{query.data.length} perangkat daerah</Chip.Label>
+                        </Chip>
+                    )}
+                </Card.Header>
+                <Card.Content>
+                    {query.isError ? (
+                        <Alert status="danger">
+                            <Alert.Indicator />
+                            <Alert.Content>
+                                <Alert.Title>Gagal memuat data rekon</Alert.Title>
+                                <Alert.Description>{getErrorMessage(query.error)}</Alert.Description>
+                            </Alert.Content>
+                        </Alert>
+                    ) : query.isLoading ? (
+                        <Loading />
+                    ) : (
+                        <RekonTable data={query.data ?? []} onEdit={setEditTarget} />
+                    )}
+                </Card.Content>
+            </Card>
 
             {editTarget && (
                 <RekonEditModal
@@ -145,5 +187,14 @@ export default function RekonContent() {
                 />
             )}
         </div>
+    );
+}
+
+// Halaman dirender tanpa layout induk, jadi dibungkus shell (header, latar, footer).
+export default function RekonContent() {
+    return (
+        <RekonShell>
+            <RekonBody />
+        </RekonShell>
     );
 }

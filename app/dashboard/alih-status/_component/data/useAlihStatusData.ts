@@ -31,10 +31,10 @@ export function useDeleteAlihStatusData(masterId: number) {
     });
 }
 
-export function useImportAlihStatusData(permohonanId: number) {
+export function useImportAlihStatusData(permohonanId: number, tahun: number) {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (file: File) => actionImportAlihStatusData({ data: file, permohonanId }),
+        mutationFn: (file: File) => actionImportAlihStatusData({ data: file, permohonanId, tahun }),
         onSuccess: (result) => {
             unwrapAction(result);
             queryClient.invalidateQueries({ queryKey: ["alih-status-data"] });

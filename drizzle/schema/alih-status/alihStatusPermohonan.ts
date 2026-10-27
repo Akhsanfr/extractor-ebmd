@@ -4,7 +4,7 @@ import { alihStatusTypeEnum, userTable } from "./../../schema";
 export const alihStatusPermohonanTable = snakeCase.table(
     "alih_status_permohonan",
     {
-        id: serial("id").primaryKey(),
+        id: integer().generatedAlwaysAsIdentity().primaryKey(),
         alihStatusType: alihStatusTypeEnum().notNull(),
         alasan: text("alasan"),
         suratNomor: text("surat_nomor"),

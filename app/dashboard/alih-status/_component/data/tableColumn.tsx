@@ -195,6 +195,13 @@ export const alihStatusColumns = alihStatusColumnHelper.columns([
         filterFn: filterFnSelectedIncludesValue,
         enableGlobalFilter: false,
     }),
+    alihStatusColumnHelper.accessor("keterangan", {
+        id: "keterangan",
+        header: () => <TableHeaderStack columns={["Keterangan"]} />,
+        cell: ({ row }) => (
+            <TableCellStack columns={[row.original.keterangan]} />
+        ),
+    }),
     // Kolom tersembunyi khusus untuk search box (global filter). Digabung
     // jadi satu string supaya pencarian mencakup semua kolom teks sekaligus,
     // tanpa perlu bikin tiap kolom display jadi accessor. Disembunyikan lewat

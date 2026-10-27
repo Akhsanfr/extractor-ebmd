@@ -270,6 +270,7 @@ export function AlihStatusTabelData({
                                             </div>
                                         </Table.Cell>
                                         <Table.Cell />
+                                        <Table.Cell />
                                         {bodyAction && <Table.Cell />}
                                     </Table.Row>
                                 );

@@ -136,6 +136,7 @@ export const AlihStatusSKHapusService = {
 
             await AlihStatusSKHapusRepository.update(tx, {
                 ...skHapus,
+                isDone: true,
                 keyBerkas: key,
                 updatedAt: new Date(),
                 updatedBy: userId,

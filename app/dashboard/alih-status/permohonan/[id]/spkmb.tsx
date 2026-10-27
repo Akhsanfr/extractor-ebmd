@@ -21,24 +21,15 @@ import { AutocompleteFormField, SelectFormField, TextFormField } from "../../_co
 import { actionCreateAlihStatusSpkmb } from "@/action/alih-status/spkmb/action.create";
 import { actionEditAlihStatusSpkmb } from "@/action/alih-status/spkmb/action.update";
 import { Controller } from "react-hook-form";
-import { Edit, Plus, Printer, RefreshCw, Trash } from "lucide-react";
+import { Edit, Plus, Printer, Trash } from "lucide-react";
 import { PegawaiPangkatGolongan } from "@/enum/user";
 import { useQueryClient, UseQueryResult } from "@tanstack/react-query";
 import { actionGetListAlihStatusSpkmbByIds } from "@/action/alih-status/spkmb/action.read";
-import { createColumnHelper, flexRender, tableFeatures, useTable } from "@tanstack/react-table";
-import { generateDocument } from "@/lib/generateDoc";
 import { AlihStatusPermohonanContract } from "@/action/alih-status/permohonan/contract";
-import { replaceNullWithDash } from "@/lib/array";
-import { formatRupiah, sumDecimal } from "@/lib/number";
-import { actionDeleteAlihStatusSpkmb } from "@/action/alih-status/spkmb/action.delete";
-import { TableCellStack } from "../../_component/data/tableCellStack";
-import { PerangkatDaerah, PerangkatDaerahJabatan } from "@/enum/perangkatDaerah";
 import DetailSPKMB from "../../_component/spkmb";
 import { generateSPKMB } from "@/lib/generateDoc/alih-status/generateSPKMB";
+import { actionDeleteAlihStatusSpkmb } from "@/action/alih-status/spkmb/action.delete";
 
-const features = tableFeatures({})
-
-const columnHelper = createColumnHelper<typeof features, AlihStatusSPKMBContract.SelectDTO>();
 
 export default function AlihStatusSpkmb({ query, queryKey }: { query: UseQueryResult<AlihStatusPermohonanContract.SelectWithDetailDTO>, queryKey: unknown[] }
 ) {
@@ -52,12 +43,6 @@ export default function AlihStatusSpkmb({ query, queryKey }: { query: UseQueryRe
         AlihStatusSPKMBContract.SelectDTO | null | undefined
     >(undefined); // undefined = closed, null = create, object = edit
 
-    // FIX: target yang sedang di-edit harus tetap muncul di opsi,
-    // walaupun dia sendiri "sudah punya" SPKMB (yaitu dirinya sendiri).
-    // Sebelumnya filter ini membuang semua target yang sudah ada SPKMB-nya
-    // tanpa mengecualikan target milik formTarget saat ini, sehingga saat
-    // edit, value perangkatDaerahTujuan yang sudah terisi di form tidak
-    // ditemukan di daftar options autocomplete.
     const availablePerangkatDaerahTujuan: string[] = useMemo(() => {
         if (!query.data) return []
         const list = new Set(query.data.data.map((item) => item.perangkatDaerahTujuan))
@@ -139,91 +124,6 @@ export default function AlihStatusSpkmb({ query, queryKey }: { query: UseQueryRe
             },
         );
     }
-
-    const removeSpkmb = useCallback(async (spkmbId: number) => {
-        try {
-            const result = await actionDeleteAlihStatusSpkmb({
-                id: spkmbId,
-            });
-
-            if (!result.success) {
-                throw result.error;
-            }
-
-            queryClient.setQueryData(queryKey, (old: AlihStatusPermohonanContract.SelectWithDetailDTO) => {
-                if (!old) return old;
-
-                return {
-                    ...old,
-                    spkmb: old.spkmb.filter(
-                        (item) => item.id !== spkmbId,
-                    ),
-                    data: old.data.map((item) =>
-                        item.spkmbId === spkmbId
-                            ? { ...item, spkmbId: null }
-                            : item,
-                    ),
-                };
-            });
-
-            toast.success("SPKMB berhasil dihapus");
-        } catch (error: any) {
-            toast.danger("Gagal menghapus SPKMB", error.message);
-        }
-    }, [queryClient, queryKey]);
-    const columns = useMemo(() => columnHelper.columns([
-        columnHelper.display({
-            id: "no",
-            header: "No",
-            cell: ({ row }) => row.index + 1,
-        }),
-        columnHelper.accessor("perangkatDaerahTujuan", {
-            header: "Perangkat Daerah Tujuan",
-            cell: ({ row }) => (
-                <TableCellStack columns={[row.original.perangkatDaerahTujuan]} />
-            ),
-        }),
-        columnHelper.accessor("penggunaBarangTujuanNama", {
-            header: "Jabatan",
-            cell: ({ row }) => (
-                <TableCellStack columns={[row.original.penggunaBarangTujuanNama, row.original.penggunaBarangTujuanNIP, row.original.penggunaBarangTujuanPangkat]} />
-            ),
-        }),
-        columnHelper.accessor("isComplete", {
-            header: "Status",
-            cell: ({ row }) => (
-                <TableCellStack columns={[row.original.isComplete ? <Chip>Lengkap</Chip> : <Chip variant="soft">Belum Lengkap</Chip>]} />
-            ),
-        }),
-        columnHelper.display({
-            id: "actions",
-            header: "Aksi",
-            cell: ({ row }) => (
-                <ButtonGroup>
-                    <Button variant="outline" size="sm" onPress={() => setFormTarget(row.original)}>
-                        <Edit />
-                    </Button>
-                    <Button variant="outline" size="sm" onPress={() => query.data && generateSPKMB(query.data, row.original.id)}>
-                        <Printer />
-                    </Button>
-                    {
-                        !row.original.isComplete ? <Button variant="danger-soft" size="sm" onPress={() => removeSpkmb(row.original.id)}>
-                            <Trash />
-                        </Button> : null
-                    }
-                </ButtonGroup>
-            ),
-        }),
-    ]), [query.data, removeSpkmb])
-    const table = useTable({
-        features,
-        columns,
-        data: query.data?.spkmb ?? [],
-    })
-    const rows = table.getRowModel().rows;
-
-    // Default values form SPKMB hanya perlu dihitung ulang saat target/data berubah,
-    // bukan setiap render (termasuk saat query refetch di background).
     const spkmbDefaultValues = useMemo(() => ({
         dataIds: data
             .filter((item) => item.spkmbId === formTarget?.id)
@@ -236,82 +136,143 @@ export default function AlihStatusSpkmb({ query, queryKey }: { query: UseQueryRe
         penggunaBarangTujuanPangkat: formTarget?.penggunaBarangTujuanPangkat ?? "",
         penggunaBarangTujuanNIP: formTarget?.penggunaBarangTujuanNIP ?? "",
     }), [data, formTarget])
+    // 1. Cetak
+    const handlePrint = useCallback((spkmbId: number) => {
+        if (!query.data) {
+            toast.danger("Gagal mencetak draft SPKMB", {
+                description: "Data belum tersedia",
+            });
+            return;
+        }
+        generateSPKMB(query.data, spkmbId);
+    }, [query.data]);
 
+    // 2. Edit
+    const handleEdit = useCallback((spkmb: AlihStatusSPKMBContract.SelectDTO) => {
+        setFormTarget(spkmb);
+    }, []);
+    const handleDelete = useCallback(async (spkmbId: number) => {
+        try {
+            const result = await actionDeleteAlihStatusSpkmb({ id: spkmbId });
+
+            if (!result.success) {
+                throw result.error;
+            }
+
+            queryClient.setQueryData(
+                queryKey,
+                (old: AlihStatusPermohonanContract.SelectWithDetailDTO) => {
+                    if (!old) return old;
+
+                    return {
+                        ...old,
+                        spkmb: old.spkmb.filter((item) => item.id !== spkmbId),
+                        data: old.data.map((item) =>
+                            item.spkmbId === spkmbId ? { ...item, spkmbId: null } : item,
+                        ),
+                    };
+                },
+            );
+
+            toast.success("SPKMB berhasil dihapus");
+        } catch (error) {
+            toast.danger("Gagal menghapus SPKMB", {
+                description: (error as Error).message,
+            });
+        }
+    }, [queryClient, queryKey]);
 
     return (
         <>
-            <DetailSPKMB data={query.data?.spkmb ?? []} isLoading={query.isLoading} action={
-                <ButtonGroup>
-                    <Tooltip>
-                        <Tooltip.Trigger>
-                            <Button variant="secondary" onPress={() => setFormTarget(null)}><Plus /></Button>
-                        </Tooltip.Trigger>
-                        <Tooltip.Content>
-                            <Tooltip.Arrow />
-                            Tambah SPKMB
-                        </Tooltip.Content>
-                    </Tooltip>
-                    {query.data?.spkmb.length === 1 && (
+            <DetailSPKMB data={query.data?.spkmb ?? []}
+                rowAction={(row) => (
+                    <ButtonGroup>
+                        <Button variant="secondary" size="sm" onPress={() => handlePrint(row.id)}>
+                            <Printer />
+                        </Button>
+                        <Button variant="secondary" size="sm" onPress={() => handleEdit(row)}>
+                            <Edit />
+                        </Button>
+                        {!row.isComplete && (
+                            <Button variant="danger-soft" size="sm" onPress={() => handleDelete(row.id)}>
+                                <Trash />
+                            </Button>
+                        )}
+                    </ButtonGroup>
+                )}
+
+                isLoading={query.isLoading} action={
+                    <ButtonGroup>
                         <Tooltip>
                             <Tooltip.Trigger>
-                                <Button
-                                    variant="secondary"
-                                    onPress={() => {
-                                        const data = query.data;
-
-                                        if (!data) {
-                                            toast.danger("Gagal mengedit SPKMB", {
-                                                description: "Data belum tersedia",
-                                            });
-                                            return;
-                                        }
-
-                                        setFormTarget(data.spkmb[0]);
-                                    }}
-                                >
-                                    <ButtonGroup.Separator />
-                                    <Edit />
-                                </Button>
+                                <Button variant="secondary" onPress={() => setFormTarget(null)}><Plus /></Button>
                             </Tooltip.Trigger>
-
                             <Tooltip.Content>
                                 <Tooltip.Arrow />
-                                Edit SPKMB
+                                Tambah SPKMB
                             </Tooltip.Content>
                         </Tooltip>
-                    )}
+                        {query.data?.spkmb.length === 1 && (
+                            <Tooltip>
+                                <Tooltip.Trigger>
+                                    <Button
+                                        variant="secondary"
+                                        onPress={() => {
+                                            const data = query.data;
 
-                    {query.data?.spkmb.length === 1 && (
-                        <Tooltip>
-                            <Tooltip.Trigger>
-                                <Button
-                                    variant="secondary"
-                                    onPress={() => {
-                                        const data = query.data;
+                                            if (!data) {
+                                                toast.danger("Gagal mengedit SPKMB", {
+                                                    description: "Data belum tersedia",
+                                                });
+                                                return;
+                                            }
 
-                                        if (!data) {
-                                            toast.danger("Gagal mencetak draft SPKMB", {
-                                                description: "Data belum tersedia",
-                                            });
-                                            return;
-                                        }
+                                            setFormTarget(data.spkmb[0]);
+                                        }}
+                                    >
+                                        <ButtonGroup.Separator />
+                                        <Edit />
+                                    </Button>
+                                </Tooltip.Trigger>
 
-                                        generateSPKMB(data, data.spkmb[0].id);
-                                    }}
-                                >
-                                    <ButtonGroup.Separator />
-                                    <Printer />
-                                </Button>
-                            </Tooltip.Trigger>
+                                <Tooltip.Content>
+                                    <Tooltip.Arrow />
+                                    Edit SPKMB
+                                </Tooltip.Content>
+                            </Tooltip>
+                        )}
 
-                            <Tooltip.Content>
-                                <Tooltip.Arrow />
-                                Cetak Draft SPKMB
-                            </Tooltip.Content>
-                        </Tooltip>
-                    )}
-                </ButtonGroup>
-            } />
+                        {query.data?.spkmb.length === 1 && (
+                            <Tooltip>
+                                <Tooltip.Trigger>
+                                    <Button
+                                        variant="secondary"
+                                        onPress={() => {
+                                            const data = query.data;
+
+                                            if (!data) {
+                                                toast.danger("Gagal mencetak draft SPKMB", {
+                                                    description: "Data belum tersedia",
+                                                });
+                                                return;
+                                            }
+
+                                            generateSPKMB(data, data.spkmb[0].id);
+                                        }}
+                                    >
+                                        <ButtonGroup.Separator />
+                                        <Printer />
+                                    </Button>
+                                </Tooltip.Trigger>
+
+                                <Tooltip.Content>
+                                    <Tooltip.Arrow />
+                                    Cetak Draft SPKMB
+                                </Tooltip.Content>
+                            </Tooltip>
+                        )}
+                    </ButtonGroup>
+                } />
             {formTarget !== undefined && (
                 <EntityFormModal<AlihStatusSPKMBContract.CreateDTO>
                     target={formTarget as (AlihStatusSPKMBContract.CreateDTO & { id: number }) | null}

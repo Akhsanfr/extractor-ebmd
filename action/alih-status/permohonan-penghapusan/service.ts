@@ -132,6 +132,7 @@ export const AlihStatusPermohonanPenghapusanService = {
 
             await AlihStatusPermohonanPenghapusanRepository.update(tx, {
                 ...permohonanPenghapusan,
+                isDone: true,
                 keyBerkas: key,
                 updatedAt: new Date(),
                 updatedBy: userId,

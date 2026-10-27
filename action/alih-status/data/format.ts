@@ -23,7 +23,7 @@ export const AlihStatusDataFormat = {
             nomorMesin: row[7],
             kondisi: row[8],
             lokasi: row[9],
-            tahunPerolehan: row[10],
+            tahunPerolehan: Number(row[10]),
             asalUsul: row[11],
             jumlah: row[12],
             luas: row[13],
@@ -35,6 +35,7 @@ export const AlihStatusDataFormat = {
             assetType: BmdAssetTypeFromLabel[
                 String(row[19]).trim().toLowerCase()
             ],
+            keterangan: row[20],
             spkmbId: null,
             permohonanId: null,
             BAPenelitianId: null,

@@ -113,6 +113,7 @@ export const AlihStatusBAPenelitianService = {
 
             await AlihStatusBAPenelitianRepository.update(tx, {
                 ...baPenelitian,
+                isDone: true,
                 keyBerkas: key,
                 updatedAt: new Date(),
                 updatedBy: userId,

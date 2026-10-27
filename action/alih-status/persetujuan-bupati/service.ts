@@ -124,6 +124,7 @@ export const AlihStatusPersetujuanBupatiService = {
 
             await AlihStatusPersetujuanBupatiRepository.update(tx, {
                 ...persetujuanBupati,
+                isDone: true,
                 keyBerkas: key,
                 updatedAt: new Date(),
                 updatedBy: userId,

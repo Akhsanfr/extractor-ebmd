@@ -33,7 +33,9 @@ export default function Content({ permohonanId }: { permohonanId: number }) {
         <div className="flex gap-4">
             <div className="flex flex-col gap-4">
                 <AlihStatusPermohonan query={query} queryKey={queryKey} />
-                <AlihStatusData permohonanId={permohonanId}
+                <AlihStatusData
+                    permohonanId={permohonanId}
+                    tahun={query.data?.permohonan.tahun}
                     query={query}
                     queryKey={queryKey} />
                 <AlihStatusSpkmb query={query} queryKey={queryKey} />

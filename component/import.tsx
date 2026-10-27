@@ -89,7 +89,9 @@ export default function ImportExcel<TSchema extends ZodTypeAny>({
 
                 const allRows = await parseExcelFile(file, sheetName);
                 const formatted = format(allRows)
+                console.log("formated", formatted)
                 const result = validation.safeParse(formatted);
+                console.log(result)
                 if (!result.success) {
                     const filteredErrors = groupIssuesByRow(result.error.issues);
 

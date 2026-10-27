@@ -154,6 +154,7 @@ export const AlihStatusBASTService = {
 
             await AlihStatusBASTRepository.update(tx, {
                 ...bast,
+                isDone: true,
                 keyBerkas: key,
                 updatedAt: new Date(),
                 updatedBy: userId,

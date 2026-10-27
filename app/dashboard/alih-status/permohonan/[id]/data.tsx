@@ -4,7 +4,7 @@ import {
     Button,
     Label,
     Modal,
-    Skeleton,
+    Alert,
     Table,
     toast,
     Select,
@@ -39,10 +39,12 @@ function getErrorMessage(error: unknown, fallback = "Terjadi kesalahan"): string
 
 export default function AlihStatusData({
     permohonanId,
+    tahun,
     query,
     queryKey,
 }: {
     permohonanId: number;
+    tahun: number | undefined;
     query: UseQueryResult<AlihStatusPermohonanContract.SelectWithDetailDTO>;
     queryKey: unknown[];
 }) {
@@ -106,10 +108,22 @@ export default function AlihStatusData({
 
     return (
         <>
+            {tahun === undefined && (
+                <Alert status="warning">
+                    <Alert.Indicator />
+                    <Alert.Content>
+                        <Alert.Title>Tahun belum ditentukan</Alert.Title>
+                        <Alert.Description>
+                            Tahun permohonan belum terisi, jadi import data BMD belum bisa dilakukan.
+                            Lengkapi tahun pada data permohonan terlebih dahulu.
+                        </Alert.Description>
+                    </Alert.Content>
+                </Alert>
+            )}
             <div className="flex justify-between items-center">
                 <Label>Data BMD Alih Status</Label>
                 <ButtonGroup>
-                    <DataImportModal permohonanId={permohonanId} queryKey={queryKey} />
+                    <DataImportModal tahun={tahun} permohonanId={permohonanId} queryKey={queryKey} />
                     <Button variant="secondary" onPress={() => setFormTarget(null)}>
                         <ButtonGroupSeparator />
                         <Plus />
@@ -285,7 +299,7 @@ export default function AlihStatusData({
     );
 }
 
-function DataImportModal({ permohonanId, queryKey }: { permohonanId: number; queryKey: unknown[] }) {
+function DataImportModal({ permohonanId, tahun, queryKey }: { permohonanId: number; tahun: number | undefined; queryKey: unknown[] }) {
     const queryClient = useQueryClient();
     const modal = useOverlayState();
     const [previewData, setPreviewData] = useState<AlihStatusDataContract.ImportItemDTO>([]);
@@ -295,9 +309,13 @@ function DataImportModal({ permohonanId, queryKey }: { permohonanId: number; que
             if (!file) {
                 throw new Error("Berkas belum dipilih");
             }
+            if (tahun === undefined) {
+                throw new Error("Tahun belum ditentukan");
+            }
             return await actionImportAlihStatusData({
                 data: file,
-                permohonanId
+                permohonanId,
+                tahun, // sudah ter-narrow ke number
             });
         },
         onSuccess: async (res) => {
@@ -367,7 +385,7 @@ function DataImportModal({ permohonanId, queryKey }: { permohonanId: number; que
                                                 Preview
                                                 {previewData.length} baris
                                             </Label>
-                                            <AlihStatusTabelData isLoading={false} data={visiblePreviewRows} />
+                                            <AlihStatusTabelData isLoading={false} data={visiblePreviewRows.map((d) => ({ ...d, tahun: tahun ?? 0 }))} />
                                         </div>
                                     )}
                                 </div>

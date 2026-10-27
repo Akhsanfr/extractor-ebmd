@@ -119,6 +119,7 @@ export const AlihStatusNodinService = {
 
             await AlihStatusNodinRepository.update(tx, {
                 ...nodin,
+                isDone: true,
                 keyBerkas: key,
                 updatedAt: new Date(),
                 updatedBy: userId,

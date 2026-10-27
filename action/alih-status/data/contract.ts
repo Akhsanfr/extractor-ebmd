@@ -40,11 +40,12 @@ export const AlihStatusDataContract = {
     }),
     importItem: baseSelect
         .extend({ assetType: z.enum(BmdAssetType) })
-        .omit({ id: true }).array(),
+        .omit({ id: true, tahun: true }).array(),
 
     importData: z.object({
         data: z.instanceof(File),
         permohonanId: z.number(),
+        tahun: z.number(),
     }),
 
 

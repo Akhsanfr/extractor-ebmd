@@ -28,7 +28,7 @@ function RekonBody() {
 
     // Filter disimpan di sini, jadi tetap terjaga saat pengguna berinteraksi dengan tabel.
     const [tahun, setTahun] = useState<number | undefined>(tahunOptions[tahunOptions.length - 1]);
-    const [bulan, setBulan] = useState(() => new Date().getMonth() + 1);
+    const [bulan, setBulan] = useState(10);
     const [rekonType, setRekonType] = useState<RekonType>(RekonType.ASET_TETAP);
     const [editTarget, setEditTarget] = useState<RekonRow | null>(null);
     // Yang disimpan hanya identitas (id + tipe); datanya selalu dibaca dari cache query.

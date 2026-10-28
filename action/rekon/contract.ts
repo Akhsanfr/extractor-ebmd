@@ -8,6 +8,13 @@ const tahun = z.number().int().positive();
 const bulan = z.number().int().min(1).max(12);
 const nominal = z.number().finite();
 
+// Dokumen per baris rekon. Keduanya independen satu sama lain.
+const berkasTipe = z.enum(["kertasKerja", "ba"]);
+const berkasTarget = z.object({
+    id: z.number().int().positive(),
+    tipe: berkasTipe,
+});
+
 export const RekonContract = {
     query: z.object({
         tahun,
@@ -78,6 +85,14 @@ export const RekonContract = {
 
     delete: z.object({ id: z.number().int().positive() }),
     remove: z.object({ id: z.number().int().positive() }),
+
+    // --- Berkas (kertas kerja .xlsx & berita acara .pdf) ---
+    // kertasKerjaId/baId sudah ikut di `select` & `selectWithPerangkatDaerah` (createSelectSchema),
+    // dan sengaja TIDAK ada di `edit`/`update`/`importItem`/`insert`, jadi edit nominal dan
+    // import tidak bisa menyentuh key berkas.
+    berkasTipe,
+    berkasTarget,
+    updateBerkas: berkasTarget.extend({ key: z.string().min(1).max(512) }),
 };
 
 export namespace RekonContract {
@@ -93,4 +108,8 @@ export namespace RekonContract {
     export type UpdateDTO = z.infer<typeof RekonContract.update>;
     export type DeleteDTO = z.infer<typeof RekonContract.delete>;
     export type RemoveDTO = z.infer<typeof RekonContract.remove>;
+    export type BerkasTipe = z.infer<typeof RekonContract.berkasTipe>;
+    export type BerkasTargetDTO = z.infer<typeof RekonContract.berkasTarget>;
+    export type UpdateBerkasDTO = z.infer<typeof RekonContract.updateBerkas>;
+    export type ResultBerkasDTO = { id: number; tipe: BerkasTipe; key: string };
 }

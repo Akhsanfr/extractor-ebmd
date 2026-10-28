@@ -1,5 +1,5 @@
 "use client";
-import { Button, Chip, ListBox, Pagination, Select, Table, type Key } from "@heroui/react";
+import { Button, Chip, ListBox, Pagination, Select, Table, Tooltip, type Key } from "@heroui/react";
 import {
     columnSizingFeature,
     createColumnHelper,
@@ -16,8 +16,9 @@ import {
     type PaginationState,
     type SortingState,
 } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, ArrowUpDown, Inbox, Pencil } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, FileWarning, Inbox, Pencil } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { REKON_BERKAS_CONFIG, getBerkasKey, type RekonBerkasTipe } from "./rekonBerkas";
 import { getSelisihStatus } from "./rekonStatus";
 import {
     formatPersentase,
@@ -82,6 +83,43 @@ function SelisihCell({ row }: { row: RekonRow }) {
             <Chip size="sm" variant="soft" color={status.chipColor}>
                 <Chip.Label>{status.label}</Chip.Label>
             </Chip>
+        </div>
+    );
+}
+
+// Status satu dokumen. Tiap tipe dihitung dari key-nya sendiri, tidak bergantung pada dokumen lain.
+function BerkasCell({
+    row,
+    tipe,
+    onOpen,
+}: {
+    row: RekonRow;
+    tipe: RekonBerkasTipe;
+    onOpen: (row: RekonRow, tipe: RekonBerkasTipe) => void;
+}) {
+    const config = REKON_BERKAS_CONFIG[tipe];
+    const tersedia = getBerkasKey(row, tipe) !== null;
+    const Icon = tersedia ? config.icon : FileWarning;
+    const tooltip = tersedia ? `Buka ${config.short}` : `${config.short} belum diunggah. Klik untuk upload`;
+    const label = tersedia
+        ? `Buka ${config.short} ${row.perangkatDaerahNama}`
+        : `${config.short} ${row.perangkatDaerahNama} belum tersedia, buka untuk upload`;
+
+    return (
+        <div className="flex justify-center">
+            <Tooltip delay={300}>
+                <Button
+                    isIconOnly
+                    variant="ghost"
+                    size="sm"
+                    aria-label={label}
+                    className={`transition-transform hover:scale-110 ${tersedia ? "text-success" : "text-muted"}`}
+                    onPress={() => onOpen(row, tipe)}
+                >
+                    <Icon size={18} />
+                </Button>
+                <Tooltip.Content>{tooltip}</Tooltip.Content>
+            </Tooltip>
         </div>
     );
 }
@@ -230,9 +268,11 @@ function EmptyState() {
 export default function RekonTable({
     data,
     onEdit,
+    onOpenBerkas,
 }: {
     data: RekonRow[];
     onEdit: (row: RekonRow) => void;
+    onOpenBerkas: (row: RekonRow, tipe: RekonBerkasTipe) => void;
 }) {
     // Default: Perangkat Daerah ascending.
     const [sorting, setSorting] = useState<SortingState>([
@@ -301,6 +341,18 @@ export default function RekonTable({
                     },
                 ),
                 columnHelper.display({
+                    id: "kertasKerja",
+                    header: () => <div className="text-center">Kertas Kerja</div>,
+                    size: 120,
+                    cell: (ctx) => <BerkasCell row={ctx.row.original} tipe="kertasKerja" onOpen={onOpenBerkas} />,
+                }),
+                columnHelper.display({
+                    id: "ba",
+                    header: () => <div className="text-center">Berita Acara</div>,
+                    size: 120,
+                    cell: (ctx) => <BerkasCell row={ctx.row.original} tipe="ba" onOpen={onOpenBerkas} />,
+                }),
+                columnHelper.display({
                     id: "edit",
                     header: "Aksi",
                     size: 80,
@@ -318,7 +370,7 @@ export default function RekonTable({
                     ),
                 }),
             ]),
-        [onEdit, pagination.pageIndex, pagination.pageSize],
+        [onEdit, onOpenBerkas, pagination.pageIndex, pagination.pageSize],
     );
 
     const table = useTable({

@@ -99,6 +99,34 @@ export const BerkasService = {
     },
 
     /**
+     * Presigned URL untuk UNDUH (GET) dengan `Content-Disposition: attachment`,
+     * sehingga browser menyimpan berkas (mis. .xlsx) alih-alih mencoba menampilkannya.
+     * `fileName` opsional; bila kosong dipakai nama dari key.
+     */
+    async getDownloadUrl(
+        key: string | null | undefined,
+        options: { fileName?: string; expiresIn?: number } = {},
+    ): Promise<string> {
+        if (!key) {
+            throw new Error("Berkas belum diunggah");
+        }
+        await this.assertExists(key);
+
+        const { expiresIn = DEFAULT_EXPIRES_SECONDS } = options;
+        // Buang karakter yang bisa merusak header (kutip, backslash, kontrol, pemisah path).
+        const fileName =
+            (options.fileName ?? key.split("/").pop() ?? "berkas")
+                .replace(/[\u0000-\u001f\u007f"\\/]/g, "_")
+                .trim() || "berkas";
+
+        const disposition = `attachment; filename="${fileName.replace(/[^\x20-\x7e]/g, "_")}"; filename*=UTF-8''${encodeURIComponent(fileName)}`;
+
+        return s3.getPresignedUrl("GET", key, expiresIn, {
+            "response-content-disposition": disposition,
+        });
+    },
+
+    /**
      * Hapus objek setelah transaksi DB sukses. Best-effort: kalau gagal,
      * hanya di-log (data DB sudah konsisten, objek yatim bisa dibersihkan belakangan).
      */

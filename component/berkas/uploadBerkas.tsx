@@ -219,6 +219,7 @@ export function useUploadBerkas({
         setIsPreparing(true);
         try {
             const res = await getPresignedUrl();
+            console.log("res", res)
             if (!res.success || !res.data) {
                 throw new Error(res.message ?? "Gagal membuat URL upload.");
             }

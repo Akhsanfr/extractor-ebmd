@@ -115,6 +115,24 @@ export const RekonRepository = {
         return res[0];
     },
 
+    // Hanya key berkas (dan updatedAt) yang diubah; nominal tidak disentuh.
+    // Patch hanya memuat kolom milik satu dokumen, jadi dokumen lain tidak ikut berubah.
+    async updateBerkasKeys(
+        db: DbOrTx,
+        id: number,
+        patch: Partial<Pick<RekonContract.SelectDTO, "kertasKerjaId" | "baId">>,
+    ): Promise<RekonContract.SelectDTO> {
+        const res = await db
+            .update(rekonTable)
+            .set({ ...patch, updatedAt: new Date() })
+            .where(eq(rekonTable.id, id))
+            .returning();
+        if (!res[0]) {
+            throw new OperationalError(`Data rekon dengan id ${id} tidak ditemukan`);
+        }
+        return res[0];
+    },
+
     // Tabel rekon tidak punya kolom deletedAt/deletedBy, jadi ini hard delete.
     async remove(db: DbOrTx, data: RekonContract.RemoveDTO): Promise<void> {
         await db.delete(rekonTable).where(eq(rekonTable.id, data.id));

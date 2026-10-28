@@ -1,10 +1,12 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Alert, Card, Chip, Label, ListBox, Select, Tabs, type Key } from "@heroui/react";
 import { useQuery } from "@tanstack/react-query";
 import { Scale } from "lucide-react";
 import { actionGetListRekon } from "@/action/rekon/action.read";
 import Loading from "@/component/loading";
+import type { RekonBerkasTipe } from "./rekonBerkas";
+import RekonBerkasModal from "./rekonBerkasModal";
 import RekonEditModal from "./rekonEditModal";
 import RekonImportModal from "./rekonImportModal";
 import RekonShell from "./rekonShell";
@@ -29,6 +31,12 @@ function RekonBody() {
     const [bulan, setBulan] = useState(() => new Date().getMonth() + 1);
     const [rekonType, setRekonType] = useState<RekonType>(RekonType.ASET_TETAP);
     const [editTarget, setEditTarget] = useState<RekonRow | null>(null);
+    // Yang disimpan hanya identitas (id + tipe); datanya selalu dibaca dari cache query.
+    const [berkasTarget, setBerkasTarget] = useState<{ id: RekonRow["id"]; tipe: RekonBerkasTipe } | null>(null);
+    const openBerkas = useCallback(
+        (row: RekonRow, tipe: RekonBerkasTipe) => setBerkasTarget({ id: row.id, tipe }),
+        [],
+    );
 
     const queryKey = [...REKON_QUERY_KEY, tahun, bulan, rekonType] as const;
     const query = useQuery({
@@ -41,6 +49,8 @@ function RekonBody() {
             return res.data;
         },
     });
+
+    const berkasRow = berkasTarget ? query.data?.find((r) => r.id === berkasTarget.id) : undefined;
 
     return (
         <div className="flex flex-col gap-6">
@@ -173,10 +183,20 @@ function RekonBody() {
                     ) : query.isLoading ? (
                         <Loading />
                     ) : (
-                        <RekonTable data={query.data ?? []} onEdit={setEditTarget} />
+                        <RekonTable data={query.data ?? []} onEdit={setEditTarget} onOpenBerkas={openBerkas} />
                     )}
                 </Card.Content>
             </Card>
+
+            {berkasRow && berkasTarget && (
+                <RekonBerkasModal
+                    key={`${berkasTarget.id}-${berkasTarget.tipe}`}
+                    row={berkasRow}
+                    tipe={berkasTarget.tipe}
+                    queryKey={queryKey}
+                    onClose={() => setBerkasTarget(null)}
+                />
+            )}
 
             {editTarget && (
                 <RekonEditModal

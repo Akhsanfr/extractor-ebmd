@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Alert, Button, Chip, Input, Label, Modal, toast } from "@heroui/react";
+import { Alert, Button, Chip, Input, Label, ListBox, Modal, Select, toast, type Key } from "@heroui/react";
 import { useMutation, useQueryClient, type QueryKey } from "@tanstack/react-query";
 import { Pencil } from "lucide-react";
 import { actionEditRekon } from "@/action/rekon/action.update";
@@ -8,21 +8,25 @@ import { RekonContract } from "@/action/rekon/contract";
 import { getSelisihStatus } from "./rekonStatus";
 import {
     BULAN_LABEL,
+    REKON_PIC_OPTIONS,
     REKON_TYPE_LABEL,
     formatRupiah,
     getErrorMessage,
     hitungSelisih,
+    isRekonPic,
     nominalToInput,
     parseNominalInput,
+    type RekonPic,
     type RekonRow,
 } from "./rekonUtil";
 
 type FieldName = "realisasiAnggaran" | "inputBMD";
-type FieldErrors = Partial<Record<FieldName, string>>;
+type FieldErrors = Partial<Record<FieldName | "pic", string>>;
 
 const NOMINAL_INVALID_MESSAGE = "Isi nominal yang valid, mis. 1500000 atau 1500000,50";
+const PIC_NONE = "none";
 
-// Mengubah realisasiAnggaran dan inputBMD. Bulan, tahun, jenis rekon, dan
+// Mengubah realisasiAnggaran, inputBMD, dan pic. Bulan, tahun, jenis rekon, dan
 // perangkat daerah tampil read-only dan tidak ikut dikirim ke server.
 export default function RekonEditModal({
     target,
@@ -36,6 +40,8 @@ export default function RekonEditModal({
     const queryClient = useQueryClient();
     const [realisasiValue, setRealisasiValue] = useState(() => nominalToInput(target.realisasiAnggaran));
     const [inputBmdValue, setInputBmdValue] = useState(() => nominalToInput(target.inputBMD));
+    // PIC lama yang tidak ada di daftar dianggap belum ada PIC.
+    const [pic, setPic] = useState<RekonPic | null>(() => (isRekonPic(target.pic) ? target.pic : null));
     const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
     const mutation = useMutation({
@@ -67,7 +73,7 @@ export default function RekonEditModal({
             : hitungSelisih({ realisasiAnggaran: realisasiPreview, inputBMD: inputBmdPreview });
     const previewStatus = previewSelisih ? getSelisihStatus(previewSelisih) : null;
 
-    const clearFieldError = (name: FieldName) => {
+    const clearFieldError = (name: FieldName | "pic") => {
         setFieldErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev));
     };
 
@@ -85,12 +91,12 @@ export default function RekonEditModal({
             return;
         }
 
-        const parsed = RekonContract.edit.safeParse({ id: target.id, realisasiAnggaran, inputBMD });
+        const parsed = RekonContract.edit.safeParse({ id: target.id, realisasiAnggaran, inputBMD, pic });
         if (!parsed.success) {
             const next: FieldErrors = {};
             for (const issue of parsed.error.issues) {
                 const key = issue.path[0];
-                if ((key === "realisasiAnggaran" || key === "inputBMD") && !next[key]) {
+                if ((key === "realisasiAnggaran" || key === "inputBMD" || key === "pic") && !next[key]) {
                     next[key] = issue.message;
                 }
             }
@@ -188,6 +194,39 @@ export default function RekonEditModal({
                                         </Alert.Content>
                                     </Alert>
                                 )}
+
+                                <Select
+                                    value={pic ?? PIC_NONE}
+                                    isDisabled={mutation.isPending}
+                                    isInvalid={fieldErrors.pic !== undefined}
+                                    onChange={(key: Key | null) => {
+                                        if (!key) return;
+                                        const next = String(key);
+                                        setPic(isRekonPic(next) ? next : null);
+                                        clearFieldError("pic");
+                                    }}
+                                >
+                                    <Label>PIC</Label>
+                                    <Select.Trigger>
+                                        <Select.Value />
+                                        <Select.Indicator />
+                                    </Select.Trigger>
+                                    <Select.Popover>
+                                        <ListBox>
+                                            <ListBox.Item id={PIC_NONE} textValue="Belum ada PIC">
+                                                Belum ada PIC
+                                                <ListBox.ItemIndicator />
+                                            </ListBox.Item>
+                                            {REKON_PIC_OPTIONS.map((name) => (
+                                                <ListBox.Item key={name} id={name} textValue={name}>
+                                                    {name}
+                                                    <ListBox.ItemIndicator />
+                                                </ListBox.Item>
+                                            ))}
+                                        </ListBox>
+                                    </Select.Popover>
+                                </Select>
+                                {fieldErrors.pic && <p className="-mt-3 text-sm text-danger">{fieldErrors.pic}</p>}
 
                                 {renderNominalField({
                                     name: "realisasiAnggaran",

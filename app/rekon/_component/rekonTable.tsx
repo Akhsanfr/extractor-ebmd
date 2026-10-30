@@ -310,6 +310,23 @@ export default function RekonTable({
                     sortFn: "text",
                     cell: (ctx) => <span className="font-medium">{ctx.getValue()}</span>,
                 }),
+                // Belum ada PIC (null) diurutkan sebagai nilai terkecil.
+                columnHelper.accessor((row) => row.pic ?? "", {
+                    id: "pic",
+                    header: (ctx) => <SortableHeader title="PIC" column={ctx.column} />,
+                    size: 120,
+                    sortFn: "text",
+                    cell: (ctx) => {
+                        const pic = ctx.getValue();
+                        return pic ? (
+                            <Chip size="sm" variant="soft" color="accent">
+                                <Chip.Label>{pic}</Chip.Label>
+                            </Chip>
+                        ) : (
+                            <span className="text-muted">—</span>
+                        );
+                    },
+                }),
                 columnHelper.accessor("realisasiAnggaran", {
                     header: (ctx) => <SortableHeader title="Realisasi" column={ctx.column} align="right" />,
                     sortFn: "basic",
@@ -389,6 +406,10 @@ export default function RekonTable({
             setPagination((p) => ({ ...p, pageIndex: 0 }));
         },
         onPaginationChange: setPagination,
+        // Data baru (mis. setelah edit lewat setQueryData) jangan mengembalikan ke halaman 1.
+        // Reset ke halaman 1 ditangani manual: ganti sorting, ganti filter (resetPageKey),
+        // dan penyesuaian saat halaman melebihi pageCount.
+        autoResetPageIndex: false,
     });
 
     // baris halaman aktif saja (sudah terurut + terpaginasi)
@@ -403,11 +424,13 @@ export default function RekonTable({
         }
     }, [pageCount, pagination.pageIndex]);
 
-    if (totalRows === 0) return <EmptyState />;
-
+    // Ganti filter (pencarian, perangkat daerah, PIC, jenis rekon) -> kembali ke halaman 1.
+    // Harus dipanggil sebelum early return di bawah agar urutan hooks selalu sama.
     useEffect(() => {
         setPagination((p) => ({ ...p, pageIndex: 0 }));
     }, [resetPageKey]);
+
+    if (totalRows === 0) return <EmptyState />;
 
     return (
         <>

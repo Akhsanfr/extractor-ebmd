@@ -3,10 +3,10 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
-import type { RekonRow } from "./rekonUtil";
+import { isRekonPic, type RekonPic, type RekonRow } from "./rekonUtil";
 
-// Semua filter hidup di URL: ?tahun=2026&bulan=10&jenis=...&q=dinas&pd=12
-type ParamKey = "tahun" | "bulan" | "jenis" | "q" | "pd";
+// Semua filter hidup di URL: ?tahun=2026&bulan=10&jenis=...&q=dinas&pd=12&pic=Ian
+type ParamKey = "tahun" | "bulan" | "jenis" | "q" | "pd" | "pic";
 type ParamPatch = Partial<Record<ParamKey, string | number | null>>;
 
 export type RekonFilterDefaults<TType extends string> = {
@@ -40,6 +40,8 @@ export function useRekonFilters<TType extends string>(
             rekonType: validTypes.includes(jenis as TType) ? (jenis as TType) : defaults.rekonType,
             q: params.get("q") ?? "",
             pd: params.get("pd") || null,
+            // PIC yang tidak dikenal di URL diabaikan.
+            pic: isRekonPic(params.get("pic")) ? (params.get("pic") as RekonPic) : null,
         };
     }, [paramString, defaults.tahun, defaults.bulan, defaults.rekonType, validTypes]);
 
@@ -61,22 +63,24 @@ export function useRekonFilters<TType extends string>(
     const setBulan = useCallback((bulan: number) => update({ bulan }), [update]);
     const setQuery = useCallback((q: string) => update({ q }), [update]);
     const setPerangkatDaerah = useCallback((pd: string | null) => update({ pd }), [update]);
-    const resetFilters = useCallback(() => update({ q: null, pd: null }), [update]);
+    const setPic = useCallback((pic: RekonPic | null) => update({ pic }), [update]);
+    const resetFilters = useCallback(() => update({ q: null, pd: null, pic: null }), [update]);
 
-    // Pindah rekonType: search & perangkat daerah ikut ter-reset. Tahun/bulan dipertahankan.
+    // Pindah rekonType: search, perangkat daerah, dan PIC ikut ter-reset. Tahun/bulan dipertahankan.
     const setRekonType = useCallback(
-        (jenis: TType) => update({ jenis, q: null, pd: null }),
+        (jenis: TType) => update({ jenis, q: null, pd: null, pic: null }),
         [update],
     );
 
     return {
         ...filters,
-        hasActiveFilter: filters.q !== "" || filters.pd !== null,
+        hasActiveFilter: filters.q !== "" || filters.pd !== null || filters.pic !== null,
         setTahun,
         setBulan,
         setRekonType,
         setQuery,
         setPerangkatDaerah,
+        setPic,
         resetFilters,
     };
 }
@@ -92,7 +96,10 @@ export function getPerangkatDaerahOptions(rows: RekonRow[]): PerangkatDaerahOpti
         .sort((a, b) => a.nama.localeCompare(b.nama, "id"));
 }
 
-export function filterRekonRows(rows: RekonRow[], { q, pd }: { q: string; pd: string | null }) {
+export function filterRekonRows(
+    rows: RekonRow[],
+    { q, pd, pic }: { q: string; pd: string | null; pic: RekonPic | null },
+) {
     const needle = q.trim().toLowerCase();
     // pd dari URL yang tidak ada di data (mis. link dari rekonType lain) diabaikan, bukan menghasilkan tabel kosong.
     const pdValid = pd !== null && rows.some((r) => String(r.perangkatDaerahId) === pd);
@@ -100,6 +107,7 @@ export function filterRekonRows(rows: RekonRow[], { q, pd }: { q: string; pd: st
     return rows.filter(
         (row) =>
             (!pdValid || String(row.perangkatDaerahId) === pd) &&
+            (pic === null || row.pic === pic) &&
             (needle === "" || row.perangkatDaerahNama.toLowerCase().includes(needle)),
     );
 }

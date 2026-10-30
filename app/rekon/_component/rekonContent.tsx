@@ -107,7 +107,7 @@ function RekonBody() {
 
     const f = useRekonFilters({ tahun: 2026, bulan: 10, rekonType: RekonType.ASET_TETAP }, Object.values(RekonType));
     const options = useMemo(() => getPerangkatDaerahOptions(query.data ?? []), [query.data]);
-    const rows = useMemo(() => filterRekonRows(query.data ?? [], { q: f.q, pd: f.pd }), [query.data, f.q, f.pd]);
+    const rows = useMemo(() => filterRekonRows(query.data ?? [], { q: f.q, pd: f.pd, pic: f.pic }), [query.data, f.q, f.pd, f.pic]);
 
     return (
         <div className="flex flex-col gap-6">
@@ -236,6 +236,7 @@ function RekonBody() {
             <RekonFilterBar
                 query={f.q} onQueryChange={f.setQuery}
                 perangkatDaerahId={f.pd} onPerangkatDaerahChange={f.setPerangkatDaerah}
+                pic={f.pic} onPicChange={f.setPic}
                 options={options} hasActiveFilter={f.hasActiveFilter} onReset={f.resetFilters}
             />
 
@@ -266,7 +267,7 @@ function RekonBody() {
                     ) : query.isLoading ? (
                         <Loading />
                     ) : (
-                        <RekonTable data={rows} resetPageKey={`${f.rekonType}|${f.q}|${f.pd}`} onEdit={setEditTarget} onOpenBerkas={openBerkas} />
+                        <RekonTable data={rows} resetPageKey={`${f.rekonType}|${f.q}|${f.pd}|${f.pic ?? ""}`} onEdit={setEditTarget} onOpenBerkas={openBerkas} />
                     )}
                 </Card.Content>
             </Card>

@@ -2,6 +2,7 @@
 import { Button, ListBox, SearchField, Select, type Key } from "@heroui/react";
 import { FilterX } from "lucide-react";
 import { useEffect, useState } from "react";
+import { REKON_PIC_OPTIONS, type RekonPic } from "./rekonUtil";
 import type { PerangkatDaerahOption } from "./useRekonFilters";
 
 const ALL = "all";
@@ -12,6 +13,8 @@ export default function RekonFilterBar({
     onQueryChange,
     perangkatDaerahId,
     onPerangkatDaerahChange,
+    pic,
+    onPicChange,
     options,
     hasActiveFilter,
     onReset,
@@ -20,6 +23,8 @@ export default function RekonFilterBar({
     onQueryChange: (q: string) => void;
     perangkatDaerahId: string | null; // nilai dari URL
     onPerangkatDaerahChange: (id: string | null) => void;
+    pic: RekonPic | null; // nilai dari URL
+    onPicChange: (pic: RekonPic | null) => void;
     options: PerangkatDaerahOption[];
     hasActiveFilter: boolean;
     onReset: () => void;
@@ -75,6 +80,36 @@ export default function RekonFilterBar({
                         {options.map((opt) => (
                             <ListBox.Item key={opt.id} id={opt.id} textValue={opt.nama}>
                                 {opt.nama}
+                                <ListBox.ItemIndicator />
+                            </ListBox.Item>
+                        ))}
+                    </ListBox>
+                </Select.Popover>
+            </Select>
+
+            <Select
+                className="w-full sm:w-48"
+                aria-label="Filter PIC"
+                value={pic ?? ALL}
+                onChange={(key: Key | null) => {
+                    if (!key) return;
+                    const next = String(key);
+                    onPicChange(next === ALL ? null : (next as RekonPic));
+                }}
+            >
+                <Select.Trigger>
+                    <Select.Value />
+                    <Select.Indicator />
+                </Select.Trigger>
+                <Select.Popover>
+                    <ListBox>
+                        <ListBox.Item id={ALL} textValue="Semua PIC">
+                            Semua PIC
+                            <ListBox.ItemIndicator />
+                        </ListBox.Item>
+                        {REKON_PIC_OPTIONS.map((name) => (
+                            <ListBox.Item key={name} id={name} textValue={name}>
+                                {name}
                                 <ListBox.ItemIndicator />
                             </ListBox.Item>
                         ))}

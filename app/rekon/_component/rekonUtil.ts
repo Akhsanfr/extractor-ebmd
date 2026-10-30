@@ -9,6 +9,14 @@ export const REKON_QUERY_KEY = ["rekon"] as const;
 
 export const TAHUN_AWAL = 2026;
 
+// Daftar PIC yang bisa dipilih. Satu tempat untuk menambah/mengurangi PIC.
+export const REKON_PIC_OPTIONS = ["Elisa", "Fernanda", "Ian", "Lita", "Nana"] as const;
+export type RekonPic = (typeof REKON_PIC_OPTIONS)[number];
+
+export function isRekonPic(value: unknown): value is RekonPic {
+    return REKON_PIC_OPTIONS.some((pic) => pic === value);
+}
+
 export const REKON_TYPE_LABEL: Record<RekonType, string> = {
     asetTetap: "Aset Tetap",
     persediaan: "Persediaan",

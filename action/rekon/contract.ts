@@ -19,6 +19,7 @@ export const RekonContract = {
     query: z.object({
         tahun,
         bulan,
+        pic: z.string().optional(),
         perangkatDaerahId: z.number().int().positive().optional(),
         rekonType: z.enum(RekonType).optional(),
     }),
@@ -76,12 +77,14 @@ export const RekonContract = {
     edit: z.object({
         id: z.number().int().positive(),
         realisasiAnggaran: nominal,
+        pic: z.string(),
         inputBMD: nominal,
     }),
     update: z.object({
         id: z.number().int().positive(),
         inputBMD: nominal,
         realisasiAnggaran: nominal,
+        pic: z.string(),
         updatedAt: z.date(),
     }),
 

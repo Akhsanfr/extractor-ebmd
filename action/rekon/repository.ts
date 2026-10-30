@@ -101,12 +101,11 @@ export const RekonRepository = {
             });
     },
 
-    // Hanya inputBMD (dan updatedAt) yang diubah; realisasiAnggaran tidak disentuh.
     async update(db: DbOrTx, data: RekonContract.UpdateDTO): Promise<RekonContract.SelectDTO> {
-        const { id, inputBMD, updatedAt } = data;
+        const { id, inputBMD, realisasiAnggaran, updatedAt } = data;
         const res = await db
             .update(rekonTable)
-            .set({ inputBMD, updatedAt })
+            .set({ inputBMD, realisasiAnggaran, updatedAt })
             .where(eq(rekonTable.id, id))
             .returning();
         if (!res[0]) {

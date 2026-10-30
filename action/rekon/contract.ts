@@ -75,11 +75,13 @@ export const RekonContract = {
     // Update hanya menyentuh inputBMD. realisasiAnggaran sengaja tidak ada di sini.
     edit: z.object({
         id: z.number().int().positive(),
+        realisasiAnggaran: nominal,
         inputBMD: nominal,
     }),
     update: z.object({
         id: z.number().int().positive(),
         inputBMD: nominal,
+        realisasiAnggaran: nominal,
         updatedAt: z.date(),
     }),
 

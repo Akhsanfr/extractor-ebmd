@@ -17,8 +17,13 @@ import {
     type RekonRow,
 } from "./rekonUtil";
 
-// Hanya mengubah inputBMD. Bulan, tahun, jenis rekon, perangkat daerah, dan
-// realisasiAnggaran tampil read-only dan tidak ikut dikirim ke server.
+type FieldName = "realisasiAnggaran" | "inputBMD";
+type FieldErrors = Partial<Record<FieldName, string>>;
+
+const NOMINAL_INVALID_MESSAGE = "Isi nominal yang valid, mis. 1500000 atau 1500000,50";
+
+// Mengubah realisasiAnggaran dan inputBMD. Bulan, tahun, jenis rekon, dan
+// perangkat daerah tampil read-only dan tidak ikut dikirim ke server.
 export default function RekonEditModal({
     target,
     queryKey,
@@ -29,8 +34,9 @@ export default function RekonEditModal({
     onClose: () => void;
 }) {
     const queryClient = useQueryClient();
-    const [value, setValue] = useState(() => nominalToInput(target.inputBMD));
-    const [fieldError, setFieldError] = useState<string | null>(null);
+    const [realisasiValue, setRealisasiValue] = useState(() => nominalToInput(target.realisasiAnggaran));
+    const [inputBmdValue, setInputBmdValue] = useState(() => nominalToInput(target.inputBMD));
+    const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
     const mutation = useMutation({
         mutationFn: async (input: RekonContract.EditDTO) => {
@@ -43,41 +49,108 @@ export default function RekonEditModal({
             queryClient.setQueryData<RekonRow[]>(queryKey, (old) =>
                 old?.map((row) => (row.id === updated.id ? { ...row, ...updated } : row)),
             );
-            toast.success("Input BMD berhasil diperbarui");
+            toast.success("Data rekon berhasil diperbarui");
             onClose();
         },
         // Modal tetap terbuka dan isian pengguna tidak diubah saat gagal.
         onError: (error: unknown) => {
-            toast.danger("Gagal menyimpan input BMD", { description: getErrorMessage(error) });
+            toast.danger("Gagal menyimpan data rekon", { description: getErrorMessage(error) });
         },
     });
 
     // Pratinjau selisih mengikuti isian pengguna (hanya tampilan, tidak dikirim ke server).
-    const nominalPreview = parseNominalInput(value);
+    const realisasiPreview = parseNominalInput(realisasiValue);
+    const inputBmdPreview = parseNominalInput(inputBmdValue);
     const previewSelisih =
-        nominalPreview === null
+        realisasiPreview === null || inputBmdPreview === null
             ? null
-            : hitungSelisih({ realisasiAnggaran: target.realisasiAnggaran, inputBMD: nominalPreview });
+            : hitungSelisih({ realisasiAnggaran: realisasiPreview, inputBMD: inputBmdPreview });
     const previewStatus = previewSelisih ? getSelisihStatus(previewSelisih) : null;
+
+    const clearFieldError = (name: FieldName) => {
+        setFieldErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev));
+    };
 
     const submit = () => {
         if (mutation.isPending) return;
-        const nominal = parseNominalInput(value);
-        if (nominal === null) {
-            setFieldError("Isi nominal yang valid, mis. 1500000 atau 1500000,50");
+
+        const realisasiAnggaran = parseNominalInput(realisasiValue);
+        const inputBMD = parseNominalInput(inputBmdValue);
+
+        const errors: FieldErrors = {};
+        if (realisasiAnggaran === null) errors.realisasiAnggaran = NOMINAL_INVALID_MESSAGE;
+        if (inputBMD === null) errors.inputBMD = NOMINAL_INVALID_MESSAGE;
+        if (realisasiAnggaran === null || inputBMD === null) {
+            setFieldErrors(errors);
             return;
         }
-        const parsed = RekonContract.edit.safeParse({ id: target.id, inputBMD: nominal });
+
+        const parsed = RekonContract.edit.safeParse({ id: target.id, realisasiAnggaran, inputBMD });
         if (!parsed.success) {
-            setFieldError(parsed.error.issues[0]?.message ?? "Nominal tidak valid");
+            const next: FieldErrors = {};
+            for (const issue of parsed.error.issues) {
+                const key = issue.path[0];
+                if ((key === "realisasiAnggaran" || key === "inputBMD") && !next[key]) {
+                    next[key] = issue.message;
+                }
+            }
+            // Jika error tidak terkait field tertentu, tampilkan di field pertama.
+            if (Object.keys(next).length === 0) {
+                next.realisasiAnggaran = parsed.error.issues[0]?.message ?? "Nominal tidak valid";
+            }
+            setFieldErrors(next);
             return;
         }
-        setFieldError(null);
+
+        setFieldErrors({});
         mutation.mutate(parsed.data);
     };
 
     const handleOpenChange = (open: boolean) => {
         if (!open && !mutation.isPending) onClose();
+    };
+
+    const renderNominalField = ({
+        name,
+        label,
+        value,
+        onValueChange,
+        autoFocus,
+    }: {
+        name: FieldName;
+        label: string;
+        value: string;
+        onValueChange: (v: string) => void;
+        autoFocus?: boolean;
+    }) => {
+        const error = fieldErrors[name];
+        return (
+            <div className="flex flex-col gap-1.5">
+                <Label>{label}</Label>
+                <Input
+                    autoFocus={autoFocus}
+                    inputMode="decimal"
+                    placeholder="mis. 1500000,50"
+                    value={value}
+                    aria-invalid={error !== undefined}
+                    disabled={mutation.isPending}
+                    onChange={(e) => {
+                        onValueChange(e.target.value);
+                        clearFieldError(name);
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") submit();
+                    }}
+                />
+                {error ? (
+                    <p className="text-sm text-danger">{error}</p>
+                ) : (
+                    <p className="text-xs text-muted">
+                        Gunakan koma untuk desimal. Titik diabaikan sebagai pemisah ribuan.
+                    </p>
+                )}
+            </div>
+        );
     };
 
     return (
@@ -90,7 +163,7 @@ export default function RekonEditModal({
                                 <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-accent/10 text-accent">
                                     <Pencil size={18} />
                                 </span>
-                                <Modal.Heading>Edit Input BMD</Modal.Heading>
+                                <Modal.Heading>Edit Rekon</Modal.Heading>
                             </div>
                         </Modal.Header>
                         <Modal.Body>
@@ -104,10 +177,6 @@ export default function RekonEditModal({
                                     <dd className="text-right">
                                         {BULAN_LABEL[target.bulan - 1]} {target.tahun}
                                     </dd>
-                                    <dt className="text-muted">Realisasi</dt>
-                                    <dd className="text-right font-medium tabular-nums">
-                                        {formatRupiah(target.realisasiAnggaran)}
-                                    </dd>
                                 </dl>
 
                                 {mutation.isError && (
@@ -120,31 +189,19 @@ export default function RekonEditModal({
                                     </Alert>
                                 )}
 
-                                <div className="flex flex-col gap-1.5">
-                                    <Label>Input BMD (Rp)</Label>
-                                    <Input
-                                        autoFocus
-                                        inputMode="decimal"
-                                        placeholder="mis. 1500000,50"
-                                        value={value}
-                                        aria-invalid={fieldError !== null}
-                                        disabled={mutation.isPending}
-                                        onChange={(e) => {
-                                            setValue(e.target.value);
-                                            if (fieldError) setFieldError(null);
-                                        }}
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Enter") submit();
-                                        }}
-                                    />
-                                    {fieldError ? (
-                                        <p className="text-sm text-danger">{fieldError}</p>
-                                    ) : (
-                                        <p className="text-xs text-muted">
-                                            Gunakan koma untuk desimal. Titik diabaikan sebagai pemisah ribuan.
-                                        </p>
-                                    )}
-                                </div>
+                                {renderNominalField({
+                                    name: "realisasiAnggaran",
+                                    label: "Realisasi Anggaran (Rp)",
+                                    value: realisasiValue,
+                                    onValueChange: setRealisasiValue,
+                                    autoFocus: true,
+                                })}
+                                {renderNominalField({
+                                    name: "inputBMD",
+                                    label: "Input BMD (Rp)",
+                                    value: inputBmdValue,
+                                    onValueChange: setInputBmdValue,
+                                })}
 
                                 {/* Pratinjau selisih */}
                                 <div

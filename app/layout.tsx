@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tool BMD",
+  title: "SI PANDU",
   description: "Aplikasi untuk mempermudah pengelolaan barang milik daerah",
 };
 

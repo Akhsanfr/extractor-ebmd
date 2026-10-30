@@ -1,8 +1,8 @@
 "use client";
 import { useCallback, useMemo, useState } from "react";
-import { Alert, Card, Chip, Label, ListBox, Select, Tabs, type Key } from "@heroui/react";
-import { useQuery } from "@tanstack/react-query";
-import { Scale } from "lucide-react";
+import { Alert, Button, Card, Chip, Dropdown, Label, ListBox, Select, Tabs, toast, type Key } from "@heroui/react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Download, FileSpreadsheet, FileText, Scale } from "lucide-react";
 import { actionGetListRekon } from "@/action/rekon/action.read";
 import Loading from "@/component/loading";
 import type { RekonBerkasTipe } from "./rekonBerkas";
@@ -26,7 +26,23 @@ import { filterRekonRows, getPerangkatDaerahOptions, useRekonFilters } from "./u
 import { getPerangkatDaerahAction } from "@/action/perangkatDaerah/action";
 import RekonFilterBar from "./rekonFilterBar";
 
+// Link template berupa spreadsheet; ganti href dengan link yang sebenarnya.
+const TEMPLATE_REKON = [
+    { id: "kk-aset-tetap", label: "KK Aset Tetap", href: "https://docs.google.com/spreadsheets/d/1zX5sWig-6WhNVaOoX7k7v890CH0cfYGUKlmp2YkAApQ/edit?usp=drive_link" },
+    { id: "kk-persediaan", label: "KK Persediaan", href: "https://docs.google.com/spreadsheets/d/1Eq0JivGm9GsMK-2EKe02Y5IwhmiqS6sZVVWMOxnP9Jo/edit?usp=drive_link" },
+    { id: "kk-pemeliharaan", label: "KK Pemeliharaan", href: "https://docs.google.com/spreadsheets/d/1jsjJaEw48z_gfc9PY6vuqTlRJVtaJNwn77C-avx9dls/edit?usp=drive_link" },
+] as const;
+
+const ACTION_SURAT_LHR = "draft-surat-lhr";
+
+async function fetchRekonList(tahun: number, bulan: number, rekonType: RekonType) {
+    const res = await actionGetListRekon({ tahun, bulan, rekonType });
+    if (!res.success) throw res.error;
+    return res.data;
+}
+
 function RekonBody() {
+    const queryClient = useQueryClient();
     const tahunOptions = useMemo(() => getTahunOptions(), []);
 
     // Filter disimpan di sini, jadi tetap terjaga saat pengguna berinteraksi dengan tabel.
@@ -47,11 +63,45 @@ function RekonBody() {
         enabled: tahun !== undefined,
         queryFn: async () => {
             if (tahun === undefined) throw new Error("Tahun belum ditentukan");
-            const res = await actionGetListRekon({ tahun, bulan, rekonType });
-            if (!res.success) throw res.error;
-            return res.data;
+            return fetchRekonList(tahun, bulan, rekonType);
         },
     });
+
+    // Draft surat butuh data ketiga jenis rekon pada periode terpilih, bukan hanya tab yang aktif.
+    const draftSuratMutation = useMutation({
+        mutationFn: async () => {
+            if (tahun === undefined) throw new Error("Tahun belum ditentukan");
+            const fetchType = (type: RekonType) =>
+                queryClient.fetchQuery({
+                    queryKey: [...REKON_QUERY_KEY, tahun, bulan, type],
+                    queryFn: () => fetchRekonList(tahun, bulan, type),
+                });
+            const [asetTetap, persediaan, pemeliharaan] = await Promise.all([
+                fetchType(RekonType.ASET_TETAP),
+                fetchType(RekonType.PERSEDIAAN),
+                fetchType(RekonType.PEMELIHARAAN),
+            ]);
+            toast.info("Fitur ini masih dalam tahap pengembangan");
+            // generateDraftSuratLhr({ asetTetap, persediaan, pemeliharaan }, { tahun, bulan });
+        },
+        onError: (error) => {
+            toast.danger("Gagal mencetak draft Surat Laporan Hasil Rekon", {
+                description: getErrorMessage(error),
+            });
+        },
+    });
+
+    const handleDownloadAction = useCallback(
+        (key: Key) => {
+            const template = TEMPLATE_REKON.find((t) => t.id === key);
+            if (template) {
+                window.open(template.href, "_blank", "noopener,noreferrer");
+                return;
+            }
+            if (key === ACTION_SURAT_LHR) draftSuratMutation.mutate();
+        },
+        [draftSuratMutation],
+    );
 
     const berkasRow = berkasTarget ? query.data?.find((r) => r.id === berkasTarget.id) : undefined;
 
@@ -72,7 +122,27 @@ function RekonBody() {
                         Bandingkan realisasi anggaran dengan input BMD untuk setiap perangkat daerah.
                     </p>
                 </div>
-                <div className="ml-auto">
+                <div className="ml-auto flex items-center gap-2">
+                    <Dropdown>
+                        <Button variant="secondary" isPending={draftSuratMutation.isPending}>
+                            <Download size={16} />
+                            Unduh
+                        </Button>
+                        <Dropdown.Popover>
+                            <Dropdown.Menu onAction={handleDownloadAction}>
+                                {TEMPLATE_REKON.map((t) => (
+                                    <Dropdown.Item key={t.id} id={t.id} textValue={`Template ${t.label}`}>
+                                        <FileSpreadsheet size={16} />
+                                        <Label>Template {t.label}</Label>
+                                    </Dropdown.Item>
+                                ))}
+                                <Dropdown.Item id={ACTION_SURAT_LHR} textValue="Draft Surat Laporan Hasil Rekon">
+                                    <FileText size={16} />
+                                    <Label>Draft Surat Laporan Hasil Rekon</Label>
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown.Popover>
+                    </Dropdown>
                     <RekonImportModal tahun={tahun} bulan={bulan} />
                 </div>
             </header>

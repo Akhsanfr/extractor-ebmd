@@ -22,6 +22,9 @@ import {
     type RekonRow,
 } from "./rekonUtil";
 import { RekonType } from "@/enum/rekon";
+import { filterRekonRows, getPerangkatDaerahOptions, useRekonFilters } from "./useRekonFilters";
+import { getPerangkatDaerahAction } from "@/action/perangkatDaerah/action";
+import RekonFilterBar from "./rekonFilterBar";
 
 function RekonBody() {
     const tahunOptions = useMemo(() => getTahunOptions(), []);
@@ -51,6 +54,10 @@ function RekonBody() {
     });
 
     const berkasRow = berkasTarget ? query.data?.find((r) => r.id === berkasTarget.id) : undefined;
+
+    const f = useRekonFilters({ tahun: 2026, bulan: 10, rekonType: RekonType.ASET_TETAP }, Object.values(RekonType));
+    const options = useMemo(() => getPerangkatDaerahOptions(query.data ?? []), [query.data]);
+    const rows = useMemo(() => filterRekonRows(query.data ?? [], { q: f.q, pd: f.pd }), [query.data, f.q, f.pd]);
 
     return (
         <div className="flex flex-col gap-6">
@@ -156,6 +163,12 @@ function RekonBody() {
             {/* Ringkasan */}
             <RekonSummary data={query.data} />
 
+            <RekonFilterBar
+                query={f.q} onQueryChange={f.setQuery}
+                perangkatDaerahId={f.pd} onPerangkatDaerahChange={f.setPerangkatDaerah}
+                options={options} hasActiveFilter={f.hasActiveFilter} onReset={f.resetFilters}
+            />
+
             {/* Tabel */}
             <Card className="border border-border">
                 <Card.Header className="flex-row items-center justify-between gap-3">
@@ -183,7 +196,7 @@ function RekonBody() {
                     ) : query.isLoading ? (
                         <Loading />
                     ) : (
-                        <RekonTable data={query.data ?? []} onEdit={setEditTarget} onOpenBerkas={openBerkas} />
+                        <RekonTable data={rows} resetPageKey={`${f.rekonType}|${f.q}|${f.pd}`} onEdit={setEditTarget} onOpenBerkas={openBerkas} />
                     )}
                 </Card.Content>
             </Card>

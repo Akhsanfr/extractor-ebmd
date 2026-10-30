@@ -269,10 +269,12 @@ export default function RekonTable({
     data,
     onEdit,
     onOpenBerkas,
+    resetPageKey
 }: {
     data: RekonRow[];
     onEdit: (row: RekonRow) => void;
     onOpenBerkas: (row: RekonRow, tipe: RekonBerkasTipe) => void;
+    resetPageKey: string;
 }) {
     // Default: Perangkat Daerah ascending.
     const [sorting, setSorting] = useState<SortingState>([
@@ -402,6 +404,10 @@ export default function RekonTable({
     }, [pageCount, pagination.pageIndex]);
 
     if (totalRows === 0) return <EmptyState />;
+
+    useEffect(() => {
+        setPagination((p) => ({ ...p, pageIndex: 0 }));
+    }, [resetPageKey]);
 
     return (
         <>

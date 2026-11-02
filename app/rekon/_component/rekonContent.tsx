@@ -82,7 +82,13 @@ function RekonBody() {
                 fetchType(RekonType.PEMELIHARAAN),
             ]);
             toast.info("Fitur ini masih dalam tahap pengembangan");
-            // generateDraftSuratLhr({ asetTetap, persediaan, pemeliharaan }, { tahun, bulan });
+            const { generateDraftSuratHasilRekon } = await import(
+                "@/lib/generateDoc/rekon/laporanHasilRekon"
+            );
+            generateDraftSuratHasilRekon(
+                { asetTetap, persediaan, pemeliharaan },
+                { tahun, bulan }
+            );
         },
         onError: (error) => {
             toast.danger("Gagal mencetak draft Surat Laporan Hasil Rekon", {

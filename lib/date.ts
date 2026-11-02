@@ -6,6 +6,22 @@ import {
     type CalendarDate,
 } from "@internationalized/date";
 import { angkaKeKata } from "./number";
+
+export const daftarBulan = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+]
+
 export const formatTanggalSurat = (value: string): { hari: string, tanggal: string, bulan: string, tahun: string } => {
 
 
@@ -22,20 +38,7 @@ export const formatTanggalSurat = (value: string): { hari: string, tanggal: stri
         "Sabtu",
     ][hariIndex];
 
-    const bulan = [
-        "Januari",
-        "Februari",
-        "Maret",
-        "April",
-        "Mei",
-        "Juni",
-        "Juli",
-        "Agustus",
-        "September",
-        "Oktober",
-        "November",
-        "Desember",
-    ][date.month - 1];
+    const bulan = daftarBulan[date.month - 1];
 
     return {
         hari,

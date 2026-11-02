@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Alert, Button, Chip, Input, Label, ListBox, Modal, Select, toast, type Key } from "@heroui/react";
+import { Alert, Button, Chip, Input, Label, ListBox, Modal, Select, toast, TextArea, type Key } from "@heroui/react";
 import { useMutation, useQueryClient, type QueryKey } from "@tanstack/react-query";
 import { Pencil } from "lucide-react";
 import { actionEditRekon } from "@/action/rekon/action.update";
@@ -21,10 +21,11 @@ import {
 } from "./rekonUtil";
 
 type FieldName = "realisasiAnggaran" | "inputBMD";
-type FieldErrors = Partial<Record<FieldName | "pic", string>>;
+type FieldErrors = Partial<Record<FieldName | "pic" | "keterangan", string>>;
 
 const NOMINAL_INVALID_MESSAGE = "Isi nominal yang valid, mis. 1500000 atau 1500000,50";
 const PIC_NONE = "none";
+const KETERANGAN_MAX = 500;
 
 // Mengubah realisasiAnggaran, inputBMD, dan pic. Bulan, tahun, jenis rekon, dan
 // perangkat daerah tampil read-only dan tidak ikut dikirim ke server.
@@ -40,6 +41,10 @@ export default function RekonEditModal({
     const queryClient = useQueryClient();
     const [realisasiValue, setRealisasiValue] = useState(() => nominalToInput(target.realisasiAnggaran));
     const [inputBmdValue, setInputBmdValue] = useState(() => nominalToInput(target.inputBMD));
+    const [keterangan, setKeterangan] = useState(() => target.keterangan ?? "");
+    const clearFieldError = (name: keyof FieldErrors) => {
+        setFieldErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev));
+    };
     // PIC lama yang tidak ada di daftar dianggap belum ada PIC.
     const [pic, setPic] = useState<RekonPic | null>(() => (isRekonPic(target.pic) ? target.pic : null));
     const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
@@ -73,10 +78,6 @@ export default function RekonEditModal({
             : hitungSelisih({ realisasiAnggaran: realisasiPreview, inputBMD: inputBmdPreview });
     const previewStatus = previewSelisih ? getSelisihStatus(previewSelisih) : null;
 
-    const clearFieldError = (name: FieldName | "pic") => {
-        setFieldErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev));
-    };
-
     const submit = () => {
         if (mutation.isPending) return;
 
@@ -91,12 +92,21 @@ export default function RekonEditModal({
             return;
         }
 
-        const parsed = RekonContract.edit.safeParse({ id: target.id, realisasiAnggaran, inputBMD, pic });
+        const parsed = RekonContract.edit.safeParse({
+            id: target.id,
+            realisasiAnggaran,
+            inputBMD,
+            pic,
+            keterangan: keterangan.trim() === "" ? null : keterangan.trim(),
+        });
         if (!parsed.success) {
             const next: FieldErrors = {};
             for (const issue of parsed.error.issues) {
                 const key = issue.path[0];
-                if ((key === "realisasiAnggaran" || key === "inputBMD" || key === "pic") && !next[key]) {
+                if (
+                    (key === "realisasiAnggaran" || key === "inputBMD" || key === "pic" || key === "keterangan") &&
+                    !next[key]
+                ) {
                     next[key] = issue.message;
                 }
             }
@@ -260,6 +270,31 @@ export default function RekonEditModal({
                                             <Chip.Label>{previewStatus.label}</Chip.Label>
                                         </Chip>
                                     )}
+                                </div>
+                                <div className="flex flex-col gap-1.5">
+                                    <Label>Keterangan</Label>
+                                    <TextArea
+                                        rows={3}
+                                        placeholder="Catatan tambahan (opsional)"
+                                        value={keterangan}
+                                        maxLength={KETERANGAN_MAX}
+                                        aria-invalid={fieldErrors.keterangan !== undefined}
+                                        disabled={mutation.isPending}
+                                        onChange={(e) => {
+                                            setKeterangan(e.target.value);
+                                            clearFieldError("keterangan");
+                                        }}
+                                    />
+                                    <div className="flex justify-between gap-2">
+                                        {fieldErrors.keterangan ? (
+                                            <p className="text-sm text-danger">{fieldErrors.keterangan}</p>
+                                        ) : (
+                                            <span />
+                                        )}
+                                        <p className="text-xs text-muted tabular-nums">
+                                            {keterangan.length}/{KETERANGAN_MAX}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </Modal.Body>

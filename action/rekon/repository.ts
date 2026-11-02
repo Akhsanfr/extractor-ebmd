@@ -102,10 +102,10 @@ export const RekonRepository = {
     },
 
     async update(db: DbOrTx, data: RekonContract.UpdateDTO): Promise<RekonContract.SelectDTO> {
-        const { id, inputBMD, realisasiAnggaran, pic, updatedAt } = data;
+        const { id, inputBMD, realisasiAnggaran, pic, updatedAt, keterangan } = data;
         const res = await db
             .update(rekonTable)
-            .set({ inputBMD, realisasiAnggaran, pic, updatedAt })
+            .set({ inputBMD, realisasiAnggaran, pic, updatedAt, keterangan })
             .where(eq(rekonTable.id, id))
             .returning();
         if (!res[0]) {

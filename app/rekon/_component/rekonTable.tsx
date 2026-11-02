@@ -372,6 +372,18 @@ export default function RekonTable({
                     cell: (ctx) => <BerkasCell row={ctx.row.original} tipe="ba" onOpen={onOpenBerkas} />,
                 }),
                 columnHelper.display({
+                    id: "keterangan",
+                    header: () => <div className="text-center">Keterangan</div>,
+                    size: 120,
+                    cell: (ctx) => (
+                        <div className="text-left">
+                            {ctx.row.original.keterangan || (
+                                <span className="text-muted">—</span>
+                            )}
+                        </div>
+                    ),
+                }),
+                columnHelper.display({
                     id: "edit",
                     header: "Aksi",
                     size: 80,

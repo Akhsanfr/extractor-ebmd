@@ -40,6 +40,7 @@ export const rekonTable = snakeCase.table(
         kertasKerjaId: text(),
         baId: text(),
         pic: text(),
+        keterangan: text(),
 
         createdAt: timestamp("created_at", {
             withTimezone: true,

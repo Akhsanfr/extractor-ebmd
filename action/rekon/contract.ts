@@ -78,6 +78,7 @@ export const RekonContract = {
         id: z.number().int().positive(),
         realisasiAnggaran: nominal,
         pic: z.string(),
+        keterangan: z.string().nullable(),
         inputBMD: nominal,
     }),
     update: z.object({
@@ -85,6 +86,7 @@ export const RekonContract = {
         inputBMD: nominal,
         realisasiAnggaran: nominal,
         pic: z.string(),
+        keterangan: z.string().nullable(),
         updatedAt: z.date(),
     }),
 

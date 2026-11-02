@@ -5,10 +5,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Download, FileSpreadsheet, FileText, Scale } from "lucide-react";
 import { actionGetListRekon } from "@/action/rekon/action.read";
 import Loading from "@/component/loading";
+import type { RentangTanggal } from "@/lib/generateDoc/rekon/laporanHasilRekon";
 import type { RekonBerkasTipe } from "./rekonBerkas";
 import RekonBerkasModal from "./rekonBerkasModal";
 import RekonEditModal from "./rekonEditModal";
 import RekonImportModal from "./rekonImportModal";
+import RekonPelaksanaanModal from "./rekonPelaksanaanModal";
 import RekonShell from "./rekonShell";
 import RekonSummary from "./rekonSummary";
 import RekonTable from "./rekonTable";
@@ -52,6 +54,8 @@ function RekonBody() {
     const [editTarget, setEditTarget] = useState<RekonRow | null>(null);
     // Yang disimpan hanya identitas (id + tipe); datanya selalu dibaca dari cache query.
     const [berkasTarget, setBerkasTarget] = useState<{ id: RekonRow["id"]; tipe: RekonBerkasTipe } | null>(null);
+    // Popup pilih tanggal pelaksanaan untuk Draft Surat Laporan Hasil Rekon.
+    const [pelaksanaanOpen, setPelaksanaanOpen] = useState(false);
     const openBerkas = useCallback(
         (row: RekonRow, tipe: RekonBerkasTipe) => setBerkasTarget({ id: row.id, tipe }),
         [],
@@ -69,7 +73,7 @@ function RekonBody() {
 
     // Draft surat butuh data ketiga jenis rekon pada periode terpilih, bukan hanya tab yang aktif.
     const draftSuratMutation = useMutation({
-        mutationFn: async () => {
+        mutationFn: async (pelaksanaan: RentangTanggal) => {
             if (tahun === undefined) throw new Error("Tahun belum ditentukan");
             const fetchType = (type: RekonType) =>
                 queryClient.fetchQuery({
@@ -87,9 +91,10 @@ function RekonBody() {
             );
             generateDraftSuratHasilRekon(
                 { asetTetap, persediaan, pemeliharaan },
-                { tahun, bulan }
+                { tahun, bulan, pelaksanaan }
             );
         },
+        onSuccess: () => setPelaksanaanOpen(false),
         onError: (error) => {
             toast.danger("Gagal mencetak draft Surat Laporan Hasil Rekon", {
                 description: getErrorMessage(error),
@@ -97,17 +102,15 @@ function RekonBody() {
         },
     });
 
-    const handleDownloadAction = useCallback(
-        (key: Key) => {
-            const template = TEMPLATE_REKON.find((t) => t.id === key);
-            if (template) {
-                window.open(template.href, "_blank", "noopener,noreferrer");
-                return;
-            }
-            if (key === ACTION_SURAT_LHR) draftSuratMutation.mutate();
-        },
-        [draftSuratMutation],
-    );
+    const handleDownloadAction = useCallback((key: Key) => {
+        const template = TEMPLATE_REKON.find((t) => t.id === key);
+        if (template) {
+            window.open(template.href, "_blank", "noopener,noreferrer");
+            return;
+        }
+        // Draft surat: buka popup tanggal pelaksanaan dulu, unduh setelah tanggal dipilih.
+        if (key === ACTION_SURAT_LHR) setPelaksanaanOpen(true);
+    }, []);
 
     const berkasRow = berkasTarget ? query.data?.find((r) => r.id === berkasTarget.id) : undefined;
 
@@ -130,7 +133,7 @@ function RekonBody() {
                 </div>
                 <div className="ml-auto flex items-center gap-2">
                     <Dropdown>
-                        <Button variant="secondary" isPending={draftSuratMutation.isPending}>
+                        <Button variant="secondary">
                             <Download size={16} />
                             Unduh
                         </Button>
@@ -294,6 +297,14 @@ function RekonBody() {
                     target={editTarget}
                     queryKey={queryKey}
                     onClose={() => setEditTarget(null)}
+                />
+            )}
+
+            {pelaksanaanOpen && (
+                <RekonPelaksanaanModal
+                    isPending={draftSuratMutation.isPending}
+                    onClose={() => setPelaksanaanOpen(false)}
+                    onSubmit={(rentang) => draftSuratMutation.mutate(rentang)}
                 />
             )}
         </div>

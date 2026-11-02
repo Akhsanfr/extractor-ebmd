@@ -4,6 +4,10 @@ import { daftarBulan } from "@/lib/date";
 
 type RekonRow = RekonContract.SelectWithPerangkatDaerahDTO;
 
+// Struktural (year/month/day) supaya CalendarDate dari HeroUI DatePicker langsung kompatibel.
+export type TanggalSederhana = { year: number; month: number; day: number };
+export type RentangTanggal = { start: TanggalSederhana; end: TanggalSederhana };
+
 const angkaFormatter = new Intl.NumberFormat("id-ID", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -17,6 +21,26 @@ const formatPersen = (n: number) => `${angkaFormatter.format(n)}%`;
 
 const hitungPersentase = (inputBMD: number, realisasi: number) =>
     realisasi > 0 ? (inputBMD / realisasi) * 100 : 0;
+
+// 30 Okt - 1 Nov 2026 -> "30 Oktober - 1 November 2026"
+// 15 - 16 Nov 2026    -> "15 - 16 November 2026"
+// beda tahun          -> "30 Desember 2026 - 2 Januari 2027"
+// satu hari           -> "15 November 2026"
+export const formatTanggalPelaksanaan = ({ start, end }: RentangTanggal) => {
+    const bulanStart = daftarBulan[start.month - 1];
+    const bulanEnd = daftarBulan[end.month - 1];
+
+    if (start.year !== end.year) {
+        return `${start.day} ${bulanStart} ${start.year} - ${end.day} ${bulanEnd} ${end.year}`;
+    }
+    if (start.month !== end.month) {
+        return `${start.day} ${bulanStart} - ${end.day} ${bulanEnd} ${end.year}`;
+    }
+    if (start.day !== end.day) {
+        return `${start.day} - ${end.day} ${bulanEnd} ${end.year}`;
+    }
+    return `${end.day} ${bulanEnd} ${end.year}`;
+};
 
 const formatKategori = (rows: RekonRow[]) => {
     const raw = rows
@@ -73,7 +97,11 @@ export const generateDraftSuratHasilRekon = (
         persediaan: RekonRow[];
         pemeliharaan: RekonRow[];
     },
-    { tahun, bulan }: { tahun: number; bulan: number }
+    {
+        tahun,
+        bulan,
+        pelaksanaan,
+    }: { tahun: number; bulan: number; pelaksanaan: RentangTanggal }
 ) => {
     const at = formatKategori(asetTetap);
     const ps = formatKategori(persediaan);
@@ -90,6 +118,8 @@ export const generateDraftSuratHasilRekon = (
             "bulan": daftarBulan[bulan - 1],
             "bulan-c": daftarBulan[bulan - 1].toUpperCase(),
             "tahun": tahun,
+
+            "tanggal-pelaksanaan": formatTanggalPelaksanaan(pelaksanaan),
 
             "aset-tetap": at.items,
             "aset-tetap-realisasi-anggaran": at.totalRealisasi,

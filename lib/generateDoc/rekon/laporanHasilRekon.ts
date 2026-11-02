@@ -16,11 +16,16 @@ const angkaFormatter = new Intl.NumberFormat("id-ID", {
 // 1000000 -> "1.000.000,00"
 const formatAngka = (n: number) => angkaFormatter.format(n);
 
+
+
+const hitungSelisih = (inputBMD: number, realisasi: number) =>
+    Math.max(realisasi - inputBMD, 0);
+
 // 100 -> "100,00%"
 const formatPersen = (n: number) => `${angkaFormatter.format(n)}%`;
 
 const hitungPersentase = (inputBMD: number, realisasi: number) =>
-    realisasi > 0 ? (inputBMD / realisasi) * 100 : 0;
+    realisasi > 0 ? Math.min((inputBMD / realisasi) * 100, 100) : 100;
 
 // 30 Okt - 1 Nov 2026 -> "30 Oktober - 1 November 2026"
 // 15 - 16 Nov 2026    -> "15 - 16 November 2026"
@@ -52,7 +57,7 @@ const formatKategori = (rows: RekonRow[]) => {
                 ...r,
                 realisasiAnggaran: realisasi,
                 inputBMD: input,
-                selisih: realisasi - input,
+                selisih: hitungSelisih(input, realisasi),
                 persentase: hitungPersentase(input, realisasi),
             };
         })
@@ -80,7 +85,7 @@ const formatKategori = (rows: RekonRow[]) => {
         items,
         totalRealisasi: formatAngka(totalRealisasi),
         totalInput: formatAngka(totalInput),
-        totalSelisih: formatAngka(totalRealisasi - totalInput),
+        totalSelisih: formatAngka(hitungSelisih(totalInput, totalRealisasi)),
         totalPersentase: formatPersen(
             hitungPersentase(totalInput, totalRealisasi)
         ),

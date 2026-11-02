@@ -85,7 +85,6 @@ function RekonBody() {
                 fetchType(RekonType.PERSEDIAAN),
                 fetchType(RekonType.PEMELIHARAAN),
             ]);
-            toast.info("Fitur ini masih dalam tahap pengembangan");
             const { generateDraftSuratHasilRekon } = await import(
                 "@/lib/generateDoc/rekon/laporanHasilRekon"
             );

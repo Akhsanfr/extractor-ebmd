@@ -7,7 +7,6 @@ import { PerangkatDaerah, PerangkatDaerahJabatan } from "@/enum/perangkatDaerah"
 export const generateSKHapus = ({
     SKHapus,
     persetujuanBupati,
-    permohonanPenghapusan,
     bast,
     data,
 }: AlihStatusSKHapusContract.SelectWithDetailDTO) => {
@@ -72,7 +71,7 @@ export const generateSKHapus = ({
     ];
 
     const memperhatikan: string[] = items.map((text, i) =>
-        i === items.length - 2 ? `${text}; dan` : `${text};`,
+        i === items.length - 2 ? `${text}; dan` : `${text}.`,
     );
 
     const perangkatDaerahAsalUnik = [...new Set(data.map((item) => item.perangkatDaerahAsal))].filter(item => item !== null);
@@ -134,7 +133,9 @@ export const generateSKHapus = ({
 
             "memperhatikan": memperhatikan,
 
-            "tembusan": tembusan.map(e => PerangkatDaerahJabatan[e as PerangkatDaerah]),
+            "tembusan": tembusan.map(
+                (e, i) => `${PerangkatDaerahJabatan[e as PerangkatDaerah]}${i === tembusan.length - 1 ? "." : ";"}`
+            ),
 
             "data": data.map((item, index) => ({
                 ...item,

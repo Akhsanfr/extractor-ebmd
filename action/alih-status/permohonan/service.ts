@@ -54,6 +54,13 @@ export const AlihStatusPermohonanService = {
         });
         return AlihStatusPermohonanRepository.findForAvailableBaPenelitian(db, tahun);
     },
+    async getForAvailablePersetujuanBupati(userId: string, tahun: number): Promise<AlihStatusPermohonanContract.SelectDTO[]> {
+        await verifyPermissions(userId, {
+            "alih-status": ["read"]
+        });
+        return AlihStatusPermohonanRepository.findForAvailablePersetujuanBupati(db, tahun);
+    },
+
 
     async insert(data: AlihStatusPermohonanContract.InsertDTO, userId: string): Promise<AlihStatusPermohonanContract.SelectDTO> {
         await verifyPermissions(userId, {

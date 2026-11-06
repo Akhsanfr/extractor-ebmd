@@ -5,10 +5,11 @@ import { alihStatusPersetujuanBupatiTable } from "@/drizzle/schema";
 import { OperationalError } from "@/action/actionResponse";
 
 export const AlihStatusPersetujuanBupatiRepository = {
-    async findAll(db: DbOrTx, tahun: number): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO[]> {
+    async findAll(db: DbOrTx, query: AlihStatusPersetujuanBupatiContract.QueryDTO): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO[]> {
         return await db.query.alihStatusPersetujuanBupatiTable.findMany({
             where: {
-                tahun
+                alihStatusType: query.alihStatusType,
+                tahun: query.tahun
             }
         });
     },

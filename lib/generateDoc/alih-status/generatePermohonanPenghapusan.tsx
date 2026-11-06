@@ -8,9 +8,6 @@ export const generatePermohonanPenghapusan = ({
     bast,
     data,
 }: AlihStatusPermohonanPenghapusanContract.SelectWithDetailDTO) => {
-
-    console.log(bast)
-
     const formatTanggal = (tanggal: string | null) =>
         tanggal
             ? new Intl.DateTimeFormat("id-ID", {

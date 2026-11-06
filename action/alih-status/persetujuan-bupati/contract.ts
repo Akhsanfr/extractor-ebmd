@@ -9,6 +9,10 @@ import { AlihStatusNodinContract } from "../nodin/contract";
 import { AlihStatusTrackingContract } from "../tracking/contract";
 
 export const AlihStatusPersetujuanBupatiContract = {
+    query: z.object({
+        alihStatusType: z.enum(AlihStatusType),
+        tahun: z.number(),
+    }),
     select: createSelectSchema(alihStatusPersetujuanBupatiTable).extend({ alihStatusType: z.enum(AlihStatusType) }),
 
     selectWithDetail: z.object({
@@ -51,11 +55,12 @@ export const AlihStatusPersetujuanBupatiContract = {
 };
 
 export namespace AlihStatusPersetujuanBupatiContract {
+    export type QueryDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.query>;
     export type SelectDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.select>;
     export type SelectWithDetailDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.selectWithDetail>;
     export type CreateDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.create>;
     export type InsertDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.insert>;
     export type EditDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.edit>;
     export type UpdateDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.update>;
-    export type DeleteDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.delete>;export type ResultAddBerkasDTO = z.infer<typeof AlihStatusBAPenelitianContract.resultAddBerkas>;
+    export type DeleteDTO = z.infer<typeof AlihStatusPersetujuanBupatiContract.delete>; export type ResultAddBerkasDTO = z.infer<typeof AlihStatusBAPenelitianContract.resultAddBerkas>;
 }

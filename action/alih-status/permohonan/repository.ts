@@ -79,6 +79,21 @@ export const AlihStatusPermohonanRepository = {
             }
         });
     },
+    async findForAvailablePersetujuanBupati(db: DbOrTx, tahun: number): Promise<AlihStatusPermohonanContract.SelectDTO[]> {
+        return await db.query.alihStatusPermohonanTable.findMany({
+            where: {
+                tahun,
+                alihStatusType: {
+                    eq: AlihStatusType.PENYERAHAN_KEPADA_PENGELOLA
+                },
+                data: {
+                    persetujuanBupatiId: {
+                        isNull: true,
+                    },
+                },
+            }
+        });
+    },
 
     async insert(db: DbOrTx, data: AlihStatusPermohonanContract.InsertDTO): Promise<AlihStatusPermohonanContract.SelectDTO> {
         const res = await db.insert(alihStatusPermohonanTable).values(data).returning();

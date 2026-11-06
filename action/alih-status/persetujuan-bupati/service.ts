@@ -15,11 +15,11 @@ const persetujuanBupatiBerkasScope = (id: number) =>
 const today = () => new Date().toISOString().slice(0, 10);
 
 export const AlihStatusPersetujuanBupatiService = {
-    async getList(userId: string, tahun: number): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO[]> {
+    async getList(userId: string, query: AlihStatusPersetujuanBupatiContract.QueryDTO): Promise<AlihStatusPersetujuanBupatiContract.SelectDTO[]> {
         await verifyPermissions(userId, {
             "alih-status": ["read"]
         });
-        return AlihStatusPersetujuanBupatiRepository.findAll(db, tahun);
+        return AlihStatusPersetujuanBupatiRepository.findAll(db, query);
     },
     async getDetailWithDetail(userId: string, id: number): Promise<AlihStatusPersetujuanBupatiContract.SelectWithDetailDTO> {
         await verifyPermissions(userId, {

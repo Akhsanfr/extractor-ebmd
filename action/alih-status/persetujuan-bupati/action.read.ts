@@ -5,13 +5,13 @@ import { AlihStatusPersetujuanBupatiService } from "./service";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth/auth";
 
-export async function actionGetListAlihStatusPersetujuanBupati(tahun: number): Promise<
+export async function actionGetListAlihStatusPersetujuanBupati(query: AlihStatusPersetujuanBupatiContract.QueryDTO): Promise<
     ActionResponse<AlihStatusPersetujuanBupatiContract.SelectDTO[]>
 > {
     try {
         const session = await auth.api.getSession({ headers: await headers() });
         if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
-        const data = await AlihStatusPersetujuanBupatiService.getList(session.user.id, tahun);
+        const data = await AlihStatusPersetujuanBupatiService.getList(session.user.id, query);
         return {
             success: true,
             data,

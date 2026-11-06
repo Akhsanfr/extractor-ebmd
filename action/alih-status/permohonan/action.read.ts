@@ -66,3 +66,19 @@ export async function actionGetListAlihStatusPermohonanForAvailableBAPenelitian(
         return handleActionError(err, "actionGetPermohonanWithDetail");
     }
 }
+export async function actionGetListAlihStatusPermohonanForAvailablePersetujuanBupati(tahun: number): Promise<
+    ActionResponse<AlihStatusPermohonanContract.SelectDTO[]>
+> {
+    try {
+        const session = await auth.api.getSession({ headers: await headers() });
+        if (!session) throw new OperationalError("Maaf, Kamu harus login dahulu.");
+        const data = await AlihStatusPermohonanService.getForAvailablePersetujuanBupati(session.user.id, tahun);
+        return {
+            success: true,
+            data,
+        };
+    } catch (err) {
+        return handleActionError(err, "actionGetPermohonanWithDetail");
+    }
+}
+

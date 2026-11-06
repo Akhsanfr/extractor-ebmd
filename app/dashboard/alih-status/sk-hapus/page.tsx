@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
     Button,
     toast,
@@ -9,14 +9,14 @@ import {
     ButtonGroup,
     ButtonGroupSeparator,
 } from "@heroui/react";
-import { Edit, Eye, Plus, RefreshCcw, RefreshCw, Trash } from "lucide-react";
+import { Eye, Plus, RefreshCw, Trash } from "lucide-react";
 import { AlihStatusSKHapusContract } from "@/action/alih-status/sk-hapus/contract";
 import { actionDeleteAlihStatusSKHapus } from "@/action/alih-status/sk-hapus/action.delete";
 import { actionGetListAlihStatusSKHapus } from "@/action/alih-status/sk-hapus/action.read";
 import { actionCreateAlihStatusSKHapus } from "@/action/alih-status/sk-hapus/action.create";
 import { useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { SelectFormField, TextFormField } from "../_component/formField";
+import { TextFormField } from "../_component/formField";
 import { useStore } from "@nanostores/react";
 import { $year } from "@/state/year.store";
 import { useForm } from "react-hook-form";
@@ -24,13 +24,18 @@ import ListAvailablePermohonanPenghapusan from "./ListAvailablePermohonanPenghap
 import ListAvailableData from "../_component/listAvailableData/listAvailableData";
 import DetailSKHapus from "../_component/SKHapus";
 import { AlihStatusDataContract } from "@/action/alih-status/data/contract";
-import { angkaKeKata } from "@/lib/number";
-
-
 
 const queryKey = ["alih-status", "sk-hapus"];
 const STEPS = ["permohonan", "data", "ba"] as const;
 type FormStep = (typeof STEPS)[number];
+
+type StatusFilter = "all" | "done" | "pending";
+
+const STATUS_OPTIONS: { id: StatusFilter; label: string }[] = [
+    { id: "all", label: "Semua" },
+    { id: "done", label: "Selesai" },
+    { id: "pending", label: "Belum Selesai" },
+];
 
 export default function SKHapus() {
     const tahun = useStore($year);
@@ -40,6 +45,7 @@ export default function SKHapus() {
     const [selectedData, setSelectedData] = useState<
         AlihStatusDataContract.SelectDTO[]
     >([]);
+    const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
 
     const [formSelected, setFormSelected] = useState<FormStep>("permohonan")
 
@@ -60,13 +66,19 @@ export default function SKHapus() {
         queryFn: async () => {
             if (!tahun) throw new Error("Tahun belum dipilih")
             const res = await actionGetListAlihStatusSKHapus(Number(tahun));
-            console.log("res", res)
             if (!res.success) {
                 throw res.error;
             }
             return res.data;
         },
     });
+
+    // Filter status (Semua / Selesai / Belum Selesai) diterapkan di sini sebelum masuk ke tabel
+    const filteredData = useMemo(() => {
+        const rows = query.data ?? [];
+        if (statusFilter === "all") return rows;
+        return rows.filter((d) => d.isDone === (statusFilter === "done"));
+    }, [query.data, statusFilter]);
 
     const handleDelete = async (id: number) => {
         try {
@@ -191,16 +203,30 @@ export default function SKHapus() {
         <>
             <DetailSKHapus
                 action={
-                    <ButtonGroup>
-                        <Button variant="outline" isPending={query.isRefetching} onPress={refresh}>
-                            <RefreshCw className={query.isRefetching ? "animate-spin" : ""} />
-                        </Button>
-                        <Button variant="outline" onPress={() => { resetWizard(); state.open(); }}>
-                            <ButtonGroupSeparator />
-                            <Plus />
-                        </Button>
-                    </ButtonGroup>}
-                data={query.data ?? []} isLoading={query.isLoading} shouldTable={true} rowAction={(row) =>
+                    <div className="flex items-center gap-2">
+                        <ButtonGroup aria-label="Filter status SK Hapus">
+                            {STATUS_OPTIONS.map((opt) => (
+                                <Button
+                                    key={opt.id}
+                                    size="sm"
+                                    variant={statusFilter === opt.id ? "primary" : "outline"}
+                                    onPress={() => setStatusFilter(opt.id)}
+                                >
+                                    {opt.label}
+                                </Button>
+                            ))}
+                        </ButtonGroup>
+                        <ButtonGroup>
+                            <Button variant="outline" isPending={query.isRefetching} onPress={refresh}>
+                                <RefreshCw className={query.isRefetching ? "animate-spin" : ""} />
+                            </Button>
+                            <Button variant="outline" onPress={() => { resetWizard(); state.open(); }}>
+                                <ButtonGroupSeparator />
+                                <Plus />
+                            </Button>
+                        </ButtonGroup>
+                    </div>}
+                data={filteredData} isLoading={query.isLoading} shouldTable={true} rowAction={(row) =>
                     <ButtonGroup>
                         <Button
                             variant="secondary" size='sm'

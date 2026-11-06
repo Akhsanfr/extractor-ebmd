@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
     Button,
     toast,
@@ -9,18 +9,13 @@ import {
     ButtonGroup,
     ButtonGroupSeparator,
 } from "@heroui/react";
-import { Edit, Eye, Plus, RefreshCcw, RefreshCw, Trash } from "lucide-react";
+import { Eye, Plus, RefreshCw, Trash } from "lucide-react";
 import { AlihStatusPermohonanPenghapusanContract } from "@/action/alih-status/permohonan-penghapusan/contract";
 import { actionDeleteAlihStatusPermohonanPenghapusan } from "@/action/alih-status/permohonan-penghapusan/action.delete";
 import { actionGetListAlihStatusPermohonanPenghapusan } from "@/action/alih-status/permohonan-penghapusan/action.read";
 import { actionCreateAlihStatusPermohonanPenghapusan } from "@/action/alih-status/permohonan-penghapusan/action.create";
 import { useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-    createColumnHelper,
-    tableFeatures,
-    columnVisibilityFeature
-} from "@tanstack/react-table";
 import { AutocompleteFormField, SelectFormField, TextFormField } from "../_component/formField";
 import { useStore } from "@nanostores/react";
 import { $year } from "@/state/year.store";
@@ -31,17 +26,24 @@ import DetailPermohonanPenghapusan from "../_component/permohonanPenghapusan";
 import { PerangkatDaerah } from "@/enum/perangkatDaerah";
 import { PegawaiPangkatGolongan } from "@/enum/user";
 
-const features = tableFeatures({ columnVisibilityFeature });
-
 const queryKey = ["alih-status", "permohonan-penghapusan"];
 const STEPS = ["permohonan", "data", "ba"] as const;
 type FormStep = (typeof STEPS)[number];
+
+type StatusFilter = "all" | "done" | "pending";
+
+const STATUS_OPTIONS: { id: StatusFilter; label: string }[] = [
+    { id: "all", label: "Semua" },
+    { id: "done", label: "Selesai" },
+    { id: "pending", label: "Belum Selesai" },
+];
 
 export default function permohonanPenghapusan() {
     const tahun = useStore($year);
     const router = useRouter();
     const queryClient = useQueryClient();
     const [selectedBAST, setSelectedBAST] = useState<number[]>([])
+    const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
 
     const [formSelected, setFormSelected] = useState<FormStep>("permohonan")
 
@@ -62,13 +64,19 @@ export default function permohonanPenghapusan() {
         queryFn: async () => {
             if (!tahun) throw new Error("Tahun belum dipilih")
             const res = await actionGetListAlihStatusPermohonanPenghapusan(Number(tahun));
-            console.log("res", res)
             if (!res.success) {
                 throw res.error;
             }
             return res.data;
         },
     });
+
+    // Filter status (Semua / Selesai / Belum Selesai) diterapkan di sini sebelum masuk ke tabel
+    const filteredData = useMemo(() => {
+        const rows = query.data ?? [];
+        if (statusFilter === "all") return rows;
+        return rows.filter((d) => d.isDone === (statusFilter === "done"));
+    }, [query.data, statusFilter]);
 
     const handleDelete = async (id: number) => {
         try {
@@ -156,16 +164,30 @@ export default function permohonanPenghapusan() {
         <>
             <DetailPermohonanPenghapusan
                 action={
-                    <ButtonGroup>
-                        <Button variant="outline" isPending={query.isRefetching} onPress={refresh}>
-                            <RefreshCw className={query.isRefetching ? "animate-spin" : ""} />
-                        </Button>
-                        <Button variant="outline" onPress={() => { resetWizard(); state.open(); }}>
-                            <ButtonGroupSeparator />
-                            <Plus />
-                        </Button>
-                    </ButtonGroup>}
-                data={query.data ?? []} isLoading={query.isLoading} shouldTable={true} rowAction={(row) =>
+                    <div className="flex items-center gap-2">
+                        <ButtonGroup aria-label="Filter status permohonan penghapusan">
+                            {STATUS_OPTIONS.map((opt) => (
+                                <Button
+                                    key={opt.id}
+                                    size="sm"
+                                    variant={statusFilter === opt.id ? "primary" : "outline"}
+                                    onPress={() => setStatusFilter(opt.id)}
+                                >
+                                    {opt.label}
+                                </Button>
+                            ))}
+                        </ButtonGroup>
+                        <ButtonGroup>
+                            <Button variant="outline" isPending={query.isRefetching} onPress={refresh}>
+                                <RefreshCw className={query.isRefetching ? "animate-spin" : ""} />
+                            </Button>
+                            <Button variant="outline" onPress={() => { resetWizard(); state.open(); }}>
+                                <ButtonGroupSeparator />
+                                <Plus />
+                            </Button>
+                        </ButtonGroup>
+                    </div>}
+                data={filteredData} isLoading={query.isLoading} shouldTable={true} rowAction={(row) =>
                     <ButtonGroup>
                         <Button
                             variant="secondary" size='sm'

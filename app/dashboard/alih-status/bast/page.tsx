@@ -34,6 +34,14 @@ const queryKey = ["alih-status", "bast"];
 const STEPS = ["permohonan", "data", "asal", "ba"] as const;
 type FormStep = (typeof STEPS)[number];
 
+type StatusFilter = "all" | "done" | "pending";
+
+const STATUS_OPTIONS: { id: StatusFilter; label: string }[] = [
+    { id: "all", label: "Semua" },
+    { id: "done", label: "Selesai" },
+    { id: "pending", label: "Belum Selesai" },
+];
+
 // satu pasangan Perangkat Daerah Asal + Tujuan — data yang dipilih user
 // difilter berdasarkan pasangan ini, bukan hanya berdasarkan asal saja
 type PerangkatDaerahPair = {
@@ -46,6 +54,7 @@ export default function BAST() {
     const router = useRouter();
     const queryClient = useQueryClient();
     const [selectedPersetujuanBupatiIds, setSelectedPersetujuanBupatiIds] = useState<number[]>([])
+    const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
 
     // data lengkap yang dipilih pada step "data", dipakai untuk menghitung
     // daftar unik pasangan Perangkat Daerah Asal + Tujuan pada step "asal"
@@ -86,13 +95,19 @@ export default function BAST() {
         queryFn: async () => {
             if (!tahun) throw new Error("Tahun belum dipilih")
             const res = await actionGetListAlihStatusBAST(Number(tahun));
-            console.log("res", res)
             if (!res.success) {
                 throw res.error;
             }
             return res.data;
         },
     });
+
+    // Filter status (Semua / Selesai / Belum Selesai) diterapkan di sini sebelum masuk ke tabel
+    const filteredData = useMemo(() => {
+        const rows = query.data ?? [];
+        if (statusFilter === "all") return rows;
+        return rows.filter((d) => d.isDone === (statusFilter === "done"));
+    }, [query.data, statusFilter]);
 
     const handleDelete = async (id: number) => {
         try {
@@ -286,16 +301,30 @@ export default function BAST() {
         <>
             <DetailBAST
                 action={
-                    <ButtonGroup>
-                        <Button variant="outline" isPending={query.isRefetching} onPress={refresh}>
-                            <RefreshCw className={query.isRefetching ? "animate-spin" : ""} />
-                        </Button>
-                        <Button variant="outline" onPress={() => { resetWizard(); state.open(); }}>
-                            <ButtonGroupSeparator />
-                            <Plus />
-                        </Button>
-                    </ButtonGroup>}
-                data={query.data ?? []} isLoading={query.isLoading} shouldTable={true} rowAction={(row) =>
+                    <div className="flex items-center gap-2">
+                        <ButtonGroup aria-label="Filter status BAST">
+                            {STATUS_OPTIONS.map((opt) => (
+                                <Button
+                                    key={opt.id}
+                                    size="sm"
+                                    variant={statusFilter === opt.id ? "primary" : "outline"}
+                                    onPress={() => setStatusFilter(opt.id)}
+                                >
+                                    {opt.label}
+                                </Button>
+                            ))}
+                        </ButtonGroup>
+                        <ButtonGroup>
+                            <Button variant="outline" isPending={query.isRefetching} onPress={refresh}>
+                                <RefreshCw className={query.isRefetching ? "animate-spin" : ""} />
+                            </Button>
+                            <Button variant="outline" onPress={() => { resetWizard(); state.open(); }}>
+                                <ButtonGroupSeparator />
+                                <Plus />
+                            </Button>
+                        </ButtonGroup>
+                    </div>}
+                data={filteredData} isLoading={query.isLoading} shouldTable={true} rowAction={(row) =>
                     <ButtonGroup>
                         <Button
                             variant="secondary" size='sm'

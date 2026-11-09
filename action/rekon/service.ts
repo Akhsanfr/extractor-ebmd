@@ -38,7 +38,8 @@ export const RekonService = {
     },
 
     // Inisiasi: siapkan satu baris per jenis rekon untuk OPD + tahun + bulan.
-    // Aman dipanggil berulang: baris yang sudah ada (termasuk inputBMD-nya) tidak berubah.
+    // Realisasi tetap null sampai diisi. Aman dipanggil berulang: baris yang
+    // sudah ada (termasuk inputBMD-nya) tidak berubah.
     async initiate(data: RekonContract.InitiateDTO): Promise<RekonContract.SelectWithPerangkatDaerahDTO[]> {
         // TODO(auth): await verifyPermissions(userId, { rekon: ["create"] });
         return await db.transaction(async (tx) => {
@@ -49,7 +50,7 @@ export const RekonService = {
                     bulan: data.bulan,
                     perangkatDaerahId: data.perangkatDaerahId,
                     rekonType,
-                    realisasiAnggaran: 0,
+                    realisasiAnggaran: null,
                     inputBMD: 0,
                 })),
             );
@@ -65,7 +66,7 @@ export const RekonService = {
         const CHUNK_SIZE = 500;
         // TODO(auth): await verifyPermissions(userId, { rekon: ["create"] });
 
-        // ASUMSI: nama sheet "rekon" (di referensi: "Alih Status"). Sesuaikan dengan template Excel.
+        // Nama sheet "rekon" sesuai template Excel.
         const parsed = await parseExcelFile(data.data, "rekon");
         const formatted = RekonFormat.import(parsed);
         const validated = RekonContract.importItem.parse(formatted);
@@ -95,11 +96,12 @@ export const RekonService = {
             }
             seen.add(perangkatDaerahId);
 
-            const realisasi = {
-                [RekonType.ASET_TETAP]: item.asetTetap,
-                [RekonType.PERSEDIAAN]: item.persediaan,
-                [RekonType.PEMELIHARAAN]: item.pemeliharaan,
-            } satisfies Record<RekonType, number>;
+            // PIC dan realisasi bisa berbeda per jenis rekon.
+            const perType = {
+                [RekonType.ASET_TETAP]: { pic: item.picAsetTetap, realisasi: item.asetTetap },
+                [RekonType.PERSEDIAAN]: { pic: item.picPersediaan, realisasi: item.persediaan },
+                [RekonType.PEMELIHARAAN]: { pic: item.picPemeliharaan, realisasi: item.pemeliharaan },
+            } satisfies Record<RekonType, { pic: string | null; realisasi: number | null }>;
 
             for (const rekonType of Object.values(RekonType)) {
                 rows.push({
@@ -107,8 +109,10 @@ export const RekonService = {
                     bulan: data.bulan,
                     perangkatDaerahId,
                     rekonType,
-                    realisasiAnggaran: realisasi[rekonType],
-                    inputBMD: 0, // hanya untuk baris baru
+                    pic: perType[rekonType].pic,
+                    nomorBA: item.nomorBA, // satu No BA per OPD, dipakai semua jenis
+                    realisasiAnggaran: perType[rekonType].realisasi, // null jika belum diisi
+                    inputBMD: 0, // hanya berlaku untuk baris baru
                 });
             }
         }

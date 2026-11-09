@@ -50,12 +50,12 @@ export function isRekonType(key: unknown): key is RekonType {
 
 // Kurang/Lebih = Realisasi Anggaran - Input BMD
 export function hitungSelisih(row: Pick<RekonRow, "realisasiAnggaran" | "inputBMD">): Decimal {
-    return new Decimal(row.realisasiAnggaran).minus(row.inputBMD);
+    return new Decimal(row.realisasiAnggaran ?? 0).minus(row.inputBMD ?? 0);
 }
 
 // Persentase = Input BMD / Realisasi Anggaran x 100. null jika realisasi 0 (tidak bisa dihitung).
 export function hitungPersentase(row: Pick<RekonRow, "realisasiAnggaran" | "inputBMD">): Decimal | null {
-    const realisasi = new Decimal(row.realisasiAnggaran);
+    const realisasi = new Decimal(row.realisasiAnggaran ?? 0);
     if (realisasi.isZero()) return null;
     return new Decimal(row.inputBMD).div(realisasi).times(100);
 }

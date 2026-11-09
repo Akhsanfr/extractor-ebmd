@@ -134,17 +134,17 @@ export default function RekonImportModal({
                                                                     </Table.Cell>
                                                                     <Table.Cell>
                                                                         <div className="text-right tabular-nums">
-                                                                            {formatRupiah(row.asetTetap)}
+                                                                            {formatRupiah(row.asetTetap ?? 0)}
                                                                         </div>
                                                                     </Table.Cell>
                                                                     <Table.Cell>
                                                                         <div className="text-right tabular-nums">
-                                                                            {formatRupiah(row.persediaan)}
+                                                                            {formatRupiah(row.persediaan ?? 0)}
                                                                         </div>
                                                                     </Table.Cell>
                                                                     <Table.Cell>
                                                                         <div className="text-right tabular-nums">
-                                                                            {formatRupiah(row.pemeliharaan)}
+                                                                            {formatRupiah(row.pemeliharaan ?? 0)}
                                                                         </div>
                                                                     </Table.Cell>
                                                                 </Table.Row>

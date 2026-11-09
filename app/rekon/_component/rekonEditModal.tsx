@@ -39,7 +39,7 @@ export default function RekonEditModal({
     onClose: () => void;
 }) {
     const queryClient = useQueryClient();
-    const [realisasiValue, setRealisasiValue] = useState(() => nominalToInput(target.realisasiAnggaran));
+    const [realisasiValue, setRealisasiValue] = useState(() => nominalToInput(target.realisasiAnggaran ?? 0));
     const [inputBmdValue, setInputBmdValue] = useState(() => nominalToInput(target.inputBMD));
     const [keterangan, setKeterangan] = useState(() => target.keterangan ?? "");
     const clearFieldError = (name: keyof FieldErrors) => {

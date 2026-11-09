@@ -1,4 +1,4 @@
-import { rekonTable, rekonTypeEnum } from "@/drizzle/schema";
+import { rekonTable } from "@/drizzle/schema";
 import { RekonType } from "@/enum/rekon";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -37,9 +37,12 @@ export const RekonContract = {
             bulan: true,
             perangkatDaerahId: true,
             realisasiAnggaran: true,
+            pic: true,
+            nomorBA: true,
         })
         .extend({ tahun, bulan, rekonType: z.enum(RekonType) }),
 
+    // Dipakai repository (initiate, import, create). realisasiAnggaran, pic, nomorBA: null = belum diisi.
     insert: createInsertSchema(rekonTable)
         .pick({
             tahun: true,
@@ -47,6 +50,8 @@ export const RekonContract = {
             perangkatDaerahId: true,
             realisasiAnggaran: true,
             inputBMD: true,
+            pic: true,
+            nomorBA: true,
         })
         .extend({ tahun, bulan, rekonType: z.enum(RekonType) }),
 
@@ -59,10 +64,14 @@ export const RekonContract = {
 
     importItem: z
         .object({
-            perangkatDaerah: z.string().trim().min(1),
-            asetTetap: nominal,
-            persediaan: nominal,
-            pemeliharaan: nominal,
+            perangkatDaerah: z.string().min(1),
+            picAsetTetap: z.string().nullable(),
+            picPersediaan: z.string().nullable(),
+            picPemeliharaan: z.string().nullable(),
+            nomorBA: z.string().nullable(),
+            asetTetap: z.number().nullable(),
+            persediaan: z.number().nullable(),
+            pemeliharaan: z.number().nullable(),
             originalIndex: z.number(),
         })
         .array(),
@@ -73,19 +82,20 @@ export const RekonContract = {
         bulan,
     }),
 
-    // Update hanya menyentuh inputBMD. realisasiAnggaran sengaja tidak ada di sini.
     edit: z.object({
         id: z.number().int().positive(),
-        realisasiAnggaran: nominal,
-        pic: z.string(),
+        realisasiAnggaran: nominal.nullable(),
+        pic: z.string().nullable(),
+        nomorBA: z.string().nullable(),
         keterangan: z.string().nullable(),
         inputBMD: nominal,
     }),
     update: z.object({
         id: z.number().int().positive(),
         inputBMD: nominal,
-        realisasiAnggaran: nominal,
-        pic: z.string(),
+        realisasiAnggaran: nominal.nullable(),
+        pic: z.string().nullable(),
+        nomorBA: z.string().nullable(),
         keterangan: z.string().nullable(),
         updatedAt: z.date(),
     }),

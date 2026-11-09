@@ -327,26 +327,58 @@ export default function RekonTable({
                         );
                     },
                 }),
+                columnHelper.display({
+                    id: "nomorBA",
+                    header: () => <div className="text-center">Nomor BA</div>,
+                    size: 50,
+                    cell: (ctx) => (
+                        <div className="text-left">
+                            {ctx.row.original.nomorBA || (
+                                <span className="text-muted">—</span>
+                            )}
+                        </div>
+                    ),
+                }),
                 columnHelper.accessor("realisasiAnggaran", {
                     header: (ctx) => <SortableHeader title="Realisasi" column={ctx.column} align="right" />,
                     sortFn: "basic",
-                    cell: (ctx) => (
-                        <div className="text-right tabular-nums">{formatRupiah(ctx.getValue())}</div>
-                    ),
+                    cell: (ctx) => {
+                        const value = ctx.getValue();
+                        return (
+                            <div className="text-right tabular-nums">
+                                {value === null ? <span className="text-muted">—</span> : formatRupiah(value)}
+                            </div>
+                        );
+                    },
                 }),
                 columnHelper.accessor("inputBMD", {
                     header: (ctx) => <SortableHeader title="Input BMD" column={ctx.column} align="right" />,
                     sortFn: "basic",
-                    cell: (ctx) => (
-                        <div className="text-right tabular-nums">{formatRupiah(ctx.getValue())}</div>
-                    ),
+                    cell: (ctx) => {
+                        const value = ctx.getValue();
+                        return (
+                            <div className="text-right tabular-nums">
+                                {value === null ? <span className="text-muted">—</span> : formatRupiah(value)}
+                            </div>
+                        );
+                    },
                 }),
-                columnHelper.accessor((row) => hitungSelisih(row).toNumber(), {
-                    id: "selisih",
-                    header: (ctx) => <SortableHeader title="Kurang/Lebih" column={ctx.column} align="right" />,
-                    sortFn: "basic",
-                    cell: (ctx) => <SelisihCell row={ctx.row.original} />,
-                }),
+                columnHelper.accessor(
+                    (row) => (row.realisasiAnggaran === null || row.inputBMD === null ? null : hitungSelisih(row).toNumber()),
+                    {
+                        id: "selisih",
+                        header: (ctx) => <SortableHeader title="Kurang/Lebih" column={ctx.column} align="right" />,
+                        sortFn: "basic",
+                        cell: (ctx) =>
+                            ctx.getValue() === null ? (
+                                <div className="text-right">
+                                    <span className="text-muted">—</span>
+                                </div>
+                            ) : (
+                                <SelisihCell row={ctx.row.original} />
+                            ),
+                    },
+                ),
                 // Persentase tak terhitung (realisasi 0) diurutkan sebagai nilai terkecil.
                 columnHelper.accessor(
                     (row) => hitungPersentase(row)?.toNumber() ?? Number.NEGATIVE_INFINITY,

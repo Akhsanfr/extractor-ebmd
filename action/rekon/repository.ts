@@ -89,13 +89,16 @@ export const RekonRepository = {
     // Catatan: satu statement tidak boleh memuat kunci yang sama dua kali (dicek di service).
     async upsertRealisasi(db: DbOrTx, data: RekonContract.InsertDTO[]): Promise<void> {
         if (data.length === 0) return;
+        const col = (c: { name: string }) => sql`excluded.${sql.identifier(c.name)}`;
         await db
             .insert(rekonTable)
             .values(data)
             .onConflictDoUpdate({
                 target: conflictTarget,
                 set: {
-                    realisasiAnggaran: sql`excluded.${sql.identifier(rekonTable.realisasiAnggaran.name)}`,
+                    realisasiAnggaran: sql`coalesce(${col(rekonTable.realisasiAnggaran)}, ${rekonTable.realisasiAnggaran})`,
+                    pic: sql`coalesce(${col(rekonTable.pic)}, ${rekonTable.pic})`,
+                    nomorBA: sql`coalesce(${col(rekonTable.nomorBA)}, ${rekonTable.nomorBA})`,
                     updatedAt: new Date(),
                 },
             });

@@ -29,19 +29,19 @@ function StatCard({
     tone: Tone;
 }) {
     return (
-        <Card className= "border border-border transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-lg hover:shadow-accent/10" >
-        <Card.Content className="flex flex-row items-center gap-4 p-5" >
-            <span
-                    className={ `flex size-11 shrink-0 items-center justify-center rounded-2xl ${TONE_CLASS[tone]}` }
+        <Card className="border border-border transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-lg hover:shadow-accent/10" >
+            <Card.Content className="flex flex-row items-center gap-4 p-5" >
+                <span
+                    className={`flex size-11 shrink-0 items-center justify-center rounded-2xl ${TONE_CLASS[tone]}`}
                 >
-        <Icon size={ 20 } />
-            </span>
-            < div className = "min-w-0" >
-                <p className="text-xs uppercase tracking-wider text-muted" > { label } </p>
-                    < p className = "truncate text-lg font-semibold tabular-nums" > { value } </p>
-    { hint && <p className="text-xs text-muted" > { hint } </p> }
-    </div>
-        </Card.Content>
+                    <Icon size={20} />
+                </span>
+                < div className="min-w-0" >
+                    <p className="text-xs uppercase tracking-wider text-muted" > {label} </p>
+                    < p className="truncate text-lg font-semibold tabular-nums" > {value} </p>
+                    {hint && <p className="text-xs text-muted" > {hint} </p>}
+                </div>
+            </Card.Content>
         </Card>
     );
 }
@@ -50,7 +50,7 @@ function StatCard({
 export default function RekonSummary({ data }: { data: RekonRow[] | undefined }) {
     const summary = useMemo(() => {
         if (!data) return null;
-        const realisasi = data.reduce((acc, r) => acc.plus(r.realisasiAnggaran), new Decimal(0));
+        const realisasi = data.reduce((acc, r) => acc.plus(r.realisasiAnggaran ?? 0), new Decimal(0));
         const input = data.reduce((acc, r) => acc.plus(r.inputBMD), new Decimal(0));
         const selisih = realisasi.minus(input);
         const persen = realisasi.isZero() ? null : input.div(realisasi).times(100);
@@ -60,33 +60,33 @@ export default function RekonSummary({ data }: { data: RekonRow[] | undefined })
     const dash = "—";
 
     return (
-        <div className= "grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4" >
-        <StatCard
-                icon={ Wallet }
-    label = "Total Realisasi"
-    value = { summary? formatRupiah(summary.realisasi) : dash }
-    tone = "accent"
-        />
-        <StatCard
-                icon={ Landmark }
-    label = "Total Input BMD"
-    value = { summary? formatRupiah(summary.input) : dash }
-    tone = "success"
-        />
-        <StatCard
-                icon={ Scale }
-    label = "Kurang/Lebih"
-    value = { summary? formatRupiah(summary.selisih) : dash }
-    hint = { summary?.status.label }
-    tone = { summary? summary.status.chipColor : "accent"}
-        />
-        <StatCard
-                icon={ Percent }
-    label = "Persentase"
-    value = { summary? formatPersentase(summary.persen) : dash }
-    hint = "Input BMD terhadap realisasi"
-    tone = "accent"
-        />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4" >
+            <StatCard
+                icon={Wallet}
+                label="Total Realisasi"
+                value={summary ? formatRupiah(summary.realisasi) : dash}
+                tone="accent"
+            />
+            <StatCard
+                icon={Landmark}
+                label="Total Input BMD"
+                value={summary ? formatRupiah(summary.input) : dash}
+                tone="success"
+            />
+            <StatCard
+                icon={Scale}
+                label="Kurang/Lebih"
+                value={summary ? formatRupiah(summary.selisih) : dash}
+                hint={summary?.status.label}
+                tone={summary ? summary.status.chipColor : "accent"}
+            />
+            <StatCard
+                icon={Percent}
+                label="Persentase"
+                value={summary ? formatPersentase(summary.persen) : dash}
+                hint="Input BMD terhadap realisasi"
+                tone="accent"
+            />
         </div>
     );
 }

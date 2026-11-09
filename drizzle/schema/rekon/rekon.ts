@@ -30,7 +30,7 @@ export const rekonTable = snakeCase.table(
             precision: 20,
             scale: 2,
             mode: "number",
-        }).notNull(),
+        }),
 
         inputBMD: numeric({
             precision: 20,
@@ -40,6 +40,7 @@ export const rekonTable = snakeCase.table(
         kertasKerjaId: text(),
         baId: text(),
         pic: text(),
+        nomorBA: text(),
         keterangan: text(),
 
         createdAt: timestamp("created_at", {

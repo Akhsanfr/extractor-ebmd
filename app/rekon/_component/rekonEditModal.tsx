@@ -39,6 +39,8 @@ export default function RekonEditModal({
     onClose: () => void;
 }) {
     const queryClient = useQueryClient();
+
+    const [nomorBA, setNomorBA] = useState("");
     const [realisasiValue, setRealisasiValue] = useState(() => nominalToInput(target.realisasiAnggaran ?? 0));
     const [inputBmdValue, setInputBmdValue] = useState(() => nominalToInput(target.inputBMD));
     const [keterangan, setKeterangan] = useState(() => target.keterangan ?? "");
@@ -92,13 +94,17 @@ export default function RekonEditModal({
             return;
         }
 
+        console.log(realisasiAnggaran, inputBMD);
+
         const parsed = RekonContract.edit.safeParse({
             id: target.id,
             realisasiAnggaran,
             inputBMD,
+            nomorBA,
             pic,
             keterangan: keterangan.trim() === "" ? null : keterangan.trim(),
         });
+        console.log(parsed)
         if (!parsed.success) {
             const next: FieldErrors = {};
             for (const issue of parsed.error.issues) {

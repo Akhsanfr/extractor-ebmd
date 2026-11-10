@@ -44,6 +44,7 @@ export default function RekonEditModal({
     const [realisasiValue, setRealisasiValue] = useState(() => nominalToInput(target.realisasiAnggaran ?? 0));
     const [inputBmdValue, setInputBmdValue] = useState(() => nominalToInput(target.inputBMD));
     const [keterangan, setKeterangan] = useState(() => target.keterangan ?? "");
+    const [tanggalRekon, setTanggalRekon] = useState(() => target.tanggalRekon ?? "");
     const clearFieldError = (name: keyof FieldErrors) => {
         setFieldErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev));
     };
@@ -102,6 +103,7 @@ export default function RekonEditModal({
             inputBMD,
             nomorBA,
             pic,
+            tanggalRekon,
             keterangan: keterangan.trim() === "" ? null : keterangan.trim(),
         });
         console.log(parsed)

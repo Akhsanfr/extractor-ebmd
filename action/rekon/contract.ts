@@ -7,6 +7,8 @@ z.config(z.locales.id());
 const tahun = z.number().int().positive();
 const bulan = z.number().int().min(1).max(12);
 const nominal = z.number().finite();
+// Format "YYYY-MM-DD", sama dengan hasil RekonFormat dan kolom `date` Drizzle (mode string).
+const tanggal = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Format tanggal harus YYYY-MM-DD");
 
 // Dokumen per baris rekon. Keduanya independen satu sama lain.
 const berkasTipe = z.enum(["kertasKerja", "ba"]);
@@ -40,7 +42,7 @@ export const RekonContract = {
             pic: true,
             nomorBA: true,
         })
-        .extend({ tahun, bulan, rekonType: z.enum(RekonType) }),
+        .extend({ tahun, bulan, rekonType: z.enum(RekonType), tanggalRekon: tanggal.nullish() }),
 
     // Dipakai repository (initiate, import, create). realisasiAnggaran, pic, nomorBA: null = belum diisi.
     insert: createInsertSchema(rekonTable)
@@ -53,7 +55,7 @@ export const RekonContract = {
             pic: true,
             nomorBA: true,
         })
-        .extend({ tahun, bulan, rekonType: z.enum(RekonType) }),
+        .extend({ tahun, bulan, rekonType: z.enum(RekonType), tanggalRekon: tanggal.nullish() }),
 
     // Inisiasi: OPD + tahun + bulan -> satu baris per jenis rekon.
     initiate: z.object({
@@ -68,6 +70,7 @@ export const RekonContract = {
             picAsetTetap: z.string().nullable(),
             picPersediaan: z.string().nullable(),
             picPemeliharaan: z.string().nullable(),
+            tanggalRekon: tanggal.nullable(),
             nomorBA: z.string().nullable(),
             asetTetap: z.number().nullable(),
             persediaan: z.number().nullable(),
@@ -87,6 +90,7 @@ export const RekonContract = {
         realisasiAnggaran: nominal.nullable(),
         pic: z.string().nullable(),
         nomorBA: z.string().nullable(),
+        tanggalRekon: tanggal.nullable(),
         keterangan: z.string().nullable(),
         inputBMD: nominal,
     }),
@@ -96,6 +100,7 @@ export const RekonContract = {
         realisasiAnggaran: nominal.nullable(),
         pic: z.string().nullable(),
         nomorBA: z.string().nullable(),
+        tanggalRekon: tanggal.nullable(),
         keterangan: z.string().nullable(),
         updatedAt: z.date(),
     }),

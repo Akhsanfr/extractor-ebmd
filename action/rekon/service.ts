@@ -110,7 +110,8 @@ export const RekonService = {
                     perangkatDaerahId,
                     rekonType,
                     pic: perType[rekonType].pic,
-                    nomorBA: item.nomorBA, // satu No BA per OPD, dipakai semua jenis
+                    nomorBA: item.nomorBA,
+                    tanggalRekon: item.tanggalRekon, // satu tanggal per OPD, dipakai semua jenis
                     realisasiAnggaran: perType[rekonType].realisasi, // null jika belum diisi
                     inputBMD: 0, // hanya berlaku untuk baris baru
                 });

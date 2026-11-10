@@ -1,11 +1,9 @@
 "use client";
 import { Button, Chip, ListBox, Pagination, Select, Table, Tooltip, type Key } from "@heroui/react";
 import {
-    columnSizingFeature,
     createColumnHelper,
     createPaginatedRowModel,
     createSortedRowModel,
-    flexRender,
     rowPaginationFeature,
     rowSortingFeature,
     sortFn_basic,
@@ -17,9 +15,10 @@ import {
     type SortingState,
 } from "@tanstack/react-table";
 import { ArrowDown, ArrowUp, ArrowUpDown, FileWarning, Inbox, Pencil } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { REKON_BERKAS_CONFIG, getBerkasKey, type RekonBerkasTipe } from "./rekonBerkas";
 import { getSelisihStatus } from "./rekonStatus";
+import { formatTanggalLengkap } from "./rekonFilterBar";
 import {
     formatPersentase,
     formatRupiah,
@@ -29,7 +28,6 @@ import {
 } from "./rekonUtil";
 
 const features = tableFeatures({
-    columnSizingFeature,
     rowSortingFeature,
     rowPaginationFeature,
     sortedRowModel: createSortedRowModel(),
@@ -41,7 +39,9 @@ const features = tableFeatures({
 });
 const columnHelper = createColumnHelper<typeof features, RekonRow>();
 
-const PAGE_SIZE_OPTIONS = [10, 25, 50, 100] as const;
+/* ------------------------------------------------------------------ */
+/* Header & sel                                                        */
+/* ------------------------------------------------------------------ */
 
 // Header yang bisa diklik untuk mengurutkan, dengan indikator arah.
 function SortableHeader<TValue>({
@@ -58,13 +58,13 @@ function SortableHeader<TValue>({
     return (
         <button
             type="button"
-            className={`group flex w-full items-center gap-1.5 font-medium transition-colors hover:text-foreground ${align === "right" ? "justify-end" : "justify-start"
+            className={`group flex w-full items-center gap-1 font-medium transition-colors hover:text-foreground ${align === "right" ? "justify-end" : "justify-start"
                 }`}
             onClick={column.getToggleSortingHandler()}
         >
             <span>{title}</span>
             <Icon
-                size={14}
+                size={13}
                 aria-hidden
                 className={
                     sorted ? "text-accent" : "text-muted opacity-60 transition-opacity group-hover:opacity-100"
@@ -74,21 +74,71 @@ function SortableHeader<TValue>({
     );
 }
 
-function SelisihCell({ row }: { row: RekonRow }) {
+const Dash = () => <span className="text-muted">—</span>;
+
+// Tanggal (dengan hari) di baris atas, nomor BA di baris bawah.
+function TanggalBACell({ row }: { row: RekonRow }) {
+    const tanggal = row.tanggalRekon ? formatTanggalLengkap(row.tanggalRekon) : null;
+    return (
+        <div className="flex flex-col leading-tight whitespace-nowrap">
+            {tanggal ? <span className="font-medium tabular-nums">{tanggal}</span> : <Dash />}
+            <span className="text-xs text-muted tabular-nums">{row.nomorBA || "—"}</span>
+        </div>
+    );
+}
+
+function AnggaranCell({ row }: { row: RekonRow }) {
+    const line = (label: string, value: RekonRow["realisasiAnggaran"]) => (
+        <div className="flex items-baseline justify-between gap-3">
+            <span className="text-xs text-muted">{label}</span>
+            <span className="tabular-nums">{value === null ? <Dash /> : formatRupiah(value)}</span>
+        </div>
+    );
+    return (
+        <div className="flex flex-col leading-tight">
+            {line("Realisasi", row.realisasiAnggaran)}
+            {line("Input BMD", row.inputBMD)}
+        </div>
+    );
+}
+
+// Selisih + status di baris atas, persentase + batang progres di baris bawah.
+function HasilCell({ row }: { row: RekonRow }) {
+    if (row.realisasiAnggaran === null || row.inputBMD === null) {
+        return <div className="text-right"><Dash /></div>;
+    }
     const selisih = hitungSelisih(row);
     const status = getSelisihStatus(selisih);
+    const persen = hitungPersentase(row);
+    const width = persen === null ? 0 : Math.min(100, Math.max(0, persen.toNumber()));
+
     return (
         <div className="flex flex-col items-end gap-1">
-            <span className={`font-medium tabular-nums ${status.textClass}`}>{formatRupiah(selisih)}</span>
-            <Chip size="sm" variant="soft" color={status.chipColor}>
-                <Chip.Label>{status.label}</Chip.Label>
-            </Chip>
+            <div className="flex items-center gap-2">
+                <span className={`font-medium tabular-nums ${status.textClass}`}>{formatRupiah(selisih)}</span>
+                <Chip size="sm" variant="soft" color={status.chipColor}>
+                    <Chip.Label>{status.label}</Chip.Label>
+                </Chip>
+            </div>
+            {persen === null ? (
+                <span className="text-xs text-muted">—</span>
+            ) : (
+                <div className="flex w-full items-center gap-2">
+                    <div className="h-1 flex-1 overflow-hidden rounded-full bg-default">
+                        <div
+                            className={`h-full rounded-full ${status.barClass} transition-all duration-700 ease-out`}
+                            style={{ width: `${width}%` }}
+                        />
+                    </div>
+                    <span className="w-14 text-right text-xs tabular-nums">{formatPersentase(persen)}</span>
+                </div>
+            )}
         </div>
     );
 }
 
 // Status satu dokumen. Tiap tipe dihitung dari key-nya sendiri, tidak bergantung pada dokumen lain.
-function BerkasCell({
+function BerkasButton({
     row,
     tipe,
     onOpen,
@@ -106,43 +156,27 @@ function BerkasCell({
         : `${config.short} ${row.perangkatDaerahNama} belum tersedia, buka untuk upload`;
 
     return (
-        <div className="flex justify-center">
-            <Tooltip delay={300}>
-                <Button
-                    isIconOnly
-                    variant="ghost"
-                    size="sm"
-                    aria-label={label}
-                    className={`transition-transform hover:scale-110 ${tersedia ? "text-success" : "text-muted"}`}
-                    onPress={() => onOpen(row, tipe)}
-                >
-                    <Icon size={18} />
-                </Button>
-                <Tooltip.Content>{tooltip}</Tooltip.Content>
-            </Tooltip>
-        </div>
+        <Tooltip delay={300}>
+            <Button
+                isIconOnly
+                variant="ghost"
+                size="sm"
+                aria-label={label}
+                className={`transition-transform hover:scale-110 ${tersedia ? "text-success" : "text-muted"}`}
+                onPress={() => onOpen(row, tipe)}
+            >
+                <Icon size={16} />
+            </Button>
+            <Tooltip.Content>{tooltip}</Tooltip.Content>
+        </Tooltip>
     );
 }
 
-// Persentase dengan batang progres; warna mengikuti status selisih.
-function PersentaseCell({ row }: { row: RekonRow }) {
-    const persen = hitungPersentase(row);
-    if (persen === null) return <div className="text-right text-muted">—</div>;
+/* ------------------------------------------------------------------ */
+/* Pagination                                                          */
+/* ------------------------------------------------------------------ */
 
-    const status = getSelisihStatus(hitungSelisih(row));
-    const width = Math.min(100, Math.max(0, persen.toNumber()));
-    return (
-        <div className="ml-auto flex w-32 flex-col gap-1.5">
-            <span className="text-right tabular-nums">{formatPersentase(persen)}</span>
-            <div className="h-1.5 overflow-hidden rounded-full bg-default">
-                <div
-                    className={`h-full rounded-full ${status.barClass} transition-all duration-700 ease-out`}
-                    style={{ width: `${width}%` }}
-                />
-            </div>
-        </div>
-    );
-}
+const PAGE_SIZE_OPTIONS = [10, 25, 50, 100] as const;
 
 // Daftar nomor halaman dengan ellipsis. current: 1-based
 function getPageItems(
@@ -258,18 +292,51 @@ function EmptyState() {
             <div>
                 <p className="font-medium">Belum ada data rekon</p>
                 <p className="text-sm text-muted">
-                    Tidak ada data untuk tahun, bulan, dan jenis rekon ini. Coba ubah filter atau import data.
+                    Tidak ada data untuk tahun, bulan, jenis rekon, dan filter ini. Coba ubah filter atau import data.
                 </p>
             </div>
         </div>
     );
 }
 
+/* ------------------------------------------------------------------ */
+/* Definisi kolom                                                      */
+/* ------------------------------------------------------------------ */
+
+// Kolom TanStack hanya mendefinisikan data untuk sorting.
+// Tata letak tampilan (kolom yang digabung) disusun manual di JSX supaya
+// Realisasi, Input BMD, Selisih, dan Persentase tetap bisa diurutkan sendiri-sendiri
+// walau berbagi satu kolom visual.
+const columns = columnHelper.columns([
+    columnHelper.accessor("perangkatDaerahNama", { id: "perangkatDaerahNama", sortFn: "text" }),
+    // Belum ada PIC (null) diurutkan sebagai nilai terkecil.
+    columnHelper.accessor((row) => row.pic ?? "", { id: "pic", sortFn: "text" }),
+    columnHelper.accessor((row) => row.tanggalRekon ?? "", { id: "tanggalRekon", sortFn: "text" }),
+    columnHelper.accessor("realisasiAnggaran", { id: "realisasiAnggaran", sortFn: "basic" }),
+    columnHelper.accessor("inputBMD", { id: "inputBMD", sortFn: "basic" }),
+    columnHelper.accessor(
+        (row) =>
+            row.realisasiAnggaran === null || row.inputBMD === null ? null : hitungSelisih(row).toNumber(),
+        { id: "selisih", sortFn: "basic" },
+    ),
+    // Persentase tak terhitung (realisasi 0) diurutkan sebagai nilai terkecil.
+    columnHelper.accessor((row) => hitungPersentase(row)?.toNumber() ?? Number.NEGATIVE_INFINITY, {
+        id: "persentase",
+        sortFn: "basic",
+    }),
+]);
+
+/* ------------------------------------------------------------------ */
+/* Tabel                                                               */
+/* ------------------------------------------------------------------ */
+
+const cellClass = "py-1.5 align-middle";
+
 export default function RekonTable({
     data,
     onEdit,
     onOpenBerkas,
-    resetPageKey
+    resetPageKey,
 }: {
     data: RekonRow[];
     onEdit: (row: RekonRow) => void;
@@ -284,157 +351,6 @@ export default function RekonTable({
         pageIndex: 0,
         pageSize: 10,
     });
-
-    const columns = useMemo(
-        () =>
-            columnHelper.columns([
-                // Nomor mengikuti posisi pada halaman aktif (setelah sorting), bukan selalu mulai dari 1.
-                columnHelper.display({
-                    id: "no",
-                    header: "No",
-                    size: 60,
-                    cell: (ctx) => {
-                        const posisi = ctx.table
-                            .getRowModel()
-                            .rows.findIndex((r) => r.id === ctx.row.id);
-                        return (
-                            <span className="text-muted tabular-nums">
-                                {pagination.pageIndex * pagination.pageSize + posisi + 1}
-                            </span>
-                        );
-                    },
-                }),
-                columnHelper.accessor("perangkatDaerahNama", {
-                    header: (ctx) => <SortableHeader title="Perangkat Daerah" column={ctx.column} />,
-                    size: 320,
-                    sortFn: "text",
-                    cell: (ctx) => <span className="font-medium">{ctx.getValue()}</span>,
-                }),
-                // Belum ada PIC (null) diurutkan sebagai nilai terkecil.
-                columnHelper.accessor((row) => row.pic ?? "", {
-                    id: "pic",
-                    header: (ctx) => <SortableHeader title="PIC" column={ctx.column} />,
-                    size: 120,
-                    sortFn: "text",
-                    cell: (ctx) => {
-                        const pic = ctx.getValue();
-                        return pic ? (
-                            <Chip size="sm" variant="soft" color="accent">
-                                <Chip.Label>{pic}</Chip.Label>
-                            </Chip>
-                        ) : (
-                            <span className="text-muted">—</span>
-                        );
-                    },
-                }),
-                columnHelper.display({
-                    id: "nomorBA",
-                    header: () => <div className="text-center">Nomor BA</div>,
-                    size: 50,
-                    cell: (ctx) => (
-                        <div className="text-left">
-                            {ctx.row.original.nomorBA || (
-                                <span className="text-muted">—</span>
-                            )}
-                        </div>
-                    ),
-                }),
-                columnHelper.accessor("realisasiAnggaran", {
-                    header: (ctx) => <SortableHeader title="Realisasi" column={ctx.column} align="right" />,
-                    sortFn: "basic",
-                    cell: (ctx) => {
-                        const value = ctx.getValue();
-                        return (
-                            <div className="text-right tabular-nums">
-                                {value === null ? <span className="text-muted">—</span> : formatRupiah(value)}
-                            </div>
-                        );
-                    },
-                }),
-                columnHelper.accessor("inputBMD", {
-                    header: (ctx) => <SortableHeader title="Input BMD" column={ctx.column} align="right" />,
-                    sortFn: "basic",
-                    cell: (ctx) => {
-                        const value = ctx.getValue();
-                        return (
-                            <div className="text-right tabular-nums">
-                                {value === null ? <span className="text-muted">—</span> : formatRupiah(value)}
-                            </div>
-                        );
-                    },
-                }),
-                columnHelper.accessor(
-                    (row) => (row.realisasiAnggaran === null || row.inputBMD === null ? null : hitungSelisih(row).toNumber()),
-                    {
-                        id: "selisih",
-                        header: (ctx) => <SortableHeader title="Kurang/Lebih" column={ctx.column} align="right" />,
-                        sortFn: "basic",
-                        cell: (ctx) =>
-                            ctx.getValue() === null ? (
-                                <div className="text-right">
-                                    <span className="text-muted">—</span>
-                                </div>
-                            ) : (
-                                <SelisihCell row={ctx.row.original} />
-                            ),
-                    },
-                ),
-                // Persentase tak terhitung (realisasi 0) diurutkan sebagai nilai terkecil.
-                columnHelper.accessor(
-                    (row) => hitungPersentase(row)?.toNumber() ?? Number.NEGATIVE_INFINITY,
-                    {
-                        id: "persentase",
-                        header: (ctx) => (
-                            <SortableHeader title="Persentase" column={ctx.column} align="right" />
-                        ),
-                        sortFn: "basic",
-                        cell: (ctx) => <PersentaseCell row={ctx.row.original} />,
-                    },
-                ),
-                columnHelper.display({
-                    id: "kertasKerja",
-                    header: () => <div className="text-center">Kertas Kerja</div>,
-                    size: 120,
-                    cell: (ctx) => <BerkasCell row={ctx.row.original} tipe="kertasKerja" onOpen={onOpenBerkas} />,
-                }),
-                columnHelper.display({
-                    id: "ba",
-                    header: () => <div className="text-center">Berita Acara</div>,
-                    size: 120,
-                    cell: (ctx) => <BerkasCell row={ctx.row.original} tipe="ba" onOpen={onOpenBerkas} />,
-                }),
-                columnHelper.display({
-                    id: "keterangan",
-                    header: () => <div className="text-center">Keterangan</div>,
-                    size: 120,
-                    cell: (ctx) => (
-                        <div className="text-left">
-                            {ctx.row.original.keterangan || (
-                                <span className="text-muted">—</span>
-                            )}
-                        </div>
-                    ),
-                }),
-                columnHelper.display({
-                    id: "edit",
-                    header: "Aksi",
-                    size: 80,
-                    cell: (ctx) => (
-                        <Button
-                            isIconOnly
-                            variant="ghost"
-                            size="sm"
-                            aria-label={`Edit input BMD ${ctx.row.original.perangkatDaerahNama}`}
-                            className="transition-transform hover:scale-110"
-                            onPress={() => onEdit(ctx.row.original)}
-                        >
-                            <Pencil size={16} />
-                        </Button>
-                    ),
-                }),
-            ]),
-        [onEdit, onOpenBerkas, pagination.pageIndex, pagination.pageSize],
-    );
 
     const table = useTable({
         features,
@@ -468,7 +384,7 @@ export default function RekonTable({
         }
     }, [pageCount, pagination.pageIndex]);
 
-    // Ganti filter (pencarian, perangkat daerah, PIC, jenis rekon) -> kembali ke halaman 1.
+    // Ganti filter (perangkat daerah, PIC, tanggal, jenis rekon) -> kembali ke halaman 1.
     // Harus dipanggil sebelum early return di bawah agar urutan hooks selalu sama.
     useEffect(() => {
         setPagination((p) => ({ ...p, pageIndex: 0 }));
@@ -476,37 +392,102 @@ export default function RekonTable({
 
     if (totalRows === 0) return <EmptyState />;
 
+    const col = (id: string) => table.getColumn(id)!;
+
     return (
         <>
-            <Table aria-label="Tabel rekon realisasi anggaran dan input BMD">
+            <Table aria-label="Tabel rekon realisasi anggaran dan input BMD" className="text-sm">
                 <Table.ScrollContainer>
                     <Table.Content>
                         <Table.Header className="sticky top-0 z-10">
-                            {table.getFlatHeaders().map((header) => (
-                                <Table.Column
-                                    key={header.id}
-                                    isRowHeader={header.column.id === "perangkatDaerahNama"}
-                                    style={{ width: header.getSize() }}
-                                >
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(header.column.columnDef.header, header.getContext())}
-                                </Table.Column>
-                            ))}
+                            <Table.Column className="w-12">No</Table.Column>
+                            <Table.Column isRowHeader className="min-w-60">
+                                <SortableHeader title="Perangkat Daerah" column={col("perangkatDaerahNama")} />
+                            </Table.Column>
+                            <Table.Column className="w-24">
+                                <SortableHeader title="PIC" column={col("pic")} />
+                            </Table.Column>
+                            <Table.Column className="min-w-44">
+                                <div className="flex flex-col gap-0.5">
+                                    <SortableHeader title="Tanggal Rekon" column={col("tanggalRekon")} />
+                                    <span className="text-xs font-normal text-muted">Nomor BA</span>
+                                </div>
+                            </Table.Column>
+                            <Table.Column className="min-w-52">
+                                <div className="flex flex-col items-end gap-0.5">
+                                    <SortableHeader title="Realisasi" column={col("realisasiAnggaran")} align="right" />
+                                    <SortableHeader title="Input BMD" column={col("inputBMD")} align="right" />
+                                </div>
+                            </Table.Column>
+                            <Table.Column className="min-w-60">
+                                <div className="flex flex-col items-end gap-0.5">
+                                    <SortableHeader title="Kurang/Lebih" column={col("selisih")} align="right" />
+                                    <SortableHeader title="Persentase" column={col("persentase")} align="right" />
+                                </div>
+                            </Table.Column>
+                            <Table.Column className="w-24">
+                                <div className="text-center">Berkas</div>
+                            </Table.Column>
+                            <Table.Column className="min-w-40">Keterangan</Table.Column>
+                            <Table.Column className="w-14">Aksi</Table.Column>
                         </Table.Header>
                         <Table.Body>
-                            {rows.map((row) => (
-                                <Table.Row key={row.id}>
-                                    {row.getAllCells().map((cell) => (
-                                        <Table.Cell
-                                            key={cell.id}
-                                            style={{ width: cell.column.getSize() }}
-                                        >
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                            {rows.map((row, i) => {
+                                const r = row.original;
+                                return (
+                                    <Table.Row key={row.id}>
+                                        <Table.Cell className={cellClass}>
+                                            <span className="text-muted tabular-nums">
+                                                {pagination.pageIndex * pagination.pageSize + i + 1}
+                                            </span>
                                         </Table.Cell>
-                                    ))}
-                                </Table.Row>
-                            ))}
+                                        <Table.Cell className={cellClass}>
+                                            <span className="font-medium">{r.perangkatDaerahNama}</span>
+                                        </Table.Cell>
+                                        <Table.Cell className={cellClass}>
+                                            {r.pic ? (
+                                                <Chip size="sm" variant="soft" color="accent">
+                                                    <Chip.Label>{r.pic}</Chip.Label>
+                                                </Chip>
+                                            ) : (
+                                                <Dash />
+                                            )}
+                                        </Table.Cell>
+                                        <Table.Cell className={cellClass}>
+                                            <TanggalBACell row={r} />
+                                        </Table.Cell>
+                                        <Table.Cell className={cellClass}>
+                                            <AnggaranCell row={r} />
+                                        </Table.Cell>
+                                        <Table.Cell className={cellClass}>
+                                            <HasilCell row={r} />
+                                        </Table.Cell>
+                                        <Table.Cell className={cellClass}>
+                                            <div className="flex justify-center gap-0.5">
+                                                <BerkasButton row={r} tipe="kertasKerja" onOpen={onOpenBerkas} />
+                                                <BerkasButton row={r} tipe="ba" onOpen={onOpenBerkas} />
+                                            </div>
+                                        </Table.Cell>
+                                        <Table.Cell className={cellClass}>
+                                            <div className="max-w-40 truncate" title={r.keterangan ?? undefined}>
+                                                {r.keterangan || <Dash />}
+                                            </div>
+                                        </Table.Cell>
+                                        <Table.Cell className={cellClass}>
+                                            <Button
+                                                isIconOnly
+                                                variant="ghost"
+                                                size="sm"
+                                                aria-label={`Edit input BMD ${r.perangkatDaerahNama}`}
+                                                className="transition-transform hover:scale-110"
+                                                onPress={() => onEdit(r)}
+                                            >
+                                                <Pencil size={15} />
+                                            </Button>
+                                        </Table.Cell>
+                                    </Table.Row>
+                                );
+                            })}
                         </Table.Body>
                     </Table.Content>
                 </Table.ScrollContainer>

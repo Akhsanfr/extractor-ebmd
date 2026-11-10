@@ -8,6 +8,7 @@ import {
     snakeCase,
     uniqueIndex,
     text,
+    date,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { rekonTypeEnum, masterPerangkatDaerah } from "./../../schema";
@@ -42,6 +43,7 @@ export const rekonTable = snakeCase.table(
         pic: text(),
         nomorBA: text(),
         keterangan: text(),
+        tanggalRekon: date(),
 
         createdAt: timestamp("created_at", {
             withTimezone: true,

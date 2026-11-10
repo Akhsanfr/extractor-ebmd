@@ -96,9 +96,10 @@ export const RekonRepository = {
             .onConflictDoUpdate({
                 target: conflictTarget,
                 set: {
-                    realisasiAnggaran: sql`coalesce(${col(rekonTable.realisasiAnggaran)}, ${rekonTable.realisasiAnggaran})`,
+                    // realisasiAnggaran: sql`coalesce(${col(rekonTable.realisasiAnggaran)}, ${rekonTable.realisasiAnggaran})`,
                     pic: sql`coalesce(${col(rekonTable.pic)}, ${rekonTable.pic})`,
                     nomorBA: sql`coalesce(${col(rekonTable.nomorBA)}, ${rekonTable.nomorBA})`,
+                    tanggalRekon: sql`coalesce(${col(rekonTable.tanggalRekon)}, ${rekonTable.tanggalRekon})`,
                     updatedAt: new Date(),
                 },
             });

@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Alert, Button, Card, Chip, Dropdown, Label, ListBox, Select, Tabs, toast, type Key } from "@heroui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Download, FileSpreadsheet, FileText, Scale } from "lucide-react";
@@ -15,6 +15,13 @@ import RekonShell from "./rekonShell";
 import RekonSummary from "./rekonSummary";
 import RekonTable from "./rekonTable";
 import {
+    EMPTY_TANGGAL_FILTER,
+    filterByTanggal,
+    getTanggalFacets,
+    isTanggalFilterEmpty,
+    type TanggalFilter,
+} from "./rekonFilterBar";
+import {
     BULAN_LABEL,
     REKON_QUERY_KEY,
     REKON_TYPE_LABEL,
@@ -25,7 +32,6 @@ import {
 } from "./rekonUtil";
 import { RekonType } from "@/enum/rekon";
 import { filterRekonRows, getPerangkatDaerahOptions, useRekonFilters } from "./useRekonFilters";
-import { getPerangkatDaerahAction } from "@/action/perangkatDaerah/action";
 import RekonFilterBar from "./rekonFilterBar";
 
 // Link template berupa spreadsheet; ganti href dengan link yang sebenarnya.
@@ -56,10 +62,17 @@ function RekonBody() {
     const [berkasTarget, setBerkasTarget] = useState<{ id: RekonRow["id"]; tipe: RekonBerkasTipe } | null>(null);
     // Popup pilih tanggal pelaksanaan untuk Draft Surat Laporan Hasil Rekon.
     const [pelaksanaanOpen, setPelaksanaanOpen] = useState(false);
+    // Filter tanggal rekon (state lokal, tidak masuk URL).
+    const [tanggal, setTanggal] = useState<TanggalFilter>(EMPTY_TANGGAL_FILTER);
     const openBerkas = useCallback(
         (row: RekonRow, tipe: RekonBerkasTipe) => setBerkasTarget({ id: row.id, tipe }),
         [],
     );
+
+    // Tanggal berbeda tiap periode/jenis rekon, jadi filter tanggal ikut direset.
+    useEffect(() => {
+        setTanggal(EMPTY_TANGGAL_FILTER);
+    }, [tahun, bulan, rekonType]);
 
     const queryKey = [...REKON_QUERY_KEY, tahun, bulan, rekonType] as const;
     const query = useQuery({
@@ -115,7 +128,20 @@ function RekonBody() {
 
     const f = useRekonFilters({ tahun: 2026, bulan: 10, rekonType: RekonType.ASET_TETAP }, Object.values(RekonType));
     const options = useMemo(() => getPerangkatDaerahOptions(query.data ?? []), [query.data]);
-    const rows = useMemo(() => filterRekonRows(query.data ?? [], { q: f.q, pd: f.pd, pic: f.pic }), [query.data, f.q, f.pd, f.pic]);
+
+    // Filter perangkat daerah + PIC dulu (tanpa pencarian teks).
+    const baseRows = useMemo(
+        () => filterRekonRows(query.data ?? [], { q: "", pd: f.pd, pic: f.pic }),
+        [query.data, f.pd, f.pic],
+    );
+    // Faceting tanggal dihitung dari baris yang sudah kena filter lain, tanpa filter tanggal sendiri.
+    const tanggalOptions = useMemo(() => getTanggalFacets(baseRows), [baseRows]);
+    const rows = useMemo(() => filterByTanggal(baseRows, tanggal), [baseRows, tanggal]);
+
+    const resetAllFilters = useCallback(() => {
+        f.resetFilters();
+        setTanggal(EMPTY_TANGGAL_FILTER);
+    }, [f]);
 
     return (
         <div className="flex flex-col gap-6">
@@ -242,10 +268,12 @@ function RekonBody() {
             <RekonSummary data={query.data} />
 
             <RekonFilterBar
-                query={f.q} onQueryChange={f.setQuery}
                 perangkatDaerahId={f.pd} onPerangkatDaerahChange={f.setPerangkatDaerah}
                 pic={f.pic} onPicChange={f.setPic}
-                options={options} hasActiveFilter={f.hasActiveFilter} onReset={f.resetFilters}
+                tanggal={tanggal} onTanggalChange={setTanggal} tanggalOptions={tanggalOptions}
+                options={options}
+                hasActiveFilter={f.hasActiveFilter || !isTanggalFilterEmpty(tanggal)}
+                onReset={resetAllFilters}
             />
 
             {/* Tabel */}
@@ -275,7 +303,12 @@ function RekonBody() {
                     ) : query.isLoading ? (
                         <Loading />
                     ) : (
-                        <RekonTable data={rows} resetPageKey={`${f.rekonType}|${f.q}|${f.pd}|${f.pic ?? ""}`} onEdit={setEditTarget} onOpenBerkas={openBerkas} />
+                        <RekonTable
+                            data={rows}
+                            resetPageKey={`${f.rekonType}|${f.pd}|${f.pic ?? ""}|${tanggal.from}|${tanggal.to}|${tanggal.dates.join(",")}`}
+                            onEdit={setEditTarget}
+                            onOpenBerkas={openBerkas}
+                        />
                     )}
                 </Card.Content>
             </Card>

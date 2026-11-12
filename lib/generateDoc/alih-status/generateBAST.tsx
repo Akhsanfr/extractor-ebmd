@@ -34,6 +34,15 @@ export const generateBAST = ({
     const isJamak = persetujuan.length > 1;
     const tunggal = isTunggal ? persetujuan[0] : null;
 
+    const formatTanggal = (tanggal: string | null) =>
+        tanggal
+            ? new Intl.DateTimeFormat("id-ID", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            }).format(new Date(tanggal))
+            : "TANGGAL SURAT BAST";
+
     return generateDocument(
         "/template/alih-status/bast.docx",
         `BAST - ${bast.perangkatDaerahAsal} ke ${bast.perangkatDaerahTujuan}`,
@@ -41,9 +50,11 @@ export const generateBAST = ({
             // Header & nomor
             "bast-nomor": bast.suratNomor,
             "bast-hari": tanggalBast?.hari ?? "HARI",
-            "bast-tanggal": tanggalBast?.tanggal ?? "TANGGAL",
+            "bast-tanggal-kata": tanggalBast?.tanggal ?? "TANGGAL",
             "bast-bulan": tanggalBast?.bulan ?? "BULAN",
             "bast-tahun": tanggalBast?.tahun ?? `TAHUN (Maksimal 30 hari sejak ${persetujuan[0].suratTanggal})`,
+
+            "bast-tanggal": formatTanggal(bast.suratTanggal),
 
             // Perangkat daerah
             "perangkat-daerah-asal": bast.perangkatDaerahAsal,
